@@ -1,5 +1,7 @@
 Revision history for Perl extension GitLab::API::v3.
 
 {{$NEXT}}
+
+0.01      2014-11-16
  - First release.
 
