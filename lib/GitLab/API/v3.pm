@@ -21,6 +21,12 @@ This module provides a one-to-one interface with the GitLab
 API v3.  Much is not documented here as it would just be duplicating
 GitLab's own L<API Documentation|http://doc.gitlab.com/ce/api/README.html>.
 
+=head1 CONSTANTS
+
+Several values in the GitLab API require looking up the numeric value
+for a meaning (such as C<access_level> and C<visibility_level>).
+Instead of doing that, you can use L<GitLab::API::v3::Constants>.
+
 =cut
 
 use GitLab::API::v3::RESTClient;
@@ -2278,6 +2284,19 @@ sub delete_user_ssh_key {
 
 1;
 __END__
+
+=head2 CONTRIBUTING
+
+This module is auto-generated from a set of YAML files defining the
+interface of GitLab's API.  If you'd like to contribute to this module
+then please feel free to make a
+L<fork on GitHub|https://github.com/bluefeet/GitLab-API-v3>
+and submit a pull request, just make sure you edit the files in the
+C<authors/> directory instead of C<lib/GitLab/API/v3.pm> directly.
+
+Please see
+L<https://github.com/bluefeet/GitLab-API-v3/blob/master/author/README.pod>
+for more information.
 
 =head1 AUTHOR
 

@@ -1,6 +1,10 @@
 Revision history for Perl extension GitLab::API::v3.
 
 {{$NEXT}}
+ - Point the user at the Constants module from the main docs.
+ - Add a CONTRIBUTING section to the docs.
+ - Add an author/README.pod to explain how the module generation
+   works.
 
 0.02      2014-11-18
  - Implement the entire API (wew!).

@@ -1,0 +1,52 @@
+
+=pod
+
+The author/ directory contains the logic for generating the v3.pm
+module.
+
+=head1 DATA FILES
+
+The YAML files in the author/data directory have lines
+like this:
+
+    SUB: HTTP_METHOD PATH
+    SUB: RETURN = HTTP_METHOD PATH?
+
+=head2 SUB
+
+The name if the subroutine that will be created in v3.pm.
+
+=head2 RETURN
+
+The name of the return variable if any.  This is used as part of
+generating the documentation.
+
+=head2 HTTP_METHOD
+
+One of GET, POST, PUT, or DELETE.
+
+=head2 PATH
+
+The path to the API endpoint (after the /api/v3 bit).
+The path is a list of static and dynamic strings separate by
+forward slashes.  So, if you have:
+
+    /foo/:bar/baz
+
+Then the API subroutine would require one argument which would
+be injected in place of :bar.
+
+=head2 ?
+
+If the PATH ends with a ? then this signifies that the API
+endpoint accepts query parameters.
+
+=head1 GENERATING
+
+To generate C<lib/GitLab/API/v3.pm> do this:
+
+    cd author
+    perl generate.pl > ../lib/GitLab/API/v3.pm
+
+=cut
+
