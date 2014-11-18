@@ -1,16 +1,16 @@
 
 =pod
 
-The author/ directory contains the logic for generating the v3.pm
+The C<author/> directory contains the logic for generating the v3.pm
 module.
 
 =head1 DATA FILES
 
-The YAML files in the author/data directory have lines
+The YAML files in the C<author/data/> directory have lines
 like this:
 
-    SUB: HTTP_METHOD PATH
-    SUB: RETURN = HTTP_METHOD PATH?
+    - SUB: HTTP_METHOD PATH
+    - SUB: RETURN = HTTP_METHOD PATH?
 
 =head2 SUB
 
@@ -19,7 +19,9 @@ The name if the subroutine that will be created in v3.pm.
 =head2 RETURN
 
 The name of the return variable if any.  This is used as part of
-generating the documentation.
+generating the documentation.  If no return variable is declared
+then the subroutine will return an empty list no matter what
+the API response returns.
 
 =head2 HTTP_METHOD
 
@@ -34,11 +36,11 @@ forward slashes.  So, if you have:
     /foo/:bar/baz
 
 Then the API subroutine would require one argument which would
-be injected in place of :bar.
+be injected in place of C<:bar>.
 
 =head2 ?
 
-If the PATH ends with a ? then this signifies that the API
+If the PATH ends with a C<?> then this signifies that the API
 endpoint accepts query parameters.
 
 =head1 GENERATING

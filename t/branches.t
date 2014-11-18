@@ -4,6 +4,7 @@ use strictures 1;
 use Test::More;
 use Types::Standard -types;
 use List::Util qw( first );
+use Log::Any::Adapter 'TAP';
 
 use GitLab::API::v3;
 use GitLab::API::v3::Constants qw( :all );

@@ -21,6 +21,28 @@ This module provides a one-to-one interface with the GitLab
 API v3.  Much is not documented here as it would just be duplicating
 GitLab's own L<API Documentation|http://doc.gitlab.com/ce/api/README.html>.
 
+=head2 CONSTANTS
+
+Several values in the GitLab API require looking up the numeric value
+for a meaning (such as C<access_level> and C<visibility_level>).
+Instead of doing that, you can use L<GitLab::API::v3::Constants>.
+
+=head2 EXCEPTIONS
+
+The API methods will all throw (hopefully) useful exception if
+a unsuccesful response is received from the API.  That is except for
+GET requests that return a C<404> response - these will return undef
+for methods that return a value.
+
+If you'd like to catch and handle these exceptions consider using
+L<Try::Tiny>.
+
+=head2 LOGGING
+
+This module uses L<Log::Any> and produces some debug messages here
+and there, but the most useful bits are the info messages produced
+just before each API call.
+
 =cut
 
 use GitLab::API::v3::RESTClient;
@@ -29,10 +51,17 @@ use Types::Standard -types;
 use Types::Common::String -types;
 use URI::Escape;
 use Carp qw( croak );
+use Log::Any qw( $log );
 
 use Moo;
 use strictures 1;
 use namespace::clean;
+
+sub BUILD {
+    my ($self) = @_;
+    $log->debugf( "An instance of %s has been created.", ref($self) );
+    return;
+}
 
 =head1 REQUIRED ARGUMENTS
 
@@ -79,8 +108,13 @@ has rest_client => (
 sub _build_rest_client {
     my ($self) = @_;
 
-    my $rest = GitLab::API::v3::RESTClient->new(
-        server => '' . $self->url(),
+    my $url = '' . $self->url();
+    my $class = 'GitLab::API::v3::RESTClient';
+
+    $log->debugf( 'Creating a %s instance pointed at %s.', $class, $url );
+
+    my $rest = $class->new(
+        server => $url,
         type   => 'application/json',
     );
 

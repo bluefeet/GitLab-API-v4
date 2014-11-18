@@ -99,6 +99,10 @@ foreach my $file (sort $dir->children()) {
         $sprintf_path =~ s{:[^/]+}{%s}g;
         print "    my \$path = sprintf('$sprintf_path', (map { uri_escape(\$_) } \@_));\n";
 
+        print "    \$log->infof( 'Making %s request against %s with params %s.', '$method', \$path, ";
+        print( $params_ok ? '$params' : 'undef' );
+        print " );\n";
+
         my $method_sub = lc( $method );
         print '    ';
         print 'return ' if $return;
