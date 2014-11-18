@@ -1,0 +1,4 @@
+---
+- notes: notes = GET /projects/:project_id/:note_type/:merge_request_id/notes
+- note: note = GET /projects/:project_id/:note_type/:merge_request_id/notes/:note_id
+- create_note: POST /projects/:project_id/:note_type/:merge_request_id/notes?

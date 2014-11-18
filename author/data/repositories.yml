@@ -1,0 +1,9 @@
+---
+- tags: tags = GET /projects/:project_id/repository/tags
+- create_tag: POST /projects/:project_id/repository/tags?
+- tree: tree = GET /projects/:project_id/repository/tree?
+- blob: blob = GET /projects/:project_id/repository/blobs/:ref?
+- raw_blob: raw_blob = GET /projects/:project_id/repository/raw_blobs/:blob_sha
+- archive: archive = GET /projects/:project_id/repository/archive?
+- compare: comparison = GET /projects/:project_id/repository/compare?
+- contributors: contributors = GET /projects/:project_id/repository/contributors

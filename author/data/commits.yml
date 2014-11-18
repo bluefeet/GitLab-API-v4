@@ -1,0 +1,6 @@
+---
+- commits: commits = GET /projects/:project_id/repository/commits?
+- commit: commit = GET /projects/:project_id/repository/commits/:commit_sha
+- commit_diff: diff = GET /projects/:project_id/repository/commits/:commit_sha/diff
+- commit_comments: comments = GET /projects/:project_id/repository/commits/:commit_sha/comments
+- add_commit_comment: POST /projects/:project_id/repository/commits/:commit_sha/comments?

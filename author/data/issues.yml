@@ -1,0 +1,6 @@
+---
+- all_issues: issues = GET /issues?
+- issues: issues = GET /projects/:project_id/issues?
+- issue: issue = GET /projects/:project_id/issues/:issue_id
+- create_issue: issue = POST /projects/:project_id/issues?
+- edit_issue: issue = PUT /projects/:project_id/issues/:issue_id?

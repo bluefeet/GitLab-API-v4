@@ -1,0 +1,5 @@
+---
+- labels: labels = GET /projects/:project_id/labels
+- create_label: label = POST /projects/:project_id/labels?
+- delete_label: DELETE /projects/:project_id/labels?
+- edit_label: label = PUT /projects/:project_id/labels?

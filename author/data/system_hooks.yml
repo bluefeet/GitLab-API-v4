@@ -1,0 +1,5 @@
+---
+- hooks: hooks = GET /hooks
+- create_hook: POST /hooks?
+- test_hook: hook = GET /hooks/:hook_id
+- delete_hook: DELETE /hooks/:hook_id

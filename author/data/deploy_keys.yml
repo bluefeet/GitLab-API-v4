@@ -1,0 +1,5 @@
+---
+- deploy_keys: keys = GET /projects/:project_id/keys
+- deploy_key: key = GET /projects/:project_id/keys/:key_id
+- create_deploy_key: POST /projects/:project_id/keys?
+- delete_deploy_key: DELETE /projects/:project_id/keys/:key_id

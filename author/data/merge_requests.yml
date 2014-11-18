@@ -1,0 +1,8 @@
+---
+- merge_requests: merge_requests = GET /projects/:project_id/merge_requests
+- merge_request: merge_request = GET /projects/:project_id/merge_request/:merge_request_id
+- create_merge_request: merge_request = POST /projects/:project_id/merge_requests?
+- edit_merge_request: merge_request = PUT /projects/:project_id/merge_requests/:merge_request_id?
+- accept_merge_request: PUT /projects/:project_id/merge_requests/:merge_request_id/merge?
+- add_merge_request_comment: POST /projects/:project_id/merge_requests/:merge_request_id/comments?
+- merge_request_comments: comments = GET /projects/:project_id/merge_requests/:merge_request_id/comments

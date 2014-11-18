@@ -1,0 +1,27 @@
+---
+- projects: projects = GET /projects?
+- owned_projects: projects = GET /projects/owned
+- all_projects: projects = GET /projects/all
+- project: project = GET /projects/:project_id
+- project_events: events = GET /projects/:project_id/events
+- create_project: POST /projects?
+- create_project_for_user: POST /projects/user/:user_id?
+- fork_project: POST /pojects/fork/:project_id
+- delete_project: DELETE /projects/:project_id
+
+- project_members: members = GET /projects/:project_id/members?
+- project_member: member = GET /project/:project_id/members/:user_id
+- add_project_member: POST /projects/:project_id/members?
+- edit_project_member: PUT /projects/:project_id/members/:user_id?
+- remove_project_member: DELETE /projects/:project_id/members/:user_id
+
+- project_hooks: hooks = GET /projects/:project_id/hooks
+- project_hook: hook = GET /project/:project_id/hooks/:hook_id
+- create_project_hook: POST /projects/:project_id/hooks?
+- edit_project_hook: PUT /projects/:project_id/hooks/:hook_id?
+- delete_project_hook: hook = DELETE /projects/:project_id/hooks/:hook_id
+
+- set_project_fork: POST /projects/:project_id/fork/:forked_from_id
+- clear_project_fork: DELETE /projects/:project_id/fork
+
+- search_projects_by_name: projects = GET /projects/search/:query?

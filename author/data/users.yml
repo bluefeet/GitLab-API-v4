@@ -1,0 +1,14 @@
+---
+- users: users = GET /users?
+- user: GET /users/:user_id
+- create_user: POST /users?
+- edit_user: PUT /users/:user_id?
+- delete_user: user = DELETE /users/:user_id
+- current_user: user = GET /user
+- current_user_ssh_keys: keys = GET /user/keys
+- user_ssh_keys: keys = GET /users/:user_id/keys
+- user_ssh_key: key = GET /user/keys/:key_id
+- create_current_user_ssh_key: POST /user/keys?
+- create_user_ssh_key: POST /users/:user_id/keys?
+- delete_current_user_ssh_key: DELETE /user/keys/:key_id
+- delete_user_ssh_key: DELETE /users/:user_id/keys/:key_id

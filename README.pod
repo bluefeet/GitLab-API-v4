@@ -18,11 +18,8 @@ GitLab::API::v3 - GitLab API v3 client.
 =head1 DESCRIPTION
 
 This module provides a one-to-one interface with the GitLab
-API v3.  Little is documented here as it would just be duplicating
+API v3.  Much is not documented here as it would just be duplicating
 GitLab's own L<API Documentation|http://doc.gitlab.com/ce/api/README.html>.
-
-Currently only the branches set of API handlers is supported.  More
-are coming shortly (release early, release often).
 
 =head1 REQUIRED ARGUMENTS
 
@@ -39,45 +36,55 @@ A GitLab API token.
 
 =head2 rest_client
 
-An instance of C<GitLab::API::v3::RESTClient>.  Typically you will not
+An instance of L<GitLab::API::v3::RESTClient>.  Typically you will not
 be setting this as it defaults to a new instance and customization
 should not be necessary.
 
-=head1 BRANCH METHODS
+=head1 BRANCHES METHODS
 
 =head2 branches
 
-    my $branches = $api->branches( $project_id );
+    my $branches = $api->branches(
+        $project_id,
+    );
 
-Returns an array ref of branch hash refs.
+Sends a C<GET> request to C</projects/:project_id/repository/branches> and returns the decoded/deserialized response body.
 
 =head2 branch
 
-    my $branch = $api->branch( $project_id, $branch_name );
+    my $branch = $api->branch(
+        $project_id,
+        $branch_name,
+    );
 
-Returns a branch hash ref.
+Sends a C<GET> request to C</projects/:project_id/repository/branches/:branch_name> and returns the decoded/deserialized response body.
 
 =head2 protect_branch
 
-    $api->protect_branch( $project_id, $branch_name );
+    $api->protect_branch(
+        $project_id,
+        $branch_name,
+    );
 
-Marks a branch as protected.
+Sends a C<PUT> request to C</projects/:project_id/repository/branches/:branch_name/protect>.
 
 =head2 unprotect_branch
 
-    $api->unprotect_branch( $project_id, $branch_name );
+    $api->unprotect_branch(
+        $project_id,
+        $branch_name,
+    );
 
-Marks a branch as not protected.
+Sends a C<PUT> request to C</projects/:project_id/repository/branches/:branch_name/unprotect>.
 
 =head2 create_branch
 
     my $branch = $api->create_branch(
         $project_id,
-        branch_name => $branch_name,
-        ref         => $ref,
+        \%params,
     );
 
-Creates a branch and returns the hash ref for it.
+Sends a C<POST> request to C</projects/:project_id/repository/branches> and returns the decoded/deserialized response body.
 
 =head2 delete_branch
 
@@ -86,7 +93,905 @@ Creates a branch and returns the hash ref for it.
         $branch_name,
     );
 
-Deletes the specified branch.
+Sends a C<DELETE> request to C</projects/:project_id/repository/branches/:branch_name>.
+
+=head1 COMMITS METHODS
+
+=head2 commits
+
+    my $commits = $api->commits(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/repository/commits> and returns the decoded/deserialized response body.
+
+=head2 commit
+
+    my $commit = $api->commit(
+        $project_id,
+        $commit_sha,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/repository/commits/:commit_sha> and returns the decoded/deserialized response body.
+
+=head2 commit_diff
+
+    my $diff = $api->commit_diff(
+        $project_id,
+        $commit_sha,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/repository/commits/:commit_sha/diff> and returns the decoded/deserialized response body.
+
+=head2 commit_comments
+
+    my $comments = $api->commit_comments(
+        $project_id,
+        $commit_sha,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/repository/commits/:commit_sha/comments> and returns the decoded/deserialized response body.
+
+=head2 add_commit_comment
+
+    $api->add_commit_comment(
+        $project_id,
+        $commit_sha,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/repository/commits/:commit_sha/comments>.
+
+=head1 DEPLOY KEYS METHODS
+
+=head2 deploy_keys
+
+    my $keys = $api->deploy_keys(
+        $project_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/keys> and returns the decoded/deserialized response body.
+
+=head2 deploy_key
+
+    my $key = $api->deploy_key(
+        $project_id,
+        $key_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/keys/:key_id> and returns the decoded/deserialized response body.
+
+=head2 create_deploy_key
+
+    $api->create_deploy_key(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/keys>.
+
+=head2 delete_deploy_key
+
+    $api->delete_deploy_key(
+        $project_id,
+        $key_id,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/keys/:key_id>.
+
+=head1 GROUPS METHODS
+
+=head2 groups
+
+    my $groups = $api->groups();
+
+Sends a C<GET> request to C</groups> and returns the decoded/deserialized response body.
+
+=head2 group
+
+    my $group = $api->group(
+        $group_id,
+    );
+
+Sends a C<GET> request to C</groups/:group_id> and returns the decoded/deserialized response body.
+
+=head2 create_group
+
+    $api->create_group(
+        \%params,
+    );
+
+Sends a C<POST> request to C</groups>.
+
+=head2 transfer_project
+
+    $api->transfer_project(
+        $group_id,
+        $project_id,
+    );
+
+Sends a C<POST> request to C</groups/:group_id/projects/:project_id>.
+
+=head2 delete_group
+
+    $api->delete_group(
+        $group_id,
+    );
+
+Sends a C<DELETE> request to C</groups/:group_id>.
+
+=head2 group_members
+
+    my $members = $api->group_members(
+        $group_id,
+    );
+
+Sends a C<GET> request to C</groups/:group_id/members> and returns the decoded/deserialized response body.
+
+=head2 add_group_member
+
+    $api->add_group_member(
+        $group_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</groups/:group_id/members>.
+
+=head2 remove_group_member
+
+    $api->remove_group_member(
+        $group_id,
+        $user_id,
+    );
+
+Sends a C<DELETE> request to C</groups/:group_id/members/:user_id>.
+
+=head1 ISSUES METHODS
+
+=head2 all_issues
+
+    my $issues = $api->all_issues(
+        \%params,
+    );
+
+Sends a C<GET> request to C</issues> and returns the decoded/deserialized response body.
+
+=head2 issues
+
+    my $issues = $api->issues(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/issues> and returns the decoded/deserialized response body.
+
+=head2 issue
+
+    my $issue = $api->issue(
+        $project_id,
+        $issue_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/issues/:issue_id> and returns the decoded/deserialized response body.
+
+=head2 create_issue
+
+    my $issue = $api->create_issue(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/issues> and returns the decoded/deserialized response body.
+
+=head2 edit_issue
+
+    my $issue = $api->edit_issue(
+        $project_id,
+        $issue_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/issues/:issue_id> and returns the decoded/deserialized response body.
+
+=head1 LABELS METHODS
+
+=head2 labels
+
+    my $labels = $api->labels(
+        $project_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/labels> and returns the decoded/deserialized response body.
+
+=head2 create_label
+
+    my $label = $api->create_label(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/labels> and returns the decoded/deserialized response body.
+
+=head2 delete_label
+
+    $api->delete_label(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/labels>.
+
+=head2 edit_label
+
+    my $label = $api->edit_label(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/labels> and returns the decoded/deserialized response body.
+
+=head1 MERGE REQUESTS METHODS
+
+=head2 merge_requests
+
+    my $merge_requests = $api->merge_requests(
+        $project_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/merge_requests> and returns the decoded/deserialized response body.
+
+=head2 merge_request
+
+    my $merge_request = $api->merge_request(
+        $project_id,
+        $merge_request_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/merge_request/:merge_request_id> and returns the decoded/deserialized response body.
+
+=head2 create_merge_request
+
+    my $merge_request = $api->create_merge_request(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/merge_requests> and returns the decoded/deserialized response body.
+
+=head2 edit_merge_request
+
+    my $merge_request = $api->edit_merge_request(
+        $project_id,
+        $merge_request_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/merge_requests/:merge_request_id> and returns the decoded/deserialized response body.
+
+=head2 accept_merge_request
+
+    $api->accept_merge_request(
+        $project_id,
+        $merge_request_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/merge_requests/:merge_request_id/merge>.
+
+=head2 add_merge_request_comment
+
+    $api->add_merge_request_comment(
+        $project_id,
+        $merge_request_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/merge_requests/:merge_request_id/comments>.
+
+=head2 merge_request_comments
+
+    my $comments = $api->merge_request_comments(
+        $project_id,
+        $merge_request_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/merge_requests/:merge_request_id/comments> and returns the decoded/deserialized response body.
+
+=head1 MILESTONES METHODS
+
+=head2 milestones
+
+    my $milestones = $api->milestones(
+        $project_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/milestones> and returns the decoded/deserialized response body.
+
+=head2 milestone
+
+    my $milestone = $api->milestone(
+        $project_id,
+        $milestone_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/milestones/:milestone_id> and returns the decoded/deserialized response body.
+
+=head2 create_milestone
+
+    $api->create_milestone(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/milestones>.
+
+=head2 edit_milestone
+
+    $api->edit_milestone(
+        $project_id,
+        $milestone_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/milestones/:milestone_id>.
+
+=head1 NOTES METHODS
+
+=head2 notes
+
+    my $notes = $api->notes(
+        $project_id,
+        $note_type,
+        $merge_request_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/:note_type/:merge_request_id/notes> and returns the decoded/deserialized response body.
+
+=head2 note
+
+    my $note = $api->note(
+        $project_id,
+        $note_type,
+        $merge_request_id,
+        $note_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/:note_type/:merge_request_id/notes/:note_id> and returns the decoded/deserialized response body.
+
+=head2 create_note
+
+    $api->create_note(
+        $project_id,
+        $note_type,
+        $merge_request_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/:note_type/:merge_request_id/notes>.
+
+=head1 PROJECT SNIPPETS METHODS
+
+=head2 snippets
+
+    my $snippets = $api->snippets(
+        $project_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/snippets> and returns the decoded/deserialized response body.
+
+=head2 snippet
+
+    my $snippet = $api->snippet(
+        $project_id,
+        $snippet_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/snippets/:snippet_id> and returns the decoded/deserialized response body.
+
+=head2 create_snippet
+
+    $api->create_snippet(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/snippets>.
+
+=head2 edit_snippet
+
+    $api->edit_snippet(
+        $project_id,
+        $snippet_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/snippets/:snippet_id>.
+
+=head2 delete_snippet
+
+    $api->delete_snippet(
+        $project_id,
+        $snippet_id,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/snippets/:snippet_id>.
+
+=head2 raw_snippet
+
+    my $content = $api->raw_snippet(
+        $project_id,
+        $snippet_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/snippets/:snippet_id/raw> and returns the decoded/deserialized response body.
+
+=head1 PROJECTS METHODS
+
+=head2 projects
+
+    my $projects = $api->projects(
+        \%params,
+    );
+
+Sends a C<GET> request to C</projects> and returns the decoded/deserialized response body.
+
+=head2 owned_projects
+
+    my $projects = $api->owned_projects();
+
+Sends a C<GET> request to C</projects/owned> and returns the decoded/deserialized response body.
+
+=head2 all_projects
+
+    my $projects = $api->all_projects();
+
+Sends a C<GET> request to C</projects/all> and returns the decoded/deserialized response body.
+
+=head2 project
+
+    my $project = $api->project(
+        $project_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id> and returns the decoded/deserialized response body.
+
+=head2 project_events
+
+    my $events = $api->project_events(
+        $project_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/events> and returns the decoded/deserialized response body.
+
+=head2 create_project
+
+    $api->create_project(
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects>.
+
+=head2 create_project_for_user
+
+    $api->create_project_for_user(
+        $user_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/user/:user_id>.
+
+=head2 fork_project
+
+    $api->fork_project(
+        $project_id,
+    );
+
+Sends a C<POST> request to C</pojects/fork/:project_id>.
+
+=head2 delete_project
+
+    $api->delete_project(
+        $project_id,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id>.
+
+=head2 project_members
+
+    my $members = $api->project_members(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/members> and returns the decoded/deserialized response body.
+
+=head2 project_member
+
+    my $member = $api->project_member(
+        $project_id,
+        $user_id,
+    );
+
+Sends a C<GET> request to C</project/:project_id/members/:user_id> and returns the decoded/deserialized response body.
+
+=head2 add_project_member
+
+    $api->add_project_member(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/members>.
+
+=head2 edit_project_member
+
+    $api->edit_project_member(
+        $project_id,
+        $user_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/members/:user_id>.
+
+=head2 remove_project_member
+
+    $api->remove_project_member(
+        $project_id,
+        $user_id,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/members/:user_id>.
+
+=head2 project_hooks
+
+    my $hooks = $api->project_hooks(
+        $project_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/hooks> and returns the decoded/deserialized response body.
+
+=head2 project_hook
+
+    my $hook = $api->project_hook(
+        $project_id,
+        $hook_id,
+    );
+
+Sends a C<GET> request to C</project/:project_id/hooks/:hook_id> and returns the decoded/deserialized response body.
+
+=head2 create_project_hook
+
+    $api->create_project_hook(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/hooks>.
+
+=head2 edit_project_hook
+
+    $api->edit_project_hook(
+        $project_id,
+        $hook_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/hooks/:hook_id>.
+
+=head2 delete_project_hook
+
+    my $hook = $api->delete_project_hook(
+        $project_id,
+        $hook_id,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/hooks/:hook_id> and returns the decoded/deserialized response body.
+
+=head2 set_project_fork
+
+    $api->set_project_fork(
+        $project_id,
+        $forked_from_id,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/fork/:forked_from_id>.
+
+=head2 clear_project_fork
+
+    $api->clear_project_fork(
+        $project_id,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/fork>.
+
+=head2 search_projects_by_name
+
+    my $projects = $api->search_projects_by_name(
+        $query,
+        \%params,
+    );
+
+Sends a C<GET> request to C</projects/search/:query> and returns the decoded/deserialized response body.
+
+=head1 REPOSITORIES METHODS
+
+=head2 tags
+
+    my $tags = $api->tags(
+        $project_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/repository/tags> and returns the decoded/deserialized response body.
+
+=head2 create_tag
+
+    $api->create_tag(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/repository/tags>.
+
+=head2 tree
+
+    my $tree = $api->tree(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/repository/tree> and returns the decoded/deserialized response body.
+
+=head2 blob
+
+    my $blob = $api->blob(
+        $project_id,
+        $ref,
+        \%params,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/repository/blobs/:ref> and returns the decoded/deserialized response body.
+
+=head2 raw_blob
+
+    my $raw_blob = $api->raw_blob(
+        $project_id,
+        $blob_sha,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/repository/raw_blobs/:blob_sha> and returns the decoded/deserialized response body.
+
+=head2 archive
+
+    my $archive = $api->archive(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/repository/archive> and returns the decoded/deserialized response body.
+
+=head2 compare
+
+    my $comparison = $api->compare(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/repository/compare> and returns the decoded/deserialized response body.
+
+=head2 contributors
+
+    my $contributors = $api->contributors(
+        $project_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/repository/contributors> and returns the decoded/deserialized response body.
+
+=head1 REPOSITORY FILES METHODS
+
+=head2 file
+
+    my $file = $api->file(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/repository/files> and returns the decoded/deserialized response body.
+
+=head2 create_file
+
+    $api->create_file(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/repository/files>.
+
+=head2 edit_file
+
+    $api->edit_file(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/repository/files>.
+
+=head2 delete_file
+
+    $api->delete_file(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/repository/files>.
+
+=head1 SERVICES METHODS
+
+=head2 edit_project_service
+
+    $api->edit_project_service(
+        $project_id,
+        $service_name,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/services/:service_name>.
+
+=head2 delete_project_service
+
+    $api->delete_project_service(
+        $project_id,
+        $service_name,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/services/:service_name>.
+
+=head1 SESSION METHODS
+
+=head2 session
+
+    $api->session(
+        \%params,
+    );
+
+Sends a C<POST> request to C</session>.
+
+=head1 SYSTEM HOOKS METHODS
+
+=head2 hooks
+
+    my $hooks = $api->hooks();
+
+Sends a C<GET> request to C</hooks> and returns the decoded/deserialized response body.
+
+=head2 create_hook
+
+    $api->create_hook(
+        \%params,
+    );
+
+Sends a C<POST> request to C</hooks>.
+
+=head2 test_hook
+
+    my $hook = $api->test_hook(
+        $hook_id,
+    );
+
+Sends a C<GET> request to C</hooks/:hook_id> and returns the decoded/deserialized response body.
+
+=head2 delete_hook
+
+    $api->delete_hook(
+        $hook_id,
+    );
+
+Sends a C<DELETE> request to C</hooks/:hook_id>.
+
+=head1 USERS METHODS
+
+=head2 users
+
+    my $users = $api->users(
+        \%params,
+    );
+
+Sends a C<GET> request to C</users> and returns the decoded/deserialized response body.
+
+=head2 user
+
+    $api->user(
+        $user_id,
+    );
+
+Sends a C<GET> request to C</users/:user_id>.
+
+=head2 create_user
+
+    $api->create_user(
+        \%params,
+    );
+
+Sends a C<POST> request to C</users>.
+
+=head2 edit_user
+
+    $api->edit_user(
+        $user_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</users/:user_id>.
+
+=head2 delete_user
+
+    my $user = $api->delete_user(
+        $user_id,
+    );
+
+Sends a C<DELETE> request to C</users/:user_id> and returns the decoded/deserialized response body.
+
+=head2 current_user
+
+    my $user = $api->current_user();
+
+Sends a C<GET> request to C</user> and returns the decoded/deserialized response body.
+
+=head2 current_user_ssh_keys
+
+    my $keys = $api->current_user_ssh_keys();
+
+Sends a C<GET> request to C</user/keys> and returns the decoded/deserialized response body.
+
+=head2 user_ssh_keys
+
+    my $keys = $api->user_ssh_keys(
+        $user_id,
+    );
+
+Sends a C<GET> request to C</users/:user_id/keys> and returns the decoded/deserialized response body.
+
+=head2 user_ssh_key
+
+    my $key = $api->user_ssh_key(
+        $key_id,
+    );
+
+Sends a C<GET> request to C</user/keys/:key_id> and returns the decoded/deserialized response body.
+
+=head2 create_current_user_ssh_key
+
+    $api->create_current_user_ssh_key(
+        \%params,
+    );
+
+Sends a C<POST> request to C</user/keys>.
+
+=head2 create_user_ssh_key
+
+    $api->create_user_ssh_key(
+        $user_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</users/:user_id/keys>.
+
+=head2 delete_current_user_ssh_key
+
+    $api->delete_current_user_ssh_key(
+        $key_id,
+    );
+
+Sends a C<DELETE> request to C</user/keys/:key_id>.
+
+=head2 delete_user_ssh_key
+
+    $api->delete_user_ssh_key(
+        $user_id,
+        $key_id,
+    );
+
+Sends a C<DELETE> request to C</users/:user_id/keys/:key_id>.
 
 =head1 AUTHOR
 

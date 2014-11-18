@@ -1,5 +1,23 @@
-package # Hide from the CPAN indexer.
-    GitLab::API::v3::RESTClient;
+package GitLab::API::v3::RESTClient;
+
+=head1 NAME
+
+GitLab::API::v3::RESTClient - GitLab API v3 REST client.
+
+=head2 DESCRIPTION
+
+This module provides the actual REST communication with the GitLab
+server and is powered by L<Role::REST::Client>.
+
+The various HTTP verb methods are wrapped so that they throw an
+exception if an unexpected response is received, except for GET
+requests that respond with a 404 code; these return C<undef>
+instead.
+
+If the request was successful then the response data is returned
+rather than the response object itself.
+
+=cut
 
 use Carp qw( confess );
 
@@ -33,3 +51,14 @@ foreach my $method (qw( post get head put delete options )) {
 }
 
 1;
+__END__
+
+=head1 AUTHOR
+
+Aran Clary Deltac <bluefeet@gmail.com>
+
+=head1 LICENSE
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+

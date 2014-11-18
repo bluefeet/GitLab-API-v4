@@ -1,0 +1,3 @@
+---
+- edit_project_service: PUT /projects/:project_id/services/:service_name?
+- delete_project_service: DELETE /projects/:project_id/services/:service_name
