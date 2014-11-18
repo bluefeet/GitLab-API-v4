@@ -105,6 +105,7 @@ Sends a C<GET> request to C</projects/:project_id/repository/branches> and retur
 
 sub branches {
     my $self = shift;
+    croak 'branches must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($project_id) to branches must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('/projects/%s/repository/branches', (map { uri_escape($_) } @_));
     return $self->get( $path );
@@ -123,6 +124,7 @@ Sends a C<GET> request to C</projects/:project_id/repository/branches/:branch_na
 
 sub branch {
     my $self = shift;
+    croak 'branch must be called with 2 arguments' if @_ != 2;
     croak 'The #1 argument ($project_id) to branch must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($branch_name) to branch must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/projects/%s/repository/branches/%s', (map { uri_escape($_) } @_));
@@ -142,6 +144,7 @@ Sends a C<PUT> request to C</projects/:project_id/repository/branches/:branch_na
 
 sub protect_branch {
     my $self = shift;
+    croak 'protect_branch must be called with 2 arguments' if @_ != 2;
     croak 'The #1 argument ($project_id) to protect_branch must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($branch_name) to protect_branch must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/projects/%s/repository/branches/%s/protect', (map { uri_escape($_) } @_));
@@ -162,6 +165,7 @@ Sends a C<PUT> request to C</projects/:project_id/repository/branches/:branch_na
 
 sub unprotect_branch {
     my $self = shift;
+    croak 'unprotect_branch must be called with 2 arguments' if @_ != 2;
     croak 'The #1 argument ($project_id) to unprotect_branch must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($branch_name) to unprotect_branch must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/projects/%s/repository/branches/%s/unprotect', (map { uri_escape($_) } @_));
@@ -182,6 +186,7 @@ Sends a C<POST> request to C</projects/:project_id/repository/branches> and retu
 
 sub create_branch {
     my $self = shift;
+    croak 'create_branch must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to create_branch must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The last argument (\%params) to create_branch must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = pop;
@@ -202,6 +207,7 @@ Sends a C<DELETE> request to C</projects/:project_id/repository/branches/:branch
 
 sub delete_branch {
     my $self = shift;
+    croak 'delete_branch must be called with 2 arguments' if @_ != 2;
     croak 'The #1 argument ($project_id) to delete_branch must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($branch_name) to delete_branch must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/projects/%s/repository/branches/%s', (map { uri_escape($_) } @_));
@@ -224,6 +230,7 @@ Sends a C<GET> request to C</projects/:project_id/repository/commits> and return
 
 sub commits {
     my $self = shift;
+    croak 'commits must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to commits must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The last argument (\%params) to commits must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = pop;
@@ -244,6 +251,7 @@ Sends a C<GET> request to C</projects/:project_id/repository/commits/:commit_sha
 
 sub commit {
     my $self = shift;
+    croak 'commit must be called with 2 arguments' if @_ != 2;
     croak 'The #1 argument ($project_id) to commit must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($commit_sha) to commit must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/projects/%s/repository/commits/%s', (map { uri_escape($_) } @_));
@@ -263,6 +271,7 @@ Sends a C<GET> request to C</projects/:project_id/repository/commits/:commit_sha
 
 sub commit_diff {
     my $self = shift;
+    croak 'commit_diff must be called with 2 arguments' if @_ != 2;
     croak 'The #1 argument ($project_id) to commit_diff must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($commit_sha) to commit_diff must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/projects/%s/repository/commits/%s/diff', (map { uri_escape($_) } @_));
@@ -282,6 +291,7 @@ Sends a C<GET> request to C</projects/:project_id/repository/commits/:commit_sha
 
 sub commit_comments {
     my $self = shift;
+    croak 'commit_comments must be called with 2 arguments' if @_ != 2;
     croak 'The #1 argument ($project_id) to commit_comments must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($commit_sha) to commit_comments must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/projects/%s/repository/commits/%s/comments', (map { uri_escape($_) } @_));
@@ -302,6 +312,7 @@ Sends a C<POST> request to C</projects/:project_id/repository/commits/:commit_sh
 
 sub add_commit_comment {
     my $self = shift;
+    croak 'add_commit_comment must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
     croak 'The #1 argument ($project_id) to add_commit_comment must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($commit_sha) to add_commit_comment must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The last argument (\%params) to add_commit_comment must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
@@ -325,6 +336,7 @@ Sends a C<GET> request to C</projects/:project_id/keys> and returns the decoded/
 
 sub deploy_keys {
     my $self = shift;
+    croak 'deploy_keys must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($project_id) to deploy_keys must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('/projects/%s/keys', (map { uri_escape($_) } @_));
     return $self->get( $path );
@@ -343,6 +355,7 @@ Sends a C<GET> request to C</projects/:project_id/keys/:key_id> and returns the 
 
 sub deploy_key {
     my $self = shift;
+    croak 'deploy_key must be called with 2 arguments' if @_ != 2;
     croak 'The #1 argument ($project_id) to deploy_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($key_id) to deploy_key must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/projects/%s/keys/%s', (map { uri_escape($_) } @_));
@@ -362,6 +375,7 @@ Sends a C<POST> request to C</projects/:project_id/keys>.
 
 sub create_deploy_key {
     my $self = shift;
+    croak 'create_deploy_key must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to create_deploy_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The last argument (\%params) to create_deploy_key must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = pop;
@@ -383,6 +397,7 @@ Sends a C<DELETE> request to C</projects/:project_id/keys/:key_id>.
 
 sub delete_deploy_key {
     my $self = shift;
+    croak 'delete_deploy_key must be called with 2 arguments' if @_ != 2;
     croak 'The #1 argument ($project_id) to delete_deploy_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($key_id) to delete_deploy_key must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/projects/%s/keys/%s', (map { uri_escape($_) } @_));
@@ -419,6 +434,7 @@ Sends a C<GET> request to C</groups/:group_id> and returns the decoded/deseriali
 
 sub group {
     my $self = shift;
+    croak 'group must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($group_id) to group must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('/groups/%s', (map { uri_escape($_) } @_));
     return $self->get( $path );
@@ -436,6 +452,7 @@ Sends a C<POST> request to C</groups>.
 
 sub create_group {
     my $self = shift;
+    croak 'create_group must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
     croak 'The last argument (\%params) to create_group must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
     my $params = pop;
     my $path = sprintf('/groups', (map { uri_escape($_) } @_));
@@ -456,6 +473,7 @@ Sends a C<POST> request to C</groups/:group_id/projects/:project_id>.
 
 sub transfer_project {
     my $self = shift;
+    croak 'transfer_project must be called with 2 arguments' if @_ != 2;
     croak 'The #1 argument ($group_id) to transfer_project must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($project_id) to transfer_project must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/groups/%s/projects/%s', (map { uri_escape($_) } @_));
@@ -475,6 +493,7 @@ Sends a C<DELETE> request to C</groups/:group_id>.
 
 sub delete_group {
     my $self = shift;
+    croak 'delete_group must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($group_id) to delete_group must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('/groups/%s', (map { uri_escape($_) } @_));
     $self->delete( $path );
@@ -493,6 +512,7 @@ Sends a C<GET> request to C</groups/:group_id/members> and returns the decoded/d
 
 sub group_members {
     my $self = shift;
+    croak 'group_members must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($group_id) to group_members must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('/groups/%s/members', (map { uri_escape($_) } @_));
     return $self->get( $path );
@@ -511,6 +531,7 @@ Sends a C<POST> request to C</groups/:group_id/members>.
 
 sub add_group_member {
     my $self = shift;
+    croak 'add_group_member must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($group_id) to add_group_member must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The last argument (\%params) to add_group_member must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = pop;
@@ -532,6 +553,7 @@ Sends a C<DELETE> request to C</groups/:group_id/members/:user_id>.
 
 sub remove_group_member {
     my $self = shift;
+    croak 'remove_group_member must be called with 2 arguments' if @_ != 2;
     croak 'The #1 argument ($group_id) to remove_group_member must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($user_id) to remove_group_member must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/groups/%s/members/%s', (map { uri_escape($_) } @_));
@@ -553,6 +575,7 @@ Sends a C<GET> request to C</issues> and returns the decoded/deserialized respon
 
 sub all_issues {
     my $self = shift;
+    croak 'all_issues must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
     croak 'The last argument (\%params) to all_issues must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
     my $params = pop;
     my $path = sprintf('/issues', (map { uri_escape($_) } @_));
@@ -572,6 +595,7 @@ Sends a C<GET> request to C</projects/:project_id/issues> and returns the decode
 
 sub issues {
     my $self = shift;
+    croak 'issues must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to issues must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The last argument (\%params) to issues must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = pop;
@@ -592,6 +616,7 @@ Sends a C<GET> request to C</projects/:project_id/issues/:issue_id> and returns 
 
 sub issue {
     my $self = shift;
+    croak 'issue must be called with 2 arguments' if @_ != 2;
     croak 'The #1 argument ($project_id) to issue must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($issue_id) to issue must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/projects/%s/issues/%s', (map { uri_escape($_) } @_));
@@ -611,6 +636,7 @@ Sends a C<POST> request to C</projects/:project_id/issues> and returns the decod
 
 sub create_issue {
     my $self = shift;
+    croak 'create_issue must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to create_issue must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The last argument (\%params) to create_issue must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = pop;
@@ -632,6 +658,7 @@ Sends a C<PUT> request to C</projects/:project_id/issues/:issue_id> and returns 
 
 sub edit_issue {
     my $self = shift;
+    croak 'edit_issue must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
     croak 'The #1 argument ($project_id) to edit_issue must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($issue_id) to edit_issue must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The last argument (\%params) to edit_issue must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
@@ -654,6 +681,7 @@ Sends a C<GET> request to C</projects/:project_id/labels> and returns the decode
 
 sub labels {
     my $self = shift;
+    croak 'labels must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($project_id) to labels must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('/projects/%s/labels', (map { uri_escape($_) } @_));
     return $self->get( $path );
@@ -672,6 +700,7 @@ Sends a C<POST> request to C</projects/:project_id/labels> and returns the decod
 
 sub create_label {
     my $self = shift;
+    croak 'create_label must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to create_label must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The last argument (\%params) to create_label must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = pop;
@@ -692,6 +721,7 @@ Sends a C<DELETE> request to C</projects/:project_id/labels>.
 
 sub delete_label {
     my $self = shift;
+    croak 'delete_label must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to delete_label must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The last argument (\%params) to delete_label must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = pop;
@@ -713,6 +743,7 @@ Sends a C<PUT> request to C</projects/:project_id/labels> and returns the decode
 
 sub edit_label {
     my $self = shift;
+    croak 'edit_label must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to edit_label must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The last argument (\%params) to edit_label must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = pop;
@@ -734,6 +765,7 @@ Sends a C<GET> request to C</projects/:project_id/merge_requests> and returns th
 
 sub merge_requests {
     my $self = shift;
+    croak 'merge_requests must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($project_id) to merge_requests must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('/projects/%s/merge_requests', (map { uri_escape($_) } @_));
     return $self->get( $path );
@@ -752,6 +784,7 @@ Sends a C<GET> request to C</projects/:project_id/merge_request/:merge_request_i
 
 sub merge_request {
     my $self = shift;
+    croak 'merge_request must be called with 2 arguments' if @_ != 2;
     croak 'The #1 argument ($project_id) to merge_request must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($merge_request_id) to merge_request must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/projects/%s/merge_request/%s', (map { uri_escape($_) } @_));
@@ -771,6 +804,7 @@ Sends a C<POST> request to C</projects/:project_id/merge_requests> and returns t
 
 sub create_merge_request {
     my $self = shift;
+    croak 'create_merge_request must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to create_merge_request must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The last argument (\%params) to create_merge_request must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = pop;
@@ -792,6 +826,7 @@ Sends a C<PUT> request to C</projects/:project_id/merge_requests/:merge_request_
 
 sub edit_merge_request {
     my $self = shift;
+    croak 'edit_merge_request must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
     croak 'The #1 argument ($project_id) to edit_merge_request must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($merge_request_id) to edit_merge_request must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The last argument (\%params) to edit_merge_request must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
@@ -814,6 +849,7 @@ Sends a C<PUT> request to C</projects/:project_id/merge_requests/:merge_request_
 
 sub accept_merge_request {
     my $self = shift;
+    croak 'accept_merge_request must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
     croak 'The #1 argument ($project_id) to accept_merge_request must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($merge_request_id) to accept_merge_request must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The last argument (\%params) to accept_merge_request must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
@@ -837,6 +873,7 @@ Sends a C<POST> request to C</projects/:project_id/merge_requests/:merge_request
 
 sub add_merge_request_comment {
     my $self = shift;
+    croak 'add_merge_request_comment must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
     croak 'The #1 argument ($project_id) to add_merge_request_comment must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($merge_request_id) to add_merge_request_comment must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The last argument (\%params) to add_merge_request_comment must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
@@ -859,6 +896,7 @@ Sends a C<GET> request to C</projects/:project_id/merge_requests/:merge_request_
 
 sub merge_request_comments {
     my $self = shift;
+    croak 'merge_request_comments must be called with 2 arguments' if @_ != 2;
     croak 'The #1 argument ($project_id) to merge_request_comments must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($merge_request_id) to merge_request_comments must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/projects/%s/merge_requests/%s/comments', (map { uri_escape($_) } @_));
@@ -879,6 +917,7 @@ Sends a C<GET> request to C</projects/:project_id/milestones> and returns the de
 
 sub milestones {
     my $self = shift;
+    croak 'milestones must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($project_id) to milestones must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('/projects/%s/milestones', (map { uri_escape($_) } @_));
     return $self->get( $path );
@@ -897,6 +936,7 @@ Sends a C<GET> request to C</projects/:project_id/milestones/:milestone_id> and 
 
 sub milestone {
     my $self = shift;
+    croak 'milestone must be called with 2 arguments' if @_ != 2;
     croak 'The #1 argument ($project_id) to milestone must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($milestone_id) to milestone must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/projects/%s/milestones/%s', (map { uri_escape($_) } @_));
@@ -916,6 +956,7 @@ Sends a C<POST> request to C</projects/:project_id/milestones>.
 
 sub create_milestone {
     my $self = shift;
+    croak 'create_milestone must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to create_milestone must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The last argument (\%params) to create_milestone must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = pop;
@@ -938,6 +979,7 @@ Sends a C<PUT> request to C</projects/:project_id/milestones/:milestone_id>.
 
 sub edit_milestone {
     my $self = shift;
+    croak 'edit_milestone must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
     croak 'The #1 argument ($project_id) to edit_milestone must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($milestone_id) to edit_milestone must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The last argument (\%params) to edit_milestone must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
@@ -963,6 +1005,7 @@ Sends a C<GET> request to C</projects/:project_id/:note_type/:merge_request_id/n
 
 sub notes {
     my $self = shift;
+    croak 'notes must be called with 3 arguments' if @_ != 3;
     croak 'The #1 argument ($project_id) to notes must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($note_type) to notes must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The #3 argument ($merge_request_id) to notes must be a scalar' if ref($_[2]) or (!defined $_[2]);
@@ -985,6 +1028,7 @@ Sends a C<GET> request to C</projects/:project_id/:note_type/:merge_request_id/n
 
 sub note {
     my $self = shift;
+    croak 'note must be called with 4 arguments' if @_ != 4;
     croak 'The #1 argument ($project_id) to note must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($note_type) to note must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The #3 argument ($merge_request_id) to note must be a scalar' if ref($_[2]) or (!defined $_[2]);
@@ -1008,6 +1052,7 @@ Sends a C<POST> request to C</projects/:project_id/:note_type/:merge_request_id/
 
 sub create_note {
     my $self = shift;
+    croak 'create_note must be called with 3 to 4 arguments' if @_ < 3 or @_ > 4;
     croak 'The #1 argument ($project_id) to create_note must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($note_type) to create_note must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The #3 argument ($merge_request_id) to create_note must be a scalar' if ref($_[2]) or (!defined $_[2]);
@@ -1032,6 +1077,7 @@ Sends a C<GET> request to C</projects/:project_id/snippets> and returns the deco
 
 sub snippets {
     my $self = shift;
+    croak 'snippets must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($project_id) to snippets must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('/projects/%s/snippets', (map { uri_escape($_) } @_));
     return $self->get( $path );
@@ -1050,6 +1096,7 @@ Sends a C<GET> request to C</projects/:project_id/snippets/:snippet_id> and retu
 
 sub snippet {
     my $self = shift;
+    croak 'snippet must be called with 2 arguments' if @_ != 2;
     croak 'The #1 argument ($project_id) to snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($snippet_id) to snippet must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/projects/%s/snippets/%s', (map { uri_escape($_) } @_));
@@ -1069,6 +1116,7 @@ Sends a C<POST> request to C</projects/:project_id/snippets>.
 
 sub create_snippet {
     my $self = shift;
+    croak 'create_snippet must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to create_snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The last argument (\%params) to create_snippet must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = pop;
@@ -1091,6 +1139,7 @@ Sends a C<PUT> request to C</projects/:project_id/snippets/:snippet_id>.
 
 sub edit_snippet {
     my $self = shift;
+    croak 'edit_snippet must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
     croak 'The #1 argument ($project_id) to edit_snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($snippet_id) to edit_snippet must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The last argument (\%params) to edit_snippet must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
@@ -1113,6 +1162,7 @@ Sends a C<DELETE> request to C</projects/:project_id/snippets/:snippet_id>.
 
 sub delete_snippet {
     my $self = shift;
+    croak 'delete_snippet must be called with 2 arguments' if @_ != 2;
     croak 'The #1 argument ($project_id) to delete_snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($snippet_id) to delete_snippet must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/projects/%s/snippets/%s', (map { uri_escape($_) } @_));
@@ -1133,6 +1183,7 @@ Sends a C<GET> request to C</projects/:project_id/snippets/:snippet_id/raw> and 
 
 sub raw_snippet {
     my $self = shift;
+    croak 'raw_snippet must be called with 2 arguments' if @_ != 2;
     croak 'The #1 argument ($project_id) to raw_snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($snippet_id) to raw_snippet must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/projects/%s/snippets/%s/raw', (map { uri_escape($_) } @_));
@@ -1153,6 +1204,7 @@ Sends a C<GET> request to C</projects> and returns the decoded/deserialized resp
 
 sub projects {
     my $self = shift;
+    croak 'projects must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
     croak 'The last argument (\%params) to projects must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
     my $params = pop;
     my $path = sprintf('/projects', (map { uri_escape($_) } @_));
@@ -1201,6 +1253,7 @@ Sends a C<GET> request to C</projects/:project_id> and returns the decoded/deser
 
 sub project {
     my $self = shift;
+    croak 'project must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($project_id) to project must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('/projects/%s', (map { uri_escape($_) } @_));
     return $self->get( $path );
@@ -1218,6 +1271,7 @@ Sends a C<GET> request to C</projects/:project_id/events> and returns the decode
 
 sub project_events {
     my $self = shift;
+    croak 'project_events must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($project_id) to project_events must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('/projects/%s/events', (map { uri_escape($_) } @_));
     return $self->get( $path );
@@ -1235,6 +1289,7 @@ Sends a C<POST> request to C</projects>.
 
 sub create_project {
     my $self = shift;
+    croak 'create_project must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
     croak 'The last argument (\%params) to create_project must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
     my $params = pop;
     my $path = sprintf('/projects', (map { uri_escape($_) } @_));
@@ -1255,6 +1310,7 @@ Sends a C<POST> request to C</projects/user/:user_id>.
 
 sub create_project_for_user {
     my $self = shift;
+    croak 'create_project_for_user must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($user_id) to create_project_for_user must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The last argument (\%params) to create_project_for_user must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = pop;
@@ -1275,6 +1331,7 @@ Sends a C<POST> request to C</pojects/fork/:project_id>.
 
 sub fork_project {
     my $self = shift;
+    croak 'fork_project must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($project_id) to fork_project must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('/pojects/fork/%s', (map { uri_escape($_) } @_));
     $self->post( $path );
@@ -1293,6 +1350,7 @@ Sends a C<DELETE> request to C</projects/:project_id>.
 
 sub delete_project {
     my $self = shift;
+    croak 'delete_project must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($project_id) to delete_project must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('/projects/%s', (map { uri_escape($_) } @_));
     $self->delete( $path );
@@ -1312,6 +1370,7 @@ Sends a C<GET> request to C</projects/:project_id/members> and returns the decod
 
 sub project_members {
     my $self = shift;
+    croak 'project_members must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to project_members must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The last argument (\%params) to project_members must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = pop;
@@ -1332,6 +1391,7 @@ Sends a C<GET> request to C</project/:project_id/members/:user_id> and returns t
 
 sub project_member {
     my $self = shift;
+    croak 'project_member must be called with 2 arguments' if @_ != 2;
     croak 'The #1 argument ($project_id) to project_member must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($user_id) to project_member must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/project/%s/members/%s', (map { uri_escape($_) } @_));
@@ -1351,6 +1411,7 @@ Sends a C<POST> request to C</projects/:project_id/members>.
 
 sub add_project_member {
     my $self = shift;
+    croak 'add_project_member must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to add_project_member must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The last argument (\%params) to add_project_member must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = pop;
@@ -1373,6 +1434,7 @@ Sends a C<PUT> request to C</projects/:project_id/members/:user_id>.
 
 sub edit_project_member {
     my $self = shift;
+    croak 'edit_project_member must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
     croak 'The #1 argument ($project_id) to edit_project_member must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($user_id) to edit_project_member must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The last argument (\%params) to edit_project_member must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
@@ -1395,6 +1457,7 @@ Sends a C<DELETE> request to C</projects/:project_id/members/:user_id>.
 
 sub remove_project_member {
     my $self = shift;
+    croak 'remove_project_member must be called with 2 arguments' if @_ != 2;
     croak 'The #1 argument ($project_id) to remove_project_member must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($user_id) to remove_project_member must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/projects/%s/members/%s', (map { uri_escape($_) } @_));
@@ -1414,6 +1477,7 @@ Sends a C<GET> request to C</projects/:project_id/hooks> and returns the decoded
 
 sub project_hooks {
     my $self = shift;
+    croak 'project_hooks must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($project_id) to project_hooks must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('/projects/%s/hooks', (map { uri_escape($_) } @_));
     return $self->get( $path );
@@ -1432,6 +1496,7 @@ Sends a C<GET> request to C</project/:project_id/hooks/:hook_id> and returns the
 
 sub project_hook {
     my $self = shift;
+    croak 'project_hook must be called with 2 arguments' if @_ != 2;
     croak 'The #1 argument ($project_id) to project_hook must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($hook_id) to project_hook must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/project/%s/hooks/%s', (map { uri_escape($_) } @_));
@@ -1451,6 +1516,7 @@ Sends a C<POST> request to C</projects/:project_id/hooks>.
 
 sub create_project_hook {
     my $self = shift;
+    croak 'create_project_hook must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to create_project_hook must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The last argument (\%params) to create_project_hook must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = pop;
@@ -1473,6 +1539,7 @@ Sends a C<PUT> request to C</projects/:project_id/hooks/:hook_id>.
 
 sub edit_project_hook {
     my $self = shift;
+    croak 'edit_project_hook must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
     croak 'The #1 argument ($project_id) to edit_project_hook must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($hook_id) to edit_project_hook must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The last argument (\%params) to edit_project_hook must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
@@ -1495,6 +1562,7 @@ Sends a C<DELETE> request to C</projects/:project_id/hooks/:hook_id> and returns
 
 sub delete_project_hook {
     my $self = shift;
+    croak 'delete_project_hook must be called with 2 arguments' if @_ != 2;
     croak 'The #1 argument ($project_id) to delete_project_hook must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($hook_id) to delete_project_hook must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/projects/%s/hooks/%s', (map { uri_escape($_) } @_));
@@ -1514,6 +1582,7 @@ Sends a C<POST> request to C</projects/:project_id/fork/:forked_from_id>.
 
 sub set_project_fork {
     my $self = shift;
+    croak 'set_project_fork must be called with 2 arguments' if @_ != 2;
     croak 'The #1 argument ($project_id) to set_project_fork must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($forked_from_id) to set_project_fork must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/projects/%s/fork/%s', (map { uri_escape($_) } @_));
@@ -1533,6 +1602,7 @@ Sends a C<DELETE> request to C</projects/:project_id/fork>.
 
 sub clear_project_fork {
     my $self = shift;
+    croak 'clear_project_fork must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($project_id) to clear_project_fork must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('/projects/%s/fork', (map { uri_escape($_) } @_));
     $self->delete( $path );
@@ -1552,6 +1622,7 @@ Sends a C<GET> request to C</projects/search/:query> and returns the decoded/des
 
 sub search_projects_by_name {
     my $self = shift;
+    croak 'search_projects_by_name must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($query) to search_projects_by_name must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The last argument (\%params) to search_projects_by_name must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = pop;
@@ -1573,6 +1644,7 @@ Sends a C<GET> request to C</projects/:project_id/repository/tags> and returns t
 
 sub tags {
     my $self = shift;
+    croak 'tags must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($project_id) to tags must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('/projects/%s/repository/tags', (map { uri_escape($_) } @_));
     return $self->get( $path );
@@ -1591,6 +1663,7 @@ Sends a C<POST> request to C</projects/:project_id/repository/tags>.
 
 sub create_tag {
     my $self = shift;
+    croak 'create_tag must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to create_tag must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The last argument (\%params) to create_tag must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = pop;
@@ -1612,6 +1685,7 @@ Sends a C<GET> request to C</projects/:project_id/repository/tree> and returns t
 
 sub tree {
     my $self = shift;
+    croak 'tree must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to tree must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The last argument (\%params) to tree must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = pop;
@@ -1633,6 +1707,7 @@ Sends a C<GET> request to C</projects/:project_id/repository/blobs/:ref> and ret
 
 sub blob {
     my $self = shift;
+    croak 'blob must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
     croak 'The #1 argument ($project_id) to blob must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($ref) to blob must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The last argument (\%params) to blob must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
@@ -1654,6 +1729,7 @@ Sends a C<GET> request to C</projects/:project_id/repository/raw_blobs/:blob_sha
 
 sub raw_blob {
     my $self = shift;
+    croak 'raw_blob must be called with 2 arguments' if @_ != 2;
     croak 'The #1 argument ($project_id) to raw_blob must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($blob_sha) to raw_blob must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/projects/%s/repository/raw_blobs/%s', (map { uri_escape($_) } @_));
@@ -1673,6 +1749,7 @@ Sends a C<GET> request to C</projects/:project_id/repository/archive> and return
 
 sub archive {
     my $self = shift;
+    croak 'archive must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to archive must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The last argument (\%params) to archive must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = pop;
@@ -1693,6 +1770,7 @@ Sends a C<GET> request to C</projects/:project_id/repository/compare> and return
 
 sub compare {
     my $self = shift;
+    croak 'compare must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to compare must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The last argument (\%params) to compare must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = pop;
@@ -1712,6 +1790,7 @@ Sends a C<GET> request to C</projects/:project_id/repository/contributors> and r
 
 sub contributors {
     my $self = shift;
+    croak 'contributors must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($project_id) to contributors must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('/projects/%s/repository/contributors', (map { uri_escape($_) } @_));
     return $self->get( $path );
@@ -1732,6 +1811,7 @@ Sends a C<GET> request to C</projects/:project_id/repository/files> and returns 
 
 sub file {
     my $self = shift;
+    croak 'file must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to file must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The last argument (\%params) to file must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = pop;
@@ -1752,6 +1832,7 @@ Sends a C<POST> request to C</projects/:project_id/repository/files>.
 
 sub create_file {
     my $self = shift;
+    croak 'create_file must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to create_file must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The last argument (\%params) to create_file must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = pop;
@@ -1773,6 +1854,7 @@ Sends a C<PUT> request to C</projects/:project_id/repository/files>.
 
 sub edit_file {
     my $self = shift;
+    croak 'edit_file must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to edit_file must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The last argument (\%params) to edit_file must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = pop;
@@ -1794,6 +1876,7 @@ Sends a C<DELETE> request to C</projects/:project_id/repository/files>.
 
 sub delete_file {
     my $self = shift;
+    croak 'delete_file must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to delete_file must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The last argument (\%params) to delete_file must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = pop;
@@ -1818,6 +1901,7 @@ Sends a C<PUT> request to C</projects/:project_id/services/:service_name>.
 
 sub edit_project_service {
     my $self = shift;
+    croak 'edit_project_service must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
     croak 'The #1 argument ($project_id) to edit_project_service must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($service_name) to edit_project_service must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The last argument (\%params) to edit_project_service must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
@@ -1840,6 +1924,7 @@ Sends a C<DELETE> request to C</projects/:project_id/services/:service_name>.
 
 sub delete_project_service {
     my $self = shift;
+    croak 'delete_project_service must be called with 2 arguments' if @_ != 2;
     croak 'The #1 argument ($project_id) to delete_project_service must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($service_name) to delete_project_service must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/projects/%s/services/%s', (map { uri_escape($_) } @_));
@@ -1861,6 +1946,7 @@ Sends a C<POST> request to C</session>.
 
 sub session {
     my $self = shift;
+    croak 'session must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
     croak 'The last argument (\%params) to session must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
     my $params = pop;
     my $path = sprintf('/session', (map { uri_escape($_) } @_));
@@ -1897,6 +1983,7 @@ Sends a C<POST> request to C</hooks>.
 
 sub create_hook {
     my $self = shift;
+    croak 'create_hook must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
     croak 'The last argument (\%params) to create_hook must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
     my $params = pop;
     my $path = sprintf('/hooks', (map { uri_escape($_) } @_));
@@ -1916,6 +2003,7 @@ Sends a C<GET> request to C</hooks/:hook_id> and returns the decoded/deserialize
 
 sub test_hook {
     my $self = shift;
+    croak 'test_hook must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($hook_id) to test_hook must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('/hooks/%s', (map { uri_escape($_) } @_));
     return $self->get( $path );
@@ -1933,6 +2021,7 @@ Sends a C<DELETE> request to C</hooks/:hook_id>.
 
 sub delete_hook {
     my $self = shift;
+    croak 'delete_hook must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($hook_id) to delete_hook must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('/hooks/%s', (map { uri_escape($_) } @_));
     $self->delete( $path );
@@ -1953,6 +2042,7 @@ Sends a C<GET> request to C</users> and returns the decoded/deserialized respons
 
 sub users {
     my $self = shift;
+    croak 'users must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
     croak 'The last argument (\%params) to users must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
     my $params = pop;
     my $path = sprintf('/users', (map { uri_escape($_) } @_));
@@ -1971,6 +2061,7 @@ Sends a C<GET> request to C</users/:user_id>.
 
 sub user {
     my $self = shift;
+    croak 'user must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($user_id) to user must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('/users/%s', (map { uri_escape($_) } @_));
     $self->get( $path );
@@ -1989,6 +2080,7 @@ Sends a C<POST> request to C</users>.
 
 sub create_user {
     my $self = shift;
+    croak 'create_user must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
     croak 'The last argument (\%params) to create_user must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
     my $params = pop;
     my $path = sprintf('/users', (map { uri_escape($_) } @_));
@@ -2009,6 +2101,7 @@ Sends a C<PUT> request to C</users/:user_id>.
 
 sub edit_user {
     my $self = shift;
+    croak 'edit_user must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($user_id) to edit_user must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The last argument (\%params) to edit_user must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = pop;
@@ -2029,6 +2122,7 @@ Sends a C<DELETE> request to C</users/:user_id> and returns the decoded/deserial
 
 sub delete_user {
     my $self = shift;
+    croak 'delete_user must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($user_id) to delete_user must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('/users/%s', (map { uri_escape($_) } @_));
     return $self->delete( $path );
@@ -2076,6 +2170,7 @@ Sends a C<GET> request to C</users/:user_id/keys> and returns the decoded/deseri
 
 sub user_ssh_keys {
     my $self = shift;
+    croak 'user_ssh_keys must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($user_id) to user_ssh_keys must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('/users/%s/keys', (map { uri_escape($_) } @_));
     return $self->get( $path );
@@ -2093,6 +2188,7 @@ Sends a C<GET> request to C</user/keys/:key_id> and returns the decoded/deserial
 
 sub user_ssh_key {
     my $self = shift;
+    croak 'user_ssh_key must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($key_id) to user_ssh_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('/user/keys/%s', (map { uri_escape($_) } @_));
     return $self->get( $path );
@@ -2110,6 +2206,7 @@ Sends a C<POST> request to C</user/keys>.
 
 sub create_current_user_ssh_key {
     my $self = shift;
+    croak 'create_current_user_ssh_key must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
     croak 'The last argument (\%params) to create_current_user_ssh_key must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
     my $params = pop;
     my $path = sprintf('/user/keys', (map { uri_escape($_) } @_));
@@ -2130,6 +2227,7 @@ Sends a C<POST> request to C</users/:user_id/keys>.
 
 sub create_user_ssh_key {
     my $self = shift;
+    croak 'create_user_ssh_key must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($user_id) to create_user_ssh_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The last argument (\%params) to create_user_ssh_key must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = pop;
@@ -2150,6 +2248,7 @@ Sends a C<DELETE> request to C</user/keys/:key_id>.
 
 sub delete_current_user_ssh_key {
     my $self = shift;
+    croak 'delete_current_user_ssh_key must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($key_id) to delete_current_user_ssh_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('/user/keys/%s', (map { uri_escape($_) } @_));
     $self->delete( $path );
@@ -2169,6 +2268,7 @@ Sends a C<DELETE> request to C</users/:user_id/keys/:key_id>.
 
 sub delete_user_ssh_key {
     my $self = shift;
+    croak 'delete_user_ssh_key must be called with 2 arguments' if @_ != 2;
     croak 'The #1 argument ($user_id) to delete_user_ssh_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($key_id) to delete_user_ssh_key must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/users/%s/keys/%s', (map { uri_escape($_) } @_));

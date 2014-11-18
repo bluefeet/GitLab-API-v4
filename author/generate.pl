@@ -65,6 +65,17 @@ foreach my $file (sort $dir->children()) {
         print "    my \$self = shift;\n";
 
         if (@args) {
+            my $min_args = @args;
+            my $max_args = @args;
+            $min_args-- if $params_ok;
+
+            if ($min_args == $max_args) {
+                print "    croak '$sub must be called with $min_args arguments' if \@_ != $min_args;\n";
+            }
+            else {
+                print "    croak '$sub must be called with $min_args to $max_args arguments' if \@_ < $min_args or \@_ > $max_args;\n";
+            }
+
             my $i = 0;
             foreach my $arg (@args) {
                 my $is_params = ($params_ok and $i==$#args) ? 1 : 0;
