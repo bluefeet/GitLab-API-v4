@@ -4,26 +4,26 @@ use YAML::XS qw();
 use Data::Dumper;
 use Path::Tiny;
 
-my $dir = path('data');
+my $dir = path('sections');
 my $header = path('header.pm')->slurp();
 my $footer = path('footer.pm')->slurp();
+my $config = YAML::XS::Load( path('config.yml')->slurp() );
 
 print $header;
 
-foreach my $file (sort $dir->children()) {
-    next if $file !~ m{\.yml$};
+foreach my $section_pack (@{ $config->{sections} }) {
+foreach my $section_name (keys %$section_pack) {
+    my $section = $section_pack->{$section_name};
 
-    my $data = YAML::XS::Load( $file->slurp() );
+    my $file = $dir->child("$section_name.yml");
+    my $endpoints = YAML::XS::Load( $file->slurp() );
 
-    my $header = $file->basename();
-    $header =~ s{\.yml$}{};
-    $header =~ s{_}{ }g;
-    $header = uc( $header );
-    print "=head1 $header METHODS\n\n";
+    print "=head1 $section->{head}\n\n";
+    print "See L<$section->{doc_url}>.\n\n";
 
-    foreach my $endpoint (@$data) {
-        my ($sub) = keys( %$endpoint );
-        my $spec = $endpoint->{$sub};
+    foreach my $endpoint_pack (@$endpoints) {
+    foreach my $sub (keys %$endpoint_pack) {
+        my $spec = $endpoint_pack->{$sub};
 
         my ($return, $method, $path, $params_ok);
         if ($spec =~ m{^(?:(\S+) = |)(GET|POST|PUT|DELETE) (\S+?)(\??)$}) {
@@ -111,7 +111,7 @@ foreach my $file (sort $dir->children()) {
         print " );\n";
         print "    return;\n" if !$return;
         print "}\n\n";
-    }
-}
+    }}
+}}
 
 print $footer;

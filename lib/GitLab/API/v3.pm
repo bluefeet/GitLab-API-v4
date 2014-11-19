@@ -127,1158 +127,297 @@ sub _build_rest_client {
     return $rest;
 }
 
-=head1 BRANCHES METHODS
+=head1 USER METHODS
 
-=head2 branches
+See L<http://doc.gitlab.com/ce/api/users.html>.
 
-    my $branches = $api->branches(
-        $project_id,
-    );
+=head2 users
 
-Sends a C<GET> request to C</projects/:project_id/repository/branches> and returns the decoded/deserialized response body.
-
-=cut
-
-sub branches {
-    my $self = shift;
-    croak 'branches must be called with 1 arguments' if @_ != 1;
-    croak 'The #1 argument ($project_id) to branches must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    my $path = sprintf('/projects/%s/repository/branches', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
-}
-
-=head2 branch
-
-    my $branch = $api->branch(
-        $project_id,
-        $branch_name,
-    );
-
-Sends a C<GET> request to C</projects/:project_id/repository/branches/:branch_name> and returns the decoded/deserialized response body.
-
-=cut
-
-sub branch {
-    my $self = shift;
-    croak 'branch must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($project_id) to branch must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($branch_name) to branch must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    my $path = sprintf('/projects/%s/repository/branches/%s', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
-}
-
-=head2 protect_branch
-
-    $api->protect_branch(
-        $project_id,
-        $branch_name,
-    );
-
-Sends a C<PUT> request to C</projects/:project_id/repository/branches/:branch_name/protect>.
-
-=cut
-
-sub protect_branch {
-    my $self = shift;
-    croak 'protect_branch must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($project_id) to protect_branch must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($branch_name) to protect_branch must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    my $path = sprintf('/projects/%s/repository/branches/%s/protect', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'PUT', $path, undef );
-    $self->put( $path );
-    return;
-}
-
-=head2 unprotect_branch
-
-    $api->unprotect_branch(
-        $project_id,
-        $branch_name,
-    );
-
-Sends a C<PUT> request to C</projects/:project_id/repository/branches/:branch_name/unprotect>.
-
-=cut
-
-sub unprotect_branch {
-    my $self = shift;
-    croak 'unprotect_branch must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($project_id) to unprotect_branch must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($branch_name) to unprotect_branch must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    my $path = sprintf('/projects/%s/repository/branches/%s/unprotect', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'PUT', $path, undef );
-    $self->put( $path );
-    return;
-}
-
-=head2 create_branch
-
-    my $branch = $api->create_branch(
-        $project_id,
+    my $users = $api->users(
         \%params,
     );
 
-Sends a C<POST> request to C</projects/:project_id/repository/branches> and returns the decoded/deserialized response body.
+Sends a C<GET> request to C</users> and returns the decoded/deserialized response body.
 
 =cut
 
-sub create_branch {
+sub users {
     my $self = shift;
-    croak 'create_branch must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
-    croak 'The #1 argument ($project_id) to create_branch must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The last argument (\%params) to create_branch must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    croak 'users must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to users must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
     my $params = pop;
-    my $path = sprintf('/projects/%s/repository/branches', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
-    return $self->post( $path, ( defined($params) ? $params : () ) );
-}
-
-=head2 delete_branch
-
-    $api->delete_branch(
-        $project_id,
-        $branch_name,
-    );
-
-Sends a C<DELETE> request to C</projects/:project_id/repository/branches/:branch_name>.
-
-=cut
-
-sub delete_branch {
-    my $self = shift;
-    croak 'delete_branch must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($project_id) to delete_branch must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($branch_name) to delete_branch must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    my $path = sprintf('/projects/%s/repository/branches/%s', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'DELETE', $path, undef );
-    $self->delete( $path );
-    return;
-}
-
-=head1 COMMITS METHODS
-
-=head2 commits
-
-    my $commits = $api->commits(
-        $project_id,
-        \%params,
-    );
-
-Sends a C<GET> request to C</projects/:project_id/repository/commits> and returns the decoded/deserialized response body.
-
-=cut
-
-sub commits {
-    my $self = shift;
-    croak 'commits must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
-    croak 'The #1 argument ($project_id) to commits must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The last argument (\%params) to commits must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
-    my $params = pop;
-    my $path = sprintf('/projects/%s/repository/commits', (map { uri_escape($_) } @_));
+    my $path = sprintf('/users', (map { uri_escape($_) } @_));
     $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, $params );
     return $self->get( $path, ( defined($params) ? $params : () ) );
 }
 
-=head2 commit
+=head2 user
 
-    my $commit = $api->commit(
-        $project_id,
-        $commit_sha,
-    );
-
-Sends a C<GET> request to C</projects/:project_id/repository/commits/:commit_sha> and returns the decoded/deserialized response body.
-
-=cut
-
-sub commit {
-    my $self = shift;
-    croak 'commit must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($project_id) to commit must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($commit_sha) to commit must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    my $path = sprintf('/projects/%s/repository/commits/%s', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
-}
-
-=head2 commit_diff
-
-    my $diff = $api->commit_diff(
-        $project_id,
-        $commit_sha,
-    );
-
-Sends a C<GET> request to C</projects/:project_id/repository/commits/:commit_sha/diff> and returns the decoded/deserialized response body.
-
-=cut
-
-sub commit_diff {
-    my $self = shift;
-    croak 'commit_diff must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($project_id) to commit_diff must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($commit_sha) to commit_diff must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    my $path = sprintf('/projects/%s/repository/commits/%s/diff', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
-}
-
-=head2 commit_comments
-
-    my $comments = $api->commit_comments(
-        $project_id,
-        $commit_sha,
-    );
-
-Sends a C<GET> request to C</projects/:project_id/repository/commits/:commit_sha/comments> and returns the decoded/deserialized response body.
-
-=cut
-
-sub commit_comments {
-    my $self = shift;
-    croak 'commit_comments must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($project_id) to commit_comments must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($commit_sha) to commit_comments must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    my $path = sprintf('/projects/%s/repository/commits/%s/comments', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
-}
-
-=head2 add_commit_comment
-
-    $api->add_commit_comment(
-        $project_id,
-        $commit_sha,
-        \%params,
-    );
-
-Sends a C<POST> request to C</projects/:project_id/repository/commits/:commit_sha/comments>.
-
-=cut
-
-sub add_commit_comment {
-    my $self = shift;
-    croak 'add_commit_comment must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
-    croak 'The #1 argument ($project_id) to add_commit_comment must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($commit_sha) to add_commit_comment must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    croak 'The last argument (\%params) to add_commit_comment must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
-    my $params = pop;
-    my $path = sprintf('/projects/%s/repository/commits/%s/comments', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
-    $self->post( $path, ( defined($params) ? $params : () ) );
-    return;
-}
-
-=head1 DEPLOY KEYS METHODS
-
-=head2 deploy_keys
-
-    my $keys = $api->deploy_keys(
-        $project_id,
-    );
-
-Sends a C<GET> request to C</projects/:project_id/keys> and returns the decoded/deserialized response body.
-
-=cut
-
-sub deploy_keys {
-    my $self = shift;
-    croak 'deploy_keys must be called with 1 arguments' if @_ != 1;
-    croak 'The #1 argument ($project_id) to deploy_keys must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    my $path = sprintf('/projects/%s/keys', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
-}
-
-=head2 deploy_key
-
-    my $key = $api->deploy_key(
-        $project_id,
-        $key_id,
-    );
-
-Sends a C<GET> request to C</projects/:project_id/keys/:key_id> and returns the decoded/deserialized response body.
-
-=cut
-
-sub deploy_key {
-    my $self = shift;
-    croak 'deploy_key must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($project_id) to deploy_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($key_id) to deploy_key must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    my $path = sprintf('/projects/%s/keys/%s', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
-}
-
-=head2 create_deploy_key
-
-    $api->create_deploy_key(
-        $project_id,
-        \%params,
-    );
-
-Sends a C<POST> request to C</projects/:project_id/keys>.
-
-=cut
-
-sub create_deploy_key {
-    my $self = shift;
-    croak 'create_deploy_key must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
-    croak 'The #1 argument ($project_id) to create_deploy_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The last argument (\%params) to create_deploy_key must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
-    my $params = pop;
-    my $path = sprintf('/projects/%s/keys', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
-    $self->post( $path, ( defined($params) ? $params : () ) );
-    return;
-}
-
-=head2 delete_deploy_key
-
-    $api->delete_deploy_key(
-        $project_id,
-        $key_id,
-    );
-
-Sends a C<DELETE> request to C</projects/:project_id/keys/:key_id>.
-
-=cut
-
-sub delete_deploy_key {
-    my $self = shift;
-    croak 'delete_deploy_key must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($project_id) to delete_deploy_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($key_id) to delete_deploy_key must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    my $path = sprintf('/projects/%s/keys/%s', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'DELETE', $path, undef );
-    $self->delete( $path );
-    return;
-}
-
-=head1 GROUPS METHODS
-
-=head2 groups
-
-    my $groups = $api->groups();
-
-Sends a C<GET> request to C</groups> and returns the decoded/deserialized response body.
-
-=cut
-
-sub groups {
-    my $self = shift;
-    croak "The groups method does not take any arguments" if @_;
-    my $path = sprintf('/groups', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
-}
-
-=head2 group
-
-    my $group = $api->group(
-        $group_id,
-    );
-
-Sends a C<GET> request to C</groups/:group_id> and returns the decoded/deserialized response body.
-
-=cut
-
-sub group {
-    my $self = shift;
-    croak 'group must be called with 1 arguments' if @_ != 1;
-    croak 'The #1 argument ($group_id) to group must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    my $path = sprintf('/groups/%s', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
-}
-
-=head2 create_group
-
-    $api->create_group(
-        \%params,
-    );
-
-Sends a C<POST> request to C</groups>.
-
-=cut
-
-sub create_group {
-    my $self = shift;
-    croak 'create_group must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
-    croak 'The last argument (\%params) to create_group must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
-    my $params = pop;
-    my $path = sprintf('/groups', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
-    $self->post( $path, ( defined($params) ? $params : () ) );
-    return;
-}
-
-=head2 transfer_project
-
-    $api->transfer_project(
-        $group_id,
-        $project_id,
-    );
-
-Sends a C<POST> request to C</groups/:group_id/projects/:project_id>.
-
-=cut
-
-sub transfer_project {
-    my $self = shift;
-    croak 'transfer_project must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($group_id) to transfer_project must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($project_id) to transfer_project must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    my $path = sprintf('/groups/%s/projects/%s', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, undef );
-    $self->post( $path );
-    return;
-}
-
-=head2 delete_group
-
-    $api->delete_group(
-        $group_id,
-    );
-
-Sends a C<DELETE> request to C</groups/:group_id>.
-
-=cut
-
-sub delete_group {
-    my $self = shift;
-    croak 'delete_group must be called with 1 arguments' if @_ != 1;
-    croak 'The #1 argument ($group_id) to delete_group must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    my $path = sprintf('/groups/%s', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'DELETE', $path, undef );
-    $self->delete( $path );
-    return;
-}
-
-=head2 group_members
-
-    my $members = $api->group_members(
-        $group_id,
-    );
-
-Sends a C<GET> request to C</groups/:group_id/members> and returns the decoded/deserialized response body.
-
-=cut
-
-sub group_members {
-    my $self = shift;
-    croak 'group_members must be called with 1 arguments' if @_ != 1;
-    croak 'The #1 argument ($group_id) to group_members must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    my $path = sprintf('/groups/%s/members', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
-}
-
-=head2 add_group_member
-
-    $api->add_group_member(
-        $group_id,
-        \%params,
-    );
-
-Sends a C<POST> request to C</groups/:group_id/members>.
-
-=cut
-
-sub add_group_member {
-    my $self = shift;
-    croak 'add_group_member must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
-    croak 'The #1 argument ($group_id) to add_group_member must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The last argument (\%params) to add_group_member must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
-    my $params = pop;
-    my $path = sprintf('/groups/%s/members', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
-    $self->post( $path, ( defined($params) ? $params : () ) );
-    return;
-}
-
-=head2 remove_group_member
-
-    $api->remove_group_member(
-        $group_id,
+    $api->user(
         $user_id,
     );
 
-Sends a C<DELETE> request to C</groups/:group_id/members/:user_id>.
+Sends a C<GET> request to C</users/:user_id>.
 
 =cut
 
-sub remove_group_member {
+sub user {
     my $self = shift;
-    croak 'remove_group_member must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($group_id) to remove_group_member must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($user_id) to remove_group_member must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    my $path = sprintf('/groups/%s/members/%s', (map { uri_escape($_) } @_));
+    croak 'user must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($user_id) to user must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $path = sprintf('/users/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
+    $self->get( $path );
+    return;
+}
+
+=head2 create_user
+
+    $api->create_user(
+        \%params,
+    );
+
+Sends a C<POST> request to C</users>.
+
+=cut
+
+sub create_user {
+    my $self = shift;
+    croak 'create_user must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to create_user must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/users', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
+    $self->post( $path, ( defined($params) ? $params : () ) );
+    return;
+}
+
+=head2 edit_user
+
+    $api->edit_user(
+        $user_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</users/:user_id>.
+
+=cut
+
+sub edit_user {
+    my $self = shift;
+    croak 'edit_user must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($user_id) to edit_user must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to edit_user must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/users/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'PUT', $path, $params );
+    $self->put( $path, ( defined($params) ? $params : () ) );
+    return;
+}
+
+=head2 delete_user
+
+    my $user = $api->delete_user(
+        $user_id,
+    );
+
+Sends a C<DELETE> request to C</users/:user_id> and returns the decoded/deserialized response body.
+
+=cut
+
+sub delete_user {
+    my $self = shift;
+    croak 'delete_user must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($user_id) to delete_user must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $path = sprintf('/users/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'DELETE', $path, undef );
+    return $self->delete( $path );
+}
+
+=head2 current_user
+
+    my $user = $api->current_user();
+
+Sends a C<GET> request to C</user> and returns the decoded/deserialized response body.
+
+=cut
+
+sub current_user {
+    my $self = shift;
+    croak "The current_user method does not take any arguments" if @_;
+    my $path = sprintf('/user', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
+    return $self->get( $path );
+}
+
+=head2 current_user_ssh_keys
+
+    my $keys = $api->current_user_ssh_keys();
+
+Sends a C<GET> request to C</user/keys> and returns the decoded/deserialized response body.
+
+=cut
+
+sub current_user_ssh_keys {
+    my $self = shift;
+    croak "The current_user_ssh_keys method does not take any arguments" if @_;
+    my $path = sprintf('/user/keys', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
+    return $self->get( $path );
+}
+
+=head2 user_ssh_keys
+
+    my $keys = $api->user_ssh_keys(
+        $user_id,
+    );
+
+Sends a C<GET> request to C</users/:user_id/keys> and returns the decoded/deserialized response body.
+
+=cut
+
+sub user_ssh_keys {
+    my $self = shift;
+    croak 'user_ssh_keys must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($user_id) to user_ssh_keys must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $path = sprintf('/users/%s/keys', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
+    return $self->get( $path );
+}
+
+=head2 user_ssh_key
+
+    my $key = $api->user_ssh_key(
+        $key_id,
+    );
+
+Sends a C<GET> request to C</user/keys/:key_id> and returns the decoded/deserialized response body.
+
+=cut
+
+sub user_ssh_key {
+    my $self = shift;
+    croak 'user_ssh_key must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($key_id) to user_ssh_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $path = sprintf('/user/keys/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
+    return $self->get( $path );
+}
+
+=head2 create_current_user_ssh_key
+
+    $api->create_current_user_ssh_key(
+        \%params,
+    );
+
+Sends a C<POST> request to C</user/keys>.
+
+=cut
+
+sub create_current_user_ssh_key {
+    my $self = shift;
+    croak 'create_current_user_ssh_key must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to create_current_user_ssh_key must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/user/keys', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
+    $self->post( $path, ( defined($params) ? $params : () ) );
+    return;
+}
+
+=head2 create_user_ssh_key
+
+    $api->create_user_ssh_key(
+        $user_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</users/:user_id/keys>.
+
+=cut
+
+sub create_user_ssh_key {
+    my $self = shift;
+    croak 'create_user_ssh_key must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($user_id) to create_user_ssh_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to create_user_ssh_key must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/users/%s/keys', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
+    $self->post( $path, ( defined($params) ? $params : () ) );
+    return;
+}
+
+=head2 delete_current_user_ssh_key
+
+    $api->delete_current_user_ssh_key(
+        $key_id,
+    );
+
+Sends a C<DELETE> request to C</user/keys/:key_id>.
+
+=cut
+
+sub delete_current_user_ssh_key {
+    my $self = shift;
+    croak 'delete_current_user_ssh_key must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($key_id) to delete_current_user_ssh_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $path = sprintf('/user/keys/%s', (map { uri_escape($_) } @_));
     $log->infof( 'Making %s request against %s with params %s.', 'DELETE', $path, undef );
     $self->delete( $path );
     return;
 }
 
-=head1 ISSUES METHODS
+=head2 delete_user_ssh_key
 
-=head2 all_issues
-
-    my $issues = $api->all_issues(
-        \%params,
+    $api->delete_user_ssh_key(
+        $user_id,
+        $key_id,
     );
 
-Sends a C<GET> request to C</issues> and returns the decoded/deserialized response body.
+Sends a C<DELETE> request to C</users/:user_id/keys/:key_id>.
 
 =cut
 
-sub all_issues {
+sub delete_user_ssh_key {
     my $self = shift;
-    croak 'all_issues must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
-    croak 'The last argument (\%params) to all_issues must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
-    my $params = pop;
-    my $path = sprintf('/issues', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, $params );
-    return $self->get( $path, ( defined($params) ? $params : () ) );
-}
-
-=head2 issues
-
-    my $issues = $api->issues(
-        $project_id,
-        \%params,
-    );
-
-Sends a C<GET> request to C</projects/:project_id/issues> and returns the decoded/deserialized response body.
-
-=cut
-
-sub issues {
-    my $self = shift;
-    croak 'issues must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
-    croak 'The #1 argument ($project_id) to issues must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The last argument (\%params) to issues must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
-    my $params = pop;
-    my $path = sprintf('/projects/%s/issues', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, $params );
-    return $self->get( $path, ( defined($params) ? $params : () ) );
-}
-
-=head2 issue
-
-    my $issue = $api->issue(
-        $project_id,
-        $issue_id,
-    );
-
-Sends a C<GET> request to C</projects/:project_id/issues/:issue_id> and returns the decoded/deserialized response body.
-
-=cut
-
-sub issue {
-    my $self = shift;
-    croak 'issue must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($project_id) to issue must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($issue_id) to issue must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    my $path = sprintf('/projects/%s/issues/%s', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
-}
-
-=head2 create_issue
-
-    my $issue = $api->create_issue(
-        $project_id,
-        \%params,
-    );
-
-Sends a C<POST> request to C</projects/:project_id/issues> and returns the decoded/deserialized response body.
-
-=cut
-
-sub create_issue {
-    my $self = shift;
-    croak 'create_issue must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
-    croak 'The #1 argument ($project_id) to create_issue must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The last argument (\%params) to create_issue must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
-    my $params = pop;
-    my $path = sprintf('/projects/%s/issues', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
-    return $self->post( $path, ( defined($params) ? $params : () ) );
-}
-
-=head2 edit_issue
-
-    my $issue = $api->edit_issue(
-        $project_id,
-        $issue_id,
-        \%params,
-    );
-
-Sends a C<PUT> request to C</projects/:project_id/issues/:issue_id> and returns the decoded/deserialized response body.
-
-=cut
-
-sub edit_issue {
-    my $self = shift;
-    croak 'edit_issue must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
-    croak 'The #1 argument ($project_id) to edit_issue must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($issue_id) to edit_issue must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    croak 'The last argument (\%params) to edit_issue must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
-    my $params = pop;
-    my $path = sprintf('/projects/%s/issues/%s', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'PUT', $path, $params );
-    return $self->put( $path, ( defined($params) ? $params : () ) );
-}
-
-=head1 LABELS METHODS
-
-=head2 labels
-
-    my $labels = $api->labels(
-        $project_id,
-    );
-
-Sends a C<GET> request to C</projects/:project_id/labels> and returns the decoded/deserialized response body.
-
-=cut
-
-sub labels {
-    my $self = shift;
-    croak 'labels must be called with 1 arguments' if @_ != 1;
-    croak 'The #1 argument ($project_id) to labels must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    my $path = sprintf('/projects/%s/labels', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
-}
-
-=head2 create_label
-
-    my $label = $api->create_label(
-        $project_id,
-        \%params,
-    );
-
-Sends a C<POST> request to C</projects/:project_id/labels> and returns the decoded/deserialized response body.
-
-=cut
-
-sub create_label {
-    my $self = shift;
-    croak 'create_label must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
-    croak 'The #1 argument ($project_id) to create_label must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The last argument (\%params) to create_label must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
-    my $params = pop;
-    my $path = sprintf('/projects/%s/labels', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
-    return $self->post( $path, ( defined($params) ? $params : () ) );
-}
-
-=head2 delete_label
-
-    $api->delete_label(
-        $project_id,
-        \%params,
-    );
-
-Sends a C<DELETE> request to C</projects/:project_id/labels>.
-
-=cut
-
-sub delete_label {
-    my $self = shift;
-    croak 'delete_label must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
-    croak 'The #1 argument ($project_id) to delete_label must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The last argument (\%params) to delete_label must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
-    my $params = pop;
-    my $path = sprintf('/projects/%s/labels', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'DELETE', $path, $params );
-    $self->delete( $path, ( defined($params) ? $params : () ) );
-    return;
-}
-
-=head2 edit_label
-
-    my $label = $api->edit_label(
-        $project_id,
-        \%params,
-    );
-
-Sends a C<PUT> request to C</projects/:project_id/labels> and returns the decoded/deserialized response body.
-
-=cut
-
-sub edit_label {
-    my $self = shift;
-    croak 'edit_label must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
-    croak 'The #1 argument ($project_id) to edit_label must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The last argument (\%params) to edit_label must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
-    my $params = pop;
-    my $path = sprintf('/projects/%s/labels', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'PUT', $path, $params );
-    return $self->put( $path, ( defined($params) ? $params : () ) );
-}
-
-=head1 MERGE REQUESTS METHODS
-
-=head2 merge_requests
-
-    my $merge_requests = $api->merge_requests(
-        $project_id,
-    );
-
-Sends a C<GET> request to C</projects/:project_id/merge_requests> and returns the decoded/deserialized response body.
-
-=cut
-
-sub merge_requests {
-    my $self = shift;
-    croak 'merge_requests must be called with 1 arguments' if @_ != 1;
-    croak 'The #1 argument ($project_id) to merge_requests must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    my $path = sprintf('/projects/%s/merge_requests', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
-}
-
-=head2 merge_request
-
-    my $merge_request = $api->merge_request(
-        $project_id,
-        $merge_request_id,
-    );
-
-Sends a C<GET> request to C</projects/:project_id/merge_request/:merge_request_id> and returns the decoded/deserialized response body.
-
-=cut
-
-sub merge_request {
-    my $self = shift;
-    croak 'merge_request must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($project_id) to merge_request must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($merge_request_id) to merge_request must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    my $path = sprintf('/projects/%s/merge_request/%s', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
-}
-
-=head2 create_merge_request
-
-    my $merge_request = $api->create_merge_request(
-        $project_id,
-        \%params,
-    );
-
-Sends a C<POST> request to C</projects/:project_id/merge_requests> and returns the decoded/deserialized response body.
-
-=cut
-
-sub create_merge_request {
-    my $self = shift;
-    croak 'create_merge_request must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
-    croak 'The #1 argument ($project_id) to create_merge_request must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The last argument (\%params) to create_merge_request must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
-    my $params = pop;
-    my $path = sprintf('/projects/%s/merge_requests', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
-    return $self->post( $path, ( defined($params) ? $params : () ) );
-}
-
-=head2 edit_merge_request
-
-    my $merge_request = $api->edit_merge_request(
-        $project_id,
-        $merge_request_id,
-        \%params,
-    );
-
-Sends a C<PUT> request to C</projects/:project_id/merge_requests/:merge_request_id> and returns the decoded/deserialized response body.
-
-=cut
-
-sub edit_merge_request {
-    my $self = shift;
-    croak 'edit_merge_request must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
-    croak 'The #1 argument ($project_id) to edit_merge_request must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($merge_request_id) to edit_merge_request must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    croak 'The last argument (\%params) to edit_merge_request must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
-    my $params = pop;
-    my $path = sprintf('/projects/%s/merge_requests/%s', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'PUT', $path, $params );
-    return $self->put( $path, ( defined($params) ? $params : () ) );
-}
-
-=head2 accept_merge_request
-
-    $api->accept_merge_request(
-        $project_id,
-        $merge_request_id,
-        \%params,
-    );
-
-Sends a C<PUT> request to C</projects/:project_id/merge_requests/:merge_request_id/merge>.
-
-=cut
-
-sub accept_merge_request {
-    my $self = shift;
-    croak 'accept_merge_request must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
-    croak 'The #1 argument ($project_id) to accept_merge_request must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($merge_request_id) to accept_merge_request must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    croak 'The last argument (\%params) to accept_merge_request must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
-    my $params = pop;
-    my $path = sprintf('/projects/%s/merge_requests/%s/merge', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'PUT', $path, $params );
-    $self->put( $path, ( defined($params) ? $params : () ) );
-    return;
-}
-
-=head2 add_merge_request_comment
-
-    $api->add_merge_request_comment(
-        $project_id,
-        $merge_request_id,
-        \%params,
-    );
-
-Sends a C<POST> request to C</projects/:project_id/merge_requests/:merge_request_id/comments>.
-
-=cut
-
-sub add_merge_request_comment {
-    my $self = shift;
-    croak 'add_merge_request_comment must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
-    croak 'The #1 argument ($project_id) to add_merge_request_comment must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($merge_request_id) to add_merge_request_comment must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    croak 'The last argument (\%params) to add_merge_request_comment must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
-    my $params = pop;
-    my $path = sprintf('/projects/%s/merge_requests/%s/comments', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
-    $self->post( $path, ( defined($params) ? $params : () ) );
-    return;
-}
-
-=head2 merge_request_comments
-
-    my $comments = $api->merge_request_comments(
-        $project_id,
-        $merge_request_id,
-    );
-
-Sends a C<GET> request to C</projects/:project_id/merge_requests/:merge_request_id/comments> and returns the decoded/deserialized response body.
-
-=cut
-
-sub merge_request_comments {
-    my $self = shift;
-    croak 'merge_request_comments must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($project_id) to merge_request_comments must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($merge_request_id) to merge_request_comments must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    my $path = sprintf('/projects/%s/merge_requests/%s/comments', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
-}
-
-=head1 MILESTONES METHODS
-
-=head2 milestones
-
-    my $milestones = $api->milestones(
-        $project_id,
-    );
-
-Sends a C<GET> request to C</projects/:project_id/milestones> and returns the decoded/deserialized response body.
-
-=cut
-
-sub milestones {
-    my $self = shift;
-    croak 'milestones must be called with 1 arguments' if @_ != 1;
-    croak 'The #1 argument ($project_id) to milestones must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    my $path = sprintf('/projects/%s/milestones', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
-}
-
-=head2 milestone
-
-    my $milestone = $api->milestone(
-        $project_id,
-        $milestone_id,
-    );
-
-Sends a C<GET> request to C</projects/:project_id/milestones/:milestone_id> and returns the decoded/deserialized response body.
-
-=cut
-
-sub milestone {
-    my $self = shift;
-    croak 'milestone must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($project_id) to milestone must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($milestone_id) to milestone must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    my $path = sprintf('/projects/%s/milestones/%s', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
-}
-
-=head2 create_milestone
-
-    $api->create_milestone(
-        $project_id,
-        \%params,
-    );
-
-Sends a C<POST> request to C</projects/:project_id/milestones>.
-
-=cut
-
-sub create_milestone {
-    my $self = shift;
-    croak 'create_milestone must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
-    croak 'The #1 argument ($project_id) to create_milestone must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The last argument (\%params) to create_milestone must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
-    my $params = pop;
-    my $path = sprintf('/projects/%s/milestones', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
-    $self->post( $path, ( defined($params) ? $params : () ) );
-    return;
-}
-
-=head2 edit_milestone
-
-    $api->edit_milestone(
-        $project_id,
-        $milestone_id,
-        \%params,
-    );
-
-Sends a C<PUT> request to C</projects/:project_id/milestones/:milestone_id>.
-
-=cut
-
-sub edit_milestone {
-    my $self = shift;
-    croak 'edit_milestone must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
-    croak 'The #1 argument ($project_id) to edit_milestone must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($milestone_id) to edit_milestone must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    croak 'The last argument (\%params) to edit_milestone must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
-    my $params = pop;
-    my $path = sprintf('/projects/%s/milestones/%s', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'PUT', $path, $params );
-    $self->put( $path, ( defined($params) ? $params : () ) );
-    return;
-}
-
-=head1 NOTES METHODS
-
-=head2 notes
-
-    my $notes = $api->notes(
-        $project_id,
-        $note_type,
-        $merge_request_id,
-    );
-
-Sends a C<GET> request to C</projects/:project_id/:note_type/:merge_request_id/notes> and returns the decoded/deserialized response body.
-
-=cut
-
-sub notes {
-    my $self = shift;
-    croak 'notes must be called with 3 arguments' if @_ != 3;
-    croak 'The #1 argument ($project_id) to notes must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($note_type) to notes must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    croak 'The #3 argument ($merge_request_id) to notes must be a scalar' if ref($_[2]) or (!defined $_[2]);
-    my $path = sprintf('/projects/%s/%s/%s/notes', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
-}
-
-=head2 note
-
-    my $note = $api->note(
-        $project_id,
-        $note_type,
-        $merge_request_id,
-        $note_id,
-    );
-
-Sends a C<GET> request to C</projects/:project_id/:note_type/:merge_request_id/notes/:note_id> and returns the decoded/deserialized response body.
-
-=cut
-
-sub note {
-    my $self = shift;
-    croak 'note must be called with 4 arguments' if @_ != 4;
-    croak 'The #1 argument ($project_id) to note must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($note_type) to note must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    croak 'The #3 argument ($merge_request_id) to note must be a scalar' if ref($_[2]) or (!defined $_[2]);
-    croak 'The #4 argument ($note_id) to note must be a scalar' if ref($_[3]) or (!defined $_[3]);
-    my $path = sprintf('/projects/%s/%s/%s/notes/%s', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
-}
-
-=head2 create_note
-
-    $api->create_note(
-        $project_id,
-        $note_type,
-        $merge_request_id,
-        \%params,
-    );
-
-Sends a C<POST> request to C</projects/:project_id/:note_type/:merge_request_id/notes>.
-
-=cut
-
-sub create_note {
-    my $self = shift;
-    croak 'create_note must be called with 3 to 4 arguments' if @_ < 3 or @_ > 4;
-    croak 'The #1 argument ($project_id) to create_note must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($note_type) to create_note must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    croak 'The #3 argument ($merge_request_id) to create_note must be a scalar' if ref($_[2]) or (!defined $_[2]);
-    croak 'The last argument (\%params) to create_note must be a hash ref' if defined($_[3]) and ref($_[3]) ne 'HASH';
-    my $params = pop;
-    my $path = sprintf('/projects/%s/%s/%s/notes', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
-    $self->post( $path, ( defined($params) ? $params : () ) );
-    return;
-}
-
-=head1 PROJECT SNIPPETS METHODS
-
-=head2 snippets
-
-    my $snippets = $api->snippets(
-        $project_id,
-    );
-
-Sends a C<GET> request to C</projects/:project_id/snippets> and returns the decoded/deserialized response body.
-
-=cut
-
-sub snippets {
-    my $self = shift;
-    croak 'snippets must be called with 1 arguments' if @_ != 1;
-    croak 'The #1 argument ($project_id) to snippets must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    my $path = sprintf('/projects/%s/snippets', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
-}
-
-=head2 snippet
-
-    my $snippet = $api->snippet(
-        $project_id,
-        $snippet_id,
-    );
-
-Sends a C<GET> request to C</projects/:project_id/snippets/:snippet_id> and returns the decoded/deserialized response body.
-
-=cut
-
-sub snippet {
-    my $self = shift;
-    croak 'snippet must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($project_id) to snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($snippet_id) to snippet must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    my $path = sprintf('/projects/%s/snippets/%s', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
-}
-
-=head2 create_snippet
-
-    $api->create_snippet(
-        $project_id,
-        \%params,
-    );
-
-Sends a C<POST> request to C</projects/:project_id/snippets>.
-
-=cut
-
-sub create_snippet {
-    my $self = shift;
-    croak 'create_snippet must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
-    croak 'The #1 argument ($project_id) to create_snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The last argument (\%params) to create_snippet must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
-    my $params = pop;
-    my $path = sprintf('/projects/%s/snippets', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
-    $self->post( $path, ( defined($params) ? $params : () ) );
-    return;
-}
-
-=head2 edit_snippet
-
-    $api->edit_snippet(
-        $project_id,
-        $snippet_id,
-        \%params,
-    );
-
-Sends a C<PUT> request to C</projects/:project_id/snippets/:snippet_id>.
-
-=cut
-
-sub edit_snippet {
-    my $self = shift;
-    croak 'edit_snippet must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
-    croak 'The #1 argument ($project_id) to edit_snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($snippet_id) to edit_snippet must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    croak 'The last argument (\%params) to edit_snippet must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
-    my $params = pop;
-    my $path = sprintf('/projects/%s/snippets/%s', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'PUT', $path, $params );
-    $self->put( $path, ( defined($params) ? $params : () ) );
-    return;
-}
-
-=head2 delete_snippet
-
-    $api->delete_snippet(
-        $project_id,
-        $snippet_id,
-    );
-
-Sends a C<DELETE> request to C</projects/:project_id/snippets/:snippet_id>.
-
-=cut
-
-sub delete_snippet {
-    my $self = shift;
-    croak 'delete_snippet must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($project_id) to delete_snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($snippet_id) to delete_snippet must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    my $path = sprintf('/projects/%s/snippets/%s', (map { uri_escape($_) } @_));
+    croak 'delete_user_ssh_key must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($user_id) to delete_user_ssh_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($key_id) to delete_user_ssh_key must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/users/%s/keys/%s', (map { uri_escape($_) } @_));
     $log->infof( 'Making %s request against %s with params %s.', 'DELETE', $path, undef );
     $self->delete( $path );
     return;
 }
 
-=head2 raw_snippet
+=head1 SESSION METHODS
 
-    my $content = $api->raw_snippet(
-        $project_id,
-        $snippet_id,
+See L<http://doc.gitlab.com/ce/api/session.html>.
+
+=head2 session
+
+    $api->session(
+        \%params,
     );
 
-Sends a C<GET> request to C</projects/:project_id/snippets/:snippet_id/raw> and returns the decoded/deserialized response body.
+Sends a C<POST> request to C</session>.
 
 =cut
 
-sub raw_snippet {
+sub session {
     my $self = shift;
-    croak 'raw_snippet must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($project_id) to raw_snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($snippet_id) to raw_snippet must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    my $path = sprintf('/projects/%s/snippets/%s/raw', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
+    croak 'session must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to session must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/session', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
+    $self->post( $path, ( defined($params) ? $params : () ) );
+    return;
 }
 
-=head1 PROJECTS METHODS
+=head1 PROJECT METHODS
+
+See L<http://doc.gitlab.com/ce/api/projects.html>.
 
 =head2 projects
 
@@ -1740,7 +879,144 @@ sub search_projects_by_name {
     return $self->get( $path, ( defined($params) ? $params : () ) );
 }
 
-=head1 REPOSITORIES METHODS
+=head1 SNIPPET METHODS
+
+See L<http://doc.gitlab.com/ce/api/project_snippets.html>.
+
+=head2 snippets
+
+    my $snippets = $api->snippets(
+        $project_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/snippets> and returns the decoded/deserialized response body.
+
+=cut
+
+sub snippets {
+    my $self = shift;
+    croak 'snippets must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($project_id) to snippets must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $path = sprintf('/projects/%s/snippets', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
+    return $self->get( $path );
+}
+
+=head2 snippet
+
+    my $snippet = $api->snippet(
+        $project_id,
+        $snippet_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/snippets/:snippet_id> and returns the decoded/deserialized response body.
+
+=cut
+
+sub snippet {
+    my $self = shift;
+    croak 'snippet must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($snippet_id) to snippet must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/snippets/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
+    return $self->get( $path );
+}
+
+=head2 create_snippet
+
+    $api->create_snippet(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/snippets>.
+
+=cut
+
+sub create_snippet {
+    my $self = shift;
+    croak 'create_snippet must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($project_id) to create_snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to create_snippet must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/projects/%s/snippets', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
+    $self->post( $path, ( defined($params) ? $params : () ) );
+    return;
+}
+
+=head2 edit_snippet
+
+    $api->edit_snippet(
+        $project_id,
+        $snippet_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/snippets/:snippet_id>.
+
+=cut
+
+sub edit_snippet {
+    my $self = shift;
+    croak 'edit_snippet must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to edit_snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($snippet_id) to edit_snippet must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to edit_snippet must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/projects/%s/snippets/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'PUT', $path, $params );
+    $self->put( $path, ( defined($params) ? $params : () ) );
+    return;
+}
+
+=head2 delete_snippet
+
+    $api->delete_snippet(
+        $project_id,
+        $snippet_id,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/snippets/:snippet_id>.
+
+=cut
+
+sub delete_snippet {
+    my $self = shift;
+    croak 'delete_snippet must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to delete_snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($snippet_id) to delete_snippet must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/snippets/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'DELETE', $path, undef );
+    $self->delete( $path );
+    return;
+}
+
+=head2 raw_snippet
+
+    my $content = $api->raw_snippet(
+        $project_id,
+        $snippet_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/snippets/:snippet_id/raw> and returns the decoded/deserialized response body.
+
+=cut
+
+sub raw_snippet {
+    my $self = shift;
+    croak 'raw_snippet must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to raw_snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($snippet_id) to raw_snippet must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/snippets/%s/raw', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
+    return $self->get( $path );
+}
+
+=head1 REPOSITORY METHODS
+
+See L<http://doc.gitlab.com/ce/api/repositories.html>.
 
 =head2 tags
 
@@ -1914,7 +1190,9 @@ sub contributors {
     return $self->get( $path );
 }
 
-=head1 REPOSITORY FILES METHODS
+=head1 FILE METHODS
+
+See L<http://doc.gitlab.com/ce/api/repository_files.html>.
 
 =head2 file
 
@@ -2007,79 +1285,879 @@ sub delete_file {
     return;
 }
 
-=head1 SERVICES METHODS
+=head1 COMMIT METHODS
 
-=head2 edit_project_service
+See L<http://doc.gitlab.com/ce/api/commits.html>.
 
-    $api->edit_project_service(
+=head2 commits
+
+    my $commits = $api->commits(
         $project_id,
-        $service_name,
         \%params,
     );
 
-Sends a C<PUT> request to C</projects/:project_id/services/:service_name>.
+Sends a C<GET> request to C</projects/:project_id/repository/commits> and returns the decoded/deserialized response body.
 
 =cut
 
-sub edit_project_service {
+sub commits {
     my $self = shift;
-    croak 'edit_project_service must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
-    croak 'The #1 argument ($project_id) to edit_project_service must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($service_name) to edit_project_service must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    croak 'The last argument (\%params) to edit_project_service must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    croak 'commits must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($project_id) to commits must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to commits must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = pop;
-    my $path = sprintf('/projects/%s/services/%s', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'PUT', $path, $params );
-    $self->put( $path, ( defined($params) ? $params : () ) );
-    return;
+    my $path = sprintf('/projects/%s/repository/commits', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, $params );
+    return $self->get( $path, ( defined($params) ? $params : () ) );
 }
 
-=head2 delete_project_service
+=head2 commit
 
-    $api->delete_project_service(
+    my $commit = $api->commit(
         $project_id,
-        $service_name,
+        $commit_sha,
     );
 
-Sends a C<DELETE> request to C</projects/:project_id/services/:service_name>.
+Sends a C<GET> request to C</projects/:project_id/repository/commits/:commit_sha> and returns the decoded/deserialized response body.
 
 =cut
 
-sub delete_project_service {
+sub commit {
     my $self = shift;
-    croak 'delete_project_service must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($project_id) to delete_project_service must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($service_name) to delete_project_service must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    my $path = sprintf('/projects/%s/services/%s', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'DELETE', $path, undef );
-    $self->delete( $path );
-    return;
+    croak 'commit must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to commit must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($commit_sha) to commit must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/repository/commits/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
+    return $self->get( $path );
 }
 
-=head1 SESSION METHODS
+=head2 commit_diff
 
-=head2 session
+    my $diff = $api->commit_diff(
+        $project_id,
+        $commit_sha,
+    );
 
-    $api->session(
+Sends a C<GET> request to C</projects/:project_id/repository/commits/:commit_sha/diff> and returns the decoded/deserialized response body.
+
+=cut
+
+sub commit_diff {
+    my $self = shift;
+    croak 'commit_diff must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to commit_diff must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($commit_sha) to commit_diff must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/repository/commits/%s/diff', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
+    return $self->get( $path );
+}
+
+=head2 commit_comments
+
+    my $comments = $api->commit_comments(
+        $project_id,
+        $commit_sha,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/repository/commits/:commit_sha/comments> and returns the decoded/deserialized response body.
+
+=cut
+
+sub commit_comments {
+    my $self = shift;
+    croak 'commit_comments must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to commit_comments must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($commit_sha) to commit_comments must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/repository/commits/%s/comments', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
+    return $self->get( $path );
+}
+
+=head2 add_commit_comment
+
+    $api->add_commit_comment(
+        $project_id,
+        $commit_sha,
         \%params,
     );
 
-Sends a C<POST> request to C</session>.
+Sends a C<POST> request to C</projects/:project_id/repository/commits/:commit_sha/comments>.
 
 =cut
 
-sub session {
+sub add_commit_comment {
     my $self = shift;
-    croak 'session must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
-    croak 'The last argument (\%params) to session must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    croak 'add_commit_comment must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to add_commit_comment must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($commit_sha) to add_commit_comment must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to add_commit_comment must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
     my $params = pop;
-    my $path = sprintf('/session', (map { uri_escape($_) } @_));
+    my $path = sprintf('/projects/%s/repository/commits/%s/comments', (map { uri_escape($_) } @_));
     $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
     $self->post( $path, ( defined($params) ? $params : () ) );
     return;
 }
 
-=head1 SYSTEM HOOKS METHODS
+=head1 BRANCH METHODS
+
+See L<http://doc.gitlab.com/ce/api/branches.html>.
+
+=head2 branches
+
+    my $branches = $api->branches(
+        $project_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/repository/branches> and returns the decoded/deserialized response body.
+
+=cut
+
+sub branches {
+    my $self = shift;
+    croak 'branches must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($project_id) to branches must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $path = sprintf('/projects/%s/repository/branches', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
+    return $self->get( $path );
+}
+
+=head2 branch
+
+    my $branch = $api->branch(
+        $project_id,
+        $branch_name,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/repository/branches/:branch_name> and returns the decoded/deserialized response body.
+
+=cut
+
+sub branch {
+    my $self = shift;
+    croak 'branch must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to branch must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($branch_name) to branch must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/repository/branches/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
+    return $self->get( $path );
+}
+
+=head2 protect_branch
+
+    $api->protect_branch(
+        $project_id,
+        $branch_name,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/repository/branches/:branch_name/protect>.
+
+=cut
+
+sub protect_branch {
+    my $self = shift;
+    croak 'protect_branch must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to protect_branch must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($branch_name) to protect_branch must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/repository/branches/%s/protect', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'PUT', $path, undef );
+    $self->put( $path );
+    return;
+}
+
+=head2 unprotect_branch
+
+    $api->unprotect_branch(
+        $project_id,
+        $branch_name,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/repository/branches/:branch_name/unprotect>.
+
+=cut
+
+sub unprotect_branch {
+    my $self = shift;
+    croak 'unprotect_branch must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to unprotect_branch must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($branch_name) to unprotect_branch must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/repository/branches/%s/unprotect', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'PUT', $path, undef );
+    $self->put( $path );
+    return;
+}
+
+=head2 create_branch
+
+    my $branch = $api->create_branch(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/repository/branches> and returns the decoded/deserialized response body.
+
+=cut
+
+sub create_branch {
+    my $self = shift;
+    croak 'create_branch must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($project_id) to create_branch must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to create_branch must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/projects/%s/repository/branches', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
+    return $self->post( $path, ( defined($params) ? $params : () ) );
+}
+
+=head2 delete_branch
+
+    $api->delete_branch(
+        $project_id,
+        $branch_name,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/repository/branches/:branch_name>.
+
+=cut
+
+sub delete_branch {
+    my $self = shift;
+    croak 'delete_branch must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to delete_branch must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($branch_name) to delete_branch must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/repository/branches/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'DELETE', $path, undef );
+    $self->delete( $path );
+    return;
+}
+
+=head1 MERGE REQUEST METHODS
+
+See L<http://doc.gitlab.com/ce/api/merge_requests.html>.
+
+=head2 merge_requests
+
+    my $merge_requests = $api->merge_requests(
+        $project_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/merge_requests> and returns the decoded/deserialized response body.
+
+=cut
+
+sub merge_requests {
+    my $self = shift;
+    croak 'merge_requests must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($project_id) to merge_requests must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $path = sprintf('/projects/%s/merge_requests', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
+    return $self->get( $path );
+}
+
+=head2 merge_request
+
+    my $merge_request = $api->merge_request(
+        $project_id,
+        $merge_request_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/merge_request/:merge_request_id> and returns the decoded/deserialized response body.
+
+=cut
+
+sub merge_request {
+    my $self = shift;
+    croak 'merge_request must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to merge_request must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($merge_request_id) to merge_request must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/merge_request/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
+    return $self->get( $path );
+}
+
+=head2 create_merge_request
+
+    my $merge_request = $api->create_merge_request(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/merge_requests> and returns the decoded/deserialized response body.
+
+=cut
+
+sub create_merge_request {
+    my $self = shift;
+    croak 'create_merge_request must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($project_id) to create_merge_request must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to create_merge_request must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/projects/%s/merge_requests', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
+    return $self->post( $path, ( defined($params) ? $params : () ) );
+}
+
+=head2 edit_merge_request
+
+    my $merge_request = $api->edit_merge_request(
+        $project_id,
+        $merge_request_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/merge_requests/:merge_request_id> and returns the decoded/deserialized response body.
+
+=cut
+
+sub edit_merge_request {
+    my $self = shift;
+    croak 'edit_merge_request must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to edit_merge_request must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($merge_request_id) to edit_merge_request must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to edit_merge_request must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/projects/%s/merge_requests/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'PUT', $path, $params );
+    return $self->put( $path, ( defined($params) ? $params : () ) );
+}
+
+=head2 accept_merge_request
+
+    $api->accept_merge_request(
+        $project_id,
+        $merge_request_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/merge_requests/:merge_request_id/merge>.
+
+=cut
+
+sub accept_merge_request {
+    my $self = shift;
+    croak 'accept_merge_request must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to accept_merge_request must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($merge_request_id) to accept_merge_request must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to accept_merge_request must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/projects/%s/merge_requests/%s/merge', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'PUT', $path, $params );
+    $self->put( $path, ( defined($params) ? $params : () ) );
+    return;
+}
+
+=head2 add_merge_request_comment
+
+    $api->add_merge_request_comment(
+        $project_id,
+        $merge_request_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/merge_requests/:merge_request_id/comments>.
+
+=cut
+
+sub add_merge_request_comment {
+    my $self = shift;
+    croak 'add_merge_request_comment must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to add_merge_request_comment must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($merge_request_id) to add_merge_request_comment must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to add_merge_request_comment must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/projects/%s/merge_requests/%s/comments', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
+    $self->post( $path, ( defined($params) ? $params : () ) );
+    return;
+}
+
+=head2 merge_request_comments
+
+    my $comments = $api->merge_request_comments(
+        $project_id,
+        $merge_request_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/merge_requests/:merge_request_id/comments> and returns the decoded/deserialized response body.
+
+=cut
+
+sub merge_request_comments {
+    my $self = shift;
+    croak 'merge_request_comments must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to merge_request_comments must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($merge_request_id) to merge_request_comments must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/merge_requests/%s/comments', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
+    return $self->get( $path );
+}
+
+=head1 ISSUE METHODS
+
+See L<http://doc.gitlab.com/ce/api/issues.html>.
+
+=head2 all_issues
+
+    my $issues = $api->all_issues(
+        \%params,
+    );
+
+Sends a C<GET> request to C</issues> and returns the decoded/deserialized response body.
+
+=cut
+
+sub all_issues {
+    my $self = shift;
+    croak 'all_issues must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to all_issues must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/issues', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, $params );
+    return $self->get( $path, ( defined($params) ? $params : () ) );
+}
+
+=head2 issues
+
+    my $issues = $api->issues(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/issues> and returns the decoded/deserialized response body.
+
+=cut
+
+sub issues {
+    my $self = shift;
+    croak 'issues must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($project_id) to issues must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to issues must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/projects/%s/issues', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, $params );
+    return $self->get( $path, ( defined($params) ? $params : () ) );
+}
+
+=head2 issue
+
+    my $issue = $api->issue(
+        $project_id,
+        $issue_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/issues/:issue_id> and returns the decoded/deserialized response body.
+
+=cut
+
+sub issue {
+    my $self = shift;
+    croak 'issue must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to issue must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($issue_id) to issue must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/issues/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
+    return $self->get( $path );
+}
+
+=head2 create_issue
+
+    my $issue = $api->create_issue(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/issues> and returns the decoded/deserialized response body.
+
+=cut
+
+sub create_issue {
+    my $self = shift;
+    croak 'create_issue must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($project_id) to create_issue must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to create_issue must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/projects/%s/issues', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
+    return $self->post( $path, ( defined($params) ? $params : () ) );
+}
+
+=head2 edit_issue
+
+    my $issue = $api->edit_issue(
+        $project_id,
+        $issue_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/issues/:issue_id> and returns the decoded/deserialized response body.
+
+=cut
+
+sub edit_issue {
+    my $self = shift;
+    croak 'edit_issue must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to edit_issue must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($issue_id) to edit_issue must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to edit_issue must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/projects/%s/issues/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'PUT', $path, $params );
+    return $self->put( $path, ( defined($params) ? $params : () ) );
+}
+
+=head1 LABEL METHODS
+
+See L<http://doc.gitlab.com/ce/api/labels.html>.
+
+=head2 labels
+
+    my $labels = $api->labels(
+        $project_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/labels> and returns the decoded/deserialized response body.
+
+=cut
+
+sub labels {
+    my $self = shift;
+    croak 'labels must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($project_id) to labels must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $path = sprintf('/projects/%s/labels', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
+    return $self->get( $path );
+}
+
+=head2 create_label
+
+    my $label = $api->create_label(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/labels> and returns the decoded/deserialized response body.
+
+=cut
+
+sub create_label {
+    my $self = shift;
+    croak 'create_label must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($project_id) to create_label must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to create_label must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/projects/%s/labels', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
+    return $self->post( $path, ( defined($params) ? $params : () ) );
+}
+
+=head2 delete_label
+
+    $api->delete_label(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/labels>.
+
+=cut
+
+sub delete_label {
+    my $self = shift;
+    croak 'delete_label must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($project_id) to delete_label must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to delete_label must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/projects/%s/labels', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'DELETE', $path, $params );
+    $self->delete( $path, ( defined($params) ? $params : () ) );
+    return;
+}
+
+=head2 edit_label
+
+    my $label = $api->edit_label(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/labels> and returns the decoded/deserialized response body.
+
+=cut
+
+sub edit_label {
+    my $self = shift;
+    croak 'edit_label must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($project_id) to edit_label must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to edit_label must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/projects/%s/labels', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'PUT', $path, $params );
+    return $self->put( $path, ( defined($params) ? $params : () ) );
+}
+
+=head1 MILESTONE METHODS
+
+See L<http://doc.gitlab.com/ce/api/milestones.html>.
+
+=head2 milestones
+
+    my $milestones = $api->milestones(
+        $project_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/milestones> and returns the decoded/deserialized response body.
+
+=cut
+
+sub milestones {
+    my $self = shift;
+    croak 'milestones must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($project_id) to milestones must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $path = sprintf('/projects/%s/milestones', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
+    return $self->get( $path );
+}
+
+=head2 milestone
+
+    my $milestone = $api->milestone(
+        $project_id,
+        $milestone_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/milestones/:milestone_id> and returns the decoded/deserialized response body.
+
+=cut
+
+sub milestone {
+    my $self = shift;
+    croak 'milestone must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to milestone must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($milestone_id) to milestone must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/milestones/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
+    return $self->get( $path );
+}
+
+=head2 create_milestone
+
+    $api->create_milestone(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/milestones>.
+
+=cut
+
+sub create_milestone {
+    my $self = shift;
+    croak 'create_milestone must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($project_id) to create_milestone must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to create_milestone must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/projects/%s/milestones', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
+    $self->post( $path, ( defined($params) ? $params : () ) );
+    return;
+}
+
+=head2 edit_milestone
+
+    $api->edit_milestone(
+        $project_id,
+        $milestone_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/milestones/:milestone_id>.
+
+=cut
+
+sub edit_milestone {
+    my $self = shift;
+    croak 'edit_milestone must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to edit_milestone must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($milestone_id) to edit_milestone must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to edit_milestone must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/projects/%s/milestones/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'PUT', $path, $params );
+    $self->put( $path, ( defined($params) ? $params : () ) );
+    return;
+}
+
+=head1 NOTE METHODS
+
+See L<http://doc.gitlab.com/ce/api/notes.html>.
+
+=head2 notes
+
+    my $notes = $api->notes(
+        $project_id,
+        $note_type,
+        $merge_request_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/:note_type/:merge_request_id/notes> and returns the decoded/deserialized response body.
+
+=cut
+
+sub notes {
+    my $self = shift;
+    croak 'notes must be called with 3 arguments' if @_ != 3;
+    croak 'The #1 argument ($project_id) to notes must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($note_type) to notes must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($merge_request_id) to notes must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    my $path = sprintf('/projects/%s/%s/%s/notes', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
+    return $self->get( $path );
+}
+
+=head2 note
+
+    my $note = $api->note(
+        $project_id,
+        $note_type,
+        $merge_request_id,
+        $note_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/:note_type/:merge_request_id/notes/:note_id> and returns the decoded/deserialized response body.
+
+=cut
+
+sub note {
+    my $self = shift;
+    croak 'note must be called with 4 arguments' if @_ != 4;
+    croak 'The #1 argument ($project_id) to note must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($note_type) to note must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($merge_request_id) to note must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    croak 'The #4 argument ($note_id) to note must be a scalar' if ref($_[3]) or (!defined $_[3]);
+    my $path = sprintf('/projects/%s/%s/%s/notes/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
+    return $self->get( $path );
+}
+
+=head2 create_note
+
+    $api->create_note(
+        $project_id,
+        $note_type,
+        $merge_request_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/:note_type/:merge_request_id/notes>.
+
+=cut
+
+sub create_note {
+    my $self = shift;
+    croak 'create_note must be called with 3 to 4 arguments' if @_ < 3 or @_ > 4;
+    croak 'The #1 argument ($project_id) to create_note must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($note_type) to create_note must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($merge_request_id) to create_note must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    croak 'The last argument (\%params) to create_note must be a hash ref' if defined($_[3]) and ref($_[3]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/projects/%s/%s/%s/notes', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
+    $self->post( $path, ( defined($params) ? $params : () ) );
+    return;
+}
+
+=head1 DEPLOY KEY METHODS
+
+See L<http://doc.gitlab.com/ce/api/deploy_keys.html>.
+
+=head2 deploy_keys
+
+    my $keys = $api->deploy_keys(
+        $project_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/keys> and returns the decoded/deserialized response body.
+
+=cut
+
+sub deploy_keys {
+    my $self = shift;
+    croak 'deploy_keys must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($project_id) to deploy_keys must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $path = sprintf('/projects/%s/keys', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
+    return $self->get( $path );
+}
+
+=head2 deploy_key
+
+    my $key = $api->deploy_key(
+        $project_id,
+        $key_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/keys/:key_id> and returns the decoded/deserialized response body.
+
+=cut
+
+sub deploy_key {
+    my $self = shift;
+    croak 'deploy_key must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to deploy_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($key_id) to deploy_key must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/keys/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
+    return $self->get( $path );
+}
+
+=head2 create_deploy_key
+
+    $api->create_deploy_key(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/keys>.
+
+=cut
+
+sub create_deploy_key {
+    my $self = shift;
+    croak 'create_deploy_key must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($project_id) to create_deploy_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to create_deploy_key must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/projects/%s/keys', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
+    $self->post( $path, ( defined($params) ? $params : () ) );
+    return;
+}
+
+=head2 delete_deploy_key
+
+    $api->delete_deploy_key(
+        $project_id,
+        $key_id,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/keys/:key_id>.
+
+=cut
+
+sub delete_deploy_key {
+    my $self = shift;
+    croak 'delete_deploy_key must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to delete_deploy_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($key_id) to delete_deploy_key must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/keys/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'DELETE', $path, undef );
+    $self->delete( $path );
+    return;
+}
+
+=head1 SYSTEM HOOK METHODS
+
+See L<http://doc.gitlab.com/ce/api/system_hooks.html>.
 
 =head2 hooks
 
@@ -2157,262 +2235,218 @@ sub delete_hook {
     return;
 }
 
-=head1 USERS METHODS
+=head1 GROUP METHODS
 
-=head2 users
+See L<http://doc.gitlab.com/ce/api/groups.html>.
 
-    my $users = $api->users(
-        \%params,
-    );
+=head2 groups
 
-Sends a C<GET> request to C</users> and returns the decoded/deserialized response body.
+    my $groups = $api->groups();
 
-=cut
-
-sub users {
-    my $self = shift;
-    croak 'users must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
-    croak 'The last argument (\%params) to users must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
-    my $params = pop;
-    my $path = sprintf('/users', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, $params );
-    return $self->get( $path, ( defined($params) ? $params : () ) );
-}
-
-=head2 user
-
-    $api->user(
-        $user_id,
-    );
-
-Sends a C<GET> request to C</users/:user_id>.
+Sends a C<GET> request to C</groups> and returns the decoded/deserialized response body.
 
 =cut
 
-sub user {
+sub groups {
     my $self = shift;
-    croak 'user must be called with 1 arguments' if @_ != 1;
-    croak 'The #1 argument ($user_id) to user must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    my $path = sprintf('/users/%s', (map { uri_escape($_) } @_));
+    croak "The groups method does not take any arguments" if @_;
+    my $path = sprintf('/groups', (map { uri_escape($_) } @_));
     $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    $self->get( $path );
-    return;
+    return $self->get( $path );
 }
 
-=head2 create_user
+=head2 group
 
-    $api->create_user(
-        \%params,
+    my $group = $api->group(
+        $group_id,
     );
 
-Sends a C<POST> request to C</users>.
+Sends a C<GET> request to C</groups/:group_id> and returns the decoded/deserialized response body.
 
 =cut
 
-sub create_user {
+sub group {
     my $self = shift;
-    croak 'create_user must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
-    croak 'The last argument (\%params) to create_user must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    croak 'group must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($group_id) to group must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $path = sprintf('/groups/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
+    return $self->get( $path );
+}
+
+=head2 create_group
+
+    $api->create_group(
+        \%params,
+    );
+
+Sends a C<POST> request to C</groups>.
+
+=cut
+
+sub create_group {
+    my $self = shift;
+    croak 'create_group must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to create_group must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
     my $params = pop;
-    my $path = sprintf('/users', (map { uri_escape($_) } @_));
+    my $path = sprintf('/groups', (map { uri_escape($_) } @_));
     $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
     $self->post( $path, ( defined($params) ? $params : () ) );
     return;
 }
 
-=head2 edit_user
+=head2 transfer_project
 
-    $api->edit_user(
-        $user_id,
-        \%params,
+    $api->transfer_project(
+        $group_id,
+        $project_id,
     );
 
-Sends a C<PUT> request to C</users/:user_id>.
+Sends a C<POST> request to C</groups/:group_id/projects/:project_id>.
 
 =cut
 
-sub edit_user {
+sub transfer_project {
     my $self = shift;
-    croak 'edit_user must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
-    croak 'The #1 argument ($user_id) to edit_user must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The last argument (\%params) to edit_user must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
-    my $params = pop;
-    my $path = sprintf('/users/%s', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'PUT', $path, $params );
-    $self->put( $path, ( defined($params) ? $params : () ) );
+    croak 'transfer_project must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($group_id) to transfer_project must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($project_id) to transfer_project must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/groups/%s/projects/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, undef );
+    $self->post( $path );
     return;
 }
 
-=head2 delete_user
+=head2 delete_group
 
-    my $user = $api->delete_user(
-        $user_id,
+    $api->delete_group(
+        $group_id,
     );
 
-Sends a C<DELETE> request to C</users/:user_id> and returns the decoded/deserialized response body.
+Sends a C<DELETE> request to C</groups/:group_id>.
 
 =cut
 
-sub delete_user {
+sub delete_group {
     my $self = shift;
-    croak 'delete_user must be called with 1 arguments' if @_ != 1;
-    croak 'The #1 argument ($user_id) to delete_user must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    my $path = sprintf('/users/%s', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'DELETE', $path, undef );
-    return $self->delete( $path );
-}
-
-=head2 current_user
-
-    my $user = $api->current_user();
-
-Sends a C<GET> request to C</user> and returns the decoded/deserialized response body.
-
-=cut
-
-sub current_user {
-    my $self = shift;
-    croak "The current_user method does not take any arguments" if @_;
-    my $path = sprintf('/user', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
-}
-
-=head2 current_user_ssh_keys
-
-    my $keys = $api->current_user_ssh_keys();
-
-Sends a C<GET> request to C</user/keys> and returns the decoded/deserialized response body.
-
-=cut
-
-sub current_user_ssh_keys {
-    my $self = shift;
-    croak "The current_user_ssh_keys method does not take any arguments" if @_;
-    my $path = sprintf('/user/keys', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
-}
-
-=head2 user_ssh_keys
-
-    my $keys = $api->user_ssh_keys(
-        $user_id,
-    );
-
-Sends a C<GET> request to C</users/:user_id/keys> and returns the decoded/deserialized response body.
-
-=cut
-
-sub user_ssh_keys {
-    my $self = shift;
-    croak 'user_ssh_keys must be called with 1 arguments' if @_ != 1;
-    croak 'The #1 argument ($user_id) to user_ssh_keys must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    my $path = sprintf('/users/%s/keys', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
-}
-
-=head2 user_ssh_key
-
-    my $key = $api->user_ssh_key(
-        $key_id,
-    );
-
-Sends a C<GET> request to C</user/keys/:key_id> and returns the decoded/deserialized response body.
-
-=cut
-
-sub user_ssh_key {
-    my $self = shift;
-    croak 'user_ssh_key must be called with 1 arguments' if @_ != 1;
-    croak 'The #1 argument ($key_id) to user_ssh_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    my $path = sprintf('/user/keys/%s', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
-}
-
-=head2 create_current_user_ssh_key
-
-    $api->create_current_user_ssh_key(
-        \%params,
-    );
-
-Sends a C<POST> request to C</user/keys>.
-
-=cut
-
-sub create_current_user_ssh_key {
-    my $self = shift;
-    croak 'create_current_user_ssh_key must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
-    croak 'The last argument (\%params) to create_current_user_ssh_key must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
-    my $params = pop;
-    my $path = sprintf('/user/keys', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
-    $self->post( $path, ( defined($params) ? $params : () ) );
-    return;
-}
-
-=head2 create_user_ssh_key
-
-    $api->create_user_ssh_key(
-        $user_id,
-        \%params,
-    );
-
-Sends a C<POST> request to C</users/:user_id/keys>.
-
-=cut
-
-sub create_user_ssh_key {
-    my $self = shift;
-    croak 'create_user_ssh_key must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
-    croak 'The #1 argument ($user_id) to create_user_ssh_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The last argument (\%params) to create_user_ssh_key must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
-    my $params = pop;
-    my $path = sprintf('/users/%s/keys', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
-    $self->post( $path, ( defined($params) ? $params : () ) );
-    return;
-}
-
-=head2 delete_current_user_ssh_key
-
-    $api->delete_current_user_ssh_key(
-        $key_id,
-    );
-
-Sends a C<DELETE> request to C</user/keys/:key_id>.
-
-=cut
-
-sub delete_current_user_ssh_key {
-    my $self = shift;
-    croak 'delete_current_user_ssh_key must be called with 1 arguments' if @_ != 1;
-    croak 'The #1 argument ($key_id) to delete_current_user_ssh_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    my $path = sprintf('/user/keys/%s', (map { uri_escape($_) } @_));
+    croak 'delete_group must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($group_id) to delete_group must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $path = sprintf('/groups/%s', (map { uri_escape($_) } @_));
     $log->infof( 'Making %s request against %s with params %s.', 'DELETE', $path, undef );
     $self->delete( $path );
     return;
 }
 
-=head2 delete_user_ssh_key
+=head2 group_members
 
-    $api->delete_user_ssh_key(
-        $user_id,
-        $key_id,
+    my $members = $api->group_members(
+        $group_id,
     );
 
-Sends a C<DELETE> request to C</users/:user_id/keys/:key_id>.
+Sends a C<GET> request to C</groups/:group_id/members> and returns the decoded/deserialized response body.
 
 =cut
 
-sub delete_user_ssh_key {
+sub group_members {
     my $self = shift;
-    croak 'delete_user_ssh_key must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($user_id) to delete_user_ssh_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($key_id) to delete_user_ssh_key must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    my $path = sprintf('/users/%s/keys/%s', (map { uri_escape($_) } @_));
+    croak 'group_members must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($group_id) to group_members must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $path = sprintf('/groups/%s/members', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
+    return $self->get( $path );
+}
+
+=head2 add_group_member
+
+    $api->add_group_member(
+        $group_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</groups/:group_id/members>.
+
+=cut
+
+sub add_group_member {
+    my $self = shift;
+    croak 'add_group_member must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($group_id) to add_group_member must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to add_group_member must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/groups/%s/members', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
+    $self->post( $path, ( defined($params) ? $params : () ) );
+    return;
+}
+
+=head2 remove_group_member
+
+    $api->remove_group_member(
+        $group_id,
+        $user_id,
+    );
+
+Sends a C<DELETE> request to C</groups/:group_id/members/:user_id>.
+
+=cut
+
+sub remove_group_member {
+    my $self = shift;
+    croak 'remove_group_member must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($group_id) to remove_group_member must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($user_id) to remove_group_member must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/groups/%s/members/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'DELETE', $path, undef );
+    $self->delete( $path );
+    return;
+}
+
+=head1 SERVICE METHODS
+
+See L<http://doc.gitlab.com/ce/api/services.html>.
+
+=head2 edit_project_service
+
+    $api->edit_project_service(
+        $project_id,
+        $service_name,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/services/:service_name>.
+
+=cut
+
+sub edit_project_service {
+    my $self = shift;
+    croak 'edit_project_service must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to edit_project_service must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($service_name) to edit_project_service must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to edit_project_service must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/projects/%s/services/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'PUT', $path, $params );
+    $self->put( $path, ( defined($params) ? $params : () ) );
+    return;
+}
+
+=head2 delete_project_service
+
+    $api->delete_project_service(
+        $project_id,
+        $service_name,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/services/:service_name>.
+
+=cut
+
+sub delete_project_service {
+    my $self = shift;
+    croak 'delete_project_service must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to delete_project_service must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($service_name) to delete_project_service must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/services/%s', (map { uri_escape($_) } @_));
     $log->infof( 'Making %s request against %s with params %s.', 'DELETE', $path, undef );
     $self->delete( $path );
     return;

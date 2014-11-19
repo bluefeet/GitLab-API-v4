@@ -6,7 +6,10 @@ module.
 
 =head1 DATA FILES
 
-The YAML files in the C<author/data/> directory have lines
+The C<author/config.yml> drives the order and configuration of
+individual sections.
+
+The YAML files in the C<author/sections/> directory have lines
 like this:
 
     - SUB: HTTP_METHOD PATH

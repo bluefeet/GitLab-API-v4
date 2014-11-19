@@ -1,0 +1,53 @@
+---
+sections:
+- users:
+    head: USER METHODS
+    doc_url: http://doc.gitlab.com/ce/api/users.html
+- session:
+    head: SESSION METHODS
+    doc_url: http://doc.gitlab.com/ce/api/session.html
+- projects:
+    head: PROJECT METHODS
+    doc_url: http://doc.gitlab.com/ce/api/projects.html
+- project_snippets:
+    head: SNIPPET METHODS
+    doc_url: http://doc.gitlab.com/ce/api/project_snippets.html
+- repositories:
+    head: REPOSITORY METHODS
+    doc_url: http://doc.gitlab.com/ce/api/repositories.html
+- repository_files:
+    head: FILE METHODS
+    doc_url: http://doc.gitlab.com/ce/api/repository_files.html
+- commits:
+    doc_url: http://doc.gitlab.com/ce/api/commits.html
+    head: COMMIT METHODS
+- branches:
+    head: BRANCH METHODS
+    doc_url: http://doc.gitlab.com/ce/api/branches.html
+- merge_requests:
+    head: MERGE REQUEST METHODS
+    doc_url: http://doc.gitlab.com/ce/api/merge_requests.html
+- issues:
+    head: ISSUE METHODS
+    doc_url: http://doc.gitlab.com/ce/api/issues.html
+- labels:
+    head: LABEL METHODS
+    doc_url: http://doc.gitlab.com/ce/api/labels.html
+- milestones:
+    head: MILESTONE METHODS
+    doc_url: http://doc.gitlab.com/ce/api/milestones.html
+- notes:
+    head: NOTE METHODS
+    doc_url: http://doc.gitlab.com/ce/api/notes.html
+- deploy_keys:
+    head: DEPLOY KEY METHODS
+    doc_url: http://doc.gitlab.com/ce/api/deploy_keys.html
+- system_hooks:
+    head: SYSTEM HOOK METHODS
+    doc_url: http://doc.gitlab.com/ce/api/system_hooks.html
+- groups:
+    head: GROUP METHODS
+    doc_url: http://doc.gitlab.com/ce/api/groups.html
+- services:
+    head: SERVICE METHODS
+    doc_url: http://doc.gitlab.com/ce/api/services.html
