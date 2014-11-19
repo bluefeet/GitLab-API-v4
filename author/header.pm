@@ -2,7 +2,7 @@ package GitLab::API::v3;
 
 =head1 NAME
 
-GitLab::API::v3 - GitLab API v3 client.
+GitLab::API::v3 - A complete GitLab API v3 client.
 
 =head1 SYNOPSIS
 
