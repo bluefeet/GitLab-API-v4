@@ -81,6 +81,22 @@ An instance of L<GitLab::API::v3::RESTClient>.  Typically you will not
 be setting this as it defaults to a new instance and customization
 should not be necessary.
 
+=head1 UTILITY METHODS
+
+=head2 paginator
+
+  my $paginator = $api->paginator( $method, @method_args );
+
+  my $member_pager = $api->paginator('group_members', $group_id);
+  while (my $member = $member_pager->next()) {
+    ...
+  }
+
+Given a method who supports the C<page> and C<per_page> parameters,
+and returns an array ref, this will return a L<GitLab::API::v3::Paginator>
+object that will allow you to walk the records one page or one record
+at a time.
+
 =head1 USER METHODS
 
 See L<http://doc.gitlab.com/ce/api/users.html>.
@@ -1023,6 +1039,7 @@ Sends a C<DELETE> request to C</groups/:group_id>.
 
     my $members = $api->group_members(
         $group_id,
+        \%params,
     );
 
 Sends a C<GET> request to C</groups/:group_id/members> and returns the decoded/deserialized response body.

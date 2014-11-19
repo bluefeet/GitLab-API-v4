@@ -65,6 +65,7 @@ See L</CONTRIBUTING> for more info.
 =cut
 
 use GitLab::API::v3::RESTClient;
+use GitLab::API::v3::Paginator;
 
 use Types::Standard -types;
 use Types::Common::String -types;
@@ -144,6 +145,37 @@ sub _build_rest_client {
     );
 
     return $rest;
+}
+
+=head1 UTILITY METHODS
+
+=head2 paginator
+
+  my $paginator = $api->paginator( $method, @method_args );
+
+  my $member_pager = $api->paginator('group_members', $group_id);
+  while (my $member = $member_pager->next()) {
+    ...
+  }
+
+Given a method who supports the C<page> and C<per_page> parameters,
+and returns an array ref, this will return a L<GitLab::API::v3::Paginator>
+object that will allow you to walk the records one page or one record
+at a time.
+
+=cut
+
+sub paginator {
+  my ($self, $method, @args) = @_;
+
+  my $params = (ref($args[-1]) eq 'HASH') ? pop(@args) : {};
+
+  return GitLab::API::v3::Paginator->new(
+    api    => $self,
+    method => $method,
+    args   => \@args,
+    params => $params,
+  );
 }
 
 =head1 USER METHODS
@@ -2360,6 +2392,7 @@ sub delete_group {
 
     my $members = $api->group_members(
         $group_id,
+        \%params,
     );
 
 Sends a C<GET> request to C</groups/:group_id/members> and returns the decoded/deserialized response body.
@@ -2368,11 +2401,13 @@ Sends a C<GET> request to C</groups/:group_id/members> and returns the decoded/d
 
 sub group_members {
     my $self = shift;
-    croak 'group_members must be called with 1 arguments' if @_ != 1;
+    croak 'group_members must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($group_id) to group_members must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to group_members must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = pop;
     my $path = sprintf('/groups/%s/members', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, $params );
+    return $self->get( $path, ( defined($params) ? $params : () ) );
 }
 
 =head2 add_group_member
