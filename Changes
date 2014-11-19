@@ -1,6 +1,8 @@
 Revision history for Perl extension GitLab::API::v3.
 
 {{$NEXT}}
+
+0.05      2014-11-19
  - Added GitLab::API::v3::Paginator.
  - Modify group_memebers() to support \%params so that page and per_page may be passed.
 
