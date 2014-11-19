@@ -9,11 +9,11 @@ use Log::Any::Adapter 'TAP';
 use GitLab::API::v3;
 use GitLab::API::v3::Constants qw( :all );
 
-my $url   = $ENV{GITLAB_V3_API_URL};
-my $token = $ENV{GITLAB_TOKEN};
+my $url   = $ENV{GITLAB_API_V3_URL};
+my $token = $ENV{GITLAB_API_V3_TOKEN};
 
 plan skip_all =>
-    'Set the GITLAB_V3_API_URL and GITLAB_TOKEN env vars to run this test.'
+    'Set the GITLAB_API_V3_URL and GITLAB_API_V3_TOKEN env vars to run this test.'
     unless $url and $token;
 
 my $api = GitLab::API::v3->new(

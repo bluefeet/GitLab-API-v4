@@ -1,6 +1,11 @@
 1;
 __END__
 
+=head2 SEE ALSO
+
+L<Net::GitLab> reports to provide an interface to the GitLab API, but
+it is hard to tell due to a complete lack of documentation.
+
 =head2 CONTRIBUTING
 
 This module is auto-generated from a set of YAML files defining the

@@ -30,8 +30,8 @@ Instead of doing that, you can use L<GitLab::API::v3::Constants>.
 =head2 EXCEPTIONS
 
 The API methods will all throw (hopefully) useful exception if
-a unsuccesful response is received from the API.  That is except for
-GET requests that return a C<404> response - these will return undef
+an unsuccesful response is received from the API.  That is except for
+C<GET> requests that return a C<404> response - these will return undef
 for methods that return a value.
 
 If you'd like to catch and handle these exceptions consider using
@@ -59,7 +59,13 @@ use namespace::clean;
 
 sub BUILD {
     my ($self) = @_;
+
     $log->debugf( "An instance of %s has been created.", ref($self) );
+
+    $self->rest_client->set_persistent_header(
+        'PRIVATE-TOKEN' => $self->token(),
+    );
+
     return;
 }
 
@@ -116,10 +122,6 @@ sub _build_rest_client {
     my $rest = $class->new(
         server => $url,
         type   => 'application/json',
-    );
-
-    $rest->set_persistent_header(
-        'PRIVATE-TOKEN' => $self->token(),
     );
 
     return $rest;
@@ -2418,6 +2420,11 @@ sub delete_user_ssh_key {
 
 1;
 __END__
+
+=head2 SEE ALSO
+
+L<Net::GitLab> reports to provide an interface to the GitLab API, but
+it is hard to tell due to a complete lack of documentation.
 
 =head2 CONTRIBUTING
 
