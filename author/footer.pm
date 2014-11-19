@@ -1,12 +1,12 @@
 1;
 __END__
 
-=head2 SEE ALSO
+=head1 SEE ALSO
 
 L<Net::GitLab> reports to provide an interface to the GitLab API, but
 it is hard to tell due to a complete lack of documentation.
 
-=head2 CONTRIBUTING
+=head1 CONTRIBUTING
 
 This module is auto-generated from a set of YAML files defining the
 interface of GitLab's API.  If you'd like to contribute to this module

@@ -21,23 +21,23 @@ This module provides a one-to-one interface with the GitLab
 API v3.  Much is not documented here as it would just be duplicating
 GitLab's own L<API Documentation|http://doc.gitlab.com/ce/api/README.html>.
 
-=head2 CONSTANTS
+=head1 CONSTANTS
 
 Several values in the GitLab API require looking up the numeric value
 for a meaning (such as C<access_level> and C<visibility_level>).
 Instead of doing that, you can use L<GitLab::API::v3::Constants>.
 
-=head2 EXCEPTIONS
+=head1 EXCEPTIONS
 
-The API methods will all throw (hopefully) useful exception if
-an unsuccesful response is received from the API.  That is except for
-C<GET> requests that return a C<404> response - these will return undef
+The API methods will all throw (hopefully) a useful exception if
+an unsuccessful response is received from the API.  That is except for
+C<GET> requests that return a C<404> response - these will return C<undef>
 for methods that return a value.
 
 If you'd like to catch and handle these exceptions consider using
 L<Try::Tiny>.
 
-=head2 LOGGING
+=head1 LOGGING
 
 This module uses L<Log::Any> and produces some debug messages here
 and there, but the most useful bits are the info messages produced
@@ -2455,12 +2455,12 @@ sub delete_project_service {
 1;
 __END__
 
-=head2 SEE ALSO
+=head1 SEE ALSO
 
 L<Net::GitLab> reports to provide an interface to the GitLab API, but
 it is hard to tell due to a complete lack of documentation.
 
-=head2 CONTRIBUTING
+=head1 CONTRIBUTING
 
 This module is auto-generated from a set of YAML files defining the
 interface of GitLab's API.  If you'd like to contribute to this module
