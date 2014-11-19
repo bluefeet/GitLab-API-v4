@@ -21,13 +21,13 @@ This module provides a one-to-one interface with the GitLab
 API v3.  Much is not documented here as it would just be duplicating
 GitLab's own L<API Documentation|http://doc.gitlab.com/ce/api/README.html>.
 
-=head1 CONSTANTS
+=head2 CONSTANTS
 
 Several values in the GitLab API require looking up the numeric value
 for a meaning (such as C<access_level> and C<visibility_level>).
 Instead of doing that, you can use L<GitLab::API::v3::Constants>.
 
-=head1 EXCEPTIONS
+=head2 EXCEPTIONS
 
 The API methods will all throw (hopefully) a useful exception if
 an unsuccessful response is received from the API.  That is except for
@@ -37,11 +37,30 @@ for methods that return a value.
 If you'd like to catch and handle these exceptions consider using
 L<Try::Tiny>.
 
-=head1 LOGGING
+=head2 LOGGING
 
 This module uses L<Log::Any> and produces some debug messages here
 and there, but the most useful bits are the info messages produced
 just before each API call.
+
+=head2 PROJECT ID
+
+Note that many API calls require a C<$project_id>.  This can be
+specified as either a numeric project C<ID>, or as a
+C<NAMESPACE_PATH/PROJECT_PATH> in many cases.  Perhaps even
+all cases, but the GitLab documentation on this point is vague.
+
+=head2 RETURN VALUES
+
+Many of this module's methods should return a value but do not
+currently.  This is due to the fact that this module was built
+as a strict representation of GitLab's own documentation which
+is often inconsistent.
+
+If you find a method that should provide a return value, but
+doesn't currently, please verify that GitLab actually does
+return a value and then submit a pull request or open an issue.
+See L</CONTRIBUTING> for more info.
 
 =cut
 

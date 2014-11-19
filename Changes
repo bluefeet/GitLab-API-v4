@@ -3,6 +3,8 @@ Revision history for Perl extension GitLab::API::v3.
 {{$NEXT}}
  - Reorganize section headers and add direct links to GitLab's documentation for each.
  - Adjust abstract.
+ - Add documentation about project IDs and return values.
+ - Other documentation tweaks.
 
 0.03      2014-11-18
  - Point the user at the Constants module from the main docs.

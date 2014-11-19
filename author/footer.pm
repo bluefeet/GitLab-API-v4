@@ -20,6 +20,9 @@ Please see
 L<https://github.com/bluefeet/GitLab-API-v3/blob/master/author/README.pod>
 for more information.
 
+Alternatively, you can
+L<open a ticket|https://github.com/bluefeet/GitLab-API-v3/issues>.
+
 =head1 AUTHOR
 
 Aran Clary Deltac <bluefeet@gmail.com>
