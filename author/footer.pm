@@ -3,8 +3,9 @@ __END__
 
 =head1 SEE ALSO
 
-L<Net::GitLab> reports to provide an interface to the GitLab API, but
-it is hard to tell due to a complete lack of documentation.
+L<Net::GitLab> purports to provide an interface to the GitLab API, but
+it is hard to tell due to a complete lack of documentation via either
+POD or unit tests.
 
 =head1 CONTRIBUTING
 
