@@ -151,12 +151,12 @@ sub _build_rest_client {
 
 =head2 paginator
 
-  my $paginator = $api->paginator( $method, @method_args );
-
-  my $member_pager = $api->paginator('group_members', $group_id);
-  while (my $member = $member_pager->next()) {
-    ...
-  }
+    my $paginator = $api->paginator( $method, @method_args );
+    
+    my $member_pager = $api->paginator('group_members', $group_id);
+    while (my $member = $member_pager->next()) {
+        ...
+    }
 
 Given a method who supports the C<page> and C<per_page> parameters,
 and returns an array ref, this will return a L<GitLab::API::v3::Paginator>
@@ -166,16 +166,16 @@ at a time.
 =cut
 
 sub paginator {
-  my ($self, $method, @args) = @_;
+    my ($self, $method, @args) = @_;
 
-  my $params = (ref($args[-1]) eq 'HASH') ? pop(@args) : {};
+    my $params = (ref($args[-1]) eq 'HASH') ? pop(@args) : {};
 
-  return GitLab::API::v3::Paginator->new(
-    api    => $self,
-    method => $method,
-    args   => \@args,
-    params => $params,
-  );
+    return GitLab::API::v3::Paginator->new(
+        api    => $self,
+        method => $method,
+        args   => \@args,
+        params => $params,
+    );
 }
 
 =head1 USER METHODS

@@ -34,9 +34,9 @@ return an array ref.
 =cut
 
 has method => (
-  is       => 'ro',
-  isa      => NonEmptySimpleStr,
-  required => 1,
+    is       => 'ro',
+    isa      => NonEmptySimpleStr,
+    required => 1,
 );
 
 =head2 api
@@ -46,9 +46,9 @@ The L<GitLab::API::v3> object.
 =cut
 
 has api => (
-  is       => 'ro',
-  isa      => InstanceOf[ 'GitLab::API::v3' ],
-  required => 1,
+    is       => 'ro',
+    isa      => InstanceOf[ 'GitLab::API::v3' ],
+    required => 1,
 );
 
 =head1 OPTIONAL ARGUMENTS
@@ -62,9 +62,9 @@ object, minus the C<\%params> hash ref.
 =cut
 
 has args => (
-  is      => 'ro',
-  isa     => ArrayRef,
-  default => sub{ [] },
+    is      => 'ro',
+    isa     => ArrayRef,
+    default => sub{ [] },
 );
 
 =head2 params
@@ -74,9 +74,9 @@ The C<\%params> hash ref argument.
 =cut
 
 has params => (
-  is      => 'ro',
-  isa     => HashRef,
-  default => sub{ {} },
+    is      => 'ro',
+    isa     => HashRef,
+    default => sub{ {} },
 );
 
 =head1 METHODS
@@ -84,67 +84,67 @@ has params => (
 =cut
 
 has _records => (
-  is       => 'rw',
-  init_arg => undef,
-  default  => sub{ [] },
+    is       => 'rw',
+    init_arg => undef,
+    default  => sub{ [] },
 );
 
 has _page => (
-  is       => 'rw',
-  init_arg => undef,
-  default  => 0,
+    is       => 'rw',
+    init_arg => undef,
+    default  => 0,
 );
 
 has _last_page => (
-  is       => 'rw',
-  init_arg => undef,
-  default  => 0,
+    is       => 'rw',
+    init_arg => undef,
+    default  => 0,
 );
 
 =head2 next_page
 
-  while (my $records = $paginator->next_page()) { ... }
+    while (my $records = $paginator->next_page()) { ... }
 
 Returns an array ref of records for the next page.
 
 =cut
 
 sub next_page {
-  my ($self) = @_;
+    my ($self) = @_;
 
-  return if $self->_last_page();
+    return if $self->_last_page();
 
-  my $page     = $self->_page() + 1;
-  my $params   = $self->params();
-  my $per_page = $params->{per_page} || 20;
+    my $page     = $self->_page() + 1;
+    my $params   = $self->params();
+    my $per_page = $params->{per_page} || 20;
 
-  $params = {
-    %$params,
-    page     => $page,
-    per_page => $per_page,
-  };
+    $params = {
+        %$params,
+        page     => $page,
+        per_page => $per_page,
+    };
 
-  my $method = $self->method();
-  my $records = $self->api->$method(
-    @{ $self->args() },
-    $params,
-  );
+    my $method = $self->method();
+    my $records = $self->api->$method(
+        @{ $self->args() },
+        $params,
+    );
 
-  croak("The $method method returned a non array ref value")
-    if ref($records) ne 'ARRAY';
+    croak("The $method method returned a non array ref value")
+        if ref($records) ne 'ARRAY';
 
-  $self->_page( $page );
-  $self->_last_page( 1 ) if @$records < $per_page;
-  $self->_records( [ @$records ] );
+    $self->_page( $page );
+    $self->_last_page( 1 ) if @$records < $per_page;
+    $self->_records( [ @$records ] );
 
-  return if !@$records;
+    return if !@$records;
 
-  return $records;
+    return $records;
 }
 
 =head2 next
 
-  while (my $record = $paginator->next()) { ... }
+    while (my $record = $paginator->next()) { ... }
 
 Returns the next record in the current page.  If all records have
 been exhausted then L</next_page> will automatically be called.
@@ -154,24 +154,24 @@ over and over again to walk through all the records.
 =cut
 
 sub next {
-  my ($self) = @_;
+    my ($self) = @_;
 
-  my $records = $self->_records();
-  return shift(@$records) if @$records;
+    my $records = $self->_records();
+    return shift(@$records) if @$records;
 
-  return if $self->_last_page();
+    return if $self->_last_page();
 
-  $self->next_page();
+    $self->next_page();
 
-  $records = $self->_records();
-  return shift(@$records) if @$records;
+    $records = $self->_records();
+    return shift(@$records) if @$records;
 
-  return;
+    return;
 }
 
 =head2 all
 
-  my $records = $paginator->all();
+    my $records = $paginator->all();
 
 This is just an alias for calling L</next_page> over and over
 again to build an array ref of all records.
@@ -179,21 +179,21 @@ again to build an array ref of all records.
 =cut
 
 sub all {
-  my ($self) = @_;
+    my ($self) = @_;
 
-  $self->reset();
+    $self->reset();
 
-  my @records;
-  while (my $page = $self->next_page()) {
-    push @records, @$page;
-  }
+    my @records;
+    while (my $page = $self->next_page()) {
+        push @records, @$page;
+    }
 
-  return \@records;
+    return \@records;
 }
 
 =head2 reset
 
-  $paginator->reset();
+    $paginator->reset();
 
 Reset the paginator back to its original state on the first page
 with no records retrieved yet.
@@ -201,11 +201,11 @@ with no records retrieved yet.
 =cut
 
 sub reset {
-  my ($self) = @_;
-  $self->_records( [] );
-  $self->_page( 0 );
-  $self->_last_page( 0 );
-  return;
+    my ($self) = @_;
+    $self->_records( [] );
+    $self->_page( 0 );
+    $self->_last_page( 0 );
+    return;
 }
 
 1;

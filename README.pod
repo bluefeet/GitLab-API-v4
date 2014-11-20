@@ -85,12 +85,12 @@ should not be necessary.
 
 =head2 paginator
 
-  my $paginator = $api->paginator( $method, @method_args );
-
-  my $member_pager = $api->paginator('group_members', $group_id);
-  while (my $member = $member_pager->next()) {
-    ...
-  }
+    my $paginator = $api->paginator( $method, @method_args );
+    
+    my $member_pager = $api->paginator('group_members', $group_id);
+    while (my $member = $member_pager->next()) {
+        ...
+    }
 
 Given a method who supports the C<page> and C<per_page> parameters,
 and returns an array ref, this will return a L<GitLab::API::v3::Paginator>
