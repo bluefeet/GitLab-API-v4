@@ -153,10 +153,21 @@ sub _build_rest_client {
 
     my $paginator = $api->paginator( $method, @method_args );
     
-    my $member_pager = $api->paginator('group_members', $group_id);
-    while (my $member = $member_pager->next()) {
+    my $members = $api->paginator('group_members', $group_id);
+    while (my $member = $members->next()) {
         ...
     }
+    
+    my $users_pager = $api->paginator('users');
+    while (my $users = $users_pager->next_page()) {
+        ...
+    }
+    
+    my $all_open_issues = $api->paginator(
+        'issues',
+        $project_id,
+        { state=>'opened' },
+    )->all();
 
 Given a method who supports the C<page> and C<per_page> parameters,
 and returns an array ref, this will return a L<GitLab::API::v3::Paginator>
