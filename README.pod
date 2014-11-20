@@ -269,11 +269,11 @@ Sends a C<GET> request to C</projects/:project_id/events> and returns the decode
 
 =head2 create_project
 
-    $api->create_project(
+    my $project = $api->create_project(
         \%params,
     );
 
-Sends a C<POST> request to C</projects>.
+Sends a C<POST> request to C</projects> and returns the decoded/deserialized response body.
 
 =head2 create_project_for_user
 

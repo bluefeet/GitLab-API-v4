@@ -3,6 +3,7 @@ Revision history for Perl extension GitLab::API::v3.
 {{$NEXT}}
  - Include GitLab error messages in failed requests.
  - Fix visilibity constants naming to match our conventions.
+ - Modify create_project() to return the project hash ref.
 
 0.05      2014-11-19
  - Added GitLab::API::v3::Paginator.

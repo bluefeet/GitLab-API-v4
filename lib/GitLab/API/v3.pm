@@ -573,11 +573,11 @@ sub project_events {
 
 =head2 create_project
 
-    $api->create_project(
+    my $project = $api->create_project(
         \%params,
     );
 
-Sends a C<POST> request to C</projects>.
+Sends a C<POST> request to C</projects> and returns the decoded/deserialized response body.
 
 =cut
 
@@ -588,8 +588,7 @@ sub create_project {
     my $params = pop;
     my $path = sprintf('/projects', (map { uri_escape($_) } @_));
     $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
-    $self->post( $path, ( defined($params) ? $params : () ) );
-    return;
+    return $self->post( $path, ( defined($params) ? $params : () ) );
 }
 
 =head2 create_project_for_user

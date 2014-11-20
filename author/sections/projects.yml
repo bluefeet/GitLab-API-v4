@@ -4,7 +4,7 @@
 - all_projects: projects = GET /projects/all
 - project: project = GET /projects/:project_id
 - project_events: events = GET /projects/:project_id/events
-- create_project: POST /projects?
+- create_project: project = POST /projects?
 - create_project_for_user: POST /projects/user/:user_id?
 - fork_project: POST /pojects/fork/:project_id
 - delete_project: DELETE /projects/:project_id
