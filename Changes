@@ -1,6 +1,7 @@
 Revision history for Perl extension GitLab::API::v3.
 
 {{$NEXT}}
+ - Include GitLab error messages in failed requests.
 
 0.05      2014-11-19
  - Added GitLab::API::v3::Paginator.

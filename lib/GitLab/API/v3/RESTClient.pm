@@ -20,6 +20,7 @@ rather than the response object itself.
 =cut
 
 use Carp qw( confess );
+use Data::Dumper qw();
 
 use Moo;
 use strictures 1;
@@ -41,13 +42,27 @@ foreach my $method (qw( post get head put delete options )) {
             local $Carp::Internal{ 'GitLab::API::v3::RESTClient' } = 1;
 
             confess sprintf(
-                'Error %sing %s from %s (HTTP %s): %s',
-                uc($method), $path, $self->server(), $res->code(), $res->error() // 'undef',
+                'Error %sing %s from %s (HTTP %s): %s %s',
+                uc($method), $path, $self->server(), $res->code(), $res->error(),
+                _dump_one_line( $res->data() ),
             );
         }
 
         return $res->data();
     };
+}
+
+# Stolen and modified from Log::Any::Adapter::Core.
+sub _dump_one_line {
+    my ($value) = @_;
+
+    return '<undef>' if !defined $value;
+
+    return Data::Dumper->new( [$value] )->Indent(0)->Sortkeys(1)->Quotekeys(0)
+        ->Terse(1)->Dump() if ref($value);
+
+    $value =~ s{\s+}{ }g;
+    return $value;
 }
 
 1;
