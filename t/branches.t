@@ -26,7 +26,7 @@ my $ArrayRefOfHashRefs = ArrayRef[ HashRef ];
 my ($project) = (
     first { $_->{namespace}->{owner_id} }
     sort { $a->{name} cmp $b->{name} }
-    grep { $_->{visibility_level} == $GITLAB_PRIVATE_VISIBILITY_LEVEL }
+    grep { $_->{visibility_level} == $GITLAB_VISIBILITY_LEVEL_PRIVATE }
     @{ $api->owned_projects() }
 );
 

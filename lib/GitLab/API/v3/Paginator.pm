@@ -213,7 +213,7 @@ __END__
 
 =head1 AUTHOR
 
-Aran Clary Deltac <bluefeet@gmail.com>
+Aran Clary Deltac <bluefeetE<64>gmail.com>
 
 =head1 LICENSE
 
