@@ -1,6 +1,8 @@
 Revision history for Perl extension GitLab::API::v3.
 
 {{$NEXT}}
+
+0.06      2014-11-29
  - CLI client, gitlab-api-v3.
  - Replace "@" in POD with "E<64>" to bypass older Perl issues.
  - Include GitLab error messages in failed requests.
