@@ -1,0 +1,258 @@
+#!/usr/bin/env perl
+use strictures 1;
+
+use GitLab::API::v3;
+use GitLab::API::v3::Constants qw( :all );
+
+use Log::Any qw( $log );
+use Log::Any::Adapter;
+use Log::Any::Adapter::ScreenColoredLevel;
+use Try::Tiny;
+use Data::Serializer;
+
+use Getopt::Long;
+use Pod::Usage qw( pod2usage );
+
+Getopt::Long::Configure('pass_through');
+
+GetOptions(
+    'url=s'    => \my $url,
+    'token=s'  => \my $token,
+    'all'      => \my $all,
+    'format=s' => \my $format,
+
+    'help'     => \my $help,
+    'verbose'  => \my $verbose,
+    'quiet'    => \my $quiet,
+) or die "ERROR: Unable to process options!\n";
+
+if ($help or @ARGV and $ARGV[0] eq 'help') {
+    pod2usage( -verbose => 2 );
+    exit 0;
+}
+
+my $min_level = 'warning';
+$min_level = 'trace' if $verbose;
+$min_level = 'error' if $quiet;
+
+$format //= 'YAML';
+my $serializer = Data::Serializer::Raw->new( serializer=>$format );
+
+Log::Any::Adapter->set(
+    'ScreenColoredLevel',
+    min_level => $min_level,
+    stderr    => 1,
+);
+
+$url   ||= $ENV{GITLAB_API_V3_URL};
+$token ||= $ENV{GITLAB_API_V3_TOKEN};
+
+my $visibility_levels = {
+    '--visibility-level-private'  => $GITLAB_VISIBILITY_LEVEL_PRIVATE,
+    '--visibility-level-internal' => $GITLAB_VISIBILITY_LEVEL_INTERNAL,
+    '--visibility-level-public'   => $GITLAB_VISIBILITY_LEVEL_PUBLIC,
+};
+
+my $access_levels = {
+    '--access-level-guest'     => $GITLAB_ACCESS_LEVEL_GUEST,
+    '--access-level-reporter'  => $GITLAB_ACCESS_LEVEL_REPORTER,
+    '--access-level-developer' => $GITLAB_ACCESS_LEVEL_DEVELOPER,
+    '--access-level-master'    => $GITLAB_ACCESS_LEVEL_MASTER,
+    '--access-level-owner'     => $GITLAB_ACCESS_LEVEL_OWNER,
+};
+
+my @args;
+my $params = {};
+foreach my $arg (@ARGV) {
+    if (defined $visibility_levels->{$arg}) {
+        $params->{visibility_level} = $visibility_levels->{$arg};
+    }
+    elsif (defined $access_levels->{$arg}) {
+        $params->{access_level} = $access_levels->{$arg};
+    }
+    elsif ($arg =~ m{^--(no-|)?([^\s=]+)(=(\S+)|)$}) {
+        my ($no, $key, $has_value, $value) = ($1, $2, $3, $4);
+        $key =~ s{-}{_}g;
+        $value = $has_value ? $value : $no ? 0 : 1;
+        $params->{$key} = $value;
+    }
+    else {
+        push @args, $arg;
+    }
+}
+
+my $method = shift( @args );
+
+try {
+    my $api = GitLab::API::v3->new(
+        url   => $url,
+        token => $token,
+    );
+
+    if ($all) {
+        @args = ( $method, @args );
+        $method = 'paginator';
+    }
+
+    my $data = $api->$method(
+        @args,
+        %$params ? $params : (),
+    );
+
+    $data = $data->all() if $all;
+
+    exit 0 if !defined $data;
+
+    # Replace all non HASH/ARRAY references with strings.  This is
+    # implemented generically, but really only causes JSON boolean
+    # object to be stringified which makes sense for non-JSON serializers.
+    if ($format ne 'JSON') {
+        $data = clean_data( $data );
+    }
+
+    print $serializer->serialize( $data );
+}
+catch {
+    $log->fatal( $_ );
+    exit 1;
+};
+
+sub clean_data {
+    my ($data) = @_;
+
+    if (ref($data) eq 'ARRAY') {
+        $data = [
+            map { clean_data( $_ ) }
+            @$data
+        ];
+    }
+    elsif (ref($data) eq 'HASH') {
+        $data = {
+            map { $_ => clean_data( $data->{$_} ) }
+            keys( %$data )
+        };
+    }
+    elsif (ref $data) {
+        $data = "$data";
+    }
+
+    return $data;
+}
+
+__END__
+
+=head1 NAME
+
+gitlab-api-v3 - Command line interface to the GitLab API v3.
+
+=head1 SYNOPSIS
+
+    # Generally:
+    gitlab-api-v3 <method> [<arg> ...] [--<param>=<value> ...]
+    
+    # List all groups:
+    gitlab-api-v3 groups
+    
+    # List information about a project:
+    gitlab-api-v3 project <proeject_id>
+    
+    # Create an admin user:
+    gitlab-api-v3 create_user \
+        --email=<email> --password=<password> --username=<username> --name=<name> --admin
+
+=head1 ARGUMENTS
+
+=head2 url
+
+    --url=<url>
+
+The URL to to your GitLab API v3 API base.  Typically this will
+be something like C<http://git.example.com/api/v3>.
+
+You can alternatively set this by specifying the C<GITLAB_API_V3_URL>
+environment variable.
+
+=head2 token
+
+    --token=<token>
+
+The API token to access the API with.
+
+Alternatively you can set the C<GITLAB_API_V3_TOKEN> environment
+variable.
+
+WARNING: As a general rule it is highly discouraged to put sensitive
+information into command arguments such as your private API token since
+arguments can be seen by other users of the system.  Please use the
+environment variable if possible.
+
+=head2 all
+
+    --all
+
+Retrieves all results when the results would normally be paged.
+
+=head2 format
+
+    --format=<format>
+    --format=YAML
+    --format=JSON
+    --format=XML::Simple
+
+Specify the output format used when returning the result of an API call.
+Accepts any serializer that L<Data::Serializer> supports.  Defaults to
+C<YAML>.
+
+=head2 method
+
+    <method>
+
+The API method to call (one of the methods documented in
+L<GitLab::API::v3>).
+
+=head2 args
+
+    [<arg> ...]
+
+Any arguments that the L</method> requires.
+
+=head2 params
+
+    [--<param>=<value> ...]
+
+Any parameters that the L</method> accepts.
+
+=head2 visibility level
+
+    --visibility-level-private
+    --visibility-level-internal
+    --visibility-level-public
+
+=head2 access level
+
+    --access-level-guest
+    --access-level-reporter
+    --access-level-developer
+    --access-level-master
+    --access-level-owner
+
+=head2 help
+
+    help
+    --help
+
+Displays this handy documentation.
+
+=head1 SEE ALSO
+
+L<GitLab::API::v3>.
+
+=head1 AUTHOR
+
+Aran Clary Deltac <bluefeetE<64>gmail.com>
+
+=head1 LICENSE
+
+This script is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+

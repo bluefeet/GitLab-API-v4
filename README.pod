@@ -21,6 +21,9 @@ This module provides a one-to-one interface with the GitLab
 API v3.  Much is not documented here as it would just be duplicating
 GitLab's own L<API Documentation|http://doc.gitlab.com/ce/api/README.html>.
 
+Note that this distribution also includes the L<gitlab-api-v3> command-line
+interface (CLI),
+
 =head2 CONSTANTS
 
 Several values in the GitLab API require looking up the numeric value
