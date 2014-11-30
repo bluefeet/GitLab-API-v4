@@ -24,7 +24,7 @@ use namespace::clean;
 
 =head2 method
 
-The name of the method subroutine to all on the L</api> object
+The name of the method subroutine to call on the L</api> object
 to get records from.
 
 This method must accept a hash ref of parameters as the last

@@ -8,7 +8,7 @@ GitLab::API::v3::Constants - GitLab API v3 constants.
 
     use GitLab::API::v3::Constants qw( :all );
     
-    print $GITLAB_INTERNAL_VISIBILITY_LEVEL # 10
+    print $GITLAB_INTERNAL_VISIBILITY_LEVEL; # 10
 
 =cut
 
