@@ -212,13 +212,13 @@ L<GitLab::API::v3>).
 
 =head2 args
 
-    [<arg> ...]
+    <arg> ...
 
 Any arguments that the L</method> requires.
 
 =head2 params
 
-    [--<param>=<value> ...]
+    --<param>=<value> ...
 
 Any parameters that the L</method> accepts.
 
