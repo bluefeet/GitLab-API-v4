@@ -1,5 +1,3 @@
-" VIM settings for o.js.
-"
 " Install the vim-localvimrc plugin at:
 "   https://github.com/embear/vim-localvimrc
 " Which will automatically load this file when editing
