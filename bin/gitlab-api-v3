@@ -154,7 +154,7 @@ gitlab-api-v3 - Command line interface to the GitLab API v3.
     gitlab-api-v3 groups
     
     # List information about a project:
-    gitlab-api-v3 project <proeject_id>
+    gitlab-api-v3 project <project_id>
     
     # Create an admin user:
     gitlab-api-v3 create_user \
