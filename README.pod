@@ -1125,6 +1125,16 @@ L<open a ticket|https://github.com/bluefeet/GitLab-API-v3/issues>.
 
 Aran Clary Deltac <bluefeetE<64>gmail.com>
 
+=head2 CONTRIBUTORS
+
+=over
+
+=item *
+
+L<dotandimet|https://github.com/dotandimet>
+
+=back
+
 =head1 ACKNOWLEDGEMENTS
 
 Thanks to L<ZipRecruiter|https://www.ziprecruiter.com/>

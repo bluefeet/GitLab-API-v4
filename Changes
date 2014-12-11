@@ -1,6 +1,7 @@
 Revision history for Perl extension GitLab::API::v3.
 
 {{$NEXT}}
+ - Fix Gitopt::Long typo preventing installation. @dotandimet
  - Fix references to Net::GitLab which should be Net::Gitlab.
 
 0.06      2014-11-29
