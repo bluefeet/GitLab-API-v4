@@ -5,6 +5,6 @@
 - transfer_project: POST /groups/:group_id/projects/:project_id
 - delete_group: DELETE /groups/:group_id
 
-- group_members: members = GET /groups/:group_id/members?
+- group_members: members = GET /groups/:group_id/members
 - add_group_member: POST /groups/:group_id/members?
 - remove_group_member: DELETE /groups/:group_id/members/:user_id
