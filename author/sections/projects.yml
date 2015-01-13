@@ -9,7 +9,7 @@
 - fork_project: POST /pojects/fork/:project_id
 - delete_project: DELETE /projects/:project_id
 
-- project_members: members = GET /projects/:project_id/members?
+- project_members: members = GET /projects/:project_id/members
 - project_member: member = GET /project/:project_id/members/:user_id
 - add_project_member: POST /projects/:project_id/members?
 - edit_project_member: PUT /projects/:project_id/members/:user_id?
