@@ -1,6 +1,8 @@
 Revision history for Perl extension GitLab::API::v3.
 
 {{$NEXT}}
+
+0.08      2015-01-16
  - Remove project_members and group_members parameters. @dotandimet
 
 0.07      2014-12-11
