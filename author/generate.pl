@@ -1,3 +1,4 @@
+#!/usr/bin/env perl
 use strictures 1;
 
 use YAML::XS qw();

@@ -1,6 +1,7 @@
 Revision history for Perl extension GitLab::API::v3.
 
 {{$NEXT}}
+ - Remove project_members and group_members parameters. @dotandimet
 
 0.07      2014-12-11
  - Fix Gitopt::Long typo preventing installation. @dotandimet

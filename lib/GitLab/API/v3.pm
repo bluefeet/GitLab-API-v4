@@ -22,7 +22,7 @@ API v3.  Much is not documented here as it would just be duplicating
 GitLab's own L<API Documentation|http://doc.gitlab.com/ce/api/README.html>.
 
 Note that this distribution also includes the L<gitlab-api-v3> command-line
-interface (CLI),
+interface (CLI).
 
 =head2 CONSTANTS
 
@@ -661,7 +661,6 @@ sub delete_project {
 
     my $members = $api->project_members(
         $project_id,
-        \%params,
     );
 
 Sends a C<GET> request to C</projects/:project_id/members> and returns the decoded/deserialized response body.
@@ -670,13 +669,11 @@ Sends a C<GET> request to C</projects/:project_id/members> and returns the decod
 
 sub project_members {
     my $self = shift;
-    croak 'project_members must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'project_members must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($project_id) to project_members must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The last argument (\%params) to project_members must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
-    my $params = pop;
     my $path = sprintf('/projects/%s/members', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, $params );
-    return $self->get( $path, ( defined($params) ? $params : () ) );
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
+    return $self->get( $path );
 }
 
 =head2 project_member
@@ -2405,7 +2402,6 @@ sub delete_group {
 
     my $members = $api->group_members(
         $group_id,
-        \%params,
     );
 
 Sends a C<GET> request to C</groups/:group_id/members> and returns the decoded/deserialized response body.
@@ -2414,13 +2410,11 @@ Sends a C<GET> request to C</groups/:group_id/members> and returns the decoded/d
 
 sub group_members {
     my $self = shift;
-    croak 'group_members must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'group_members must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($group_id) to group_members must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The last argument (\%params) to group_members must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
-    my $params = pop;
     my $path = sprintf('/groups/%s/members', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, $params );
-    return $self->get( $path, ( defined($params) ? $params : () ) );
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
+    return $self->get( $path );
 }
 
 =head2 add_group_member
