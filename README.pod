@@ -22,7 +22,7 @@ API v3.  Much is not documented here as it would just be duplicating
 GitLab's own L<API Documentation|http://doc.gitlab.com/ce/api/README.html>.
 
 Note that this distribution also includes the L<gitlab-api-v3> command-line
-interface (CLI),
+interface (CLI).
 
 =head2 CONSTANTS
 
@@ -307,7 +307,6 @@ Sends a C<DELETE> request to C</projects/:project_id>.
 
     my $members = $api->project_members(
         $project_id,
-        \%params,
     );
 
 Sends a C<GET> request to C</projects/:project_id/members> and returns the decoded/deserialized response body.
@@ -1053,7 +1052,6 @@ Sends a C<DELETE> request to C</groups/:group_id>.
 
     my $members = $api->group_members(
         $group_id,
-        \%params,
     );
 
 Sends a C<GET> request to C</groups/:group_id/members> and returns the decoded/deserialized response body.
