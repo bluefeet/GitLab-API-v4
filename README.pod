@@ -244,13 +244,17 @@ Sends a C<GET> request to C</projects> and returns the decoded/deserialized resp
 
 =head2 owned_projects
 
-    my $projects = $api->owned_projects();
+    my $projects = $api->owned_projects(
+        \%params,
+    );
 
 Sends a C<GET> request to C</projects/owned> and returns the decoded/deserialized response body.
 
 =head2 all_projects
 
-    my $projects = $api->all_projects();
+    my $projects = $api->all_projects(
+        \%params,
+    );
 
 Sends a C<GET> request to C</projects/all> and returns the decoded/deserialized response body.
 
@@ -287,6 +291,15 @@ Sends a C<POST> request to C</projects> and returns the decoded/deserialized res
 
 Sends a C<POST> request to C</projects/user/:user_id>.
 
+=head2 edit_project
+
+    my $project = $api->edit_project(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id> and returns the decoded/deserialized response body.
+
 =head2 fork_project
 
     $api->fork_project(
@@ -307,6 +320,7 @@ Sends a C<DELETE> request to C</projects/:project_id>.
 
     my $members = $api->project_members(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C</projects/:project_id/members> and returns the decoded/deserialized response body.
@@ -468,14 +482,37 @@ Sends a C<PUT> request to C</projects/:project_id/snippets/:snippet_id>.
 
 Sends a C<DELETE> request to C</projects/:project_id/snippets/:snippet_id>.
 
-=head2 raw_snippet
+=head2 snippet_content
 
-    my $content = $api->raw_snippet(
+    my $content = $api->snippet_content(
         $project_id,
         $snippet_id,
     );
 
 Sends a C<GET> request to C</projects/:project_id/snippets/:snippet_id/raw> and returns the decoded/deserialized response body.
+
+=head1 SERVICE METHODS
+
+See L<http://doc.gitlab.com/ce/api/services.html>.
+
+=head2 edit_project_service
+
+    $api->edit_project_service(
+        $project_id,
+        $service_name,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/services/:service_name>.
+
+=head2 delete_project_service
+
+    $api->delete_project_service(
+        $project_id,
+        $service_name,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/services/:service_name>.
 
 =head1 REPOSITORY METHODS
 
@@ -707,6 +744,7 @@ See L<http://doc.gitlab.com/ce/api/merge_requests.html>.
 
     my $merge_requests = $api->merge_requests(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C</projects/:project_id/merge_requests> and returns the decoded/deserialized response body.
@@ -864,6 +902,7 @@ See L<http://doc.gitlab.com/ce/api/milestones.html>.
 
     my $milestones = $api->milestones(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C</projects/:project_id/milestones> and returns the decoded/deserialized response body.
@@ -896,6 +935,15 @@ Sends a C<POST> request to C</projects/:project_id/milestones>.
 
 Sends a C<PUT> request to C</projects/:project_id/milestones/:milestone_id>.
 
+=head2 milestone_issues
+
+    my $issues = $api->milestone_issues(
+        $project_id,
+        $milestone_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/milestones/:milestone_id/issues> and returns the decoded/deserialized response body.
+
 =head1 NOTE METHODS
 
 See L<http://doc.gitlab.com/ce/api/notes.html>.
@@ -904,33 +952,45 @@ See L<http://doc.gitlab.com/ce/api/notes.html>.
 
     my $notes = $api->notes(
         $project_id,
-        $note_type,
-        $merge_request_id,
+        $thing_type,
+        $thing_id,
     );
 
-Sends a C<GET> request to C</projects/:project_id/:note_type/:merge_request_id/notes> and returns the decoded/deserialized response body.
+Sends a C<GET> request to C</projects/:project_id/:thing_type/:thing_id/notes> and returns the decoded/deserialized response body.
 
 =head2 note
 
     my $note = $api->note(
         $project_id,
-        $note_type,
-        $merge_request_id,
+        $thing_type,
+        $thing_id,
         $note_id,
     );
 
-Sends a C<GET> request to C</projects/:project_id/:note_type/:merge_request_id/notes/:note_id> and returns the decoded/deserialized response body.
+Sends a C<GET> request to C</projects/:project_id/:thing_type/:thing_id/notes/:note_id> and returns the decoded/deserialized response body.
 
 =head2 create_note
 
     $api->create_note(
         $project_id,
-        $note_type,
-        $merge_request_id,
+        $thing_type,
+        $thing_id,
         \%params,
     );
 
-Sends a C<POST> request to C</projects/:project_id/:note_type/:merge_request_id/notes>.
+Sends a C<POST> request to C</projects/:project_id/:thing_type/:thing_id/notes>.
+
+=head2 edit_note
+
+    $api->edit_note(
+        $project_id,
+        $thing_type,
+        $thing_id,
+        $note_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/:thing_type/:thing_id/notes/:note_id>.
 
 =head1 DEPLOY KEY METHODS
 
@@ -1048,6 +1108,14 @@ Sends a C<POST> request to C</groups/:group_id/projects/:project_id>.
 
 Sends a C<DELETE> request to C</groups/:group_id>.
 
+=head2 search_groups
+
+    my $groups = $api->search_groups(
+        \%params,
+    );
+
+Sends a C<GET> request to C</groups> and returns the decoded/deserialized response body.
+
 =head2 group_members
 
     my $members = $api->group_members(
@@ -1065,6 +1133,16 @@ Sends a C<GET> request to C</groups/:group_id/members> and returns the decoded/d
 
 Sends a C<POST> request to C</groups/:group_id/members>.
 
+=head2 edit_group_member
+
+    $api->edit_group_member(
+        $group_id,
+        $user_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</groups/:group_id/members/:user_id>.
+
 =head2 remove_group_member
 
     $api->remove_group_member(
@@ -1073,29 +1151,6 @@ Sends a C<POST> request to C</groups/:group_id/members>.
     );
 
 Sends a C<DELETE> request to C</groups/:group_id/members/:user_id>.
-
-=head1 SERVICE METHODS
-
-See L<http://doc.gitlab.com/ce/api/services.html>.
-
-=head2 edit_project_service
-
-    $api->edit_project_service(
-        $project_id,
-        $service_name,
-        \%params,
-    );
-
-Sends a C<PUT> request to C</projects/:project_id/services/:service_name>.
-
-=head2 delete_project_service
-
-    $api->delete_project_service(
-        $project_id,
-        $service_name,
-    );
-
-Sends a C<DELETE> request to C</projects/:project_id/services/:service_name>.
 
 =head1 SEE ALSO
 

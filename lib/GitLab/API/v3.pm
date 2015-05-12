@@ -506,7 +506,9 @@ sub projects {
 
 =head2 owned_projects
 
-    my $projects = $api->owned_projects();
+    my $projects = $api->owned_projects(
+        \%params,
+    );
 
 Sends a C<GET> request to C</projects/owned> and returns the decoded/deserialized response body.
 
@@ -514,15 +516,19 @@ Sends a C<GET> request to C</projects/owned> and returns the decoded/deserialize
 
 sub owned_projects {
     my $self = shift;
-    croak "The owned_projects method does not take any arguments" if @_;
+    croak 'owned_projects must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to owned_projects must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    my $params = pop;
     my $path = sprintf('/projects/owned', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, $params );
+    return $self->get( $path, ( defined($params) ? $params : () ) );
 }
 
 =head2 all_projects
 
-    my $projects = $api->all_projects();
+    my $projects = $api->all_projects(
+        \%params,
+    );
 
 Sends a C<GET> request to C</projects/all> and returns the decoded/deserialized response body.
 
@@ -530,10 +536,12 @@ Sends a C<GET> request to C</projects/all> and returns the decoded/deserialized 
 
 sub all_projects {
     my $self = shift;
-    croak "The all_projects method does not take any arguments" if @_;
+    croak 'all_projects must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to all_projects must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    my $params = pop;
     my $path = sprintf('/projects/all', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, $params );
+    return $self->get( $path, ( defined($params) ? $params : () ) );
 }
 
 =head2 project
@@ -617,6 +625,28 @@ sub create_project_for_user {
     return;
 }
 
+=head2 edit_project
+
+    my $project = $api->edit_project(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id> and returns the decoded/deserialized response body.
+
+=cut
+
+sub edit_project {
+    my $self = shift;
+    croak 'edit_project must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($project_id) to edit_project must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to edit_project must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/projects/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'PUT', $path, $params );
+    return $self->put( $path, ( defined($params) ? $params : () ) );
+}
+
 =head2 fork_project
 
     $api->fork_project(
@@ -661,6 +691,7 @@ sub delete_project {
 
     my $members = $api->project_members(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C</projects/:project_id/members> and returns the decoded/deserialized response body.
@@ -669,11 +700,13 @@ Sends a C<GET> request to C</projects/:project_id/members> and returns the decod
 
 sub project_members {
     my $self = shift;
-    croak 'project_members must be called with 1 arguments' if @_ != 1;
+    croak 'project_members must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to project_members must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to project_members must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = pop;
     my $path = sprintf('/projects/%s/members', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, $params );
+    return $self->get( $path, ( defined($params) ? $params : () ) );
 }
 
 =head2 project_member
@@ -1054,9 +1087,9 @@ sub delete_snippet {
     return;
 }
 
-=head2 raw_snippet
+=head2 snippet_content
 
-    my $content = $api->raw_snippet(
+    my $content = $api->snippet_content(
         $project_id,
         $snippet_id,
     );
@@ -1065,14 +1098,65 @@ Sends a C<GET> request to C</projects/:project_id/snippets/:snippet_id/raw> and 
 
 =cut
 
-sub raw_snippet {
+sub snippet_content {
     my $self = shift;
-    croak 'raw_snippet must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($project_id) to raw_snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($snippet_id) to raw_snippet must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'snippet_content must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to snippet_content must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($snippet_id) to snippet_content must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/projects/%s/snippets/%s/raw', (map { uri_escape($_) } @_));
     $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
     return $self->get( $path );
+}
+
+=head1 SERVICE METHODS
+
+See L<http://doc.gitlab.com/ce/api/services.html>.
+
+=head2 edit_project_service
+
+    $api->edit_project_service(
+        $project_id,
+        $service_name,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/services/:service_name>.
+
+=cut
+
+sub edit_project_service {
+    my $self = shift;
+    croak 'edit_project_service must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to edit_project_service must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($service_name) to edit_project_service must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to edit_project_service must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/projects/%s/services/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'PUT', $path, $params );
+    $self->put( $path, ( defined($params) ? $params : () ) );
+    return;
+}
+
+=head2 delete_project_service
+
+    $api->delete_project_service(
+        $project_id,
+        $service_name,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/services/:service_name>.
+
+=cut
+
+sub delete_project_service {
+    my $self = shift;
+    croak 'delete_project_service must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to delete_project_service must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($service_name) to delete_project_service must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/services/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'DELETE', $path, undef );
+    $self->delete( $path );
+    return;
 }
 
 =head1 REPOSITORY METHODS
@@ -1600,6 +1684,7 @@ See L<http://doc.gitlab.com/ce/api/merge_requests.html>.
 
     my $merge_requests = $api->merge_requests(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C</projects/:project_id/merge_requests> and returns the decoded/deserialized response body.
@@ -1608,11 +1693,13 @@ Sends a C<GET> request to C</projects/:project_id/merge_requests> and returns th
 
 sub merge_requests {
     my $self = shift;
-    croak 'merge_requests must be called with 1 arguments' if @_ != 1;
+    croak 'merge_requests must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to merge_requests must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to merge_requests must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = pop;
     my $path = sprintf('/projects/%s/merge_requests', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, $params );
+    return $self->get( $path, ( defined($params) ? $params : () ) );
 }
 
 =head2 merge_request
@@ -1964,6 +2051,7 @@ See L<http://doc.gitlab.com/ce/api/milestones.html>.
 
     my $milestones = $api->milestones(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C</projects/:project_id/milestones> and returns the decoded/deserialized response body.
@@ -1972,11 +2060,13 @@ Sends a C<GET> request to C</projects/:project_id/milestones> and returns the de
 
 sub milestones {
     my $self = shift;
-    croak 'milestones must be called with 1 arguments' if @_ != 1;
+    croak 'milestones must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to milestones must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to milestones must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = pop;
     my $path = sprintf('/projects/%s/milestones', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    return $self->get( $path );
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, $params );
+    return $self->get( $path, ( defined($params) ? $params : () ) );
 }
 
 =head2 milestone
@@ -2048,6 +2138,27 @@ sub edit_milestone {
     return;
 }
 
+=head2 milestone_issues
+
+    my $issues = $api->milestone_issues(
+        $project_id,
+        $milestone_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/milestones/:milestone_id/issues> and returns the decoded/deserialized response body.
+
+=cut
+
+sub milestone_issues {
+    my $self = shift;
+    croak 'milestone_issues must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to milestone_issues must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($milestone_id) to milestone_issues must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/milestones/%s/issues', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
+    return $self->get( $path );
+}
+
 =head1 NOTE METHODS
 
 See L<http://doc.gitlab.com/ce/api/notes.html>.
@@ -2056,11 +2167,11 @@ See L<http://doc.gitlab.com/ce/api/notes.html>.
 
     my $notes = $api->notes(
         $project_id,
-        $note_type,
-        $merge_request_id,
+        $thing_type,
+        $thing_id,
     );
 
-Sends a C<GET> request to C</projects/:project_id/:note_type/:merge_request_id/notes> and returns the decoded/deserialized response body.
+Sends a C<GET> request to C</projects/:project_id/:thing_type/:thing_id/notes> and returns the decoded/deserialized response body.
 
 =cut
 
@@ -2068,8 +2179,8 @@ sub notes {
     my $self = shift;
     croak 'notes must be called with 3 arguments' if @_ != 3;
     croak 'The #1 argument ($project_id) to notes must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($note_type) to notes must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    croak 'The #3 argument ($merge_request_id) to notes must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    croak 'The #2 argument ($thing_type) to notes must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($thing_id) to notes must be a scalar' if ref($_[2]) or (!defined $_[2]);
     my $path = sprintf('/projects/%s/%s/%s/notes', (map { uri_escape($_) } @_));
     $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
     return $self->get( $path );
@@ -2079,12 +2190,12 @@ sub notes {
 
     my $note = $api->note(
         $project_id,
-        $note_type,
-        $merge_request_id,
+        $thing_type,
+        $thing_id,
         $note_id,
     );
 
-Sends a C<GET> request to C</projects/:project_id/:note_type/:merge_request_id/notes/:note_id> and returns the decoded/deserialized response body.
+Sends a C<GET> request to C</projects/:project_id/:thing_type/:thing_id/notes/:note_id> and returns the decoded/deserialized response body.
 
 =cut
 
@@ -2092,8 +2203,8 @@ sub note {
     my $self = shift;
     croak 'note must be called with 4 arguments' if @_ != 4;
     croak 'The #1 argument ($project_id) to note must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($note_type) to note must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    croak 'The #3 argument ($merge_request_id) to note must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    croak 'The #2 argument ($thing_type) to note must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($thing_id) to note must be a scalar' if ref($_[2]) or (!defined $_[2]);
     croak 'The #4 argument ($note_id) to note must be a scalar' if ref($_[3]) or (!defined $_[3]);
     my $path = sprintf('/projects/%s/%s/%s/notes/%s', (map { uri_escape($_) } @_));
     $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
@@ -2104,12 +2215,12 @@ sub note {
 
     $api->create_note(
         $project_id,
-        $note_type,
-        $merge_request_id,
+        $thing_type,
+        $thing_id,
         \%params,
     );
 
-Sends a C<POST> request to C</projects/:project_id/:note_type/:merge_request_id/notes>.
+Sends a C<POST> request to C</projects/:project_id/:thing_type/:thing_id/notes>.
 
 =cut
 
@@ -2117,13 +2228,42 @@ sub create_note {
     my $self = shift;
     croak 'create_note must be called with 3 to 4 arguments' if @_ < 3 or @_ > 4;
     croak 'The #1 argument ($project_id) to create_note must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($note_type) to create_note must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    croak 'The #3 argument ($merge_request_id) to create_note must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    croak 'The #2 argument ($thing_type) to create_note must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($thing_id) to create_note must be a scalar' if ref($_[2]) or (!defined $_[2]);
     croak 'The last argument (\%params) to create_note must be a hash ref' if defined($_[3]) and ref($_[3]) ne 'HASH';
     my $params = pop;
     my $path = sprintf('/projects/%s/%s/%s/notes', (map { uri_escape($_) } @_));
     $log->infof( 'Making %s request against %s with params %s.', 'POST', $path, $params );
     $self->post( $path, ( defined($params) ? $params : () ) );
+    return;
+}
+
+=head2 edit_note
+
+    $api->edit_note(
+        $project_id,
+        $thing_type,
+        $thing_id,
+        $note_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/:thing_type/:thing_id/notes/:note_id>.
+
+=cut
+
+sub edit_note {
+    my $self = shift;
+    croak 'edit_note must be called with 4 to 5 arguments' if @_ < 4 or @_ > 5;
+    croak 'The #1 argument ($project_id) to edit_note must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($thing_type) to edit_note must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($thing_id) to edit_note must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    croak 'The #4 argument ($note_id) to edit_note must be a scalar' if ref($_[3]) or (!defined $_[3]);
+    croak 'The last argument (\%params) to edit_note must be a hash ref' if defined($_[4]) and ref($_[4]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/projects/%s/%s/%s/notes/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'PUT', $path, $params );
+    $self->put( $path, ( defined($params) ? $params : () ) );
     return;
 }
 
@@ -2398,6 +2538,26 @@ sub delete_group {
     return;
 }
 
+=head2 search_groups
+
+    my $groups = $api->search_groups(
+        \%params,
+    );
+
+Sends a C<GET> request to C</groups> and returns the decoded/deserialized response body.
+
+=cut
+
+sub search_groups {
+    my $self = shift;
+    croak 'search_groups must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to search_groups must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/groups', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, $params );
+    return $self->get( $path, ( defined($params) ? $params : () ) );
+}
+
 =head2 group_members
 
     my $members = $api->group_members(
@@ -2440,6 +2600,31 @@ sub add_group_member {
     return;
 }
 
+=head2 edit_group_member
+
+    $api->edit_group_member(
+        $group_id,
+        $user_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</groups/:group_id/members/:user_id>.
+
+=cut
+
+sub edit_group_member {
+    my $self = shift;
+    croak 'edit_group_member must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($group_id) to edit_group_member must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($user_id) to edit_group_member must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to edit_group_member must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/groups/%s/members/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'PUT', $path, $params );
+    $self->put( $path, ( defined($params) ? $params : () ) );
+    return;
+}
+
 =head2 remove_group_member
 
     $api->remove_group_member(
@@ -2462,55 +2647,11 @@ sub remove_group_member {
     return;
 }
 
-=head1 SERVICE METHODS
 
-See L<http://doc.gitlab.com/ce/api/services.html>.
-
-=head2 edit_project_service
-
-    $api->edit_project_service(
-        $project_id,
-        $service_name,
-        \%params,
-    );
-
-Sends a C<PUT> request to C</projects/:project_id/services/:service_name>.
-
-=cut
-
-sub edit_project_service {
+sub raw_snippet {
     my $self = shift;
-    croak 'edit_project_service must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
-    croak 'The #1 argument ($project_id) to edit_project_service must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($service_name) to edit_project_service must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    croak 'The last argument (\%params) to edit_project_service must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
-    my $params = pop;
-    my $path = sprintf('/projects/%s/services/%s', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'PUT', $path, $params );
-    $self->put( $path, ( defined($params) ? $params : () ) );
-    return;
-}
-
-=head2 delete_project_service
-
-    $api->delete_project_service(
-        $project_id,
-        $service_name,
-    );
-
-Sends a C<DELETE> request to C</projects/:project_id/services/:service_name>.
-
-=cut
-
-sub delete_project_service {
-    my $self = shift;
-    croak 'delete_project_service must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($project_id) to delete_project_service must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($service_name) to delete_project_service must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    my $path = sprintf('/projects/%s/services/%s', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s with params %s.', 'DELETE', $path, undef );
-    $self->delete( $path );
-    return;
+    warn "The raw_snippet method is deprecated, please use the snippet_content method instead";
+    return $self->snippet_content( @_ );
 }
 
 1;

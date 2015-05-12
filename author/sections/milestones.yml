@@ -1,5 +1,6 @@
 ---
-- milestones: milestones = GET /projects/:project_id/milestones
+- milestones: milestones = GET /projects/:project_id/milestones?
 - milestone: milestone = GET /projects/:project_id/milestones/:milestone_id
 - create_milestone: POST /projects/:project_id/milestones?
 - edit_milestone: PUT /projects/:project_id/milestones/:milestone_id?
+- milestone_issues: issues = GET /projects/:project_id/milestones/:milestone_id/issues

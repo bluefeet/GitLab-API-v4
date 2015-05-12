@@ -1,3 +1,10 @@
+
+sub raw_snippet {
+    my $self = shift;
+    warn "The raw_snippet method is deprecated, please use the snippet_content method instead";
+    return $self->snippet_content( @_ );
+}
+
 1;
 __END__
 

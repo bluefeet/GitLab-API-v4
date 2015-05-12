@@ -1,6 +1,13 @@
 Revision history for Perl extension GitLab::API::v3.
 
 {{$NEXT}}
+ - Renamed the raw_snippet method to snippet_content.  Note that the raw_snippet
+   method still exists but now issues a deprecation warning and will be removed
+   in the future.
+ - Added the search_groups, edit_group_member, milestone_issues, edit_project, and
+   edit_note methods.
+ - The owned_projects, all_projects, project_members, and milestones methods now
+   accept parameters.
 
 0.08      2015-01-16
  - Remove project_members and group_members parameters. @dotandimet

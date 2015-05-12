@@ -12,6 +12,9 @@ sections:
 - project_snippets:
     head: SNIPPET METHODS
     doc_url: http://doc.gitlab.com/ce/api/project_snippets.html
+- services:
+    head: SERVICE METHODS
+    doc_url: http://doc.gitlab.com/ce/api/services.html
 - repositories:
     head: REPOSITORY METHODS
     doc_url: http://doc.gitlab.com/ce/api/repositories.html
@@ -48,6 +51,3 @@ sections:
 - groups:
     head: GROUP METHODS
     doc_url: http://doc.gitlab.com/ce/api/groups.html
-- services:
-    head: SERVICE METHODS
-    doc_url: http://doc.gitlab.com/ce/api/services.html

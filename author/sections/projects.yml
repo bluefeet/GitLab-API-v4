@@ -1,15 +1,16 @@
 ---
 - projects: projects = GET /projects?
-- owned_projects: projects = GET /projects/owned
-- all_projects: projects = GET /projects/all
+- owned_projects: projects = GET /projects/owned?
+- all_projects: projects = GET /projects/all?
 - project: project = GET /projects/:project_id
 - project_events: events = GET /projects/:project_id/events
 - create_project: project = POST /projects?
 - create_project_for_user: POST /projects/user/:user_id?
+- edit_project: project = PUT /projects/:project_id?
 - fork_project: POST /pojects/fork/:project_id
 - delete_project: DELETE /projects/:project_id
 
-- project_members: members = GET /projects/:project_id/members
+- project_members: members = GET /projects/:project_id/members?
 - project_member: member = GET /project/:project_id/members/:user_id
 - add_project_member: POST /projects/:project_id/members?
 - edit_project_member: PUT /projects/:project_id/members/:user_id?
