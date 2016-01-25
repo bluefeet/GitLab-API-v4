@@ -2576,6 +2576,28 @@ sub group_members {
     return $self->get( $path );
 }
 
+=head2 group_projects
+
+    my $projects = $api->group_projects(
+        $group_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C</groups/:group_id/projects> and returns the decoded/deserialized response body.
+
+=cut
+
+sub group_projects {
+    my $self = shift;
+    croak 'group_projects must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($group_id) to group_projects must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to group_projects must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = pop;
+    my $path = sprintf('/groups/%s/projects', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, $params );
+    return $self->get( $path, ( defined($params) ? $params : () ) );
+}
+
 =head2 add_group_member
 
     $api->add_group_member(
@@ -2693,6 +2715,10 @@ L<dotandimet|https://github.com/dotandimet>
 =item *
 
 L<nfg|https://github.com/nfg>
+
+=item *
+
+L<trunov-ms|https://github.com/trunov-ms>
 
 =back
 

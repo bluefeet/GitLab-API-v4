@@ -1124,6 +1124,15 @@ Sends a C<GET> request to C</groups> and returns the decoded/deserialized respon
 
 Sends a C<GET> request to C</groups/:group_id/members> and returns the decoded/deserialized response body.
 
+=head2 group_projects
+
+    my $projects = $api->group_projects(
+        $group_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C</groups/:group_id/projects> and returns the decoded/deserialized response body.
+
 =head2 add_group_member
 
     $api->add_group_member(
@@ -1189,6 +1198,10 @@ L<dotandimet|https://github.com/dotandimet>
 =item *
 
 L<nfg|https://github.com/nfg>
+
+=item *
+
+L<trunov-ms|https://github.com/trunov-ms>
 
 =back
 

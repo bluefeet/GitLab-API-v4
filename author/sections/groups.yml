@@ -7,6 +7,7 @@
 - search_groups: groups = GET /groups?
 
 - group_members: members = GET /groups/:group_id/members
+- group_projects: projects = GET /groups/:group_id/projects?
 - add_group_member: POST /groups/:group_id/members?
 - edit_group_member: PUT /groups/:group_id/members/:user_id?
 - remove_group_member: DELETE /groups/:group_id/members/:user_id

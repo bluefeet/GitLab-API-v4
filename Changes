@@ -2,6 +2,7 @@ Revision history for Perl extension GitLab::API::v3.
 
 {{$NEXT}}
 
+ - Added the group_projects method. @trunov-ms
  - Switch from Log::Any::Adapter::ScreenColoredLevel to
    Log::Any::Adapter::Screen. @nfg
  - Modify the user() method to return the user data (...).
