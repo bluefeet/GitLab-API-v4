@@ -6,7 +6,7 @@ use GitLab::API::v3::Constants qw( :all );
 
 use Log::Any qw( $log );
 use Log::Any::Adapter;
-use Log::Any::Adapter::ScreenColoredLevel;
+use Log::Any::Adapter::Screen;
 use Try::Tiny;
 use Data::Serializer;
 
@@ -39,7 +39,7 @@ $format //= 'YAML';
 my $serializer = Data::Serializer::Raw->new( serializer=>$format );
 
 Log::Any::Adapter->set(
-    'ScreenColoredLevel',
+    'Screen',
     min_level => $min_level,
     stderr    => 1,
 );
