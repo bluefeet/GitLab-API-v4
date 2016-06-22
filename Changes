@@ -1,6 +1,10 @@
 Revision history for Perl extension GitLab::API::v3.
 
 {{$NEXT}}
+
+ - Switch from Log::Any::Adapter::ScreenColoredLevel to
+   Log::Any::Adapter::Screen. @nfg
+ - Modify the user() method to return the user data (...).
  - Renamed the raw_snippet method to snippet_content.  Note that the raw_snippet
    method still exists but now issues a deprecation warning and will be removed
    in the future.
@@ -10,13 +14,16 @@ Revision history for Perl extension GitLab::API::v3.
    accept parameters.
 
 0.08      2015-01-16
+
  - Remove project_members and group_members parameters. @dotandimet
 
 0.07      2014-12-11
+
  - Fix Gitopt::Long typo preventing installation. @dotandimet
  - Fix references to Net::GitLab which should be Net::Gitlab.
 
 0.06      2014-11-29
+
  - CLI client, gitlab-api-v3.
  - Replace "@" in POD with "E<64>" to bypass older Perl issues.
  - Include GitLab error messages in failed requests.
@@ -24,16 +31,19 @@ Revision history for Perl extension GitLab::API::v3.
  - Modify create_project() to return the project hash ref.
 
 0.05      2014-11-19
+
  - Added GitLab::API::v3::Paginator.
  - Modify group_members() to support \%params so that page and per_page may be passed.
 
 0.04      2014-11-18
+
  - Reorganize section headers and add direct links to GitLab's documentation for each.
  - Adjust abstract.
  - Add documentation about project IDs and return values.
  - Other documentation tweaks.
 
 0.03      2014-11-18
+
  - Point the user at the Constants module from the main docs.
  - Add a CONTRIBUTING section to the docs describing how v3.pm is generated.
  - Add an author/README.pod to explain how the module generation works.
@@ -42,8 +52,10 @@ Revision history for Perl extension GitLab::API::v3.
  - Added a SEE ALSO section with reference to Net::Gitlab.
 
 0.02      2014-11-18
+
  - Implement the entire API (wew!).
 
 0.01      2014-11-16
+
  - First release.
 

@@ -2690,6 +2690,10 @@ Aran Clary Deltac <bluefeetE<64>gmail.com>
 
 L<dotandimet|https://github.com/dotandimet>
 
+=item *
+
+L<nfg|https://github.com/nfg>
+
 =back
 
 =head1 ACKNOWLEDGEMENTS
