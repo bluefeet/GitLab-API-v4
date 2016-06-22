@@ -2,6 +2,8 @@ Revision history for Perl extension GitLab::API::v3.
 
 {{$NEXT}}
 
+0.09 2016-06-22
+
  - Added the group_projects method. @trunov-ms
  - Switch from Log::Any::Adapter::ScreenColoredLevel to
    Log::Any::Adapter::Screen. @nfg
