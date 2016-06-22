@@ -42,6 +42,14 @@ Aran Clary Deltac <bluefeetE<64>gmail.com>
 
 L<dotandimet|https://github.com/dotandimet>
 
+=item *
+
+L<nfg|https://github.com/nfg>
+
+=item *
+
+L<trunov-ms|https://github.com/trunov-ms>
+
 =back
 
 =head1 ACKNOWLEDGEMENTS
