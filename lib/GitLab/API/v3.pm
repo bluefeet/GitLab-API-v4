@@ -218,11 +218,11 @@ sub users {
 
 =head2 user
 
-    $api->user(
+    my $user = $api->user(
         $user_id,
     );
 
-Sends a C<GET> request to C</users/:user_id>.
+Sends a C<GET> request to C</users/:user_id> and returns the decoded/deserialized response body.
 
 =cut
 
@@ -232,8 +232,7 @@ sub user {
     croak 'The #1 argument ($user_id) to user must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('/users/%s', (map { uri_escape($_) } @_));
     $log->infof( 'Making %s request against %s with params %s.', 'GET', $path, undef );
-    $self->get( $path );
-    return;
+    return $self->get( $path );
 }
 
 =head2 create_user

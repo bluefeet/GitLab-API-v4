@@ -125,11 +125,11 @@ Sends a C<GET> request to C</users> and returns the decoded/deserialized respons
 
 =head2 user
 
-    $api->user(
+    my $user = $api->user(
         $user_id,
     );
 
-Sends a C<GET> request to C</users/:user_id>.
+Sends a C<GET> request to C</users/:user_id> and returns the decoded/deserialized response body.
 
 =head2 create_user
 

@@ -1,6 +1,6 @@
 ---
 - users: users = GET /users?
-- user: GET /users/:user_id
+- user: user = GET /users/:user_id
 - create_user: POST /users?
 - edit_user: PUT /users/:user_id?
 - delete_user: user = DELETE /users/:user_id
