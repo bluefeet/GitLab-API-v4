@@ -89,20 +89,18 @@ foreach my $section_name (keys %$section_pack) {
                 }
                 $i ++;
             }
+
+            print "    my \$params = (\@_ == $max_args) ? pop() : undef;\n" if $params_ok;
         }
         else {
             print "    croak \"The $sub method does not take any arguments\" if \@_;\n";
         }
 
-        print "    my \$params = pop;\n" if $params_ok;
-
         my $sprintf_path = $path;
         $sprintf_path =~ s{:[^/]+}{%s}g;
         print "    my \$path = sprintf('$sprintf_path', (map { uri_escape(\$_) } \@_));\n";
 
-        print "    \$log->infof( 'Making %s request against %s with params %s.', '$method', \$path, ";
-        print( $params_ok ? '$params' : 'undef' );
-        print " );\n";
+        print "    \$log->infof( 'Making %s request against %s.', '$method', \$path );\n";
 
         my $method_sub = lc( $method );
         print '    ';
