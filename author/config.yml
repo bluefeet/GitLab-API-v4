@@ -1,6 +1,8 @@
 ---
 sections:
-# award_emoji
+- award_emoji:
+    head: AWARD EMOJI METHODS
+    doc_url: http://docs.gitlab.com/ce/api/award_emoji.html
 - branches:
     head: BRANCH METHODS
     doc_url: http://doc.gitlab.com/ce/api/branches.html
@@ -19,7 +21,9 @@ sections:
 - issues:
     head: ISSUE METHODS
     doc_url: http://doc.gitlab.com/ce/api/issues.html
-# keys
+- keys:
+    head: KEY METHODS
+    doc_url: http://docs.gitlab.com/ce/api/keys.html
 - labels:
     head: LABEL METHODS
     doc_url: http://doc.gitlab.com/ce/api/labels.html
@@ -29,8 +33,12 @@ sections:
 - milestones:
     head: MILESTONE METHODS
     doc_url: http://doc.gitlab.com/ce/api/milestones.html
-# licenses
-# namespaces
+- licenses:
+    head: OPEN SOURCE LICENSES METHODS
+    doc_url: http://docs.gitlab.com/ce/api/licenses.html
+- namespaces:
+    head: NAMESPACE METHODS
+    doc_url: http://docs.gitlab.com/ce/api/namespaces.html
 - notes:
     head: NOTE METHODS
     doc_url: http://doc.gitlab.com/ce/api/notes.html
@@ -53,8 +61,12 @@ sections:
 - session:
     head: SESSION METHODS
     doc_url: http://doc.gitlab.com/ce/api/session.html
-# settings
-# sidekiq
+- settings:
+    head: SETTINGS METHODS
+    doc_url: http://docs.gitlab.com/ce/api/settings.html
+- sidekiq:
+    head: SIDEKIQ METHODS
+    doc_url: http://docs.gitlab.com/ce/api/sidekiq_metrics.html
 - system_hooks:
     head: SYSTEM HOOK METHODS
     doc_url: http://doc.gitlab.com/ce/api/system_hooks.html

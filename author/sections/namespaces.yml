@@ -1,0 +1,2 @@
+---
+- namespaces: namespaces = GET /namespaces?

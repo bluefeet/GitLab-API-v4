@@ -1,0 +1,3 @@
+---
+- settings: settings = GET /application/settings
+- update_settings: settings = PUT /application/settings?

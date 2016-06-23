@@ -111,6 +111,174 @@ and returns an array ref, this will return a L<GitLab::API::v3::Paginator>
 object that will allow you to walk the records one page or one record
 at a time.
 
+=head1 AWARD EMOJI METHODS
+
+See L<http://docs.gitlab.com/ce/api/award_emoji.html>.
+
+=head2 issue_award_emojis
+
+    my $award_emojis = $api->issue_award_emojis(
+        $id,
+        $issue_id,
+    );
+
+Sends a C<GET> request to C</projects/:id/issues/:issue_id/award_emoji> and returns the decoded/deserialized response body.
+
+=head2 merge_request_award_emojis
+
+    my $award_emojis = $api->merge_request_award_emojis(
+        $id,
+        $merge_request_id,
+    );
+
+Sends a C<GET> request to C</projects/:id/merge_requests/:merge_request_id/award_emoji> and returns the decoded/deserialized response body.
+
+=head2 issue_award_emoji
+
+    my $award_emoji = $api->issue_award_emoji(
+        $id,
+        $issue_id,
+        $award_id,
+    );
+
+Sends a C<GET> request to C</projects/:id/issues/:issue_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
+
+=head2 merge_request_award_emoji
+
+    my $award_emoji = $api->merge_request_award_emoji(
+        $id,
+        $merge_request_id,
+        $award_id,
+    );
+
+Sends a C<GET> request to C</projects/:id/merge_requests/:merge_request_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
+
+=head2 create_issue_award_emoji
+
+    my $award_emoji = $api->create_issue_award_emoji(
+        $id,
+        $issue_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:id/issues/:issue_id/award_emoji> and returns the decoded/deserialized response body.
+
+=head2 create_merge_request_award_emoji
+
+    my $award_emoji = $api->create_merge_request_award_emoji(
+        $id,
+        $merge_request_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:id/merge_requests/:merge_request_id/award_emoji> and returns the decoded/deserialized response body.
+
+=head2 delete_issue_award_emoji
+
+    my $award_emoji = $api->delete_issue_award_emoji(
+        $id,
+        $issue_id,
+        $award_id,
+    );
+
+Sends a C<DELETE> request to C</projects/:id/issues/:issue_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
+
+=head2 delete_merge_request_award_emoji
+
+    my $award_emoji = $api->delete_merge_request_award_emoji(
+        $id,
+        $merge_request_id,
+        $award_id,
+    );
+
+Sends a C<DELETE> request to C</projects/:id/merge_requests/:merge_request_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
+
+=head2 issue_note_award_emojis
+
+    my $award_emojis = $api->issue_note_award_emojis(
+        $id,
+        $issue_id,
+        $note_id,
+    );
+
+Sends a C<GET> request to C</projects/:id/issues/:issue_id/notes/:note_id/award_emoji> and returns the decoded/deserialized response body.
+
+=head2 issue_note_award_emoji
+
+    my $award_emoji = $api->issue_note_award_emoji(
+        $id,
+        $issue_id,
+        $note_id,
+        $award_id,
+    );
+
+Sends a C<GET> request to C</projects/:id/issues/:issue_id/notes/:note_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
+
+=head2 create_issue_note_award_emoji
+
+    my $award_emoji = $api->create_issue_note_award_emoji(
+        $id,
+        $issue_id,
+        $note_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:id/issues/:issue_id/notes/:note_id/award_emoji> and returns the decoded/deserialized response body.
+
+=head2 delete_issue_note_award_emoji
+
+    my $award_emoji = $api->delete_issue_note_award_emoji(
+        $id,
+        $issue_id,
+        $note_id,
+        $award_id,
+    );
+
+Sends a C<DELETE> request to C</projects/:id/issues/:issue_id/notes/:note_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
+
+=head2 merge_request_note_award_emojis
+
+    my $award_emojis = $api->merge_request_note_award_emojis(
+        $id,
+        $merge_request_id,
+        $note_id,
+    );
+
+Sends a C<GET> request to C</projects/:id/merge_requests/:merge_request_id/notes/:note_id/award_emoji> and returns the decoded/deserialized response body.
+
+=head2 merge_request_note_award_emoji
+
+    my $award_emoji = $api->merge_request_note_award_emoji(
+        $id,
+        $merge_request_id,
+        $note_id,
+        $award_id,
+    );
+
+Sends a C<GET> request to C</projects/:id/merge_requests/:merge_request_id/notes/:note_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
+
+=head2 create_merge_request_note_award_emoji
+
+    my $award_emoji = $api->create_merge_request_note_award_emoji(
+        $id,
+        $merge_request_id,
+        $note_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:id/merge_requests/:merge_request_id/notes/:note_id/award_emoji> and returns the decoded/deserialized response body.
+
+=head2 delete_merge_request_note_award_emoji
+
+    my $award_emoji = $api->delete_merge_request_note_award_emoji(
+        $id,
+        $merge_request_id,
+        $note_id,
+        $award_id,
+    );
+
+Sends a C<DELETE> request to C</projects/:id/merge_requests/:merge_request_id/notes/:note_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
+
 =head1 BRANCH METHODS
 
 See L<http://doc.gitlab.com/ce/api/branches.html>.
@@ -402,6 +570,18 @@ Sends a C<POST> request to C</projects/:project_id/issues> and returns the decod
 
 Sends a C<PUT> request to C</projects/:project_id/issues/:issue_id> and returns the decoded/deserialized response body.
 
+=head1 KEY METHODS
+
+See L<http://docs.gitlab.com/ce/api/keys.html>.
+
+=head2 key
+
+    my $key = $api->key(
+        $key_id,
+    );
+
+Sends a C<GET> request to C</keys/:key_id> and returns the decoded/deserialized response body.
+
 =head1 LABEL METHODS
 
 See L<http://doc.gitlab.com/ce/api/labels.html>.
@@ -560,6 +740,39 @@ Sends a C<PUT> request to C</projects/:project_id/milestones/:milestone_id>.
     );
 
 Sends a C<GET> request to C</projects/:project_id/milestones/:milestone_id/issues> and returns the decoded/deserialized response body.
+
+=head1 OPEN SOURCE LICENSES METHODS
+
+See L<http://docs.gitlab.com/ce/api/licenses.html>.
+
+=head2 licenses
+
+    my $licenses = $api->licenses(
+        \%params,
+    );
+
+Sends a C<GET> request to C</licenses> and returns the decoded/deserialized response body.
+
+=head2 license
+
+    my $license = $api->license(
+        $license_key,
+        \%params,
+    );
+
+Sends a C<GET> request to C</licenses/:license_key> and returns the decoded/deserialized response body.
+
+=head1 NAMESPACE METHODS
+
+See L<http://docs.gitlab.com/ce/api/namespaces.html>.
+
+=head2 namespaces
+
+    my $namespaces = $api->namespaces(
+        \%params,
+    );
+
+Sends a C<GET> request to C</namespaces> and returns the decoded/deserialized response body.
 
 =head1 NOTE METHODS
 
@@ -1002,6 +1215,52 @@ See L<http://doc.gitlab.com/ce/api/session.html>.
     );
 
 Sends a C<POST> request to C</session>.
+
+=head1 SETTINGS METHODS
+
+See L<http://docs.gitlab.com/ce/api/settings.html>.
+
+=head2 settings
+
+    my $settings = $api->settings();
+
+Sends a C<GET> request to C</application/settings> and returns the decoded/deserialized response body.
+
+=head2 update_settings
+
+    my $settings = $api->update_settings(
+        \%params,
+    );
+
+Sends a C<PUT> request to C</application/settings> and returns the decoded/deserialized response body.
+
+=head1 SIDEKIQ METHODS
+
+See L<http://docs.gitlab.com/ce/api/sidekiq_metrics.html>.
+
+=head2 queue_metrics
+
+    my $metrics = $api->queue_metrics();
+
+Sends a C<GET> request to C</sidekiq/queue_metrics> and returns the decoded/deserialized response body.
+
+=head2 process_metrics
+
+    my $metrics = $api->process_metrics();
+
+Sends a C<GET> request to C</sidekiq/process_metrics> and returns the decoded/deserialized response body.
+
+=head2 job_stats
+
+    my $stats = $api->job_stats();
+
+Sends a C<GET> request to C</sidekiq/job_stats> and returns the decoded/deserialized response body.
+
+=head2 compound_metrics
+
+    my $metrics = $api->compound_metrics();
+
+Sends a C<GET> request to C</sidekiq/compound_metrics> and returns the decoded/deserialized response body.
 
 =head1 SYSTEM HOOK METHODS
 

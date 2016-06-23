@@ -6,6 +6,7 @@ Revision history for Perl extension GitLab::API::v3.
    create_release, and update_release methods.
  - Fixup params handling so that they don't eat up proceeding arguments.
  - Re-ordered POD sections so its in the same order as the source GitLab API docs.
+ - Add methods for award emoji, keys, licenses, namespaces, settings, and sidekiq.
 
 0.09 2016-06-22
 

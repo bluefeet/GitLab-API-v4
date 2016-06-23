@@ -1,0 +1,22 @@
+---
+- issue_award_emojis: award_emojis = GET /projects/:id/issues/:issue_id/award_emoji
+- merge_request_award_emojis: award_emojis = GET /projects/:id/merge_requests/:merge_request_id/award_emoji
+
+- issue_award_emoji: award_emoji = GET /projects/:id/issues/:issue_id/award_emoji/:award_id
+- merge_request_award_emoji: award_emoji = GET /projects/:id/merge_requests/:merge_request_id/award_emoji/:award_id
+
+- create_issue_award_emoji: award_emoji = POST /projects/:id/issues/:issue_id/award_emoji?
+- create_merge_request_award_emoji: award_emoji = POST /projects/:id/merge_requests/:merge_request_id/award_emoji?
+
+- delete_issue_award_emoji: award_emoji = DELETE /projects/:id/issues/:issue_id/award_emoji/:award_id
+- delete_merge_request_award_emoji: award_emoji = DELETE /projects/:id/merge_requests/:merge_request_id/award_emoji/:award_id
+
+- issue_note_award_emojis: award_emojis = GET /projects/:id/issues/:issue_id/notes/:note_id/award_emoji
+- issue_note_award_emoji: award_emoji = GET /projects/:id/issues/:issue_id/notes/:note_id/award_emoji/:award_id
+- create_issue_note_award_emoji: award_emoji = POST /projects/:id/issues/:issue_id/notes/:note_id/award_emoji?
+- delete_issue_note_award_emoji: award_emoji = DELETE /projects/:id/issues/:issue_id/notes/:note_id/award_emoji/:award_id
+
+- merge_request_note_award_emojis: award_emojis = GET /projects/:id/merge_requests/:merge_request_id/notes/:note_id/award_emoji
+- merge_request_note_award_emoji: award_emoji = GET /projects/:id/merge_requests/:merge_request_id/notes/:note_id/award_emoji/:award_id
+- create_merge_request_note_award_emoji: award_emoji = POST /projects/:id/merge_requests/:merge_request_id/notes/:note_id/award_emoji?
+- delete_merge_request_note_award_emoji: award_emoji = DELETE /projects/:id/merge_requests/:merge_request_id/notes/:note_id/award_emoji/:award_id

@@ -1,0 +1,3 @@
+---
+- licenses: licenses = GET /licenses?
+- license: license = GET /licenses/:license_key?

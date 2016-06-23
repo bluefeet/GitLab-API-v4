@@ -192,6 +192,390 @@ sub paginator {
     );
 }
 
+=head1 AWARD EMOJI METHODS
+
+See L<http://docs.gitlab.com/ce/api/award_emoji.html>.
+
+=head2 issue_award_emojis
+
+    my $award_emojis = $api->issue_award_emojis(
+        $id,
+        $issue_id,
+    );
+
+Sends a C<GET> request to C</projects/:id/issues/:issue_id/award_emoji> and returns the decoded/deserialized response body.
+
+=cut
+
+sub issue_award_emojis {
+    my $self = shift;
+    croak 'issue_award_emojis must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($id) to issue_award_emojis must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($issue_id) to issue_award_emojis must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/issues/%s/award_emoji', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path );
+}
+
+=head2 merge_request_award_emojis
+
+    my $award_emojis = $api->merge_request_award_emojis(
+        $id,
+        $merge_request_id,
+    );
+
+Sends a C<GET> request to C</projects/:id/merge_requests/:merge_request_id/award_emoji> and returns the decoded/deserialized response body.
+
+=cut
+
+sub merge_request_award_emojis {
+    my $self = shift;
+    croak 'merge_request_award_emojis must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($id) to merge_request_award_emojis must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($merge_request_id) to merge_request_award_emojis must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/merge_requests/%s/award_emoji', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path );
+}
+
+=head2 issue_award_emoji
+
+    my $award_emoji = $api->issue_award_emoji(
+        $id,
+        $issue_id,
+        $award_id,
+    );
+
+Sends a C<GET> request to C</projects/:id/issues/:issue_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
+
+=cut
+
+sub issue_award_emoji {
+    my $self = shift;
+    croak 'issue_award_emoji must be called with 3 arguments' if @_ != 3;
+    croak 'The #1 argument ($id) to issue_award_emoji must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($issue_id) to issue_award_emoji must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($award_id) to issue_award_emoji must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    my $path = sprintf('/projects/%s/issues/%s/award_emoji/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path );
+}
+
+=head2 merge_request_award_emoji
+
+    my $award_emoji = $api->merge_request_award_emoji(
+        $id,
+        $merge_request_id,
+        $award_id,
+    );
+
+Sends a C<GET> request to C</projects/:id/merge_requests/:merge_request_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
+
+=cut
+
+sub merge_request_award_emoji {
+    my $self = shift;
+    croak 'merge_request_award_emoji must be called with 3 arguments' if @_ != 3;
+    croak 'The #1 argument ($id) to merge_request_award_emoji must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($merge_request_id) to merge_request_award_emoji must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($award_id) to merge_request_award_emoji must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    my $path = sprintf('/projects/%s/merge_requests/%s/award_emoji/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path );
+}
+
+=head2 create_issue_award_emoji
+
+    my $award_emoji = $api->create_issue_award_emoji(
+        $id,
+        $issue_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:id/issues/:issue_id/award_emoji> and returns the decoded/deserialized response body.
+
+=cut
+
+sub create_issue_award_emoji {
+    my $self = shift;
+    croak 'create_issue_award_emoji must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($id) to create_issue_award_emoji must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($issue_id) to create_issue_award_emoji must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to create_issue_award_emoji must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
+    my $path = sprintf('/projects/%s/issues/%s/award_emoji', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'POST', $path );
+    return $self->post( $path, ( defined($params) ? $params : () ) );
+}
+
+=head2 create_merge_request_award_emoji
+
+    my $award_emoji = $api->create_merge_request_award_emoji(
+        $id,
+        $merge_request_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:id/merge_requests/:merge_request_id/award_emoji> and returns the decoded/deserialized response body.
+
+=cut
+
+sub create_merge_request_award_emoji {
+    my $self = shift;
+    croak 'create_merge_request_award_emoji must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($id) to create_merge_request_award_emoji must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($merge_request_id) to create_merge_request_award_emoji must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to create_merge_request_award_emoji must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
+    my $path = sprintf('/projects/%s/merge_requests/%s/award_emoji', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'POST', $path );
+    return $self->post( $path, ( defined($params) ? $params : () ) );
+}
+
+=head2 delete_issue_award_emoji
+
+    my $award_emoji = $api->delete_issue_award_emoji(
+        $id,
+        $issue_id,
+        $award_id,
+    );
+
+Sends a C<DELETE> request to C</projects/:id/issues/:issue_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
+
+=cut
+
+sub delete_issue_award_emoji {
+    my $self = shift;
+    croak 'delete_issue_award_emoji must be called with 3 arguments' if @_ != 3;
+    croak 'The #1 argument ($id) to delete_issue_award_emoji must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($issue_id) to delete_issue_award_emoji must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($award_id) to delete_issue_award_emoji must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    my $path = sprintf('/projects/%s/issues/%s/award_emoji/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'DELETE', $path );
+    return $self->delete( $path );
+}
+
+=head2 delete_merge_request_award_emoji
+
+    my $award_emoji = $api->delete_merge_request_award_emoji(
+        $id,
+        $merge_request_id,
+        $award_id,
+    );
+
+Sends a C<DELETE> request to C</projects/:id/merge_requests/:merge_request_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
+
+=cut
+
+sub delete_merge_request_award_emoji {
+    my $self = shift;
+    croak 'delete_merge_request_award_emoji must be called with 3 arguments' if @_ != 3;
+    croak 'The #1 argument ($id) to delete_merge_request_award_emoji must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($merge_request_id) to delete_merge_request_award_emoji must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($award_id) to delete_merge_request_award_emoji must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    my $path = sprintf('/projects/%s/merge_requests/%s/award_emoji/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'DELETE', $path );
+    return $self->delete( $path );
+}
+
+=head2 issue_note_award_emojis
+
+    my $award_emojis = $api->issue_note_award_emojis(
+        $id,
+        $issue_id,
+        $note_id,
+    );
+
+Sends a C<GET> request to C</projects/:id/issues/:issue_id/notes/:note_id/award_emoji> and returns the decoded/deserialized response body.
+
+=cut
+
+sub issue_note_award_emojis {
+    my $self = shift;
+    croak 'issue_note_award_emojis must be called with 3 arguments' if @_ != 3;
+    croak 'The #1 argument ($id) to issue_note_award_emojis must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($issue_id) to issue_note_award_emojis must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($note_id) to issue_note_award_emojis must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    my $path = sprintf('/projects/%s/issues/%s/notes/%s/award_emoji', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path );
+}
+
+=head2 issue_note_award_emoji
+
+    my $award_emoji = $api->issue_note_award_emoji(
+        $id,
+        $issue_id,
+        $note_id,
+        $award_id,
+    );
+
+Sends a C<GET> request to C</projects/:id/issues/:issue_id/notes/:note_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
+
+=cut
+
+sub issue_note_award_emoji {
+    my $self = shift;
+    croak 'issue_note_award_emoji must be called with 4 arguments' if @_ != 4;
+    croak 'The #1 argument ($id) to issue_note_award_emoji must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($issue_id) to issue_note_award_emoji must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($note_id) to issue_note_award_emoji must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    croak 'The #4 argument ($award_id) to issue_note_award_emoji must be a scalar' if ref($_[3]) or (!defined $_[3]);
+    my $path = sprintf('/projects/%s/issues/%s/notes/%s/award_emoji/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path );
+}
+
+=head2 create_issue_note_award_emoji
+
+    my $award_emoji = $api->create_issue_note_award_emoji(
+        $id,
+        $issue_id,
+        $note_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:id/issues/:issue_id/notes/:note_id/award_emoji> and returns the decoded/deserialized response body.
+
+=cut
+
+sub create_issue_note_award_emoji {
+    my $self = shift;
+    croak 'create_issue_note_award_emoji must be called with 3 to 4 arguments' if @_ < 3 or @_ > 4;
+    croak 'The #1 argument ($id) to create_issue_note_award_emoji must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($issue_id) to create_issue_note_award_emoji must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($note_id) to create_issue_note_award_emoji must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    croak 'The last argument (\%params) to create_issue_note_award_emoji must be a hash ref' if defined($_[3]) and ref($_[3]) ne 'HASH';
+    my $params = (@_ == 4) ? pop() : undef;
+    my $path = sprintf('/projects/%s/issues/%s/notes/%s/award_emoji', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'POST', $path );
+    return $self->post( $path, ( defined($params) ? $params : () ) );
+}
+
+=head2 delete_issue_note_award_emoji
+
+    my $award_emoji = $api->delete_issue_note_award_emoji(
+        $id,
+        $issue_id,
+        $note_id,
+        $award_id,
+    );
+
+Sends a C<DELETE> request to C</projects/:id/issues/:issue_id/notes/:note_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
+
+=cut
+
+sub delete_issue_note_award_emoji {
+    my $self = shift;
+    croak 'delete_issue_note_award_emoji must be called with 4 arguments' if @_ != 4;
+    croak 'The #1 argument ($id) to delete_issue_note_award_emoji must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($issue_id) to delete_issue_note_award_emoji must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($note_id) to delete_issue_note_award_emoji must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    croak 'The #4 argument ($award_id) to delete_issue_note_award_emoji must be a scalar' if ref($_[3]) or (!defined $_[3]);
+    my $path = sprintf('/projects/%s/issues/%s/notes/%s/award_emoji/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'DELETE', $path );
+    return $self->delete( $path );
+}
+
+=head2 merge_request_note_award_emojis
+
+    my $award_emojis = $api->merge_request_note_award_emojis(
+        $id,
+        $merge_request_id,
+        $note_id,
+    );
+
+Sends a C<GET> request to C</projects/:id/merge_requests/:merge_request_id/notes/:note_id/award_emoji> and returns the decoded/deserialized response body.
+
+=cut
+
+sub merge_request_note_award_emojis {
+    my $self = shift;
+    croak 'merge_request_note_award_emojis must be called with 3 arguments' if @_ != 3;
+    croak 'The #1 argument ($id) to merge_request_note_award_emojis must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($merge_request_id) to merge_request_note_award_emojis must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($note_id) to merge_request_note_award_emojis must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    my $path = sprintf('/projects/%s/merge_requests/%s/notes/%s/award_emoji', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path );
+}
+
+=head2 merge_request_note_award_emoji
+
+    my $award_emoji = $api->merge_request_note_award_emoji(
+        $id,
+        $merge_request_id,
+        $note_id,
+        $award_id,
+    );
+
+Sends a C<GET> request to C</projects/:id/merge_requests/:merge_request_id/notes/:note_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
+
+=cut
+
+sub merge_request_note_award_emoji {
+    my $self = shift;
+    croak 'merge_request_note_award_emoji must be called with 4 arguments' if @_ != 4;
+    croak 'The #1 argument ($id) to merge_request_note_award_emoji must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($merge_request_id) to merge_request_note_award_emoji must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($note_id) to merge_request_note_award_emoji must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    croak 'The #4 argument ($award_id) to merge_request_note_award_emoji must be a scalar' if ref($_[3]) or (!defined $_[3]);
+    my $path = sprintf('/projects/%s/merge_requests/%s/notes/%s/award_emoji/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path );
+}
+
+=head2 create_merge_request_note_award_emoji
+
+    my $award_emoji = $api->create_merge_request_note_award_emoji(
+        $id,
+        $merge_request_id,
+        $note_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:id/merge_requests/:merge_request_id/notes/:note_id/award_emoji> and returns the decoded/deserialized response body.
+
+=cut
+
+sub create_merge_request_note_award_emoji {
+    my $self = shift;
+    croak 'create_merge_request_note_award_emoji must be called with 3 to 4 arguments' if @_ < 3 or @_ > 4;
+    croak 'The #1 argument ($id) to create_merge_request_note_award_emoji must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($merge_request_id) to create_merge_request_note_award_emoji must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($note_id) to create_merge_request_note_award_emoji must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    croak 'The last argument (\%params) to create_merge_request_note_award_emoji must be a hash ref' if defined($_[3]) and ref($_[3]) ne 'HASH';
+    my $params = (@_ == 4) ? pop() : undef;
+    my $path = sprintf('/projects/%s/merge_requests/%s/notes/%s/award_emoji', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'POST', $path );
+    return $self->post( $path, ( defined($params) ? $params : () ) );
+}
+
+=head2 delete_merge_request_note_award_emoji
+
+    my $award_emoji = $api->delete_merge_request_note_award_emoji(
+        $id,
+        $merge_request_id,
+        $note_id,
+        $award_id,
+    );
+
+Sends a C<DELETE> request to C</projects/:id/merge_requests/:merge_request_id/notes/:note_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
+
+=cut
+
+sub delete_merge_request_note_award_emoji {
+    my $self = shift;
+    croak 'delete_merge_request_note_award_emoji must be called with 4 arguments' if @_ != 4;
+    croak 'The #1 argument ($id) to delete_merge_request_note_award_emoji must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($merge_request_id) to delete_merge_request_note_award_emoji must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($note_id) to delete_merge_request_note_award_emoji must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    croak 'The #4 argument ($award_id) to delete_merge_request_note_award_emoji must be a scalar' if ref($_[3]) or (!defined $_[3]);
+    my $path = sprintf('/projects/%s/merge_requests/%s/notes/%s/award_emoji/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'DELETE', $path );
+    return $self->delete( $path );
+}
+
 =head1 BRANCH METHODS
 
 See L<http://doc.gitlab.com/ce/api/branches.html>.
@@ -873,6 +1257,29 @@ sub edit_issue {
     return $self->put( $path, ( defined($params) ? $params : () ) );
 }
 
+=head1 KEY METHODS
+
+See L<http://docs.gitlab.com/ce/api/keys.html>.
+
+=head2 key
+
+    my $key = $api->key(
+        $key_id,
+    );
+
+Sends a C<GET> request to C</keys/:key_id> and returns the decoded/deserialized response body.
+
+=cut
+
+sub key {
+    my $self = shift;
+    croak 'key must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($key_id) to key must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $path = sprintf('/keys/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path );
+}
+
 =head1 LABEL METHODS
 
 See L<http://doc.gitlab.com/ce/api/labels.html>.
@@ -1241,6 +1648,76 @@ sub milestone_issues {
     my $path = sprintf('/projects/%s/milestones/%s/issues', (map { uri_escape($_) } @_));
     $log->infof( 'Making %s request against %s.', 'GET', $path );
     return $self->get( $path );
+}
+
+=head1 OPEN SOURCE LICENSES METHODS
+
+See L<http://docs.gitlab.com/ce/api/licenses.html>.
+
+=head2 licenses
+
+    my $licenses = $api->licenses(
+        \%params,
+    );
+
+Sends a C<GET> request to C</licenses> and returns the decoded/deserialized response body.
+
+=cut
+
+sub licenses {
+    my $self = shift;
+    croak 'licenses must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to licenses must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    my $params = (@_ == 1) ? pop() : undef;
+    my $path = sprintf('/licenses', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path, ( defined($params) ? $params : () ) );
+}
+
+=head2 license
+
+    my $license = $api->license(
+        $license_key,
+        \%params,
+    );
+
+Sends a C<GET> request to C</licenses/:license_key> and returns the decoded/deserialized response body.
+
+=cut
+
+sub license {
+    my $self = shift;
+    croak 'license must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($license_key) to license must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to license must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
+    my $path = sprintf('/licenses/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path, ( defined($params) ? $params : () ) );
+}
+
+=head1 NAMESPACE METHODS
+
+See L<http://docs.gitlab.com/ce/api/namespaces.html>.
+
+=head2 namespaces
+
+    my $namespaces = $api->namespaces(
+        \%params,
+    );
+
+Sends a C<GET> request to C</namespaces> and returns the decoded/deserialized response body.
+
+=cut
+
+sub namespaces {
+    my $self = shift;
+    croak 'namespaces must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to namespaces must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    my $params = (@_ == 1) ? pop() : undef;
+    my $path = sprintf('/namespaces', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path, ( defined($params) ? $params : () ) );
 }
 
 =head1 NOTE METHODS
@@ -2282,6 +2759,114 @@ sub session {
     $log->infof( 'Making %s request against %s.', 'POST', $path );
     $self->post( $path, ( defined($params) ? $params : () ) );
     return;
+}
+
+=head1 SETTINGS METHODS
+
+See L<http://docs.gitlab.com/ce/api/settings.html>.
+
+=head2 settings
+
+    my $settings = $api->settings();
+
+Sends a C<GET> request to C</application/settings> and returns the decoded/deserialized response body.
+
+=cut
+
+sub settings {
+    my $self = shift;
+    croak "The settings method does not take any arguments" if @_;
+    my $path = sprintf('/application/settings', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path );
+}
+
+=head2 update_settings
+
+    my $settings = $api->update_settings(
+        \%params,
+    );
+
+Sends a C<PUT> request to C</application/settings> and returns the decoded/deserialized response body.
+
+=cut
+
+sub update_settings {
+    my $self = shift;
+    croak 'update_settings must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to update_settings must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    my $params = (@_ == 1) ? pop() : undef;
+    my $path = sprintf('/application/settings', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'PUT', $path );
+    return $self->put( $path, ( defined($params) ? $params : () ) );
+}
+
+=head1 SIDEKIQ METHODS
+
+See L<http://docs.gitlab.com/ce/api/sidekiq_metrics.html>.
+
+=head2 queue_metrics
+
+    my $metrics = $api->queue_metrics();
+
+Sends a C<GET> request to C</sidekiq/queue_metrics> and returns the decoded/deserialized response body.
+
+=cut
+
+sub queue_metrics {
+    my $self = shift;
+    croak "The queue_metrics method does not take any arguments" if @_;
+    my $path = sprintf('/sidekiq/queue_metrics', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path );
+}
+
+=head2 process_metrics
+
+    my $metrics = $api->process_metrics();
+
+Sends a C<GET> request to C</sidekiq/process_metrics> and returns the decoded/deserialized response body.
+
+=cut
+
+sub process_metrics {
+    my $self = shift;
+    croak "The process_metrics method does not take any arguments" if @_;
+    my $path = sprintf('/sidekiq/process_metrics', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path );
+}
+
+=head2 job_stats
+
+    my $stats = $api->job_stats();
+
+Sends a C<GET> request to C</sidekiq/job_stats> and returns the decoded/deserialized response body.
+
+=cut
+
+sub job_stats {
+    my $self = shift;
+    croak "The job_stats method does not take any arguments" if @_;
+    my $path = sprintf('/sidekiq/job_stats', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path );
+}
+
+=head2 compound_metrics
+
+    my $metrics = $api->compound_metrics();
+
+Sends a C<GET> request to C</sidekiq/compound_metrics> and returns the decoded/deserialized response body.
+
+=cut
+
+sub compound_metrics {
+    my $self = shift;
+    croak "The compound_metrics method does not take any arguments" if @_;
+    my $path = sprintf('/sidekiq/compound_metrics', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path );
 }
 
 =head1 SYSTEM HOOK METHODS

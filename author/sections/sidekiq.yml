@@ -1,0 +1,5 @@
+---
+- queue_metrics: metrics = GET /sidekiq/queue_metrics
+- process_metrics: metrics = GET /sidekiq/process_metrics
+- job_stats: stats = GET /sidekiq/job_stats
+- compound_metrics: metrics = GET /sidekiq/compound_metrics
