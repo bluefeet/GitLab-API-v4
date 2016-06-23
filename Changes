@@ -2,6 +2,8 @@ Revision history for Perl extension GitLab::API::v3.
 
 {{$NEXT}}
 
+ - Move tag methods into their own section and add the tag, delete_tag,
+   create_release, and update_release methods.
  - Fixup params handling so that they don't eat up proceeding arguments.
 
 0.09 2016-06-22

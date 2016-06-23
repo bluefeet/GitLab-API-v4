@@ -518,23 +518,6 @@ Sends a C<DELETE> request to C</projects/:project_id/services/:service_name>.
 
 See L<http://doc.gitlab.com/ce/api/repositories.html>.
 
-=head2 tags
-
-    my $tags = $api->tags(
-        $project_id,
-    );
-
-Sends a C<GET> request to C</projects/:project_id/repository/tags> and returns the decoded/deserialized response body.
-
-=head2 create_tag
-
-    $api->create_tag(
-        $project_id,
-        \%params,
-    );
-
-Sends a C<POST> request to C</projects/:project_id/repository/tags>.
-
 =head2 tree
 
     my $tree = $api->tree(
@@ -1160,6 +1143,65 @@ Sends a C<PUT> request to C</groups/:group_id/members/:user_id>.
     );
 
 Sends a C<DELETE> request to C</groups/:group_id/members/:user_id>.
+
+=head1 TAG METHODS
+
+See L<http://docs.gitlab.com/ce/api/tags.html>.
+
+=head2 tags
+
+    my $tags = $api->tags(
+        $project_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/repository/tags> and returns the decoded/deserialized response body.
+
+=head2 tag
+
+    my $tag = $api->tag(
+        $project_id,
+        $tag_name,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/repository/tags/:tag_name> and returns the decoded/deserialized response body.
+
+=head2 create_tag
+
+    my $tag = $api->create_tag(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/repository/tags> and returns the decoded/deserialized response body.
+
+=head2 delete_tag
+
+    $api->delete_tag(
+        $project_id,
+        $tag_name,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/repository/tags/:tag_name>.
+
+=head2 create_release
+
+    $api->create_release(
+        $project_id,
+        $tag_name,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/repository/tags/:tag_name/release>.
+
+=head2 update_release
+
+    $api->update_release(
+        $project_id,
+        $tag_name,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/repository/tags/:tag_name/release>.
 
 =head1 SEE ALSO
 

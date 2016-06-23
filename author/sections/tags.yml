@@ -1,0 +1,7 @@
+---
+- tags: tags = GET /projects/:project_id/repository/tags
+- tag: tag = GET /projects/:project_id/repository/tags/:tag_name
+- create_tag: tag = POST /projects/:project_id/repository/tags?
+- delete_tag: DELETE /projects/:project_id/repository/tags/:tag_name
+- create_release: POST /projects/:project_id/repository/tags/:tag_name/release?
+- update_release: PUT /projects/:project_id/repository/tags/:tag_name/release?

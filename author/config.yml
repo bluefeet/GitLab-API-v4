@@ -51,3 +51,6 @@ sections:
 - groups:
     head: GROUP METHODS
     doc_url: http://doc.gitlab.com/ce/api/groups.html
+- tags:
+    head: TAG METHODS
+    doc_url: http://docs.gitlab.com/ce/api/tags.html

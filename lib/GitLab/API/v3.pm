@@ -1162,48 +1162,6 @@ sub delete_project_service {
 
 See L<http://doc.gitlab.com/ce/api/repositories.html>.
 
-=head2 tags
-
-    my $tags = $api->tags(
-        $project_id,
-    );
-
-Sends a C<GET> request to C</projects/:project_id/repository/tags> and returns the decoded/deserialized response body.
-
-=cut
-
-sub tags {
-    my $self = shift;
-    croak 'tags must be called with 1 arguments' if @_ != 1;
-    croak 'The #1 argument ($project_id) to tags must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    my $path = sprintf('/projects/%s/repository/tags', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s.', 'GET', $path );
-    return $self->get( $path );
-}
-
-=head2 create_tag
-
-    $api->create_tag(
-        $project_id,
-        \%params,
-    );
-
-Sends a C<POST> request to C</projects/:project_id/repository/tags>.
-
-=cut
-
-sub create_tag {
-    my $self = shift;
-    croak 'create_tag must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
-    croak 'The #1 argument ($project_id) to create_tag must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The last argument (\%params) to create_tag must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
-    my $params = (@_ == 2) ? pop() : undef;
-    my $path = sprintf('/projects/%s/repository/tags', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s.', 'POST', $path );
-    $self->post( $path, ( defined($params) ? $params : () ) );
-    return;
-}
-
 =head2 tree
 
     my $tree = $api->tree(
@@ -2665,6 +2623,144 @@ sub remove_group_member {
     my $path = sprintf('/groups/%s/members/%s', (map { uri_escape($_) } @_));
     $log->infof( 'Making %s request against %s.', 'DELETE', $path );
     $self->delete( $path );
+    return;
+}
+
+=head1 TAG METHODS
+
+See L<http://docs.gitlab.com/ce/api/tags.html>.
+
+=head2 tags
+
+    my $tags = $api->tags(
+        $project_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/repository/tags> and returns the decoded/deserialized response body.
+
+=cut
+
+sub tags {
+    my $self = shift;
+    croak 'tags must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($project_id) to tags must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $path = sprintf('/projects/%s/repository/tags', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path );
+}
+
+=head2 tag
+
+    my $tag = $api->tag(
+        $project_id,
+        $tag_name,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/repository/tags/:tag_name> and returns the decoded/deserialized response body.
+
+=cut
+
+sub tag {
+    my $self = shift;
+    croak 'tag must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to tag must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($tag_name) to tag must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/repository/tags/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path );
+}
+
+=head2 create_tag
+
+    my $tag = $api->create_tag(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/repository/tags> and returns the decoded/deserialized response body.
+
+=cut
+
+sub create_tag {
+    my $self = shift;
+    croak 'create_tag must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($project_id) to create_tag must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to create_tag must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
+    my $path = sprintf('/projects/%s/repository/tags', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'POST', $path );
+    return $self->post( $path, ( defined($params) ? $params : () ) );
+}
+
+=head2 delete_tag
+
+    $api->delete_tag(
+        $project_id,
+        $tag_name,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/repository/tags/:tag_name>.
+
+=cut
+
+sub delete_tag {
+    my $self = shift;
+    croak 'delete_tag must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to delete_tag must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($tag_name) to delete_tag must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/repository/tags/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'DELETE', $path );
+    $self->delete( $path );
+    return;
+}
+
+=head2 create_release
+
+    $api->create_release(
+        $project_id,
+        $tag_name,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/repository/tags/:tag_name/release>.
+
+=cut
+
+sub create_release {
+    my $self = shift;
+    croak 'create_release must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to create_release must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($tag_name) to create_release must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to create_release must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
+    my $path = sprintf('/projects/%s/repository/tags/%s/release', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'POST', $path );
+    $self->post( $path, ( defined($params) ? $params : () ) );
+    return;
+}
+
+=head2 update_release
+
+    $api->update_release(
+        $project_id,
+        $tag_name,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/repository/tags/:tag_name/release>.
+
+=cut
+
+sub update_release {
+    my $self = shift;
+    croak 'update_release must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to update_release must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($tag_name) to update_release must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to update_release must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
+    my $path = sprintf('/projects/%s/repository/tags/%s/release', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'PUT', $path );
+    $self->put( $path, ( defined($params) ? $params : () ) );
     return;
 }
 
