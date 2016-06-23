@@ -708,6 +708,398 @@ sub delete_branch {
     return;
 }
 
+=head1 BUILD METHODS
+
+See L<http://docs.gitlab.com/ce/api/builds.html>.
+
+=head2 builds
+
+    my $builds = $api->builds(
+        $id,
+        \%params,
+    );
+
+Sends a C<GET> request to C</projects/:id/builds> and returns the decoded/deserialized response body.
+
+=cut
+
+sub builds {
+    my $self = shift;
+    croak 'builds must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($id) to builds must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to builds must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
+    my $path = sprintf('/projects/%s/builds', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path, ( defined($params) ? $params : () ) );
+}
+
+=head2 commit_builds
+
+    my $builds = $api->commit_builds(
+        $id,
+        $sha,
+        \%params,
+    );
+
+Sends a C<GET> request to C</projects/:id/repository/commits/:sha/builds> and returns the decoded/deserialized response body.
+
+=cut
+
+sub commit_builds {
+    my $self = shift;
+    croak 'commit_builds must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($id) to commit_builds must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($sha) to commit_builds must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to commit_builds must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
+    my $path = sprintf('/projects/%s/repository/commits/%s/builds', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path, ( defined($params) ? $params : () ) );
+}
+
+=head2 build
+
+    my $build = $api->build(
+        $id,
+        $build_id,
+    );
+
+Sends a C<GET> request to C</projects/:id/builds/:build_id> and returns the decoded/deserialized response body.
+
+=cut
+
+sub build {
+    my $self = shift;
+    croak 'build must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($id) to build must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($build_id) to build must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/builds/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path );
+}
+
+=head2 build_artifacts
+
+    my $artifacts = $api->build_artifacts(
+        $id,
+        $build_id,
+    );
+
+Sends a C<GET> request to C</projects/:id/builds/:build_id/artifacts> and returns the decoded/deserialized response body.
+
+=cut
+
+sub build_artifacts {
+    my $self = shift;
+    croak 'build_artifacts must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($id) to build_artifacts must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($build_id) to build_artifacts must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/builds/%s/artifacts', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path );
+}
+
+=head2 build_trace
+
+    my $trace = $api->build_trace(
+        $id,
+        $build_id,
+    );
+
+Sends a C<GET> request to C</projects/:id/builds/:build_id/trace> and returns the decoded/deserialized response body.
+
+=cut
+
+sub build_trace {
+    my $self = shift;
+    croak 'build_trace must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($id) to build_trace must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($build_id) to build_trace must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/builds/%s/trace', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path );
+}
+
+=head2 cancel_build
+
+    my $build = $api->cancel_build(
+        $id,
+        $build_id,
+    );
+
+Sends a C<POST> request to C</projects/:id/builds/:build_id/cancel> and returns the decoded/deserialized response body.
+
+=cut
+
+sub cancel_build {
+    my $self = shift;
+    croak 'cancel_build must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($id) to cancel_build must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($build_id) to cancel_build must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/builds/%s/cancel', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'POST', $path );
+    return $self->post( $path );
+}
+
+=head2 retry_build
+
+    my $build = $api->retry_build(
+        $id,
+        $build_id,
+    );
+
+Sends a C<POST> request to C</projects/:id/builds/:build_id/retry> and returns the decoded/deserialized response body.
+
+=cut
+
+sub retry_build {
+    my $self = shift;
+    croak 'retry_build must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($id) to retry_build must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($build_id) to retry_build must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/builds/%s/retry', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'POST', $path );
+    return $self->post( $path );
+}
+
+=head2 erase_build
+
+    my $build = $api->erase_build(
+        $id,
+        $build_id,
+    );
+
+Sends a C<POST> request to C</projects/:id/builds/:build_id/erase> and returns the decoded/deserialized response body.
+
+=cut
+
+sub erase_build {
+    my $self = shift;
+    croak 'erase_build must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($id) to erase_build must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($build_id) to erase_build must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/builds/%s/erase', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'POST', $path );
+    return $self->post( $path );
+}
+
+=head2 keep_build_artifacts
+
+    my $build = $api->keep_build_artifacts(
+        $id,
+        $build_id,
+    );
+
+Sends a C<POST> request to C</projects/:id/builds/:build_id/artifacts/keep> and returns the decoded/deserialized response body.
+
+=cut
+
+sub keep_build_artifacts {
+    my $self = shift;
+    croak 'keep_build_artifacts must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($id) to keep_build_artifacts must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($build_id) to keep_build_artifacts must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/builds/%s/artifacts/keep', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'POST', $path );
+    return $self->post( $path );
+}
+
+=head1 BUILD TRIGGER METHODS
+
+See L<http://docs.gitlab.com/ce/api/build_triggers.html>.
+
+=head2 triggers
+
+    my $triggers = $api->triggers(
+        $id,
+    );
+
+Sends a C<GET> request to C</projects/:id/triggers> and returns the decoded/deserialized response body.
+
+=cut
+
+sub triggers {
+    my $self = shift;
+    croak 'triggers must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($id) to triggers must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $path = sprintf('/projects/%s/triggers', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path );
+}
+
+=head2 trigger
+
+    my $trigger = $api->trigger(
+        $id,
+        $token,
+    );
+
+Sends a C<GET> request to C</projects/:id/triggers/:token> and returns the decoded/deserialized response body.
+
+=cut
+
+sub trigger {
+    my $self = shift;
+    croak 'trigger must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($id) to trigger must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($token) to trigger must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/triggers/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path );
+}
+
+=head2 create_trigger
+
+    my $trigger = $api->create_trigger(
+        $id,
+    );
+
+Sends a C<POST> request to C</projects/:id/triggers> and returns the decoded/deserialized response body.
+
+=cut
+
+sub create_trigger {
+    my $self = shift;
+    croak 'create_trigger must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($id) to create_trigger must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $path = sprintf('/projects/%s/triggers', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'POST', $path );
+    return $self->post( $path );
+}
+
+=head2 delete_trigger
+
+    my $trigger = $api->delete_trigger(
+        $id,
+        $token,
+    );
+
+Sends a C<DELETE> request to C</projects/:id/triggers/:token> and returns the decoded/deserialized response body.
+
+=cut
+
+sub delete_trigger {
+    my $self = shift;
+    croak 'delete_trigger must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($id) to delete_trigger must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($token) to delete_trigger must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/triggers/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'DELETE', $path );
+    return $self->delete( $path );
+}
+
+=head1 BUILD VARIABLE METHODS
+
+See L<http://docs.gitlab.com/ce/api/build_variables.html>.
+
+=head2 variables
+
+    my $variables = $api->variables(
+        $id,
+    );
+
+Sends a C<GET> request to C</projects/:id/variables> and returns the decoded/deserialized response body.
+
+=cut
+
+sub variables {
+    my $self = shift;
+    croak 'variables must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($id) to variables must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $path = sprintf('/projects/%s/variables', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path );
+}
+
+=head2 variable
+
+    my $variable = $api->variable(
+        $id,
+        $key,
+    );
+
+Sends a C<GET> request to C</projects/:id/variables/:key> and returns the decoded/deserialized response body.
+
+=cut
+
+sub variable {
+    my $self = shift;
+    croak 'variable must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($id) to variable must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($key) to variable must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/variables/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path );
+}
+
+=head2 create_variable
+
+    my $variable = $api->create_variable(
+        $id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:id/variables> and returns the decoded/deserialized response body.
+
+=cut
+
+sub create_variable {
+    my $self = shift;
+    croak 'create_variable must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($id) to create_variable must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to create_variable must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
+    my $path = sprintf('/projects/%s/variables', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'POST', $path );
+    return $self->post( $path, ( defined($params) ? $params : () ) );
+}
+
+=head2 update_variable
+
+    my $variable = $api->update_variable(
+        $id,
+        $key,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:id/variables/:key> and returns the decoded/deserialized response body.
+
+=cut
+
+sub update_variable {
+    my $self = shift;
+    croak 'update_variable must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($id) to update_variable must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($key) to update_variable must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to update_variable must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
+    my $path = sprintf('/projects/%s/variables/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'PUT', $path );
+    return $self->put( $path, ( defined($params) ? $params : () ) );
+}
+
+=head2 delete_variable
+
+    my $variable = $api->delete_variable(
+        $id,
+        $key,
+    );
+
+Sends a C<DELETE> request to C</projects/:id/variables/:key> and returns the decoded/deserialized response body.
+
+=cut
+
+sub delete_variable {
+    my $self = shift;
+    croak 'delete_variable must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($id) to delete_variable must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($key) to delete_variable must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/variables/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'DELETE', $path );
+    return $self->delete( $path );
+}
+
 =head1 COMMIT METHODS
 
 See L<http://doc.gitlab.com/ce/api/commits.html>.
@@ -2683,6 +3075,172 @@ sub delete_file {
     $log->infof( 'Making %s request against %s.', 'DELETE', $path );
     $self->delete( $path, ( defined($params) ? $params : () ) );
     return;
+}
+
+=head1 RUNNER METHODS
+
+See L<http://docs.gitlab.com/ce/api/runners.html>.
+
+=head2 runners
+
+    my $runners = $api->runners(
+        \%params,
+    );
+
+Sends a C<GET> request to C</runners> and returns the decoded/deserialized response body.
+
+=cut
+
+sub runners {
+    my $self = shift;
+    croak 'runners must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to runners must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    my $params = (@_ == 1) ? pop() : undef;
+    my $path = sprintf('/runners', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path, ( defined($params) ? $params : () ) );
+}
+
+=head2 all_runners
+
+    my $runners = $api->all_runners(
+        \%params,
+    );
+
+Sends a C<GET> request to C</runners/all> and returns the decoded/deserialized response body.
+
+=cut
+
+sub all_runners {
+    my $self = shift;
+    croak 'all_runners must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to all_runners must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    my $params = (@_ == 1) ? pop() : undef;
+    my $path = sprintf('/runners/all', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path, ( defined($params) ? $params : () ) );
+}
+
+=head2 runner
+
+    my $runner = $api->runner(
+        $id,
+    );
+
+Sends a C<GET> request to C</runners/:id> and returns the decoded/deserialized response body.
+
+=cut
+
+sub runner {
+    my $self = shift;
+    croak 'runner must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($id) to runner must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $path = sprintf('/runners/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path );
+}
+
+=head2 update_runner
+
+    my $runner = $api->update_runner(
+        $id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</runners/:id> and returns the decoded/deserialized response body.
+
+=cut
+
+sub update_runner {
+    my $self = shift;
+    croak 'update_runner must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($id) to update_runner must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to update_runner must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
+    my $path = sprintf('/runners/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'PUT', $path );
+    return $self->put( $path, ( defined($params) ? $params : () ) );
+}
+
+=head2 delete_runner
+
+    my $runner = $api->delete_runner(
+        $id,
+    );
+
+Sends a C<DELETE> request to C</runners/:id> and returns the decoded/deserialized response body.
+
+=cut
+
+sub delete_runner {
+    my $self = shift;
+    croak 'delete_runner must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($id) to delete_runner must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $path = sprintf('/runners/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'DELETE', $path );
+    return $self->delete( $path );
+}
+
+=head2 project_runners
+
+    my $runners = $api->project_runners(
+        $id,
+    );
+
+Sends a C<GET> request to C</projects/:id/runners> and returns the decoded/deserialized response body.
+
+=cut
+
+sub project_runners {
+    my $self = shift;
+    croak 'project_runners must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($id) to project_runners must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $path = sprintf('/projects/%s/runners', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'GET', $path );
+    return $self->get( $path );
+}
+
+=head2 enable_project_runner
+
+    my $runner = $api->enable_project_runner(
+        $id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:id/runners> and returns the decoded/deserialized response body.
+
+=cut
+
+sub enable_project_runner {
+    my $self = shift;
+    croak 'enable_project_runner must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($id) to enable_project_runner must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to enable_project_runner must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
+    my $path = sprintf('/projects/%s/runners', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'POST', $path );
+    return $self->post( $path, ( defined($params) ? $params : () ) );
+}
+
+=head2 disable_project_runner
+
+    my $runner = $api->disable_project_runner(
+        $id,
+        $runner_id,
+    );
+
+Sends a C<DELETE> request to C</projects/:id/runners/:runner_id> and returns the decoded/deserialized response body.
+
+=cut
+
+sub disable_project_runner {
+    my $self = shift;
+    croak 'disable_project_runner must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($id) to disable_project_runner must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($runner_id) to disable_project_runner must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/runners/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'DELETE', $path );
+    return $self->delete( $path );
 }
 
 =head1 SERVICE METHODS

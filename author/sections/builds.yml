@@ -1,0 +1,10 @@
+---
+- builds: builds = GET /projects/:id/builds?
+- commit_builds: builds = GET /projects/:id/repository/commits/:sha/builds?
+- build: build = GET /projects/:id/builds/:build_id
+- build_artifacts: artifacts = GET /projects/:id/builds/:build_id/artifacts
+- build_trace: trace = GET /projects/:id/builds/:build_id/trace
+- cancel_build: build = POST /projects/:id/builds/:build_id/cancel
+- retry_build: build = POST /projects/:id/builds/:build_id/retry
+- erase_build: build = POST /projects/:id/builds/:build_id/erase
+- keep_build_artifacts: build = POST /projects/:id/builds/:build_id/artifacts/keep

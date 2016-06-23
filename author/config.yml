@@ -6,9 +6,15 @@ sections:
 - branches:
     head: BRANCH METHODS
     doc_url: http://doc.gitlab.com/ce/api/branches.html
-# builds
-# build_triggers
-# build_variables
+- builds:
+    head: BUILD METHODS
+    doc_url: http://docs.gitlab.com/ce/api/builds.html
+- build_triggers:
+    head: BUILD TRIGGER METHODS
+    doc_url: http://docs.gitlab.com/ce/api/build_triggers.html
+- build_variables:
+    head: BUILD VARIABLE METHODS
+    doc_url: http://docs.gitlab.com/ce/api/build_variables.html
 - commits:
     doc_url: http://doc.gitlab.com/ce/api/commits.html
     head: COMMIT METHODS
@@ -54,7 +60,9 @@ sections:
 - repository_files:
     head: FILE METHODS
     doc_url: http://doc.gitlab.com/ce/api/repository_files.html
-# runners
+- runners:
+    head: RUNNER METHODS
+    doc_url: http://docs.gitlab.com/ce/api/runners.html
 - services:
     head: SERVICE METHODS
     doc_url: http://doc.gitlab.com/ce/api/services.html

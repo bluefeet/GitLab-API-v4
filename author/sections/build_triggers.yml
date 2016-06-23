@@ -1,0 +1,5 @@
+---
+- triggers: triggers = GET /projects/:id/triggers
+- trigger: trigger = GET /projects/:id/triggers/:token
+- create_trigger: trigger = POST /projects/:id/triggers
+- delete_trigger: trigger = DELETE /projects/:id/triggers/:token

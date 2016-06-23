@@ -1,0 +1,6 @@
+---
+- variables: variables = GET /projects/:id/variables
+- variable: variable = GET /projects/:id/variables/:key
+- create_variable: variable = POST /projects/:id/variables?
+- update_variable: variable = PUT /projects/:id/variables/:key?
+- delete_variable: variable = DELETE /projects/:id/variables/:key
