@@ -2,6 +2,9 @@ Revision history for Perl extension GitLab::API::v3.
 
 {{$NEXT}}
 
+ - Change CONTRIBUTORS section to show the commit author rather than a link
+   to their GitHub profile.
+
 1.00 2016-06-23
 
  - Move tag methods into their own section and add the tag, delete_tag,

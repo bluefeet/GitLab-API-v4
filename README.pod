@@ -1738,15 +1738,15 @@ Aran Clary Deltac <bluefeetE<64>gmail.com>
 
 =item *
 
-L<dotandimet|https://github.com/dotandimet>
+Dotan Dimet <dotanE<64>corky.net>
 
 =item *
 
-L<nfg|https://github.com/nfg>
+Nigel Gregoire <nigelgregoireE<64>gmail.com>
 
 =item *
 
-L<trunov-ms|https://github.com/trunov-ms>
+trunov-ms <trunov.msE<64>gmail.com>
 
 =back
 
