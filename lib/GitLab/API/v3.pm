@@ -2540,6 +2540,51 @@ sub remove_project_member {
     return;
 }
 
+=head2 share_project_with_group
+
+    $api->share_project_with_group(
+        $id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:id/share>.
+
+=cut
+
+sub share_project_with_group {
+    my $self = shift;
+    croak 'share_project_with_group must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($id) to share_project_with_group must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to share_project_with_group must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
+    my $path = sprintf('/projects/%s/share', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'POST', $path );
+    $self->post( $path, ( defined($params) ? $params : () ) );
+    return;
+}
+
+=head2 delete_shared_project_link_within_group
+
+    $api->delete_shared_project_link_within_group(
+        $id,
+        $group_id,
+    );
+
+Sends a C<DELETE> request to C</projects/:id/share/:group_id>.
+
+=cut
+
+sub delete_shared_project_link_within_group {
+    my $self = shift;
+    croak 'delete_shared_project_link_within_group must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($id) to delete_shared_project_link_within_group must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($group_id) to delete_shared_project_link_within_group must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $path = sprintf('/projects/%s/share/%s', (map { uri_escape($_) } @_));
+    $log->infof( 'Making %s request against %s.', 'DELETE', $path );
+    $self->delete( $path );
+    return;
+}
+
 =head2 project_hooks
 
     my $hooks = $api->project_hooks(

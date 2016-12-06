@@ -15,6 +15,8 @@
 - add_project_member: POST /projects/:project_id/members?
 - edit_project_member: PUT /projects/:project_id/members/:user_id?
 - remove_project_member: DELETE /projects/:project_id/members/:user_id
+- share_project_with_group: POST /projects/:id/share?
+- delete_shared_project_link_within_group: DELETE /projects/:id/share/:group_id
 
 - project_hooks: hooks = GET /projects/:project_id/hooks
 - project_hook: hook = GET /project/:project_id/hooks/:hook_id
