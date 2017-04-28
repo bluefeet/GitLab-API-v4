@@ -82,7 +82,7 @@ around _call => sub {
       return Role::REST::Client::Response->new(
           code     => $res->code,
           response => $res->response,
-          data     => sub { $res->response->content },
+          data     => sub { $res->response->decoded_content },
           (defined $res->error) ? ( error => $res->error ) : (),
       );
     }
