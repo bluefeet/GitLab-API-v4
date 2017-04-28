@@ -100,8 +100,6 @@ foreach my $section_name (keys %$section_pack) {
         $sprintf_path =~ s{:[^/]+}{%s}g;
         print "    my \$path = sprintf('$sprintf_path', (map { uri_escape(\$_) } \@_));\n";
 
-        print "    \$log->infof( 'Making %s request against %s.', '$method', \$path );\n";
-
         my $method_sub = lc( $method );
         print '    ';
         print 'return ' if $return;

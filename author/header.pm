@@ -201,12 +201,27 @@ sub _build_rest_client {
     $log->debugf( 'Creating a %s instance pointed at %s.', $class, $url );
 
     my $rest = $class->new(
-        server => $url,
-        type   => 'application/json',
+        server  => $url,
+        type    => 'application/json',
+        retries => $self->retries,
     );
 
     return $rest;
 }
+
+=head2 retries
+
+The number of times the request should be retried in case it does not succeed.
+Defaults to 0, meaning that a failed request will not be retried.
+
+=cut
+
+has retries => (
+    is      => 'ro',
+    isa     => Int,
+    lazy    => 1,
+    default => 0,
+);
 
 =head1 UTILITY METHODS
 

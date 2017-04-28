@@ -20,6 +20,7 @@ GetOptions(
     'token=s'  => \my $token,
     'all'      => \my $all,
     'format=s' => \my $format,
+    'retry=i'  => \my $retries,
 
     'help'     => \my $help,
     'verbose'  => \my $verbose,
@@ -85,8 +86,9 @@ my $method = shift( @args );
 
 try {
     my $api = GitLab::API::v3->new(
-        url   => $url,
-        token => $token,
+        url     => $url,
+        token   => $token,
+        retries => $retries,
     );
 
     if ($all) {
