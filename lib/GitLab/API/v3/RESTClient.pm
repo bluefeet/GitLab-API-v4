@@ -71,7 +71,7 @@ around _call => sub {
 
     my $res = $self->$orig(@_);
 
-    # Disable serialization when response is an octest stream
+    # Disable serialization when response is not serial data
     # Annoyingly, this cannot be done using the Role::REST::Client API
     my $type = $res->response->headers->{'content-type'};
     if ($type =~ qr{\b(?:json|xml|yaml|x-www-form-urlencoded)\b}) {
