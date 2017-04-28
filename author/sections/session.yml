@@ -1,2 +1,2 @@
 ---
-- session: POST /session?
+- session: session = POST /session?

@@ -80,6 +80,40 @@ use Moo;
 use strictures 1;
 use namespace::clean;
 
+sub BUILDARGS {
+  my $class = shift;
+  my $args = (@_) ? (@_ > 1) ? { @_ } : shift : {};
+
+  if (!defined $args->{token}) {
+    if (defined $args->{password}) {
+      my $session;
+      my $api = bless({ url => $args->{url} }, $class );
+
+      if (defined $args->{email}) {
+        $session = $api->session({
+          email    => $args->{email},
+          password => $args->{password}
+        });
+      }
+      elsif (defined $args->{login}) {
+        $session = $api->session({
+          login    => $args->{login},
+          password => $args->{password}
+        });
+      }
+      else {
+        croak 'Credentials needed: provide token or login details';
+      }
+      $args->{token} = $session->{private_token};
+    }
+    else {
+      croak 'Credentials needed: provide token or login details';
+    }
+  }
+
+  return $args;
+}
+
 sub BUILD {
     my ($self) = @_;
 
@@ -107,6 +141,20 @@ has url => (
     required => 1,
 );
 
+=head1 CREDENTIALS
+
+The GitLab::API::v3 constructor expects some way to authenticate, and will
+croak unless this is provided, or possible to obtain. The way this is
+implemented is with a private token for the authenticated user, which gets
+passed with the various requests to the API.
+
+If this token is not passed to the constructor together with the API url, then
+the constructor will expect a valid user email or login name, and their
+password. Any of these combinations is accepted.
+
+In the end, only the token will be kept in memory, and the other user
+credentials will be discarded.
+
 =head2 token
 
 A GitLab API token.
@@ -118,6 +166,18 @@ has token => (
     isa      => NonEmptySimpleStr,
     required => 1,
 );
+
+=head2 login
+
+A GitLab user login name, needed if no token is provided.
+
+=head2 email
+
+A GitLab user email, needed if no login is provided.
+
+=head2 password
+
+A GitLab user password, needed if no token is provided.
 
 =head1 OPTIONAL ARGUMENTS
 
@@ -3348,11 +3408,11 @@ See L<http://doc.gitlab.com/ce/api/session.html>.
 
 =head2 session
 
-    $api->session(
+    my $session = $api->session(
         \%params,
     );
 
-Sends a C<POST> request to C</session>.
+Sends a C<POST> request to C</session> and returns the decoded/deserialized response body.
 
 =cut
 
@@ -3363,8 +3423,7 @@ sub session {
     my $params = (@_ == 1) ? pop() : undef;
     my $path = sprintf('/session', (map { uri_escape($_) } @_));
     $log->infof( 'Making %s request against %s.', 'POST', $path );
-    $self->post( $path, ( defined($params) ? $params : () ) );
-    return;
+    return $self->post( $path, ( defined($params) ? $params : () ) );
 }
 
 =head1 SETTINGS METHODS
