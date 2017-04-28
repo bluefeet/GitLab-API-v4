@@ -103,41 +103,17 @@ try {
 
     exit 0 if !defined $data;
 
-    # Replace all non HASH/ARRAY references with strings.  This is
-    # implemented generically, but really only causes JSON boolean
-    # object to be stringified which makes sense for non-JSON serializers.
-    if ($format ne 'JSON') {
-        $data = clean_data( $data );
+    if (ref $data) {
+      print $serializer->serialize( $data );
     }
-
-    print $serializer->serialize( $data );
+    else {
+      print $data;
+    }
 }
 catch {
     $log->fatal( $_ );
     exit 1;
 };
-
-sub clean_data {
-    my ($data) = @_;
-
-    if (ref($data) eq 'ARRAY') {
-        $data = [
-            map { clean_data( $_ ) }
-            @$data
-        ];
-    }
-    elsif (ref($data) eq 'HASH') {
-        $data = {
-            map { $_ => clean_data( $data->{$_} ) }
-            keys( %$data )
-        };
-    }
-    elsif (ref $data) {
-        $data = "$data";
-    }
-
-    return $data;
-}
 
 __END__
 
