@@ -52,7 +52,7 @@ sections:
     head: PROJECT METHODS
     doc_url: http://doc.gitlab.com/ce/api/projects.html
 - project_snippets:
-    head: SNIPPET METHODS
+    head: PROJECT SNIPPET METHODS
     doc_url: http://doc.gitlab.com/ce/api/project_snippets.html
 - repositories:
     head: REPOSITORY METHODS
@@ -75,6 +75,9 @@ sections:
 - sidekiq:
     head: SIDEKIQ METHODS
     doc_url: http://docs.gitlab.com/ce/api/sidekiq_metrics.html
+- snippets:
+    head: USER SNIPPET METHODS
+    doc_url: http://docs.gitlab.com/ce/api/snippets.html
 - system_hooks:
     head: SYSTEM HOOK METHODS
     doc_url: http://doc.gitlab.com/ce/api/system_hooks.html
