@@ -50,6 +50,10 @@ Nigel Gregoire <nigelgregoireE<64>gmail.com>
 
 trunov-ms <trunov.msE<64>gmail.com>
 
+=item *
+
+Marek R. Sotola <Marek.R.SotolaE<64>nasa.gov>
+
 =back
 
 =head1 ACKNOWLEDGEMENTS
