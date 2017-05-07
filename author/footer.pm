@@ -54,6 +54,10 @@ trunov-ms <trunov.msE<64>gmail.com>
 
 Marek R. Sotola <Marek.R.SotolaE<64>nasa.gov>
 
+=item *
+
+José Joaquín Atria <jjatriaE<64>gmail.com>
+
 =back
 
 =head1 ACKNOWLEDGEMENTS
