@@ -2,6 +2,7 @@ Revision history for Perl extension GitLab::API::v3.
 
 {{$NEXT}}
 
+ - Allow protect_branch to accept parameters.
  - Add share_project_with_group and delete_shared_project_link_within_group
    methods. @sotola
  - Change CONTRIBUTORS section to show the commit author rather than a link

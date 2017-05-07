@@ -625,6 +625,7 @@ sub branch {
     $api->protect_branch(
         $project_id,
         $branch_name,
+        \%params,
     );
 
 Sends a C<PUT> request to C</projects/:project_id/repository/branches/:branch_name/protect>.
@@ -633,12 +634,14 @@ Sends a C<PUT> request to C</projects/:project_id/repository/branches/:branch_na
 
 sub protect_branch {
     my $self = shift;
-    croak 'protect_branch must be called with 2 arguments' if @_ != 2;
+    croak 'protect_branch must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
     croak 'The #1 argument ($project_id) to protect_branch must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($branch_name) to protect_branch must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to protect_branch must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
     my $path = sprintf('/projects/%s/repository/branches/%s/protect', (map { uri_escape($_) } @_));
     $log->infof( 'Making %s request against %s.', 'PUT', $path );
-    $self->put( $path );
+    $self->put( $path, ( defined($params) ? $params : () ) );
     return;
 }
 

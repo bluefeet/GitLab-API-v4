@@ -305,6 +305,7 @@ Sends a C<GET> request to C</projects/:project_id/repository/branches/:branch_na
     $api->protect_branch(
         $project_id,
         $branch_name,
+        \%params,
     );
 
 Sends a C<PUT> request to C</projects/:project_id/repository/branches/:branch_name/protect>.
@@ -1127,6 +1128,24 @@ Sends a C<PUT> request to C</projects/:project_id/members/:user_id>.
 
 Sends a C<DELETE> request to C</projects/:project_id/members/:user_id>.
 
+=head2 share_project_with_group
+
+    $api->share_project_with_group(
+        $id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:id/share>.
+
+=head2 delete_shared_project_link_within_group
+
+    $api->delete_shared_project_link_within_group(
+        $id,
+        $group_id,
+    );
+
+Sends a C<DELETE> request to C</projects/:id/share/:group_id>.
+
 =head2 project_hooks
 
     my $hooks = $api->project_hooks(
@@ -1747,6 +1766,10 @@ Nigel Gregoire <nigelgregoireE<64>gmail.com>
 =item *
 
 trunov-ms <trunov.msE<64>gmail.com>
+
+=item *
+
+Marek R. Sotola <Marek.R.SotolaE<64>nasa.gov>
 
 =back
 
