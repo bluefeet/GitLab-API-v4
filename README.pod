@@ -24,12 +24,6 @@ GitLab's own L<API Documentation|http://doc.gitlab.com/ce/api/README.html>.
 Note that this distribution also includes the L<gitlab-api-v3> command-line
 interface (CLI).
 
-=head2 AUTHENTICATION
-
-There are two ways to authenticate with GitLab - the first is via the
-L</token> argument as seen in the L</SYNOPSIS>, and the second is by
-first creating an anonymous object and calling L</login> on it.
-
 =head2 CONSTANTS
 
 Several values in the GitLab API require looking up the numeric value
@@ -78,23 +72,43 @@ See L</CONTRIBUTING> for more info.
 The URL to your v3 API endpoint.  Typically this will be something
 like C<http://git.example.com/api/v3>.
 
-=head1 OPTIONAL ARGUMENTS
+=head1 CREDENTIALS
+
+The GitLab::API::v3 constructor expects some way to authenticate, and will
+croak unless this is provided, or possible to obtain. The way this is
+implemented is with a private token for the authenticated user, which gets
+passed with the various requests to the API.
+
+If this token is not passed to the constructor together with the API url, then
+the constructor will expect a valid user email or login name, and their
+password. Any of these combinations is accepted.
+
+In the end, only the token will be kept in memory, and the other user
+credentials will be discarded.
 
 =head2 token
 
-A GitLab API token.  If this is not set then API access will be severely limited.
+A GitLab API token.
 
-=head2 rest_client_class
+=head2 login
 
-The class to use when constructing the L</rest_client>.
+A GitLab user login name, needed if no token is provided.
 
-Defaults to C<GitLab::API::v3::RESTClient>.
+=head2 email
 
-=head1 ATTRIBUTES
+A GitLab user email, needed if no login is provided.
+
+=head2 password
+
+A GitLab user password, needed if no token is provided.
+
+=head1 OPTIONAL ARGUMENTS
 
 =head2 rest_client
 
-An instance of L</rest_client_class>.
+An instance of L<GitLab::API::v3::RESTClient>.  Typically you will not
+be setting this as it defaults to a new instance and customization
+should not be necessary.
 
 =head1 UTILITY METHODS
 
@@ -122,21 +136,6 @@ Given a method who supports the C<page> and C<per_page> parameters,
 and returns an array ref, this will return a L<GitLab::API::v3::Paginator>
 object that will allow you to walk the records one page or one record
 at a time.
-
-=head2 login
-
-This is a thin wrapper around L</session> which allows for normal GitLab
-authentication to be used to generate an API token.  This method returns
-a new, authenticated, L<GitLab::API::v3> object and does not modify the
-original.
-
-    my $api = GitLab::API::v3->new( url=>... )->login(
-        login    => $username,
-        password => $pass,
-    );
-
-This method accepts whatever parameters L</session> supports which means you
-can specify C<login> or C<email>, along with C<password>.
 
 =head1 AWARD EMOJI METHODS
 

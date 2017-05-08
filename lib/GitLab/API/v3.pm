@@ -24,12 +24,6 @@ GitLab's own L<API Documentation|http://doc.gitlab.com/ce/api/README.html>.
 Note that this distribution also includes the L<gitlab-api-v3> command-line
 interface (CLI).
 
-=head2 AUTHENTICATION
-
-There are two ways to authenticate with GitLab - the first is via the
-L</token> argument as seen in the L</SYNOPSIS>, and the second is by
-first creating an anonymous object and calling L</login> on it.
-
 =head2 CONSTANTS
 
 Several values in the GitLab API require looking up the numeric value
@@ -86,10 +80,48 @@ use Moo;
 use strictures 1;
 use namespace::clean;
 
+sub BUILDARGS {
+  my $class = shift;
+  my $args = (@_) ? (@_ > 1) ? { @_ } : shift : {};
+
+  if (!defined $args->{token}) {
+    if (defined $args->{password}) {
+      my $session;
+      my $api = bless({ url => $args->{url} }, $class );
+
+      if (defined $args->{email}) {
+        $session = $api->session({
+          email    => $args->{email},
+          password => $args->{password}
+        });
+      }
+      elsif (defined $args->{login}) {
+        $session = $api->session({
+          login    => $args->{login},
+          password => $args->{password}
+        });
+      }
+      else {
+        croak 'Credentials needed: provide token or login details';
+      }
+      $args->{token} = $session->{private_token};
+    }
+    else {
+      croak 'Credentials needed: provide token or login details';
+    }
+  }
+
+  return $args;
+}
+
 sub BUILD {
     my ($self) = @_;
 
     $log->debugf( "An instance of %s has been created.", ref($self) );
+
+    $self->rest_client->set_persistent_header(
+        'PRIVATE-TOKEN' => $self->token(),
+    );
 
     return;
 }
@@ -109,47 +141,58 @@ has url => (
     required => 1,
 );
 
-=head1 OPTIONAL ARGUMENTS
+=head1 CREDENTIALS
+
+The GitLab::API::v3 constructor expects some way to authenticate, and will
+croak unless this is provided, or possible to obtain. The way this is
+implemented is with a private token for the authenticated user, which gets
+passed with the various requests to the API.
+
+If this token is not passed to the constructor together with the API url, then
+the constructor will expect a valid user email or login name, and their
+password. Any of these combinations is accepted.
+
+In the end, only the token will be kept in memory, and the other user
+credentials will be discarded.
 
 =head2 token
 
-A GitLab API token.  If this is not set then API access will be severely limited.
+A GitLab API token.
 
 =cut
 
 has token => (
-    is        => 'ro',
-    isa       => NonEmptySimpleStr,
-    predicate => 'has_token',
+    is       => 'ro',
+    isa      => NonEmptySimpleStr,
+    required => 1,
 );
 
-=head2 rest_client_class
+=head2 login
 
-The class to use when constructing the L</rest_client>.
+A GitLab user login name, needed if no token is provided.
 
-Defaults to C<GitLab::API::v3::RESTClient>.
+=head2 email
 
-=cut
+A GitLab user email, needed if no login is provided.
 
-has rest_client_class => (
-    is      => 'ro',
-    isa     => NonEmptySimpleStr,
-    default => 'GitLab::API::v3::RESTClient',
-);
+=head2 password
 
-=head1 ATTRIBUTES
+A GitLab user password, needed if no token is provided.
+
+=head1 OPTIONAL ARGUMENTS
 
 =head2 rest_client
 
-An instance of L</rest_client_class>.
+An instance of L<GitLab::API::v3::RESTClient>.  Typically you will not
+be setting this as it defaults to a new instance and customization
+should not be necessary.
 
 =cut
 
 has rest_client => (
-    is       => 'lazy',
-    isa      => InstanceOf[ 'GitLab::API::v3::RESTClient' ],
-    init_arg => undef,
-    handles  => [qw( post get head put delete options )],
+    is      => 'lazy',
+    isa     => InstanceOf[ 'GitLab::API::v3::RESTClient' ],
+    handles => [qw( post get head put delete options )],
 );
 sub _build_rest_client {
     my ($self) = @_;
@@ -163,10 +206,6 @@ sub _build_rest_client {
         server => $url,
         type   => 'application/json',
     );
-
-    $rest->set_persistent_header(
-        'PRIVATE-TOKEN' => $self->token(),
-    ) if $self->has_token();
 
     return $rest;
 }
@@ -210,35 +249,6 @@ sub paginator {
         method => $method,
         args   => \@args,
         params => $params,
-    );
-}
-
-=head2 login
-
-This is a thin wrapper around L</session> which allows for normal GitLab
-authentication to be used to generate an API token.  This method returns
-a new, authenticated, L<GitLab::API::v3> object and does not modify the
-original.
-
-    my $api = GitLab::API::v3->new( url=>... )->login(
-        login    => $username,
-        password => $pass,
-    );
-
-This method accepts whatever parameters L</session> supports which means you
-can specify C<login> or C<email>, along with C<password>.
-
-=cut
-
-sub login {
-    my $self = shift;
-
-    my $session = $self->session({ @_ });
-
-    return ref($self)->new(
-        url               => $self->url(),
-        rest_client_class => $self->rest_client_class(),
-        token             => $session->{private_token},
     );
 }
 
