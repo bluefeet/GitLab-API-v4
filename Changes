@@ -2,6 +2,8 @@ Revision history for Perl extension GitLab::API::v3.
 
 {{$NEXT}}
 
+ - Add a very simple retries argument for retrying a request when a 5xx response is
+   received. @jjatria
  - Support user snippets. @d5ve
  - Disable deserialisation when dealing with non-serialized data. @jjatria
  - Add support for login in with user credentials. @jjatria

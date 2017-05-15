@@ -3416,7 +3416,6 @@ sub user_snippets {
     my $self = shift;
     croak "The user_snippets method does not take any arguments" if @_;
     my $path = sprintf('/snippets', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s.', 'GET', $path );
     return $self->get( $path );
 }
 
@@ -3435,7 +3434,6 @@ sub user_snippet {
     croak 'user_snippet must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($snippet_id) to user_snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('/snippets/%s', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s.', 'GET', $path );
     return $self->get( $path );
 }
 
@@ -3455,7 +3453,6 @@ sub create_user_snippet {
     croak 'The last argument (\%params) to create_user_snippet must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
     my $params = (@_ == 1) ? pop() : undef;
     my $path = sprintf('/snippets', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s.', 'POST', $path );
     $self->post( $path, ( defined($params) ? $params : () ) );
     return;
 }
@@ -3478,7 +3475,6 @@ sub edit_user_snippet {
     croak 'The last argument (\%params) to edit_user_snippet must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = (@_ == 2) ? pop() : undef;
     my $path = sprintf('/snippets/%s', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s.', 'PUT', $path );
     $self->put( $path, ( defined($params) ? $params : () ) );
     return;
 }
@@ -3498,7 +3494,6 @@ sub delete_user_snippet {
     croak 'delete_user_snippet must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($snippet_id) to delete_user_snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('/snippets/%s', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s.', 'DELETE', $path );
     $self->delete( $path );
     return;
 }
@@ -3515,7 +3510,6 @@ sub public_snippets {
     my $self = shift;
     croak "The public_snippets method does not take any arguments" if @_;
     my $path = sprintf('/snippets/public', (map { uri_escape($_) } @_));
-    $log->infof( 'Making %s request against %s.', 'GET', $path );
     return $self->get( $path );
 }
 
