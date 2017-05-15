@@ -2,6 +2,7 @@ Revision history for Perl extension GitLab::API::v3.
 
 {{$NEXT}}
 
+ - Support user snippets. @d5ve
  - Disable deserialisation when dealing with non-serialized data. @jjatria
  - Add support for login in with user credentials. @jjatria
  - Allow protect_branch to accept parameters.

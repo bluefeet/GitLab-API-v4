@@ -1250,7 +1250,7 @@ Sends a C<DELETE> request to C</projects/:project_id/fork>.
 
 Sends a C<GET> request to C</projects/search/:query> and returns the decoded/deserialized response body.
 
-=head1 SNIPPET METHODS
+=head1 PROJECT SNIPPET METHODS
 
 See L<http://doc.gitlab.com/ce/api/project_snippets.html>.
 
@@ -1558,6 +1558,55 @@ Sends a C<GET> request to C</sidekiq/job_stats> and returns the decoded/deserial
 
 Sends a C<GET> request to C</sidekiq/compound_metrics> and returns the decoded/deserialized response body.
 
+=head1 USER SNIPPET METHODS
+
+See L<http://docs.gitlab.com/ce/api/snippets.html>.
+
+=head2 user_snippets
+
+    my $snippets = $api->user_snippets();
+
+Sends a C<GET> request to C</snippets> and returns the decoded/deserialized response body.
+
+=head2 user_snippet
+
+    my $snippet = $api->user_snippet(
+        $snippet_id,
+    );
+
+Sends a C<GET> request to C</snippets/:snippet_id> and returns the decoded/deserialized response body.
+
+=head2 create_user_snippet
+
+    $api->create_user_snippet(
+        \%params,
+    );
+
+Sends a C<POST> request to C</snippets>.
+
+=head2 edit_user_snippet
+
+    $api->edit_user_snippet(
+        $snippet_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</snippets/:snippet_id>.
+
+=head2 delete_user_snippet
+
+    $api->delete_user_snippet(
+        $snippet_id,
+    );
+
+Sends a C<DELETE> request to C</snippets/:snippet_id>.
+
+=head2 public_snippets
+
+    my $snippets = $api->public_snippets();
+
+Sends a C<GET> request to C</snippets/public> and returns the decoded/deserialized response body.
+
 =head1 SYSTEM HOOK METHODS
 
 See L<http://doc.gitlab.com/ce/api/system_hooks.html>.
@@ -1807,6 +1856,10 @@ Marek R. Sotola <Marek.R.SotolaE<64>nasa.gov>
 =item *
 
 José Joaquín Atria <jjatriaE<64>gmail.com>
+
+=item *
+
+Dave Webb <githubE<64>d5ve.com>
 
 =back
 
