@@ -24,6 +24,19 @@ GitLab's own L<API Documentation|http://doc.gitlab.com/ce/api/README.html>.
 Note that this distribution also includes the L<gitlab-api-v3> command-line
 interface (CLI).
 
+=head1 CREDENTIALS
+
+Authentication credentials may be defined by setting either the L</token>,
+the L</login> and L</password>, or the L</email> and L</password> arguments.
+
+When the object is constructed the L</login>, L</email>, and L</password>
+arguments are used to call L</session> to generate a token.  The token is
+saved in the L</token> attribute, and the login/email/password arguments
+are discarded.
+
+If no credentials are supplied then the client will be anonymous and greatly
+limited in what it can do with the API.
+
 =head2 CONSTANTS
 
 Several values in the GitLab API require looking up the numeric value
@@ -80,39 +93,26 @@ use Moo;
 use strictures 1;
 use namespace::clean;
 
-sub BUILDARGS {
-  my $class = shift;
-  my $args = (@_) ? (@_ > 1) ? { @_ } : shift : {};
+around BUILDARGS => sub{
+    my $orig = shift;
+    my $class = shift;
 
-  if (!defined $args->{token}) {
-    if (defined $args->{password}) {
-      my $session;
-      my $api = bless({ url => $args->{url} }, $class );
+    my $args = $class->$orig( @_ );
 
-      if (defined $args->{email}) {
-        $session = $api->session({
-          email    => $args->{email},
-          password => $args->{password}
-        });
-      }
-      elsif (defined $args->{login}) {
-        $session = $api->session({
-          login    => $args->{login},
-          password => $args->{password}
-        });
-      }
-      else {
-        croak 'Credentials needed: provide token or login details';
-      }
-      $args->{token} = $session->{private_token};
+    my $session_args = {};
+    foreach my $key (qw( login email password )) {
+        next if !exists $args->{$key};
+        $session_args->{$key} = delete $args->{$key};
     }
-    else {
-      croak 'Credentials needed: provide token or login details';
-    }
-  }
 
-  return $args;
-}
+    if (%$session_args) {
+        my $api = $class->new( $args );
+        my $session = $api->session( $session_args );
+        $args->{token} = $session->{private_token};
+    }
+
+    return $args;
+};
 
 sub BUILD {
     my ($self) = @_;
@@ -121,7 +121,7 @@ sub BUILD {
 
     $self->rest_client->set_persistent_header(
         'PRIVATE-TOKEN' => $self->token(),
-    );
+    ) if $self->has_token();
 
     return;
 }
@@ -141,45 +141,43 @@ has url => (
     required => 1,
 );
 
-=head1 CREDENTIALS
-
-The GitLab::API::v3 constructor expects some way to authenticate, and will
-croak unless this is provided, or possible to obtain. The way this is
-implemented is with a private token for the authenticated user, which gets
-passed with the various requests to the API.
-
-If this token is not passed to the constructor together with the API url, then
-the constructor will expect a valid user email or login name, and their
-password. Any of these combinations is accepted.
-
-In the end, only the token will be kept in memory, and the other user
-credentials will be discarded.
+=head1 OPTIONAL ARGUMENTS
 
 =head2 token
 
 A GitLab API token.
+If set then neither L</login> or L</email> may be set.
+Read more in L</CREDENTIALS>.
 
 =cut
 
 has token => (
-    is       => 'ro',
-    isa      => NonEmptySimpleStr,
-    required => 1,
+    is        => 'ro',
+    isa       => NonEmptySimpleStr,
+    predicate => 'has_token',
 );
 
 =head2 login
 
-A GitLab user login name, needed if no token is provided.
+A GitLab user login name.
+If set then L</password> must be set.
+Read more in L</CREDENTIALS>.
 
 =head2 email
 
-A GitLab user email, needed if no login is provided.
+A GitLab user email.
+If set then L</password> must be set.
+Read more in L</CREDENTIALS>.
 
 =head2 password
 
-A GitLab user password, needed if no token is provided.
+A GitLab user password.
+This must be set if either L</login> or L</email> are set.
+Read more in L</CREDENTIALS>.
 
-=head1 OPTIONAL ARGUMENTS
+=cut
+
+# The above three args are virtual and get stripped out in BUILDARGS.
 
 =head2 rest_client
 
