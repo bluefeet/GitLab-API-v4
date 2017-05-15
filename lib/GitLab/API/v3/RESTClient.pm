@@ -21,6 +21,7 @@ rather than the response object itself.
 
 use Carp qw( confess );
 use Data::Dumper qw();
+use Role::REST::Client::Response;
 
 use Moo;
 use strictures 1;
@@ -78,7 +79,6 @@ around _call => sub {
         return $res;
     }
     else {
-      use Role::REST::Client::Response;
       return Role::REST::Client::Response->new(
           code     => $res->code,
           response => $res->response,

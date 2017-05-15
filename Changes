@@ -2,6 +2,7 @@ Revision history for Perl extension GitLab::API::v3.
 
 {{$NEXT}}
 
+ - Disable deserialisation when dealing with non-serialized data. @jjatria
  - Add support for login in with user credentials. @jjatria
  - Allow protect_branch to accept parameters.
  - Add share_project_with_group and delete_shared_project_link_within_group

@@ -32,7 +32,7 @@ my ($project) = (
 );
 
 plan skip_all =>
-    'Could not find a private project owned by the tokened user.'
+    'Could not find a private project owned by the tokened user which has a default branch set.'
     if !$project;
 
 my $project_id = $project->{id};
