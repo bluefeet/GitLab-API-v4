@@ -87,28 +87,6 @@ sub _dump_one_line {
     return $value;
 }
 
-around _call => sub {
-    my $orig = shift;
-    my $self = shift;
-
-    my $res = $self->$orig(@_);
-
-    # Disable serialization when response is not serial data
-    # Annoyingly, this cannot be done using the Role::REST::Client API
-    my $type = $res->response->headers->{'content-type'};
-    if ($type =~ qr{\b(?:json|xml|yaml|x-www-form-urlencoded)\b}) {
-        return $res;
-    }
-    else {
-      return Role::REST::Client::Response->new(
-          code     => $res->code,
-          response => $res->response,
-          data     => sub { $res->response->decoded_content },
-          (defined $res->error) ? ( error => $res->error ) : (),
-      );
-    }
-};
-
 1;
 __END__
 

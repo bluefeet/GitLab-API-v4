@@ -1,5 +1,5 @@
 requires 'Moo' => 1.006000;
-requires 'Role::REST::Client' => 0.18;
+requires 'Role::REST::Client' => 0.20;
 requires 'Type::Tiny' => 1;
 requires 'strictures' => 0;
 requires 'namespace::clean' => 0;
