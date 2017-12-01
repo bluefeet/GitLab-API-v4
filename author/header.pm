@@ -39,9 +39,9 @@ limited in what it can do with the API.
 
 =head2 CONSTANTS
 
-Several values in the GitLab API require looking up the numeric value
-for a meaning (such as C<access_level> and C<visibility_level>).
-Instead of doing that, you can use L<GitLab::API::v4::Constants>.
+The GitLab API, in rare cases, uses a numeric value to represent a state.
+To make life easier the L<GitLab::API::v4::Constants> module exposes
+these states as named variables making your code easier to read.
 
 =head2 EXCEPTIONS
 
