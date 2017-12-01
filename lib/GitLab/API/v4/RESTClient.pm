@@ -1,8 +1,8 @@
-package GitLab::API::v3::RESTClient;
+package GitLab::API::v4::RESTClient;
 
 =head1 NAME
 
-GitLab::API::v3::RESTClient - GitLab API v3 REST client.
+GitLab::API::v4::RESTClient - GitLab API v4 REST client.
 
 =head2 DESCRIPTION
 
@@ -61,7 +61,7 @@ foreach my $method (qw( post get head put delete options )) {
         return undef if $res->code() eq '404' and $method eq 'get';
 
         if ($res->failed()) {
-            local $Carp::Internal{ 'GitLab::API::v3::RESTClient' } = 1;
+            local $Carp::Internal{ 'GitLab::API::v4::RESTClient' } = 1;
 
             confess sprintf(
                 'Error %sing %s from %s (HTTP %s): %s %s',

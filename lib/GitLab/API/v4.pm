@@ -1,15 +1,15 @@
-package GitLab::API::v3;
+package GitLab::API::v4;
 
 =head1 NAME
 
-GitLab::API::v3 - A complete GitLab API v3 client.
+GitLab::API::v4 - A complete GitLab API v4 client.
 
 =head1 SYNOPSIS
 
-    use GitLab::API::v3;
+    use GitLab::API::v4;
     
-    my $api = GitLab::API::v3->new(
-        url   => $v3_api_url,
+    my $api = GitLab::API::v4->new(
+        url   => $v4_api_url,
         token => $token,
     );
     
@@ -18,10 +18,10 @@ GitLab::API::v3 - A complete GitLab API v3 client.
 =head1 DESCRIPTION
 
 This module provides a one-to-one interface with the GitLab
-API v3.  Much is not documented here as it would just be duplicating
+API v4.  Much is not documented here as it would just be duplicating
 GitLab's own L<API Documentation|http://doc.gitlab.com/ce/api/README.html>.
 
-Note that this distribution also includes the L<gitlab-api-v3> command-line
+Note that this distribution also includes the L<gitlab-api-v4> command-line
 interface (CLI).
 
 =head1 CREDENTIALS
@@ -41,7 +41,7 @@ limited in what it can do with the API.
 
 Several values in the GitLab API require looking up the numeric value
 for a meaning (such as C<access_level> and C<visibility_level>).
-Instead of doing that, you can use L<GitLab::API::v3::Constants>.
+Instead of doing that, you can use L<GitLab::API::v4::Constants>.
 
 =head2 EXCEPTIONS
 
@@ -80,8 +80,8 @@ See L</CONTRIBUTING> for more info.
 
 =cut
 
-use GitLab::API::v3::RESTClient;
-use GitLab::API::v3::Paginator;
+use GitLab::API::v4::RESTClient;
+use GitLab::API::v4::Paginator;
 
 use Types::Standard -types;
 use Types::Common::String -types;
@@ -130,8 +130,8 @@ sub BUILD {
 
 =head2 url
 
-The URL to your v3 API endpoint.  Typically this will be something
-like C<http://git.example.com/api/v3>.
+The URL to your v4 API endpoint.  Typically this will be something
+like C<http://git.example.com/api/v4>.
 
 =cut
 
@@ -181,7 +181,7 @@ Read more in L</CREDENTIALS>.
 
 =head2 rest_client
 
-An instance of L<GitLab::API::v3::RESTClient>.  Typically you will not
+An instance of L<GitLab::API::v4::RESTClient>.  Typically you will not
 be setting this as it defaults to a new instance and customization
 should not be necessary.
 
@@ -189,14 +189,14 @@ should not be necessary.
 
 has rest_client => (
     is      => 'lazy',
-    isa     => InstanceOf[ 'GitLab::API::v3::RESTClient' ],
+    isa     => InstanceOf[ 'GitLab::API::v4::RESTClient' ],
     handles => [qw( post get head put delete options )],
 );
 sub _build_rest_client {
     my ($self) = @_;
 
     my $url = '' . $self->url();
-    my $class = 'GitLab::API::v3::RESTClient';
+    my $class = 'GitLab::API::v4::RESTClient';
 
     $log->debugf( 'Creating a %s instance pointed at %s.', $class, $url );
 
@@ -246,7 +246,7 @@ has retries => (
     )->all();
 
 Given a method who supports the C<page> and C<per_page> parameters,
-and returns an array ref, this will return a L<GitLab::API::v3::Paginator>
+and returns an array ref, this will return a L<GitLab::API::v4::Paginator>
 object that will allow you to walk the records one page or one record
 at a time.
 
@@ -257,7 +257,7 @@ sub paginator {
 
     my $params = (ref($args[-1]) eq 'HASH') ? pop(@args) : {};
 
-    return GitLab::API::v3::Paginator->new(
+    return GitLab::API::v4::Paginator->new(
         api    => $self,
         method => $method,
         args   => \@args,
@@ -3991,16 +3991,16 @@ POD or unit tests.
 This module is auto-generated from a set of YAML files defining the
 interface of GitLab's API.  If you'd like to contribute to this module
 then please feel free to make a
-L<fork on GitHub|https://github.com/bluefeet/GitLab-API-v3>
+L<fork on GitHub|https://github.com/bluefeet/GitLab-API-v4>
 and submit a pull request, just make sure you edit the files in the
-C<authors/> directory instead of C<lib/GitLab/API/v3.pm> directly.
+C<authors/> directory instead of C<lib/GitLab/API/v4.pm> directly.
 
 Please see
-L<https://github.com/bluefeet/GitLab-API-v3/blob/master/author/README.pod>
+L<https://github.com/bluefeet/GitLab-API-v4/blob/master/author/README.pod>
 for more information.
 
 Alternatively, you can
-L<open a ticket|https://github.com/bluefeet/GitLab-API-v3/issues>.
+L<open a ticket|https://github.com/bluefeet/GitLab-API-v4/issues>.
 
 =head1 AUTHOR
 

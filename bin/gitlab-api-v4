@@ -1,8 +1,8 @@
 #!/usr/bin/env perl
 use strictures 1;
 
-use GitLab::API::v3;
-use GitLab::API::v3::Constants qw( :all );
+use GitLab::API::v4;
+use GitLab::API::v4::Constants qw( :all );
 
 use Log::Any qw( $log );
 use Log::Any::Adapter;
@@ -45,8 +45,8 @@ Log::Any::Adapter->set(
     stderr    => 1,
 );
 
-$url   ||= $ENV{GITLAB_API_V3_URL};
-$token ||= $ENV{GITLAB_API_V3_TOKEN};
+$url   ||= $ENV{GITLAB_API_V4_URL};
+$token ||= $ENV{GITLAB_API_V4_TOKEN};
 
 my $visibility_levels = {
     '--visibility-level-private'  => $GITLAB_VISIBILITY_LEVEL_PRIVATE,
@@ -85,7 +85,7 @@ foreach my $arg (@ARGV) {
 my $method = shift( @args );
 
 try {
-    my $api = GitLab::API::v3->new(
+    my $api = GitLab::API::v4->new(
         url     => $url,
         token   => $token,
         retries => $retries,
@@ -147,21 +147,21 @@ __END__
 
 =head1 NAME
 
-gitlab-api-v3 - Command line interface to the GitLab API v3.
+gitlab-api-v4 - Command line interface to the GitLab API v4.
 
 =head1 SYNOPSIS
 
     # Generally:
-    gitlab-api-v3 <method> [<arg> ...] [--<param>=<value> ...]
+    gitlab-api-v4 <method> [<arg> ...] [--<param>=<value> ...]
     
     # List all groups:
-    gitlab-api-v3 groups
+    gitlab-api-v4 groups
     
     # List information about a project:
-    gitlab-api-v3 project <project_id>
+    gitlab-api-v4 project <project_id>
     
     # Create an admin user:
-    gitlab-api-v3 create_user \
+    gitlab-api-v4 create_user \
         --email=<email> --password=<password> --username=<username> --name=<name> --admin
 
 =head1 ARGUMENTS
@@ -170,10 +170,10 @@ gitlab-api-v3 - Command line interface to the GitLab API v3.
 
     --url=<url>
 
-The URL to to your GitLab API v3 API base.  Typically this will
-be something like C<http://git.example.com/api/v3>.
+The URL to to your GitLab API v4 API base.  Typically this will
+be something like C<http://git.example.com/api/v4>.
 
-You can alternatively set this by specifying the C<GITLAB_API_V3_URL>
+You can alternatively set this by specifying the C<GITLAB_API_V4_URL>
 environment variable.
 
 =head2 token
@@ -182,7 +182,7 @@ environment variable.
 
 The API token to access the API with.
 
-Alternatively you can set the C<GITLAB_API_V3_TOKEN> environment
+Alternatively you can set the C<GITLAB_API_V4_TOKEN> environment
 variable.
 
 WARNING: As a general rule it is highly discouraged to put sensitive
@@ -212,7 +212,7 @@ C<YAML>.
     <method>
 
 The API method to call (one of the methods documented in
-L<GitLab::API::v3>).
+L<GitLab::API::v4>).
 
 =head2 args
 
@@ -249,7 +249,7 @@ Displays this handy documentation.
 
 =head1 SEE ALSO
 
-L<GitLab::API::v3>.
+L<GitLab::API::v4>.
 
 =head1 AUTHOR
 

@@ -1,12 +1,12 @@
-package GitLab::API::v3::Constants;
+package GitLab::API::v4::Constants;
 
 =head1 NAME
 
-GitLab::API::v3::Constants - GitLab API v3 constants.
+GitLab::API::v4::Constants - GitLab API v4 constants.
 
 =head1 SYNOPSIS
 
-    use GitLab::API::v3::Constants qw( :all );
+    use GitLab::API::v4::Constants qw( :all );
     
     print $GITLAB_INTERNAL_VISIBILITY_LEVEL; # 10
 

@@ -1,7 +1,7 @@
 
 =pod
 
-The C<author/> directory contains the logic for generating the v3.pm
+The C<author/> directory contains the logic for generating the v4.pm
 module.
 
 =head1 DATA FILES
@@ -17,7 +17,7 @@ like this:
 
 =head2 SUB
 
-The name if the subroutine that will be created in v3.pm.
+The name if the subroutine that will be created in v4.pm.
 
 =head2 RETURN
 
@@ -32,7 +32,7 @@ One of GET, POST, PUT, or DELETE.
 
 =head2 PATH
 
-The path to the API endpoint (after the /api/v3 bit).
+The path to the API endpoint (after the /api/v4 bit).
 The path is a list of static and dynamic strings separate by
 forward slashes.  So, if you have:
 
@@ -48,10 +48,10 @@ endpoint accepts query parameters.
 
 =head1 GENERATING
 
-To generate C<lib/GitLab/API/v3.pm> do this:
+To generate C<lib/GitLab/API/v4.pm> do this:
 
     cd author
-    perl generate.pl > ../lib/GitLab/API/v3.pm
+    perl generate.pl > ../lib/GitLab/API/v4.pm
 
 =cut
 

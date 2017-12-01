@@ -1,13 +1,13 @@
-package GitLab::API::v3::Paginator;
+package GitLab::API::v4::Paginator;
 
 =head1 NAME
 
-GitLab::API::v3::Paginator - Iterate through paginated GitLab v3 API records.
+GitLab::API::v4::Paginator - Iterate through paginated GitLab v4 API records.
 
 =head1 DESCRIPTION
 
 There should be no need to create objects of this type
-directly, instead use L<GitLab::API::v3/paginator> which
+directly, instead use L<GitLab::API::v4/paginator> which
 simplifies things a bit.
 
 =cut
@@ -41,13 +41,13 @@ has method => (
 
 =head2 api
 
-The L<GitLab::API::v3> object.
+The L<GitLab::API::v4> object.
 
 =cut
 
 has api => (
     is       => 'ro',
-    isa      => InstanceOf[ 'GitLab::API::v3' ],
+    isa      => InstanceOf[ 'GitLab::API::v4' ],
     required => 1,
 );
 

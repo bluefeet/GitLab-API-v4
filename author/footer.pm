@@ -19,16 +19,16 @@ POD or unit tests.
 This module is auto-generated from a set of YAML files defining the
 interface of GitLab's API.  If you'd like to contribute to this module
 then please feel free to make a
-L<fork on GitHub|https://github.com/bluefeet/GitLab-API-v3>
+L<fork on GitHub|https://github.com/bluefeet/GitLab-API-v4>
 and submit a pull request, just make sure you edit the files in the
-C<authors/> directory instead of C<lib/GitLab/API/v3.pm> directly.
+C<authors/> directory instead of C<lib/GitLab/API/v4.pm> directly.
 
 Please see
-L<https://github.com/bluefeet/GitLab-API-v3/blob/master/author/README.pod>
+L<https://github.com/bluefeet/GitLab-API-v4/blob/master/author/README.pod>
 for more information.
 
 Alternatively, you can
-L<open a ticket|https://github.com/bluefeet/GitLab-API-v3/issues>.
+L<open a ticket|https://github.com/bluefeet/GitLab-API-v4/issues>.
 
 =head1 AUTHOR
 

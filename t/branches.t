@@ -6,17 +6,17 @@ use Types::Standard -types;
 use List::Util qw( first );
 use Log::Any::Adapter 'TAP';
 
-use GitLab::API::v3;
-use GitLab::API::v3::Constants qw( :all );
+use GitLab::API::v4;
+use GitLab::API::v4::Constants qw( :all );
 
-my $url   = $ENV{GITLAB_API_V3_URL};
-my $token = $ENV{GITLAB_API_V3_TOKEN};
+my $url   = $ENV{GITLAB_API_V4_URL};
+my $token = $ENV{GITLAB_API_V4_TOKEN};
 
 plan skip_all =>
-    'Set the GITLAB_API_V3_URL and GITLAB_API_V3_TOKEN env vars to run this test.'
+    'Set the GITLAB_API_V4_URL and GITLAB_API_V4_TOKEN env vars to run this test.'
     unless $url and $token;
 
-my $api = GitLab::API::v3->new(
+my $api = GitLab::API::v4->new(
     url   => $url,
     token => $token,
 );
