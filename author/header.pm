@@ -41,7 +41,7 @@ limited in what it can do with the API.
 
 The GitLab API, in rare cases, uses a numeric value to represent a state.
 To make life easier the L<GitLab::API::v4::Constants> module exposes
-these states as named variables making your code easier to read.
+these states as named variables.
 
 =head2 EXCEPTIONS
 

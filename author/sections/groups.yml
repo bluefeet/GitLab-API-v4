@@ -1,13 +1,13 @@
 ---
-- groups: groups = GET /groups
+- groups: groups = GET /groups?
+- group_subgroups: subgroups = GET /groups/:group_id/subgroups?
+- group_projects: projects = GET /groups/:group_id/projects?
 - group: group = GET /groups/:group_id
 - create_group: POST /groups?
-- transfer_project: POST /groups/:group_id/projects/:project_id
+- transfer_project_to_group: POST /groups/:group_id/projects/:project_id
+- edit_group: group = PUT /groups/:group_id?
 - delete_group: DELETE /groups/:group_id
-- search_groups: groups = GET /groups?
-
-- group_members: members = GET /groups/:group_id/members
-- group_projects: projects = GET /groups/:group_id/projects?
-- add_group_member: POST /groups/:group_id/members?
-- edit_group_member: PUT /groups/:group_id/members/:user_id?
-- remove_group_member: DELETE /groups/:group_id/members/:user_id
+- sync_group_with_ldap: POST /groups/:group_id/ldap_sync
+- create_ldap_group_link: POST /groups/:group_id/ldap_group_links?
+- delete_ldap_group_link: DELETE /groups/:group_id/ldap_group_links/:cn
+- delete_ldap_provider_group_link: DELETE /groups/:group_id/ldap_group_links/:provider/:cn

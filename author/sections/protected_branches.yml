@@ -1,0 +1,5 @@
+---
+- protected_branches: branches = GET /projects/:project_id/protected_branches
+- protected_branch: branch = GET /projects/:project_id/protected_branches/:branch_name
+- protect_branch: branch = POST /projects/:project_id/protected_branches?
+- unprotect_branch: DELETE /projects/:project_id/protected_branches/:branch_name

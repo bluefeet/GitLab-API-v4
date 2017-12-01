@@ -1,6 +1,6 @@
 ---
-- variables: variables = GET /projects/:id/variables
-- variable: variable = GET /projects/:id/variables/:key
-- create_variable: variable = POST /projects/:id/variables?
-- update_variable: variable = PUT /projects/:id/variables/:key?
-- delete_variable: variable = DELETE /projects/:id/variables/:key
+- project_variables: variables = GET /projects/:project_id/variables
+- project_variable: variable = GET /projects/:project_id/variables/:variable_key
+- create_project_variable: variable = POST /projects/:project_id/variables?
+- edit_project_variable: variable = PUT /projects/:project_id/variables/:variable_key?
+- delete_project_variable: DELETE /projects/:project_id/variables/:variable_key

@@ -1,0 +1,3 @@
+---
+- gitlab_ci_ymls_templates: templates = GET /templates/gitlab_ci_ymls
+- gitlab_ci_ymls_template: template = GET /templates/gitlab_ci_ymls/:template_key

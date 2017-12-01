@@ -2,6 +2,10 @@ Revision history for Perl extension GitLab::API::v4.
 
 {{$NEXT}}
 
- - First release.
+ - Added the board and broadcast_messages sections.
+ - Add the delete_merged_branches method.
+ - Remove the deprecated protect_branch/unprotect_branch methods.
+ - Updated award emoji methods to include snippets.
+ - Added methods for group and project access requests list/create/approve/deny.
  - Imported GitLab::API::v3 @ fb9253c58b68ca1be71feedf12c1d6004c8ba8d6.
 

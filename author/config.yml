@@ -45,11 +45,8 @@ sections:
 - groups:
     head: GROUP METHODS
     doc_url: https://docs.gitlab.com/ce/api/groups.html
-- group_access_requests:
-    head: GROUP ACCESS REQUEST METHODS
-    doc_url: https://docs.gitlab.com/ce/api/access_requests.html
 - members:
-    head: GROUP MEMBER METHODS
+    head: GROUP AND PROJECT MEMBER METHODS
     doc_url: https://docs.gitlab.com/ce/api/members.html
 - issues:
     head: ISSUE METHODS
@@ -105,9 +102,6 @@ sections:
 - access_requests:
     head: PROJECT ACCESS REQUEST METHODS
     doc_url: https://docs.gitlab.com/ce/api/access_requests.html
-- members:
-    head: PROJECT MEMBER METHODS
-    doc_url: https://docs.gitlab.com/ce/api/members.html
 - project_snippets:
     head: PROJECT SNIPPET METHODS
     doc_url: https://docs.gitlab.com/ce/api/project_snippets.html

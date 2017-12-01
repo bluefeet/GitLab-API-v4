@@ -1,0 +1,6 @@
+---
+- broadcast_messages: messages = GET /broadcast_messages
+- broadcast_message: message = GET /broadcast_messages/:message_id
+- create_broadcast_message: message = POST /broadcast_messages?
+- edit_broadcast_message: message = PUT /broadcast_messages/:message_id?
+- delete_broadcast_message: DELETE /broadcast_messages/:message_id

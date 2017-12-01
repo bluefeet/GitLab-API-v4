@@ -1,9 +1,10 @@
 ---
 - runners: runners = GET /runners?
 - all_runners: runners = GET /runners/all?
-- runner: runner = GET /runners/:id
-- update_runner: runner = PUT /runners/:id?
-- delete_runner: runner = DELETE /runners/:id
-- project_runners: runners = GET /projects/:id/runners
-- enable_project_runner: runner = POST /projects/:id/runners?
-- disable_project_runner: runner = DELETE /projects/:id/runners/:runner_id
+- runner: runner = GET /runners/:runner_id
+- update_runner: runner = PUT /runners/:runner_id?
+- delete_runner: runner = DELETE /runners/:runner_id
+- runner_jobs: jobs = GET /runners/:runner_id/jobs?
+- project_runners: runners = GET /projects/:project_id/runners
+- enable_project_runner: runner = POST /projects/:project_id/runners?
+- disable_project_runner: runner = DELETE /projects/:project_id/runners/:runner_id

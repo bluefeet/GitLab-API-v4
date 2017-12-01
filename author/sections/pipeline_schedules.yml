@@ -1,0 +1,10 @@
+---
+- pipeline_schedules: schedules = GET /projects/:project_id/pipeline_schedules?
+- pipeline_schedule: schedule = GET /projects/:project_id/pipeline_schedules/:pipeline_schedule_id
+- create_pipeline_schedule: schedule = POST /projects/:project_id/pipeline_schedules?
+- edit_pipeline_schedule: schedule = PUT /projects/:project_id/pipeline_schedules/:pipeline_schedule_id?
+- take_ownership_of_pipeline_schedule: schedule = POST /projects/:project_id/pipeline_schedules/:pipeline_schedule_id/take_ownership
+- delete_pipeline_schedule: schedule = DELETE /projects/:project_id/pipeline_schedules/:pipeline_schedule_id
+- create_pipeline_schedule_variable: variable = POST /projects/:project_id/pipeline_schedules/:pipeline_schedule_id/variables?
+- edit_pipeline_schedule_variable: variable = PUT /projects/:project_id/pipeline_schedules/:pipeline_schedule_id/variables/:variable_key?
+- delete_pipeline_schedule_variable: variable = DELETE /projects/:project_id/pipeline_schedules/:pipeline_schedule_id/variables/:variable_key

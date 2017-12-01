@@ -1,0 +1,11 @@
+---
+- group_members: members = GET /groups/:group_id/members?
+- project_members: members = GET /projects/:project_id/members?
+- group_member: member = GET /groups/:project_id/members/:user_id
+- project_member: member = GET /projects/:project_id/members/:user_id
+- add_group_member: member = POST /groups/:group_id/members?
+- add_project_member: member = POST /projects/:project_id/members?
+- edit_group_member: member = PUT /groups/:group_id/members/:user_id?
+- edit_project_member: member = PUT /projects/:project_id/members/:user_id?
+- remove_group_member: DELETE /groups/:group_id/members/:user_id
+- remove_project_member: DELETE /projects/:project_id/members/:user_id

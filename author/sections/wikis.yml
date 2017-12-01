@@ -1,0 +1,6 @@
+---
+- wiki_pages: pages = GET /projects/:project_id/wikis?
+- wiki_page: pages = GET /projects/:project_id/wikis/:slug
+- create_wiki_page: page = POST /projects/:project_id/wikis?
+- edit_wiki_page: page = PUT /projects/:project_id/wikis/:slug?
+- delete_wiki_page: DELETE /projects/:project_id/wikis/:slug

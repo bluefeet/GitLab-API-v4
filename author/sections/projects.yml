@@ -1,30 +1,26 @@
 ---
 - projects: projects = GET /projects?
-- owned_projects: projects = GET /projects/owned?
-- all_projects: projects = GET /projects/all?
+- user_projects: projects = GET /users/:user_id/projects?
 - project: project = GET /projects/:project_id
-- project_events: events = GET /projects/:project_id/events
-- create_project: project = POST /projects?
+- project_users: users = GET /projects/:project_id/users
+- create_project: POST /projects?
 - create_project_for_user: POST /projects/user/:user_id?
-- edit_project: project = PUT /projects/:project_id?
-- fork_project: POST /pojects/fork/:project_id
+- edit_project: PUT /projects/:project_id?
+- fork_project: POST /pojects/fork/:project_id?
+- project_forks: forks = GET /projects/:project_id/forks?
+- start_project: project = POST /projects/:project_id/star
+- unstar_project: project = POST /projects/:project_id/unstar
+- archive_project: project = POST /projects/:project_id/archive
+- unarchive_project: project = POST /projects/:project_id/unarchive
 - delete_project: DELETE /projects/:project_id
-
-- project_members: members = GET /projects/:project_id/members?
-- project_member: member = GET /project/:project_id/members/:user_id
-- add_project_member: POST /projects/:project_id/members?
-- edit_project_member: PUT /projects/:project_id/members/:user_id?
-- remove_project_member: DELETE /projects/:project_id/members/:user_id
-- share_project_with_group: POST /projects/:id/share?
-- delete_shared_project_link_within_group: DELETE /projects/:id/share/:group_id
-
+- upload_file_to_project: upload = POST /projects/:project_id/uploads?
+- share_project_with_group: POST /projects/:project_id/share?
+- unshare_project_with_group: DELETE /projects/:project_id/share/:group_id
 - project_hooks: hooks = GET /projects/:project_id/hooks
 - project_hook: hook = GET /project/:project_id/hooks/:hook_id
 - create_project_hook: POST /projects/:project_id/hooks?
 - edit_project_hook: PUT /projects/:project_id/hooks/:hook_id?
 - delete_project_hook: hook = DELETE /projects/:project_id/hooks/:hook_id
-
-- set_project_fork: POST /projects/:project_id/fork/:forked_from_id
+- set_project_fork: POST /projects/:project_id/fork/:from_project_id
 - clear_project_fork: DELETE /projects/:project_id/fork
-
-- search_projects_by_name: projects = GET /projects/search/:query?
+- start_housekeeping: POST /projects/:project_id/housekeeping

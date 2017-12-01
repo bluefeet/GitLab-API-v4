@@ -1,5 +1,7 @@
 ---
-- triggers: triggers = GET /projects/:id/triggers
-- trigger: trigger = GET /projects/:id/triggers/:token
-- create_trigger: trigger = POST /projects/:id/triggers
-- delete_trigger: trigger = DELETE /projects/:id/triggers/:token
+- triggers: triggers = GET /projects/:project_id/triggers
+- trigger: trigger = GET /projects/:project_id/triggers/:trigger_id
+- create_trigger: trigger = POST /projects/:project_id/triggers?
+- edit_trigger: trigger = PUT /projects/:project_id/triggers/:trigger_id?
+- take_ownership_of_trigger: trigger = POST /projects/:project_id/triggers/:trigger_id/take_ownership
+- delete_trigger: DELETE /projects/:id/triggers/:trigger_id

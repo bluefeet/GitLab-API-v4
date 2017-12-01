@@ -39,9 +39,9 @@ limited in what it can do with the API.
 
 =head2 CONSTANTS
 
-Several values in the GitLab API require looking up the numeric value
-for a meaning (such as C<access_level> and C<visibility_level>).
-Instead of doing that, you can use L<GitLab::API::v4::Constants>.
+The GitLab API, in rare cases, uses a numeric value to represent a state.
+To make life easier the L<GitLab::API::v4::Constants> module exposes
+these states as named variables.
 
 =head2 EXCEPTIONS
 
@@ -151,65 +151,93 @@ at a time.
 
 =head1 AWARD EMOJI METHODS
 
-See L<http://docs.gitlab.com/ce/api/award_emoji.html>.
+See L<https://docs.gitlab.com/ce/api/award_emoji.html>.
 
 =head2 issue_award_emojis
 
     my $award_emojis = $api->issue_award_emojis(
-        $id,
-        $issue_id,
+        $project_id,
+        $issue_iid,
     );
 
-Sends a C<GET> request to C</projects/:id/issues/:issue_id/award_emoji> and returns the decoded/deserialized response body.
+Sends a C<GET> request to C</projects/:project_id/issues/:issue_iid/award_emoji> and returns the decoded/deserialized response body.
 
 =head2 merge_request_award_emojis
 
     my $award_emojis = $api->merge_request_award_emojis(
-        $id,
+        $project_id,
+        $merge_request_iid,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/merge_requests/:merge_request_iid/award_emoji> and returns the decoded/deserialized response body.
+
+=head2 snippet_award_emojis
+
+    my $award_emojis = $api->snippet_award_emojis(
+        $project_id,
         $merge_request_id,
     );
 
-Sends a C<GET> request to C</projects/:id/merge_requests/:merge_request_id/award_emoji> and returns the decoded/deserialized response body.
+Sends a C<GET> request to C</projects/:project_id/merge_requests/:merge_request_id/award_emoji> and returns the decoded/deserialized response body.
 
 =head2 issue_award_emoji
 
     my $award_emoji = $api->issue_award_emoji(
-        $id,
-        $issue_id,
+        $project_id,
+        $issue_iid,
         $award_id,
     );
 
-Sends a C<GET> request to C</projects/:id/issues/:issue_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
+Sends a C<GET> request to C</projects/:project_id/issues/:issue_iid/award_emoji/:award_id> and returns the decoded/deserialized response body.
 
 =head2 merge_request_award_emoji
 
     my $award_emoji = $api->merge_request_award_emoji(
-        $id,
-        $merge_request_id,
+        $project_id,
+        $merge_request_iid,
         $award_id,
     );
 
-Sends a C<GET> request to C</projects/:id/merge_requests/:merge_request_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
+Sends a C<GET> request to C</projects/:project_id/merge_requests/:merge_request_iid/award_emoji/:award_id> and returns the decoded/deserialized response body.
+
+=head2 snippet_award_emoji
+
+    my $award_emoji = $api->snippet_award_emoji(
+        $project_id,
+        $snippet_id,
+        $award_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/snippets/:snippet_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
 
 =head2 create_issue_award_emoji
 
     my $award_emoji = $api->create_issue_award_emoji(
-        $id,
-        $issue_id,
+        $project_id,
+        $issue_iid,
         \%params,
     );
 
-Sends a C<POST> request to C</projects/:id/issues/:issue_id/award_emoji> and returns the decoded/deserialized response body.
+Sends a C<POST> request to C</projects/:project_id/issues/:issue_iid/award_emoji> and returns the decoded/deserialized response body.
 
 =head2 create_merge_request_award_emoji
 
     my $award_emoji = $api->create_merge_request_award_emoji(
-        $id,
-        $merge_request_id,
+        $project_id,
+        $merge_request_iid,
         \%params,
     );
 
-Sends a C<POST> request to C</projects/:id/merge_requests/:merge_request_id/award_emoji> and returns the decoded/deserialized response body.
+Sends a C<POST> request to C</projects/:project_id/merge_requests/:merge_request_iid/award_emoji> and returns the decoded/deserialized response body.
+
+=head2 create_snippet_award_emoji
+
+    my $award_emoji = $api->create_snippet_award_emoji(
+        $project_id,
+        $snippet_id,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/snippets/:snippet_id/award_emoji> and returns the decoded/deserialized response body.
 
 =head2 delete_issue_award_emoji
 
@@ -231,95 +259,105 @@ Sends a C<DELETE> request to C</projects/:id/issues/:issue_id/award_emoji/:award
 
 Sends a C<DELETE> request to C</projects/:id/merge_requests/:merge_request_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
 
+=head2 delete_snippet_award_emoji
+
+    my $award_emoji = $api->delete_snippet_award_emoji(
+        $project_id,
+        $snippet_id,
+        $award_id,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/snippets/:snippet_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
+
 =head2 issue_note_award_emojis
 
     my $award_emojis = $api->issue_note_award_emojis(
-        $id,
-        $issue_id,
+        $project_id,
+        $issue_iid,
         $note_id,
     );
 
-Sends a C<GET> request to C</projects/:id/issues/:issue_id/notes/:note_id/award_emoji> and returns the decoded/deserialized response body.
+Sends a C<GET> request to C</projects/:project_id/issues/:issue_iid/notes/:note_id/award_emoji> and returns the decoded/deserialized response body.
 
 =head2 issue_note_award_emoji
 
     my $award_emoji = $api->issue_note_award_emoji(
-        $id,
-        $issue_id,
+        $project_id,
+        $issue_iid,
         $note_id,
         $award_id,
     );
 
-Sends a C<GET> request to C</projects/:id/issues/:issue_id/notes/:note_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
+Sends a C<GET> request to C</projects/:project_id/issues/:issue_iid/notes/:note_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
 
 =head2 create_issue_note_award_emoji
 
     my $award_emoji = $api->create_issue_note_award_emoji(
-        $id,
-        $issue_id,
+        $project_id,
+        $issue_iid,
         $note_id,
         \%params,
     );
 
-Sends a C<POST> request to C</projects/:id/issues/:issue_id/notes/:note_id/award_emoji> and returns the decoded/deserialized response body.
+Sends a C<POST> request to C</projects/:project_id/issues/:issue_iid/notes/:note_id/award_emoji> and returns the decoded/deserialized response body.
 
 =head2 delete_issue_note_award_emoji
 
     my $award_emoji = $api->delete_issue_note_award_emoji(
-        $id,
-        $issue_id,
+        $project_id,
+        $issue_iid,
         $note_id,
         $award_id,
     );
 
-Sends a C<DELETE> request to C</projects/:id/issues/:issue_id/notes/:note_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
+Sends a C<DELETE> request to C</projects/:project_id/issues/:issue_iid/notes/:note_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
 
 =head2 merge_request_note_award_emojis
 
     my $award_emojis = $api->merge_request_note_award_emojis(
-        $id,
-        $merge_request_id,
+        $project_id,
+        $merge_request_iid,
         $note_id,
     );
 
-Sends a C<GET> request to C</projects/:id/merge_requests/:merge_request_id/notes/:note_id/award_emoji> and returns the decoded/deserialized response body.
+Sends a C<GET> request to C</projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id/award_emoji> and returns the decoded/deserialized response body.
 
 =head2 merge_request_note_award_emoji
 
     my $award_emoji = $api->merge_request_note_award_emoji(
-        $id,
-        $merge_request_id,
+        $project_id,
+        $merge_request_iid,
         $note_id,
         $award_id,
     );
 
-Sends a C<GET> request to C</projects/:id/merge_requests/:merge_request_id/notes/:note_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
+Sends a C<GET> request to C</projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
 
 =head2 create_merge_request_note_award_emoji
 
     my $award_emoji = $api->create_merge_request_note_award_emoji(
-        $id,
-        $merge_request_id,
+        $project_id,
+        $merge_request_iid,
         $note_id,
         \%params,
     );
 
-Sends a C<POST> request to C</projects/:id/merge_requests/:merge_request_id/notes/:note_id/award_emoji> and returns the decoded/deserialized response body.
+Sends a C<POST> request to C</projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id/award_emoji> and returns the decoded/deserialized response body.
 
 =head2 delete_merge_request_note_award_emoji
 
     my $award_emoji = $api->delete_merge_request_note_award_emoji(
-        $id,
-        $merge_request_id,
+        $project_id,
+        $merge_request_iid,
         $note_id,
         $award_id,
     );
 
-Sends a C<DELETE> request to C</projects/:id/merge_requests/:merge_request_id/notes/:note_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
+Sends a C<DELETE> request to C</projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
 
 =head1 BRANCH METHODS
 
-See L<http://doc.gitlab.com/ce/api/branches.html>.
+See L<https://doc.gitlab.com/ce/api/branches.html>.
 
 =head2 branches
 
@@ -337,25 +375,6 @@ Sends a C<GET> request to C</projects/:project_id/repository/branches> and retur
     );
 
 Sends a C<GET> request to C</projects/:project_id/repository/branches/:branch_name> and returns the decoded/deserialized response body.
-
-=head2 protect_branch
-
-    $api->protect_branch(
-        $project_id,
-        $branch_name,
-        \%params,
-    );
-
-Sends a C<PUT> request to C</projects/:project_id/repository/branches/:branch_name/protect>.
-
-=head2 unprotect_branch
-
-    $api->unprotect_branch(
-        $project_id,
-        $branch_name,
-    );
-
-Sends a C<PUT> request to C</projects/:project_id/repository/branches/:branch_name/unprotect>.
 
 =head2 create_branch
 
@@ -375,182 +394,158 @@ Sends a C<POST> request to C</projects/:project_id/repository/branches> and retu
 
 Sends a C<DELETE> request to C</projects/:project_id/repository/branches/:branch_name>.
 
-=head1 BUILD METHODS
+=head2 delete_merged_branches
 
-See L<http://docs.gitlab.com/ce/api/builds.html>.
+    $api->delete_merged_branches(
+        $project_id,
+    );
 
-=head2 builds
+Sends a C<DELETE> request to C</projects/:project_id/repository/merged_branches>.
 
-    my $builds = $api->builds(
-        $id,
+=head1 BROADCAST MESSAGE METHODS
+
+See L<https://docs.gitlab.com/ce/api/broadcast_messages.html>.
+
+=head2 broadcast_messages
+
+    my $messages = $api->broadcast_messages();
+
+Sends a C<GET> request to C</broadcast_messages> and returns the decoded/deserialized response body.
+
+=head2 broadcast_message
+
+    my $message = $api->broadcast_message(
+        $message_id,
+    );
+
+Sends a C<GET> request to C</broadcast_messages/:message_id> and returns the decoded/deserialized response body.
+
+=head2 create_broadcast_message
+
+    my $message = $api->create_broadcast_message(
         \%params,
     );
 
-Sends a C<GET> request to C</projects/:id/builds> and returns the decoded/deserialized response body.
+Sends a C<POST> request to C</broadcast_messages> and returns the decoded/deserialized response body.
 
-=head2 commit_builds
+=head2 edit_broadcast_message
 
-    my $builds = $api->commit_builds(
-        $id,
-        $sha,
+    my $message = $api->edit_broadcast_message(
+        $message_id,
         \%params,
     );
 
-Sends a C<GET> request to C</projects/:id/repository/commits/:sha/builds> and returns the decoded/deserialized response body.
+Sends a C<PUT> request to C</broadcast_messages/:message_id> and returns the decoded/deserialized response body.
 
-=head2 build
+=head2 delete_broadcast_message
 
-    my $build = $api->build(
-        $id,
-        $build_id,
+    $api->delete_broadcast_message(
+        $message_id,
     );
 
-Sends a C<GET> request to C</projects/:id/builds/:build_id> and returns the decoded/deserialized response body.
+Sends a C<DELETE> request to C</broadcast_messages/:message_id>.
 
-=head2 build_artifacts
+=head1 PROJECT LEVEL VARIABLE METHODS
 
-    my $artifacts = $api->build_artifacts(
-        $id,
-        $build_id,
+See L<https://docs.gitlab.com/ce/api/project_level_variables.html>.
+
+=head2 project_variables
+
+    my $variables = $api->project_variables(
+        $project_id,
     );
 
-Sends a C<GET> request to C</projects/:id/builds/:build_id/artifacts> and returns the decoded/deserialized response body.
+Sends a C<GET> request to C</projects/:project_id/variables> and returns the decoded/deserialized response body.
 
-=head2 build_trace
+=head2 project_variable
 
-    my $trace = $api->build_trace(
-        $id,
-        $build_id,
+    my $variable = $api->project_variable(
+        $project_id,
+        $variable_key,
     );
 
-Sends a C<GET> request to C</projects/:id/builds/:build_id/trace> and returns the decoded/deserialized response body.
+Sends a C<GET> request to C</projects/:project_id/variables/:variable_key> and returns the decoded/deserialized response body.
 
-=head2 cancel_build
+=head2 create_project_variable
 
-    my $build = $api->cancel_build(
-        $id,
-        $build_id,
-    );
-
-Sends a C<POST> request to C</projects/:id/builds/:build_id/cancel> and returns the decoded/deserialized response body.
-
-=head2 retry_build
-
-    my $build = $api->retry_build(
-        $id,
-        $build_id,
-    );
-
-Sends a C<POST> request to C</projects/:id/builds/:build_id/retry> and returns the decoded/deserialized response body.
-
-=head2 erase_build
-
-    my $build = $api->erase_build(
-        $id,
-        $build_id,
-    );
-
-Sends a C<POST> request to C</projects/:id/builds/:build_id/erase> and returns the decoded/deserialized response body.
-
-=head2 keep_build_artifacts
-
-    my $build = $api->keep_build_artifacts(
-        $id,
-        $build_id,
-    );
-
-Sends a C<POST> request to C</projects/:id/builds/:build_id/artifacts/keep> and returns the decoded/deserialized response body.
-
-=head1 BUILD TRIGGER METHODS
-
-See L<http://docs.gitlab.com/ce/api/build_triggers.html>.
-
-=head2 triggers
-
-    my $triggers = $api->triggers(
-        $id,
-    );
-
-Sends a C<GET> request to C</projects/:id/triggers> and returns the decoded/deserialized response body.
-
-=head2 trigger
-
-    my $trigger = $api->trigger(
-        $id,
-        $token,
-    );
-
-Sends a C<GET> request to C</projects/:id/triggers/:token> and returns the decoded/deserialized response body.
-
-=head2 create_trigger
-
-    my $trigger = $api->create_trigger(
-        $id,
-    );
-
-Sends a C<POST> request to C</projects/:id/triggers> and returns the decoded/deserialized response body.
-
-=head2 delete_trigger
-
-    my $trigger = $api->delete_trigger(
-        $id,
-        $token,
-    );
-
-Sends a C<DELETE> request to C</projects/:id/triggers/:token> and returns the decoded/deserialized response body.
-
-=head1 BUILD VARIABLE METHODS
-
-See L<http://docs.gitlab.com/ce/api/build_variables.html>.
-
-=head2 variables
-
-    my $variables = $api->variables(
-        $id,
-    );
-
-Sends a C<GET> request to C</projects/:id/variables> and returns the decoded/deserialized response body.
-
-=head2 variable
-
-    my $variable = $api->variable(
-        $id,
-        $key,
-    );
-
-Sends a C<GET> request to C</projects/:id/variables/:key> and returns the decoded/deserialized response body.
-
-=head2 create_variable
-
-    my $variable = $api->create_variable(
-        $id,
+    my $variable = $api->create_project_variable(
+        $project_id,
         \%params,
     );
 
-Sends a C<POST> request to C</projects/:id/variables> and returns the decoded/deserialized response body.
+Sends a C<POST> request to C</projects/:project_id/variables> and returns the decoded/deserialized response body.
 
-=head2 update_variable
+=head2 edit_project_variable
 
-    my $variable = $api->update_variable(
-        $id,
-        $key,
+    my $variable = $api->edit_project_variable(
+        $project_id,
+        $variable_key,
         \%params,
     );
 
-Sends a C<PUT> request to C</projects/:id/variables/:key> and returns the decoded/deserialized response body.
+Sends a C<PUT> request to C</projects/:project_id/variables/:variable_key> and returns the decoded/deserialized response body.
 
-=head2 delete_variable
+=head2 delete_project_variable
 
-    my $variable = $api->delete_variable(
-        $id,
-        $key,
+    $api->delete_project_variable(
+        $project_id,
+        $variable_key,
     );
 
-Sends a C<DELETE> request to C</projects/:id/variables/:key> and returns the decoded/deserialized response body.
+Sends a C<DELETE> request to C</projects/:project_id/variables/:variable_key>.
+
+=head1 GROUP LEVEL VARIABLE METHODS
+
+See L<https://docs.gitlab.com/ce/api/group_level_variables.html>.
+
+=head2 group_variables
+
+    my $variables = $api->group_variables(
+        $group_id,
+    );
+
+Sends a C<GET> request to C</groups/:group_id/variables> and returns the decoded/deserialized response body.
+
+=head2 group_variable
+
+    my $variable = $api->group_variable(
+        $group_id,
+        $variable_key,
+    );
+
+Sends a C<GET> request to C</groups/:group_id/variables/:variable_key> and returns the decoded/deserialized response body.
+
+=head2 create_group_variable
+
+    my $variable = $api->create_group_variable(
+        $group_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</groups/:group_id/variables> and returns the decoded/deserialized response body.
+
+=head2 edit_group_variable
+
+    my $variable = $api->edit_group_variable(
+        $group_id,
+        $variable_key,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</groups/:group_id/variables/:variable_key> and returns the decoded/deserialized response body.
+
+=head2 delete_group_variable
+
+    $api->delete_group_variable(
+        $group_id,
+        $variable_key,
+    );
+
+Sends a C<DELETE> request to C</groups/:group_id/variables/:variable_key>.
 
 =head1 COMMIT METHODS
 
-See L<http://doc.gitlab.com/ce/api/commits.html>.
+See L<https://doc.gitlab.com/ce/api/commits.html>.
 
 =head2 commits
 
@@ -561,6 +556,15 @@ See L<http://doc.gitlab.com/ce/api/commits.html>.
 
 Sends a C<GET> request to C</projects/:project_id/repository/commits> and returns the decoded/deserialized response body.
 
+=head2 create_commit
+
+    my $commit = $api->create_commit(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/repository/commits> and returns the decoded/deserialized response body.
+
 =head2 commit
 
     my $commit = $api->commit(
@@ -569,6 +573,16 @@ Sends a C<GET> request to C</projects/:project_id/repository/commits> and return
     );
 
 Sends a C<GET> request to C</projects/:project_id/repository/commits/:commit_sha> and returns the decoded/deserialized response body.
+
+=head2 cherry_pick_commit
+
+    my $commit = $api->cherry_pick_commit(
+        $project_id,
+        $commit_sha,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/repository/commits/:commit_sha/cherry_pick> and returns the decoded/deserialized response body.
 
 =head2 commit_diff
 
@@ -588,9 +602,9 @@ Sends a C<GET> request to C</projects/:project_id/repository/commits/:commit_sha
 
 Sends a C<GET> request to C</projects/:project_id/repository/commits/:commit_sha/comments> and returns the decoded/deserialized response body.
 
-=head2 add_commit_comment
+=head2 create_commit_comment
 
-    $api->add_commit_comment(
+    $api->create_commit_comment(
         $project_id,
         $commit_sha,
         \%params,
@@ -598,9 +612,168 @@ Sends a C<GET> request to C</projects/:project_id/repository/commits/:commit_sha
 
 Sends a C<POST> request to C</projects/:project_id/repository/commits/:commit_sha/comments>.
 
+=head2 commit_statuses
+
+    my $build_statuses = $api->commit_statuses(
+        $project_id,
+        $commit_sha,
+        \%params,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/repository/commits/:commit_sha/statuses> and returns the decoded/deserialized response body.
+
+=head2 create_commit_status
+
+    my $build_status = $api->create_commit_status(
+        $project_id,
+        $commit_sha,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/statuses/:commit_sha> and returns the decoded/deserialized response body.
+
+=head1 CUSTOM ATTRIBUTE METHODS
+
+See L<https://docs.gitlab.com/ce/api/custom_attributes.html>.
+
+=head2 custom_user_attributes
+
+    my $attributes = $api->custom_user_attributes(
+        $user_id,
+    );
+
+Sends a C<GET> request to C</users/:user_id/custom_attributes> and returns the decoded/deserialized response body.
+
+=head2 custom_group_attributes
+
+    my $attributes = $api->custom_group_attributes(
+        $group_id,
+    );
+
+Sends a C<GET> request to C</groups/:group_id/custom_attributes> and returns the decoded/deserialized response body.
+
+=head2 custom_project_attributes
+
+    my $attributes = $api->custom_project_attributes(
+        $project_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/custom_attributes> and returns the decoded/deserialized response body.
+
+=head2 custom_user_attribute
+
+    my $attribute = $api->custom_user_attribute(
+        $user_id,
+        $attribute_key,
+    );
+
+Sends a C<GET> request to C</users/:user_id/custom_attributes/:attribute_key> and returns the decoded/deserialized response body.
+
+=head2 custom_group_attribute
+
+    my $attribute = $api->custom_group_attribute(
+        $group_id,
+        $attribute_key,
+    );
+
+Sends a C<GET> request to C</groups/:group_id/custom_attributes/:attribute_key> and returns the decoded/deserialized response body.
+
+=head2 custom_project_attribute
+
+    my $attribute = $api->custom_project_attribute(
+        $project_id,
+        $attribute_key,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/custom_attributes/:attribute_key> and returns the decoded/deserialized response body.
+
+=head2 set_custom_user_attribute
+
+    my $attribute = $api->set_custom_user_attribute(
+        $user_id,
+        $attribute_key,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</users/:user_id/custom_attributes/:attribute_key> and returns the decoded/deserialized response body.
+
+=head2 set_custom_group_attribute
+
+    my $attribute = $api->set_custom_group_attribute(
+        $group_id,
+        $attribute_key,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</groups/:group_id/custom_attributes/:attribute_key> and returns the decoded/deserialized response body.
+
+=head2 set_custom_project_attribute
+
+    my $attribute = $api->set_custom_project_attribute(
+        $project_id,
+        $attribute_key,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/custom_attributes/:attribute_key> and returns the decoded/deserialized response body.
+
+=head2 delete_custom_user_attribute
+
+    $api->delete_custom_user_attribute(
+        $user_id,
+        $attribute_key,
+    );
+
+Sends a C<DELETE> request to C</users/:user_id/custom_attributes/:attribute_key>.
+
+=head2 delete_custom_group_attribute
+
+    $api->delete_custom_group_attribute(
+        $group_id,
+        $attribute_key,
+    );
+
+Sends a C<DELETE> request to C</groups/:group_id/custom_attributes/:attribute_key>.
+
+=head2 delete_custom_project_attribute
+
+    $api->delete_custom_project_attribute(
+        $project_id,
+        $attribute_key,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/custom_attributes/:attribute_key>.
+
+=head1 DEPLOYMENT METHODS
+
+See L<https://docs.gitlab.com/ce/api/deployments.html>.
+
+=head2 deployments
+
+    my $deployments = $api->deployments(
+        $project_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/deployments> and returns the decoded/deserialized response body.
+
+=head2 deployment
+
+    my $deployment = $api->deployment(
+        $project_id,
+        $deployment_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/deployments/:deployment_id> and returns the decoded/deserialized response body.
+
 =head1 DEPLOY KEY METHODS
 
-See L<http://doc.gitlab.com/ce/api/deploy_keys.html>.
+See L<https://docs.gitlab.com/ce/api/deploy_keys.html>.
+
+=head2 all_deploy_keys
+
+    my $keys = $api->all_deploy_keys();
+
+Sends a C<GET> request to C</deploy_keys> and returns the decoded/deserialized response body.
 
 =head2 deploy_keys
 
@@ -608,7 +781,7 @@ See L<http://doc.gitlab.com/ce/api/deploy_keys.html>.
         $project_id,
     );
 
-Sends a C<GET> request to C</projects/:project_id/keys> and returns the decoded/deserialized response body.
+Sends a C<GET> request to C</projects/:project_id/deploy_keys> and returns the decoded/deserialized response body.
 
 =head2 deploy_key
 
@@ -617,16 +790,16 @@ Sends a C<GET> request to C</projects/:project_id/keys> and returns the decoded/
         $key_id,
     );
 
-Sends a C<GET> request to C</projects/:project_id/keys/:key_id> and returns the decoded/deserialized response body.
+Sends a C<GET> request to C</projects/:project_id/deploy_keys/:key_id> and returns the decoded/deserialized response body.
 
 =head2 create_deploy_key
 
-    $api->create_deploy_key(
+    my $key = $api->create_deploy_key(
         $project_id,
         \%params,
     );
 
-Sends a C<POST> request to C</projects/:project_id/keys>.
+Sends a C<POST> request to C</projects/:project_id/deploy_keys> and returns the decoded/deserialized response body.
 
 =head2 delete_deploy_key
 
@@ -635,17 +808,180 @@ Sends a C<POST> request to C</projects/:project_id/keys>.
         $key_id,
     );
 
-Sends a C<DELETE> request to C</projects/:project_id/keys/:key_id>.
+Sends a C<DELETE> request to C</projects/:project_id/deploy_keys/:key_id>.
+
+=head2 enable_deploy_key
+
+    my $key = $api->enable_deploy_key(
+        $project_id,
+        $key_id,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/deploy_keys/:key_id/enable> and returns the decoded/deserialized response body.
+
+=head1 ENVIRONMENT METHODS
+
+See L<https://docs.gitlab.com/ce/api/environments.html>.
+
+=head2 environments
+
+    my $environments = $api->environments(
+        $project_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/environments> and returns the decoded/deserialized response body.
+
+=head2 create_environment
+
+    my $environment = $api->create_environment(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/environments> and returns the decoded/deserialized response body.
+
+=head2 edit_environment
+
+    my $environment = $api->edit_environment(
+        $project_id,
+        $environments_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/environments/:environments_id> and returns the decoded/deserialized response body.
+
+=head2 delete_environment
+
+    $api->delete_environment(
+        $project_id,
+        $environment_id,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/environments/:environment_id>.
+
+=head2 stop_environment
+
+    my $environment = $api->stop_environment(
+        $project_id,
+        $environment_id,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/environments/:environment_id/stop> and returns the decoded/deserialized response body.
+
+=head1 EVENT METHODS
+
+See L<https://docs.gitlab.com/ce/api/events.html>.
+
+=head2 all_events
+
+    my $events = $api->all_events(
+        \%params,
+    );
+
+Sends a C<GET> request to C</events> and returns the decoded/deserialized response body.
+
+=head2 user_events
+
+    my $events = $api->user_events(
+        $user_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C</users/:user_id/events> and returns the decoded/deserialized response body.
+
+=head2 project_events
+
+    my $events = $api->project_events(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/events> and returns the decoded/deserialized response body.
+
+=head1 FEATURE FLAG METHODS
+
+See L<https://docs.gitlab.com/ce/api/features.html>.
+
+=head2 features
+
+    my $features = $api->features();
+
+Sends a C<GET> request to C</features> and returns the decoded/deserialized response body.
+
+=head2 set_feature
+
+    my $feature = $api->set_feature(
+        $name,
+        \%params,
+    );
+
+Sends a C<POST> request to C</features/:name> and returns the decoded/deserialized response body.
+
+=head1 GITIGNORES TEMPLATE METHODS
+
+See L<https://docs.gitlab.com/ce/api/templates/gitignores.html>.
+
+=head2 gitignores_templates
+
+    my $templates = $api->gitignores_templates();
+
+Sends a C<GET> request to C</templates/gitignores> and returns the decoded/deserialized response body.
+
+=head2 gitignores_template
+
+    my $template = $api->gitignores_template(
+        $template_key,
+    );
+
+Sends a C<GET> request to C</templates/gitignores/:template_key> and returns the decoded/deserialized response body.
+
+=head1 GITLAB CI CONFIG TEMPLATE METHODS
+
+See L<https://docs.gitlab.com/ce/api/templates/gitlab_ci_ymls.html>.
+
+=head2 gitlab_ci_ymls_templates
+
+    my $templates = $api->gitlab_ci_ymls_templates();
+
+Sends a C<GET> request to C</templates/gitlab_ci_ymls> and returns the decoded/deserialized response body.
+
+=head2 gitlab_ci_ymls_template
+
+    my $template = $api->gitlab_ci_ymls_template(
+        $template_key,
+    );
+
+Sends a C<GET> request to C</templates/gitlab_ci_ymls/:template_key> and returns the decoded/deserialized response body.
 
 =head1 GROUP METHODS
 
-See L<http://doc.gitlab.com/ce/api/groups.html>.
+See L<https://docs.gitlab.com/ce/api/groups.html>.
 
 =head2 groups
 
-    my $groups = $api->groups();
+    my $groups = $api->groups(
+        \%params,
+    );
 
 Sends a C<GET> request to C</groups> and returns the decoded/deserialized response body.
+
+=head2 group_subgroups
+
+    my $subgroups = $api->group_subgroups(
+        $group_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C</groups/:group_id/subgroups> and returns the decoded/deserialized response body.
+
+=head2 group_projects
+
+    my $projects = $api->group_projects(
+        $group_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C</groups/:group_id/projects> and returns the decoded/deserialized response body.
 
 =head2 group
 
@@ -663,14 +999,23 @@ Sends a C<GET> request to C</groups/:group_id> and returns the decoded/deseriali
 
 Sends a C<POST> request to C</groups>.
 
-=head2 transfer_project
+=head2 transfer_project_to_group
 
-    $api->transfer_project(
+    $api->transfer_project_to_group(
         $group_id,
         $project_id,
     );
 
 Sends a C<POST> request to C</groups/:group_id/projects/:project_id>.
+
+=head2 edit_group
+
+    my $group = $api->edit_group(
+        $group_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</groups/:group_id> and returns the decoded/deserialized response body.
 
 =head2 delete_group
 
@@ -680,49 +1025,119 @@ Sends a C<POST> request to C</groups/:group_id/projects/:project_id>.
 
 Sends a C<DELETE> request to C</groups/:group_id>.
 
-=head2 search_groups
+=head2 sync_group_with_ldap
 
-    my $groups = $api->search_groups(
+    $api->sync_group_with_ldap(
+        $group_id,
+    );
+
+Sends a C<POST> request to C</groups/:group_id/ldap_sync>.
+
+=head2 create_ldap_group_link
+
+    $api->create_ldap_group_link(
+        $group_id,
         \%params,
     );
 
-Sends a C<GET> request to C</groups> and returns the decoded/deserialized response body.
+Sends a C<POST> request to C</groups/:group_id/ldap_group_links>.
+
+=head2 delete_ldap_group_link
+
+    $api->delete_ldap_group_link(
+        $group_id,
+        $cn,
+    );
+
+Sends a C<DELETE> request to C</groups/:group_id/ldap_group_links/:cn>.
+
+=head2 delete_ldap_provider_group_link
+
+    $api->delete_ldap_provider_group_link(
+        $group_id,
+        $provider,
+        $cn,
+    );
+
+Sends a C<DELETE> request to C</groups/:group_id/ldap_group_links/:provider/:cn>.
+
+=head1 GROUP AND PROJECT MEMBER METHODS
+
+See L<https://docs.gitlab.com/ce/api/members.html>.
 
 =head2 group_members
 
     my $members = $api->group_members(
         $group_id,
+        \%params,
     );
 
 Sends a C<GET> request to C</groups/:group_id/members> and returns the decoded/deserialized response body.
 
-=head2 group_projects
+=head2 project_members
 
-    my $projects = $api->group_projects(
-        $group_id,
+    my $members = $api->project_members(
+        $project_id,
         \%params,
     );
 
-Sends a C<GET> request to C</groups/:group_id/projects> and returns the decoded/deserialized response body.
+Sends a C<GET> request to C</projects/:project_id/members> and returns the decoded/deserialized response body.
+
+=head2 group_member
+
+    my $member = $api->group_member(
+        $project_id,
+        $user_id,
+    );
+
+Sends a C<GET> request to C</groups/:project_id/members/:user_id> and returns the decoded/deserialized response body.
+
+=head2 project_member
+
+    my $member = $api->project_member(
+        $project_id,
+        $user_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/members/:user_id> and returns the decoded/deserialized response body.
 
 =head2 add_group_member
 
-    $api->add_group_member(
+    my $member = $api->add_group_member(
         $group_id,
         \%params,
     );
 
-Sends a C<POST> request to C</groups/:group_id/members>.
+Sends a C<POST> request to C</groups/:group_id/members> and returns the decoded/deserialized response body.
+
+=head2 add_project_member
+
+    my $member = $api->add_project_member(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/members> and returns the decoded/deserialized response body.
 
 =head2 edit_group_member
 
-    $api->edit_group_member(
+    my $member = $api->edit_group_member(
         $group_id,
         $user_id,
         \%params,
     );
 
-Sends a C<PUT> request to C</groups/:group_id/members/:user_id>.
+Sends a C<PUT> request to C</groups/:group_id/members/:user_id> and returns the decoded/deserialized response body.
+
+=head2 edit_project_member
+
+    my $member = $api->edit_project_member(
+        $project_id,
+        $user_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/members/:user_id> and returns the decoded/deserialized response body.
 
 =head2 remove_group_member
 
@@ -733,17 +1148,35 @@ Sends a C<PUT> request to C</groups/:group_id/members/:user_id>.
 
 Sends a C<DELETE> request to C</groups/:group_id/members/:user_id>.
 
+=head2 remove_project_member
+
+    $api->remove_project_member(
+        $project_id,
+        $user_id,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/members/:user_id>.
+
 =head1 ISSUE METHODS
 
-See L<http://doc.gitlab.com/ce/api/issues.html>.
+See L<https://docs.gitlab.com/ce/api/issues.html>.
 
-=head2 all_issues
+=head2 global_issues
 
-    my $issues = $api->all_issues(
+    my $issues = $api->global_issues(
         \%params,
     );
 
 Sends a C<GET> request to C</issues> and returns the decoded/deserialized response body.
+
+=head2 group_issues
+
+    my $issues = $api->group_issues(
+        $group_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C</groups/:group_id/issues> and returns the decoded/deserialized response body.
 
 =head2 issues
 
@@ -758,10 +1191,10 @@ Sends a C<GET> request to C</projects/:project_id/issues> and returns the decode
 
     my $issue = $api->issue(
         $project_id,
-        $issue_id,
+        $issue_iid,
     );
 
-Sends a C<GET> request to C</projects/:project_id/issues/:issue_id> and returns the decoded/deserialized response body.
+Sends a C<GET> request to C</projects/:project_id/issues/:issue_iid> and returns the decoded/deserialized response body.
 
 =head2 create_issue
 
@@ -776,15 +1209,303 @@ Sends a C<POST> request to C</projects/:project_id/issues> and returns the decod
 
     my $issue = $api->edit_issue(
         $project_id,
-        $issue_id,
+        $issue_iid,
         \%params,
     );
 
-Sends a C<PUT> request to C</projects/:project_id/issues/:issue_id> and returns the decoded/deserialized response body.
+Sends a C<PUT> request to C</projects/:project_id/issues/:issue_iid> and returns the decoded/deserialized response body.
+
+=head2 delete_issue
+
+    $api->delete_issue(
+        $project_id,
+        $issue_iid,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/issues/:issue_iid>.
+
+=head2 move_issue
+
+    my $issue = $api->move_issue(
+        $project_id,
+        $issue_iid,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/issues/:issue_iid/move> and returns the decoded/deserialized response body.
+
+=head2 subscribe_to_issue
+
+    my $issue = $api->subscribe_to_issue(
+        $project_id,
+        $issue_iid,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/issues/:issue_iid/subscribe> and returns the decoded/deserialized response body.
+
+=head2 unsubscribe_from_issue
+
+    my $issue = $api->unsubscribe_from_issue(
+        $project_id,
+        $issue_iid,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/issues/:issue_iid/unsubscribe> and returns the decoded/deserialized response body.
+
+=head2 create_issue_todo
+
+    my $todo = $api->create_issue_todo(
+        $project_id,
+        $issue_iid,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/issues/:issue_iid/todo> and returns the decoded/deserialized response body.
+
+=head2 set_issue_time_estimate
+
+    my $tracking = $api->set_issue_time_estimate(
+        $project_id,
+        $issue_iid,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/issues/:issue_iid/time_estimate> and returns the decoded/deserialized response body.
+
+=head2 reset_issue_time_estimate
+
+    my $tracking = $api->reset_issue_time_estimate(
+        $id,
+        $issue_iid,
+    );
+
+Sends a C<POST> request to C</projects/:id/issues/:issue_iid/reset_time_estimate> and returns the decoded/deserialized response body.
+
+=head2 add_issue_spent_time
+
+    my $tracking = $api->add_issue_spent_time(
+        $project_id,
+        $issue_iid,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/issues/:issue_iid/add_spent_time> and returns the decoded/deserialized response body.
+
+=head2 reset_issue_spent_time
+
+    my $tracking = $api->reset_issue_spent_time(
+        $project_id,
+        $issue_iid,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/issues/:issue_iid/reset_spent_time> and returns the decoded/deserialized response body.
+
+=head2 issue_time_stats
+
+    my $tracking = $api->issue_time_stats(
+        $project_id,
+        $issue_iid,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/issues/:issue_iid/time_stats> and returns the decoded/deserialized response body.
+
+=head2 issue_closed_by
+
+    my $merge_requests = $api->issue_closed_by(
+        $project_id,
+        $issue_iid,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/issues/:issue_iid/closed_by> and returns the decoded/deserialized response body.
+
+=head2 issue_user_agent_detail
+
+    my $user_agent = $api->issue_user_agent_detail(
+        $project_id,
+        $issue_iid,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/issues/:issue_iid/user_agent_detail> and returns the decoded/deserialized response body.
+
+=head1 ISSUE BOARD METHODS
+
+See L<https://docs.gitlab.com/ce/api/boards.html>.
+
+=head2 project_boards
+
+    my $boards = $api->project_boards(
+        $project_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/boards> and returns the decoded/deserialized response body.
+
+=head2 project_board_lists
+
+    my $lists = $api->project_board_lists(
+        $project_id,
+        $board_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/boards/:board_id/lists> and returns the decoded/deserialized response body.
+
+=head2 project_board_list
+
+    my $list = $api->project_board_list(
+        $project_id,
+        $board_id,
+        $list_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/boards/:board_id/lists/:list_id> and returns the decoded/deserialized response body.
+
+=head2 create_project_board_list
+
+    my $list = $api->create_project_board_list(
+        $project_id,
+        $board_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/boards/:board_id/lists> and returns the decoded/deserialized response body.
+
+=head2 edit_project_board_list
+
+    my $list = $api->edit_project_board_list(
+        $project_id,
+        $board_id,
+        $list_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/boards/:board_id/lists/:list_id> and returns the decoded/deserialized response body.
+
+=head2 delete_project_board_list
+
+    $api->delete_project_board_list(
+        $project_id,
+        $board_id,
+        $list_id,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/boards/:board_id/lists/:list_id>.
+
+=head1 JOB METHODS
+
+See L<https://docs.gitlab.com/ce/api/jobs.html>.
+
+=head2 jobs
+
+    my $jobs = $api->jobs(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/jobs> and returns the decoded/deserialized response body.
+
+=head2 pipeline_jobs
+
+    my $jobs = $api->pipeline_jobs(
+        $project_id,
+        $pipeline_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/pipelines/:pipeline_id/jobs> and returns the decoded/deserialized response body.
+
+=head2 job
+
+    my $job = $api->job(
+        $project_id,
+        $job_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/jobs/:job_id> and returns the decoded/deserialized response body.
+
+=head2 job_artifacts
+
+    my $artifacts = $api->job_artifacts(
+        $project_id,
+        $job_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/jobs/:job_id/artifacts> and returns the decoded/deserialized response body.
+
+=head2 job_artifacts_archive
+
+    my $archive = $api->job_artifacts_archive(
+        $project_id,
+        $ref_name,
+        \%params,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/jobs/artifacts/:ref_name/download> and returns the decoded/deserialized response body.
+
+=head2 job_artifacts_file
+
+    my $file = $api->job_artifacts_file(
+        $project_id,
+        $job_id,
+        $artifact_path,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/jobs/:job_id/artifacts/:artifact_path> and returns the decoded/deserialized response body.
+
+=head2 job_trace_file
+
+    my $file = $api->job_trace_file(
+        $project_id,
+        $job_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/jobs/:job_id/trace> and returns the decoded/deserialized response body.
+
+=head2 cancel_job
+
+    my $job = $api->cancel_job(
+        $project_id,
+        $job_id,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/jobs/:job_id/cancel> and returns the decoded/deserialized response body.
+
+=head2 retry_job
+
+    my $job = $api->retry_job(
+        $project_id,
+        $job_id,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/jobs/:job_id/retry> and returns the decoded/deserialized response body.
+
+=head2 erase_job
+
+    my $job = $api->erase_job(
+        $project_id,
+        $job_id,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/jobs/:job_id/erase> and returns the decoded/deserialized response body.
+
+=head2 keep_job_artifacts
+
+    my $job = $api->keep_job_artifacts(
+        $project_id,
+        $job_id,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/jobs/:job_id/artifacts/keep> and returns the decoded/deserialized response body.
+
+=head2 play_job
+
+    my $job = $api->play_job(
+        $project_id,
+        $job_id,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/jobs/:job_id/play> and returns the decoded/deserialized response body.
 
 =head1 KEY METHODS
 
-See L<http://docs.gitlab.com/ce/api/keys.html>.
+See L<https://docs.gitlab.com/ce/api/keys.html>.
 
 =head2 key
 
@@ -796,7 +1517,7 @@ Sends a C<GET> request to C</keys/:key_id> and returns the decoded/deserialized 
 
 =head1 LABEL METHODS
 
-See L<http://doc.gitlab.com/ce/api/labels.html>.
+See L<https://docs.gitlab.com/ce/api/labels.html>.
 
 =head2 labels
 
@@ -833,9 +1554,35 @@ Sends a C<DELETE> request to C</projects/:project_id/labels>.
 
 Sends a C<PUT> request to C</projects/:project_id/labels> and returns the decoded/deserialized response body.
 
+=head2 subscribe_to_label
+
+    my $label = $api->subscribe_to_label(
+        $project_id,
+        $label_id,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/labels/:label_id/subscribe> and returns the decoded/deserialized response body.
+
+=head2 unsubscribe_from_label
+
+    $api->unsubscribe_from_label(
+        $project_id,
+        $label_id,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/labels/:label_id/unsubscribe>.
+
 =head1 MERGE REQUEST METHODS
 
-See L<http://doc.gitlab.com/ce/api/merge_requests.html>.
+See L<https://docs.gitlab.com/ce/api/merge_requests.html>.
+
+=head2 global_merge_requests
+
+    my $merge_requests = $api->global_merge_requests(
+        \%params,
+    );
+
+Sends a C<GET> request to C</merge_requests> and returns the decoded/deserialized response body.
 
 =head2 merge_requests
 
@@ -850,10 +1597,28 @@ Sends a C<GET> request to C</projects/:project_id/merge_requests> and returns th
 
     my $merge_request = $api->merge_request(
         $project_id,
-        $merge_request_id,
+        $merge_request_iid,
     );
 
-Sends a C<GET> request to C</projects/:project_id/merge_request/:merge_request_id> and returns the decoded/deserialized response body.
+Sends a C<GET> request to C</projects/:project_id/merge_requests/:merge_request_iid> and returns the decoded/deserialized response body.
+
+=head2 merge_request_commits
+
+    my $commits = $api->merge_request_commits(
+        $project_id,
+        $merge_request_iid,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/merge_requests/:merge_request_iid/commits> and returns the decoded/deserialized response body.
+
+=head2 merge_request_with_changes
+
+    my $merge_request = $api->merge_request_with_changes(
+        $project_id,
+        $merge_request_iid,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/merge_requests/:merge_request_iid/changes> and returns the decoded/deserialized response body.
 
 =head2 create_merge_request
 
@@ -868,115 +1633,263 @@ Sends a C<POST> request to C</projects/:project_id/merge_requests> and returns t
 
     my $merge_request = $api->edit_merge_request(
         $project_id,
-        $merge_request_id,
+        $merge_request_iid,
         \%params,
     );
 
-Sends a C<PUT> request to C</projects/:project_id/merge_requests/:merge_request_id> and returns the decoded/deserialized response body.
+Sends a C<PUT> request to C</projects/:project_id/merge_requests/:merge_request_iid> and returns the decoded/deserialized response body.
+
+=head2 delete_merge_request
+
+    $api->delete_merge_request(
+        $project_id,
+        $merge_request_iid,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/merge_requests/:merge_request_iid>.
 
 =head2 accept_merge_request
 
-    $api->accept_merge_request(
+    my $merge_request = $api->accept_merge_request(
         $project_id,
-        $merge_request_id,
+        $merge_request_iid,
         \%params,
     );
 
-Sends a C<PUT> request to C</projects/:project_id/merge_requests/:merge_request_id/merge>.
+Sends a C<PUT> request to C</projects/:project_id/merge_requests/:merge_request_iid/merge> and returns the decoded/deserialized response body.
 
-=head2 add_merge_request_comment
+=head2 cancel_merge_when_pipeline_succeeds
 
-    $api->add_merge_request_comment(
+    my $merge_request = $api->cancel_merge_when_pipeline_succeeds(
         $project_id,
-        $merge_request_id,
+        $merge_request_iid,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/merge_requests/:merge_request_iid/cancel_merge_when_pipeline_succeeds> and returns the decoded/deserialized response body.
+
+=head2 merge_request_closes_issues
+
+    my $issues = $api->merge_request_closes_issues(
+        $project_id,
+        $merge_request_iid,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/merge_requests/:merge_request_iid/closes_issues> and returns the decoded/deserialized response body.
+
+=head2 subscribe_to_merge_request
+
+    my $merge_request = $api->subscribe_to_merge_request(
+        $project_id,
+        $merge_request_iid,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/merge_requests/:merge_request_iid/subscribe> and returns the decoded/deserialized response body.
+
+=head2 unsubscribe_from_merge_request
+
+    my $merge_request = $api->unsubscribe_from_merge_request(
+        $project_id,
+        $merge_request_iid,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/merge_requests/:merge_request_iid/unsubscribe> and returns the decoded/deserialized response body.
+
+=head2 create_merge_request_todo
+
+    my $todo = $api->create_merge_request_todo(
+        $project_id,
+        $merge_request_iid,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/merge_requests/:merge_request_iid/todo> and returns the decoded/deserialized response body.
+
+=head2 merge_request_diff_versions
+
+    my $versions = $api->merge_request_diff_versions(
+        $project_id,
+        $merge_request_iid,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/merge_requests/:merge_request_iid/versions> and returns the decoded/deserialized response body.
+
+=head2 merge_request_diff_version
+
+    my $version = $api->merge_request_diff_version(
+        $project_id,
+        $merge_request_iid,
+        $version_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/merge_requests/:merge_request_iid/versions/:version_id> and returns the decoded/deserialized response body.
+
+=head2 set_merge_request_time_estimate
+
+    my $tracking = $api->set_merge_request_time_estimate(
+        $project_id,
+        $merge_request_iid,
         \%params,
     );
 
-Sends a C<POST> request to C</projects/:project_id/merge_requests/:merge_request_id/comments>.
+Sends a C<POST> request to C</projects/:project_id/merge_requests/:merge_request_iid/time_estimate> and returns the decoded/deserialized response body.
 
-=head2 merge_request_comments
+=head2 reset_merge_request_time_estimate
 
-    my $comments = $api->merge_request_comments(
-        $project_id,
-        $merge_request_id,
+    my $tracking = $api->reset_merge_request_time_estimate(
+        $id,
+        $merge_request_iid,
     );
 
-Sends a C<GET> request to C</projects/:project_id/merge_requests/:merge_request_id/comments> and returns the decoded/deserialized response body.
+Sends a C<POST> request to C</projects/:id/merge_requests/:merge_request_iid/reset_time_estimate> and returns the decoded/deserialized response body.
 
-=head1 MILESTONE METHODS
+=head2 add_merge_request_spent_time
 
-See L<http://doc.gitlab.com/ce/api/milestones.html>.
+    my $tracking = $api->add_merge_request_spent_time(
+        $project_id,
+        $merge_request_iid,
+        \%params,
+    );
 
-=head2 milestones
+Sends a C<POST> request to C</projects/:project_id/merge_requests/:merge_request_iid/add_spent_time> and returns the decoded/deserialized response body.
 
-    my $milestones = $api->milestones(
+=head2 reset_merge_request_spent_time
+
+    my $tracking = $api->reset_merge_request_spent_time(
+        $project_id,
+        $merge_request_iid,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/merge_requests/:merge_request_iid/reset_spent_time> and returns the decoded/deserialized response body.
+
+=head2 merge_request_time_stats
+
+    my $tracking = $api->merge_request_time_stats(
+        $project_id,
+        $merge_request_iid,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/merge_requests/:merge_request_iid/time_stats> and returns the decoded/deserialized response body.
+
+=head1 PROJECT MILESTONE METHODS
+
+See L<https://docs.gitlab.com/ce/api/milestones.html>.
+
+=head2 project_milestones
+
+    my $milestones = $api->project_milestones(
         $project_id,
         \%params,
     );
 
 Sends a C<GET> request to C</projects/:project_id/milestones> and returns the decoded/deserialized response body.
 
-=head2 milestone
+=head2 project_milestone
 
-    my $milestone = $api->milestone(
+    my $milestone = $api->project_milestone(
         $project_id,
         $milestone_id,
     );
 
 Sends a C<GET> request to C</projects/:project_id/milestones/:milestone_id> and returns the decoded/deserialized response body.
 
-=head2 create_milestone
+=head2 create_project_milestone
 
-    $api->create_milestone(
+    my $milestone = $api->create_project_milestone(
         $project_id,
         \%params,
     );
 
-Sends a C<POST> request to C</projects/:project_id/milestones>.
+Sends a C<POST> request to C</projects/:project_id/milestones> and returns the decoded/deserialized response body.
 
-=head2 edit_milestone
+=head2 edit_project_milestone
 
-    $api->edit_milestone(
+    my $milestone = $api->edit_project_milestone(
         $project_id,
         $milestone_id,
         \%params,
     );
 
-Sends a C<PUT> request to C</projects/:project_id/milestones/:milestone_id>.
+Sends a C<PUT> request to C</projects/:project_id/milestones/:milestone_id> and returns the decoded/deserialized response body.
 
-=head2 milestone_issues
+=head2 project_milestone_issues
 
-    my $issues = $api->milestone_issues(
+    my $issues = $api->project_milestone_issues(
         $project_id,
         $milestone_id,
     );
 
 Sends a C<GET> request to C</projects/:project_id/milestones/:milestone_id/issues> and returns the decoded/deserialized response body.
 
-=head1 OPEN SOURCE LICENSES METHODS
+=head2 project_milestone_merge_requests
 
-See L<http://docs.gitlab.com/ce/api/licenses.html>.
+    my $merge_requests = $api->project_milestone_merge_requests(
+        $project_id,
+        $milestone_id,
+    );
 
-=head2 licenses
+Sends a C<GET> request to C</projects/:project_id/milestones/:milestone_id/merge_requests> and returns the decoded/deserialized response body.
 
-    my $licenses = $api->licenses(
+=head1 GROUP MILESTONE METHODS
+
+See L<https://docs.gitlab.com/ce/api/group_milestones.html>.
+
+=head2 group_milestones
+
+    my $milestones = $api->group_milestones(
+        $group_id,
         \%params,
     );
 
-Sends a C<GET> request to C</licenses> and returns the decoded/deserialized response body.
+Sends a C<GET> request to C</groups/:group_id/milestones> and returns the decoded/deserialized response body.
 
-=head2 license
+=head2 group_milestone
 
-    my $license = $api->license(
-        $license_key,
+    my $milestone = $api->group_milestone(
+        $group_id,
+        $milestone_id,
+    );
+
+Sends a C<GET> request to C</groups/:group_id/milestones/:milestone_id> and returns the decoded/deserialized response body.
+
+=head2 create_group_milestone
+
+    my $milestone = $api->create_group_milestone(
+        $group_id,
         \%params,
     );
 
-Sends a C<GET> request to C</licenses/:license_key> and returns the decoded/deserialized response body.
+Sends a C<POST> request to C</groups/:group_id/milestones> and returns the decoded/deserialized response body.
+
+=head2 edit_group_milestone
+
+    my $milestone = $api->edit_group_milestone(
+        $group_id,
+        $milestone_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</groups/:group_id/milestones/:milestone_id> and returns the decoded/deserialized response body.
+
+=head2 group_milestone_issues
+
+    my $issues = $api->group_milestone_issues(
+        $group_id,
+        $milestone_id,
+    );
+
+Sends a C<GET> request to C</groups/:group_id/milestones/:milestone_id/issues> and returns the decoded/deserialized response body.
+
+=head2 group_milestone_merge_requests
+
+    my $merge_requests = $api->group_milestone_merge_requests(
+        $group_id,
+        $milestone_id,
+    );
+
+Sends a C<GET> request to C</groups/:group_id/milestones/:milestone_id/merge_requests> and returns the decoded/deserialized response body.
 
 =head1 NAMESPACE METHODS
 
-See L<http://docs.gitlab.com/ce/api/namespaces.html>.
+See L<https://docs.gitlab.com/ce/api/namespaces.html>.
 
 =head2 namespaces
 
@@ -986,57 +1899,499 @@ See L<http://docs.gitlab.com/ce/api/namespaces.html>.
 
 Sends a C<GET> request to C</namespaces> and returns the decoded/deserialized response body.
 
+=head2 namespace
+
+    my $namespace = $api->namespace(
+        $namespace_id,
+    );
+
+Sends a C<GET> request to C</namespaces/:namespace_id> and returns the decoded/deserialized response body.
+
 =head1 NOTE METHODS
 
-See L<http://doc.gitlab.com/ce/api/notes.html>.
+See L<https://docs.gitlab.com/ce/api/notes.html>.
 
-=head2 notes
+=head2 issue_notes
 
-    my $notes = $api->notes(
+    my $notes = $api->issue_notes(
         $project_id,
-        $thing_type,
-        $thing_id,
-    );
-
-Sends a C<GET> request to C</projects/:project_id/:thing_type/:thing_id/notes> and returns the decoded/deserialized response body.
-
-=head2 note
-
-    my $note = $api->note(
-        $project_id,
-        $thing_type,
-        $thing_id,
-        $note_id,
-    );
-
-Sends a C<GET> request to C</projects/:project_id/:thing_type/:thing_id/notes/:note_id> and returns the decoded/deserialized response body.
-
-=head2 create_note
-
-    $api->create_note(
-        $project_id,
-        $thing_type,
-        $thing_id,
+        $issue_iid,
         \%params,
     );
 
-Sends a C<POST> request to C</projects/:project_id/:thing_type/:thing_id/notes>.
+Sends a C<GET> request to C</projects/:project_id/issues/:issue_iid/notes> and returns the decoded/deserialized response body.
 
-=head2 edit_note
+=head2 issue_note
 
-    $api->edit_note(
+    my $note = $api->issue_note(
         $project_id,
-        $thing_type,
-        $thing_id,
+        $issue_iid,
+        $note_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/issues/:issue_iid/notes/:note_id> and returns the decoded/deserialized response body.
+
+=head2 create_issue_note
+
+    my $note = $api->create_issue_note(
+        $project_id,
+        $issue_iid,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/issues/:issue_iid/notes> and returns the decoded/deserialized response body.
+
+=head2 edit_issue_note
+
+    $api->edit_issue_note(
+        $project_id,
+        $issue_iid,
         $note_id,
         \%params,
     );
 
-Sends a C<PUT> request to C</projects/:project_id/:thing_type/:thing_id/notes/:note_id>.
+Sends a C<PUT> request to C</projects/:project_id/issues/:issue_iid/notes/:note_id>.
+
+=head2 delete_issue_note
+
+    $api->delete_issue_note(
+        $project_id,
+        $issue_iid,
+        $note_id,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/issues/:issue_iid/notes/:note_id>.
+
+=head2 snippet_notes
+
+    my $notes = $api->snippet_notes(
+        $project_id,
+        $snippet_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/snippets/:snippet_id/notes> and returns the decoded/deserialized response body.
+
+=head2 snippet_note
+
+    my $note = $api->snippet_note(
+        $project_id,
+        $snippet_id,
+        $note_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/snippets/:snippet_id/notes/:note_id> and returns the decoded/deserialized response body.
+
+=head2 create_snippet_note
+
+    my $note = $api->create_snippet_note(
+        $project_id,
+        $snippet_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/snippets/:snippet_id/notes> and returns the decoded/deserialized response body.
+
+=head2 edit_snippet_note
+
+    $api->edit_snippet_note(
+        $project_id,
+        $snippet_id,
+        $note_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/snippets/:snippet_id/notes/:note_id>.
+
+=head2 delete_snippet_note
+
+    $api->delete_snippet_note(
+        $project_id,
+        $snippet_id,
+        $note_id,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/snippets/:snippet_id/notes/:note_id>.
+
+=head2 merge_request_notes
+
+    my $notes = $api->merge_request_notes(
+        $project_id,
+        $merge_request_iid,
+        \%params,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/merge_requests/:merge_request_iid/notes> and returns the decoded/deserialized response body.
+
+=head2 merge_request_note
+
+    my $note = $api->merge_request_note(
+        $project_id,
+        $merge_request_iid,
+        $note_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id> and returns the decoded/deserialized response body.
+
+=head2 create_merge_request_note
+
+    my $note = $api->create_merge_request_note(
+        $project_id,
+        $merge_request_iid,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/merge_requests/:merge_request_iid/notes> and returns the decoded/deserialized response body.
+
+=head2 edit_merge_request_note
+
+    $api->edit_merge_request_note(
+        $project_id,
+        $merge_request_iid,
+        $note_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id>.
+
+=head2 delete_merge_request_note
+
+    $api->delete_merge_request_note(
+        $project_id,
+        $merge_request_iid,
+        $note_id,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id>.
+
+=head1 NOTIFICATION SETTING METHODS
+
+See L<https://docs.gitlab.com/ce/api/notification_settings.html>.
+
+=head2 global_notification_settings
+
+    my $settings = $api->global_notification_settings();
+
+Sends a C<GET> request to C</notification_settings> and returns the decoded/deserialized response body.
+
+=head2 set_global_notification_settings
+
+    my $settings = $api->set_global_notification_settings(
+        \%params,
+    );
+
+Sends a C<PUT> request to C</notification_settings> and returns the decoded/deserialized response body.
+
+=head2 group_notification_settings
+
+    my $settings = $api->group_notification_settings(
+        $group_id,
+    );
+
+Sends a C<GET> request to C</groups/:group_id/notification_settings> and returns the decoded/deserialized response body.
+
+=head2 project_notification_settings
+
+    my $settings = $api->project_notification_settings(
+        $project_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/notification_settings> and returns the decoded/deserialized response body.
+
+=head2 set_group_notification_settings
+
+    my $settings = $api->set_group_notification_settings(
+        $group_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</groups/:group_id/notification_settings> and returns the decoded/deserialized response body.
+
+=head2 set_project_notification_settings
+
+    my $settings = $api->set_project_notification_settings(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/notification_settings> and returns the decoded/deserialized response body.
+
+=head1 OPEN SOURCE LICENSE TEMPLATE METHODS
+
+See L<https://docs.gitlab.com/ce/api/templates/licenses.html>.
+
+=head2 license_templates
+
+    my $templates = $api->license_templates(
+        \%params,
+    );
+
+Sends a C<GET> request to C</templates/licenses> and returns the decoded/deserialized response body.
+
+=head2 license_template
+
+    my $template = $api->license_template(
+        $template_key,
+        \%params,
+    );
+
+Sends a C<GET> request to C</templates/licenses/:template_key> and returns the decoded/deserialized response body.
+
+=head1 PAGE DOMAIN METHODS
+
+See L<https://docs.gitlab.com/ce/api/pages_domains.html>.
+
+=head2 global_pages_domains
+
+    my $domains = $api->global_pages_domains();
+
+Sends a C<GET> request to C</pages/domains> and returns the decoded/deserialized response body.
+
+=head2 pages_domains
+
+    my $domains = $api->pages_domains(
+        $project_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/pages/domains> and returns the decoded/deserialized response body.
+
+=head2 pages_domain
+
+    my $domain = $api->pages_domain(
+        $project_id,
+        $domain,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/pages/domains/:domain> and returns the decoded/deserialized response body.
+
+=head2 create_pages_domain
+
+    my $domain = $api->create_pages_domain(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/pages/domains> and returns the decoded/deserialized response body.
+
+=head2 edit_pages_domain
+
+    my $domain = $api->edit_pages_domain(
+        $project_id,
+        $domain,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/pages/domains/:domain> and returns the decoded/deserialized response body.
+
+=head2 delete_pages_domain
+
+    $api->delete_pages_domain(
+        $project_id,
+        $domain,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/pages/domains/:domain>.
+
+=head1 PIPELINE METHODS
+
+See L<https://docs.gitlab.com/ce/api/pipelines.html>.
+
+=head2 pipelines
+
+    my $pipelines = $api->pipelines(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/pipelines> and returns the decoded/deserialized response body.
+
+=head2 pipeline
+
+    my $pipeline = $api->pipeline(
+        $project_id,
+        $pipeline_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/pipelines/:pipeline_id> and returns the decoded/deserialized response body.
+
+=head2 create_pipeline
+
+    my $pipeline = $api->create_pipeline(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/pipeline> and returns the decoded/deserialized response body.
+
+=head2 retry_pipeline_jobs
+
+    my $pipeline = $api->retry_pipeline_jobs(
+        $project_id,
+        $pipeline_id,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/pipelines/:pipeline_id/retry> and returns the decoded/deserialized response body.
+
+=head2 cancel_pipeline_jobs
+
+    my $pipeline = $api->cancel_pipeline_jobs(
+        $project_id,
+        $pipeline_id,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/pipelines/:pipeline_id/cancel> and returns the decoded/deserialized response body.
+
+=head1 PIPELINE TRIGGER METHODS
+
+See L<https://docs.gitlab.com/ce/api/pipeline_triggers.html>.
+
+=head2 triggers
+
+    my $triggers = $api->triggers(
+        $project_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/triggers> and returns the decoded/deserialized response body.
+
+=head2 trigger
+
+    my $trigger = $api->trigger(
+        $project_id,
+        $trigger_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/triggers/:trigger_id> and returns the decoded/deserialized response body.
+
+=head2 create_trigger
+
+    my $trigger = $api->create_trigger(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/triggers> and returns the decoded/deserialized response body.
+
+=head2 edit_trigger
+
+    my $trigger = $api->edit_trigger(
+        $project_id,
+        $trigger_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/triggers/:trigger_id> and returns the decoded/deserialized response body.
+
+=head2 take_ownership_of_trigger
+
+    my $trigger = $api->take_ownership_of_trigger(
+        $project_id,
+        $trigger_id,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/triggers/:trigger_id/take_ownership> and returns the decoded/deserialized response body.
+
+=head2 delete_trigger
+
+    $api->delete_trigger(
+        $id,
+        $trigger_id,
+    );
+
+Sends a C<DELETE> request to C</projects/:id/triggers/:trigger_id>.
+
+=head1 PIPELINE SCHEDULE METHODS
+
+See L<https://docs.gitlab.com/ce/api/pipeline_schedules.html>.
+
+=head2 pipeline_schedules
+
+    my $schedules = $api->pipeline_schedules(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/pipeline_schedules> and returns the decoded/deserialized response body.
+
+=head2 pipeline_schedule
+
+    my $schedule = $api->pipeline_schedule(
+        $project_id,
+        $pipeline_schedule_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/pipeline_schedules/:pipeline_schedule_id> and returns the decoded/deserialized response body.
+
+=head2 create_pipeline_schedule
+
+    my $schedule = $api->create_pipeline_schedule(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/pipeline_schedules> and returns the decoded/deserialized response body.
+
+=head2 edit_pipeline_schedule
+
+    my $schedule = $api->edit_pipeline_schedule(
+        $project_id,
+        $pipeline_schedule_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/pipeline_schedules/:pipeline_schedule_id> and returns the decoded/deserialized response body.
+
+=head2 take_ownership_of_pipeline_schedule
+
+    my $schedule = $api->take_ownership_of_pipeline_schedule(
+        $project_id,
+        $pipeline_schedule_id,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/pipeline_schedules/:pipeline_schedule_id/take_ownership> and returns the decoded/deserialized response body.
+
+=head2 delete_pipeline_schedule
+
+    my $schedule = $api->delete_pipeline_schedule(
+        $project_id,
+        $pipeline_schedule_id,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/pipeline_schedules/:pipeline_schedule_id> and returns the decoded/deserialized response body.
+
+=head2 create_pipeline_schedule_variable
+
+    my $variable = $api->create_pipeline_schedule_variable(
+        $project_id,
+        $pipeline_schedule_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/pipeline_schedules/:pipeline_schedule_id/variables> and returns the decoded/deserialized response body.
+
+=head2 edit_pipeline_schedule_variable
+
+    my $variable = $api->edit_pipeline_schedule_variable(
+        $project_id,
+        $pipeline_schedule_id,
+        $variable_key,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/pipeline_schedules/:pipeline_schedule_id/variables/:variable_key> and returns the decoded/deserialized response body.
+
+=head2 delete_pipeline_schedule_variable
+
+    my $variable = $api->delete_pipeline_schedule_variable(
+        $project_id,
+        $pipeline_schedule_id,
+        $variable_key,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/pipeline_schedules/:pipeline_schedule_id/variables/:variable_key> and returns the decoded/deserialized response body.
 
 =head1 PROJECT METHODS
 
-See L<http://doc.gitlab.com/ce/api/projects.html>.
+See L<https://docs.gitlab.com/ce/api/projects.html>.
 
 =head2 projects
 
@@ -1046,21 +2401,14 @@ See L<http://doc.gitlab.com/ce/api/projects.html>.
 
 Sends a C<GET> request to C</projects> and returns the decoded/deserialized response body.
 
-=head2 owned_projects
+=head2 user_projects
 
-    my $projects = $api->owned_projects(
+    my $projects = $api->user_projects(
+        $user_id,
         \%params,
     );
 
-Sends a C<GET> request to C</projects/owned> and returns the decoded/deserialized response body.
-
-=head2 all_projects
-
-    my $projects = $api->all_projects(
-        \%params,
-    );
-
-Sends a C<GET> request to C</projects/all> and returns the decoded/deserialized response body.
+Sends a C<GET> request to C</users/:user_id/projects> and returns the decoded/deserialized response body.
 
 =head2 project
 
@@ -1070,21 +2418,21 @@ Sends a C<GET> request to C</projects/all> and returns the decoded/deserialized 
 
 Sends a C<GET> request to C</projects/:project_id> and returns the decoded/deserialized response body.
 
-=head2 project_events
+=head2 project_users
 
-    my $events = $api->project_events(
+    my $users = $api->project_users(
         $project_id,
     );
 
-Sends a C<GET> request to C</projects/:project_id/events> and returns the decoded/deserialized response body.
+Sends a C<GET> request to C</projects/:project_id/users> and returns the decoded/deserialized response body.
 
 =head2 create_project
 
-    my $project = $api->create_project(
+    $api->create_project(
         \%params,
     );
 
-Sends a C<POST> request to C</projects> and returns the decoded/deserialized response body.
+Sends a C<POST> request to C</projects>.
 
 =head2 create_project_for_user
 
@@ -1097,20 +2445,62 @@ Sends a C<POST> request to C</projects/user/:user_id>.
 
 =head2 edit_project
 
-    my $project = $api->edit_project(
+    $api->edit_project(
         $project_id,
         \%params,
     );
 
-Sends a C<PUT> request to C</projects/:project_id> and returns the decoded/deserialized response body.
+Sends a C<PUT> request to C</projects/:project_id>.
 
 =head2 fork_project
 
     $api->fork_project(
         $project_id,
+        \%params,
     );
 
 Sends a C<POST> request to C</pojects/fork/:project_id>.
+
+=head2 project_forks
+
+    my $forks = $api->project_forks(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/forks> and returns the decoded/deserialized response body.
+
+=head2 start_project
+
+    my $project = $api->start_project(
+        $project_id,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/star> and returns the decoded/deserialized response body.
+
+=head2 unstar_project
+
+    my $project = $api->unstar_project(
+        $project_id,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/unstar> and returns the decoded/deserialized response body.
+
+=head2 archive_project
+
+    my $project = $api->archive_project(
+        $project_id,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/archive> and returns the decoded/deserialized response body.
+
+=head2 unarchive_project
+
+    my $project = $api->unarchive_project(
+        $project_id,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/unarchive> and returns the decoded/deserialized response body.
 
 =head2 delete_project
 
@@ -1120,69 +2510,32 @@ Sends a C<POST> request to C</pojects/fork/:project_id>.
 
 Sends a C<DELETE> request to C</projects/:project_id>.
 
-=head2 project_members
+=head2 upload_file_to_project
 
-    my $members = $api->project_members(
+    my $upload = $api->upload_file_to_project(
         $project_id,
         \%params,
     );
 
-Sends a C<GET> request to C</projects/:project_id/members> and returns the decoded/deserialized response body.
-
-=head2 project_member
-
-    my $member = $api->project_member(
-        $project_id,
-        $user_id,
-    );
-
-Sends a C<GET> request to C</project/:project_id/members/:user_id> and returns the decoded/deserialized response body.
-
-=head2 add_project_member
-
-    $api->add_project_member(
-        $project_id,
-        \%params,
-    );
-
-Sends a C<POST> request to C</projects/:project_id/members>.
-
-=head2 edit_project_member
-
-    $api->edit_project_member(
-        $project_id,
-        $user_id,
-        \%params,
-    );
-
-Sends a C<PUT> request to C</projects/:project_id/members/:user_id>.
-
-=head2 remove_project_member
-
-    $api->remove_project_member(
-        $project_id,
-        $user_id,
-    );
-
-Sends a C<DELETE> request to C</projects/:project_id/members/:user_id>.
+Sends a C<POST> request to C</projects/:project_id/uploads> and returns the decoded/deserialized response body.
 
 =head2 share_project_with_group
 
     $api->share_project_with_group(
-        $id,
+        $project_id,
         \%params,
     );
 
-Sends a C<POST> request to C</projects/:id/share>.
+Sends a C<POST> request to C</projects/:project_id/share>.
 
-=head2 delete_shared_project_link_within_group
+=head2 unshare_project_with_group
 
-    $api->delete_shared_project_link_within_group(
-        $id,
+    $api->unshare_project_with_group(
+        $project_id,
         $group_id,
     );
 
-Sends a C<DELETE> request to C</projects/:id/share/:group_id>.
+Sends a C<DELETE> request to C</projects/:project_id/share/:group_id>.
 
 =head2 project_hooks
 
@@ -1233,10 +2586,10 @@ Sends a C<DELETE> request to C</projects/:project_id/hooks/:hook_id> and returns
 
     $api->set_project_fork(
         $project_id,
-        $forked_from_id,
+        $from_project_id,
     );
 
-Sends a C<POST> request to C</projects/:project_id/fork/:forked_from_id>.
+Sends a C<POST> request to C</projects/:project_id/fork/:from_project_id>.
 
 =head2 clear_project_fork
 
@@ -1246,18 +2599,89 @@ Sends a C<POST> request to C</projects/:project_id/fork/:forked_from_id>.
 
 Sends a C<DELETE> request to C</projects/:project_id/fork>.
 
-=head2 search_projects_by_name
+=head2 start_housekeeping
 
-    my $projects = $api->search_projects_by_name(
-        $query,
-        \%params,
+    $api->start_housekeeping(
+        $project_id,
     );
 
-Sends a C<GET> request to C</projects/search/:query> and returns the decoded/deserialized response body.
+Sends a C<POST> request to C</projects/:project_id/housekeeping>.
+
+=head1 PROJECT ACCESS REQUEST METHODS
+
+See L<https://docs.gitlab.com/ce/api/access_requests.html>.
+
+=head2 group_access_requests
+
+    my $requests = $api->group_access_requests(
+        $group_id,
+    );
+
+Sends a C<GET> request to C</groups/:group_id/access_requests> and returns the decoded/deserialized response body.
+
+=head2 project_access_requests
+
+    my $requests = $api->project_access_requests(
+        $project_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/access_requests> and returns the decoded/deserialized response body.
+
+=head2 request_group_access
+
+    my $request = $api->request_group_access(
+        $group_id,
+    );
+
+Sends a C<POST> request to C</groups/:group_id/access_requests> and returns the decoded/deserialized response body.
+
+=head2 request_project_access
+
+    my $request = $api->request_project_access(
+        $project_id,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/access_requests> and returns the decoded/deserialized response body.
+
+=head2 approve_group_access
+
+    my $request = $api->approve_group_access(
+        $group_id,
+        $user_id,
+    );
+
+Sends a C<PUT> request to C</groups/:group_id/access_requests/:user_id/approve> and returns the decoded/deserialized response body.
+
+=head2 approve_project_access
+
+    my $request = $api->approve_project_access(
+        $project_id,
+        $user_id,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/access_requests/:user_id/approve> and returns the decoded/deserialized response body.
+
+=head2 deny_group_access
+
+    $api->deny_group_access(
+        $group_id,
+        $user_id,
+    );
+
+Sends a C<DELETE> request to C</groups/:group_id/access_requests/:user_id>.
+
+=head2 deny_project_access
+
+    $api->deny_project_access(
+        $project_id,
+        $user_id,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/access_requests/:user_id>.
 
 =head1 PROJECT SNIPPET METHODS
 
-See L<http://doc.gitlab.com/ce/api/project_snippets.html>.
+See L<https://docs.gitlab.com/ce/api/project_snippets.html>.
 
 =head2 snippets
 
@@ -1313,9 +2737,57 @@ Sends a C<DELETE> request to C</projects/:project_id/snippets/:snippet_id>.
 
 Sends a C<GET> request to C</projects/:project_id/snippets/:snippet_id/raw> and returns the decoded/deserialized response body.
 
+=head2 snippet_user_agent_detail
+
+    my $user_agent = $api->snippet_user_agent_detail(
+        $project_id,
+        $snippet_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/snippets/:snippet_id/user_agent_detail> and returns the decoded/deserialized response body.
+
+=head1 PROTECTED BRANCH METHODS
+
+See L<https://docs.gitlab.com/ce/api/protected_branches.html>.
+
+=head2 protected_branches
+
+    my $branches = $api->protected_branches(
+        $project_id,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/protected_branches> and returns the decoded/deserialized response body.
+
+=head2 protected_branch
+
+    my $branch = $api->protected_branch(
+        $project_id,
+        $branch_name,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/protected_branches/:branch_name> and returns the decoded/deserialized response body.
+
+=head2 protect_branch
+
+    my $branch = $api->protect_branch(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/protected_branches> and returns the decoded/deserialized response body.
+
+=head2 unprotect_branch
+
+    $api->unprotect_branch(
+        $project_id,
+        $branch_name,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/protected_branches/:branch_name>.
+
 =head1 REPOSITORY METHODS
 
-See L<http://doc.gitlab.com/ce/api/repositories.html>.
+See L<https://docs.gitlab.com/ce/api/repositories.html>.
 
 =head2 tree
 
@@ -1330,20 +2802,19 @@ Sends a C<GET> request to C</projects/:project_id/repository/tree> and returns t
 
     my $blob = $api->blob(
         $project_id,
-        $ref,
-        \%params,
+        $sha,
     );
 
-Sends a C<GET> request to C</projects/:project_id/repository/blobs/:ref> and returns the decoded/deserialized response body.
+Sends a C<GET> request to C</projects/:project_id/repository/blobs/:sha> and returns the decoded/deserialized response body.
 
 =head2 raw_blob
 
     my $raw_blob = $api->raw_blob(
         $project_id,
-        $blob_sha,
+        $sha,
     );
 
-Sends a C<GET> request to C</projects/:project_id/repository/raw_blobs/:blob_sha> and returns the decoded/deserialized response body.
+Sends a C<GET> request to C</projects/:project_id/repository/blobs/:sha/raw> and returns the decoded/deserialized response body.
 
 =head2 archive
 
@@ -1373,47 +2844,61 @@ Sends a C<GET> request to C</projects/:project_id/repository/contributors> and r
 
 =head1 FILE METHODS
 
-See L<http://doc.gitlab.com/ce/api/repository_files.html>.
+See L<https://docs.gitlab.com/ce/api/repository_files.html>.
 
 =head2 file
 
     my $file = $api->file(
         $project_id,
+        $file_path,
         \%params,
     );
 
-Sends a C<GET> request to C</projects/:project_id/repository/files> and returns the decoded/deserialized response body.
+Sends a C<GET> request to C</projects/:project_id/repository/files/:file_path> and returns the decoded/deserialized response body.
+
+=head2 raw_file
+
+    my $file = $api->raw_file(
+        $project_id,
+        $file_path,
+        \%params,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/repository/files/:file_path/raw> and returns the decoded/deserialized response body.
 
 =head2 create_file
 
     $api->create_file(
         $project_id,
+        $file_path,
         \%params,
     );
 
-Sends a C<POST> request to C</projects/:project_id/repository/files>.
+Sends a C<POST> request to C</projects/:project_id/repository/files/:file_path>.
 
 =head2 edit_file
 
     $api->edit_file(
         $project_id,
+        $file_path,
         \%params,
     );
 
-Sends a C<PUT> request to C</projects/:project_id/repository/files>.
+Sends a C<PUT> request to C</projects/:project_id/repository/files/:file_path>.
 
 =head2 delete_file
 
     $api->delete_file(
         $project_id,
+        $file_path,
         \%params,
     );
 
-Sends a C<DELETE> request to C</projects/:project_id/repository/files>.
+Sends a C<DELETE> request to C</projects/:project_id/repository/files/:file_path>.
 
 =head1 RUNNER METHODS
 
-See L<http://docs.gitlab.com/ce/api/runners.html>.
+See L<https://docs.gitlab.com/ce/api/runners.html>.
 
 =head2 runners
 
@@ -1434,57 +2919,66 @@ Sends a C<GET> request to C</runners/all> and returns the decoded/deserialized r
 =head2 runner
 
     my $runner = $api->runner(
-        $id,
+        $runner_id,
     );
 
-Sends a C<GET> request to C</runners/:id> and returns the decoded/deserialized response body.
+Sends a C<GET> request to C</runners/:runner_id> and returns the decoded/deserialized response body.
 
 =head2 update_runner
 
     my $runner = $api->update_runner(
-        $id,
+        $runner_id,
         \%params,
     );
 
-Sends a C<PUT> request to C</runners/:id> and returns the decoded/deserialized response body.
+Sends a C<PUT> request to C</runners/:runner_id> and returns the decoded/deserialized response body.
 
 =head2 delete_runner
 
     my $runner = $api->delete_runner(
-        $id,
+        $runner_id,
     );
 
-Sends a C<DELETE> request to C</runners/:id> and returns the decoded/deserialized response body.
+Sends a C<DELETE> request to C</runners/:runner_id> and returns the decoded/deserialized response body.
+
+=head2 runner_jobs
+
+    my $jobs = $api->runner_jobs(
+        $runner_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C</runners/:runner_id/jobs> and returns the decoded/deserialized response body.
 
 =head2 project_runners
 
     my $runners = $api->project_runners(
-        $id,
+        $project_id,
     );
 
-Sends a C<GET> request to C</projects/:id/runners> and returns the decoded/deserialized response body.
+Sends a C<GET> request to C</projects/:project_id/runners> and returns the decoded/deserialized response body.
 
 =head2 enable_project_runner
 
     my $runner = $api->enable_project_runner(
-        $id,
+        $project_id,
         \%params,
     );
 
-Sends a C<POST> request to C</projects/:id/runners> and returns the decoded/deserialized response body.
+Sends a C<POST> request to C</projects/:project_id/runners> and returns the decoded/deserialized response body.
 
 =head2 disable_project_runner
 
     my $runner = $api->disable_project_runner(
-        $id,
+        $project_id,
         $runner_id,
     );
 
-Sends a C<DELETE> request to C</projects/:id/runners/:runner_id> and returns the decoded/deserialized response body.
+Sends a C<DELETE> request to C</projects/:project_id/runners/:runner_id> and returns the decoded/deserialized response body.
 
 =head1 SERVICE METHODS
 
-See L<http://doc.gitlab.com/ce/api/services.html>.
+See L<https://docs.gitlab.com/ce/api/services.html>.
 
 =head2 edit_project_service
 
@@ -1505,21 +2999,9 @@ Sends a C<PUT> request to C</projects/:project_id/services/:service_name>.
 
 Sends a C<DELETE> request to C</projects/:project_id/services/:service_name>.
 
-=head1 SESSION METHODS
-
-See L<http://doc.gitlab.com/ce/api/session.html>.
-
-=head2 session
-
-    my $session = $api->session(
-        \%params,
-    );
-
-Sends a C<POST> request to C</session> and returns the decoded/deserialized response body.
-
 =head1 SETTINGS METHODS
 
-See L<http://docs.gitlab.com/ce/api/settings.html>.
+See L<https://docs.gitlab.com/ce/api/settings.html>.
 
 =head2 settings
 
@@ -1535,9 +3017,9 @@ Sends a C<GET> request to C</application/settings> and returns the decoded/deser
 
 Sends a C<PUT> request to C</application/settings> and returns the decoded/deserialized response body.
 
-=head1 SIDEKIQ METHODS
+=head1 SIDEKIQ METRIC METHODS
 
-See L<http://docs.gitlab.com/ce/api/sidekiq_metrics.html>.
+See L<https://docs.gitlab.com/ce/api/sidekiq_metrics.html>.
 
 =head2 queue_metrics
 
@@ -1563,58 +3045,9 @@ Sends a C<GET> request to C</sidekiq/job_stats> and returns the decoded/deserial
 
 Sends a C<GET> request to C</sidekiq/compound_metrics> and returns the decoded/deserialized response body.
 
-=head1 USER SNIPPET METHODS
-
-See L<http://docs.gitlab.com/ce/api/snippets.html>.
-
-=head2 user_snippets
-
-    my $snippets = $api->user_snippets();
-
-Sends a C<GET> request to C</snippets> and returns the decoded/deserialized response body.
-
-=head2 user_snippet
-
-    my $snippet = $api->user_snippet(
-        $snippet_id,
-    );
-
-Sends a C<GET> request to C</snippets/:snippet_id> and returns the decoded/deserialized response body.
-
-=head2 create_user_snippet
-
-    $api->create_user_snippet(
-        \%params,
-    );
-
-Sends a C<POST> request to C</snippets>.
-
-=head2 edit_user_snippet
-
-    $api->edit_user_snippet(
-        $snippet_id,
-        \%params,
-    );
-
-Sends a C<PUT> request to C</snippets/:snippet_id>.
-
-=head2 delete_user_snippet
-
-    $api->delete_user_snippet(
-        $snippet_id,
-    );
-
-Sends a C<DELETE> request to C</snippets/:snippet_id>.
-
-=head2 public_snippets
-
-    my $snippets = $api->public_snippets();
-
-Sends a C<GET> request to C</snippets/public> and returns the decoded/deserialized response body.
-
 =head1 SYSTEM HOOK METHODS
 
-See L<http://doc.gitlab.com/ce/api/system_hooks.html>.
+See L<https://docs.gitlab.com/ce/api/system_hooks.html>.
 
 =head2 hooks
 
@@ -1648,7 +3081,7 @@ Sends a C<DELETE> request to C</hooks/:hook_id>.
 
 =head1 TAG METHODS
 
-See L<http://docs.gitlab.com/ce/api/tags.html>.
+See L<https://docs.gitlab.com/ce/api/tags.html>.
 
 =head2 tags
 
@@ -1705,9 +3138,13 @@ Sends a C<POST> request to C</projects/:project_id/repository/tags/:tag_name/rel
 
 Sends a C<PUT> request to C</projects/:project_id/repository/tags/:tag_name/release>.
 
+=head1 TODO METHODS
+
+See L<https://docs.gitlab.com/ce/api/todos.html>.
+
 =head1 USER METHODS
 
-See L<http://doc.gitlab.com/ce/api/users.html>.
+See L<https://docs.gitlab.com/ce/api/users.html>.
 
 =head2 users
 
@@ -1811,6 +3248,257 @@ Sends a C<DELETE> request to C</user/keys/:key_id>.
     );
 
 Sends a C<DELETE> request to C</users/:user_id/keys/:key_id>.
+
+=head2 current_user_gpg_keys
+
+    my $keys = $api->current_user_gpg_keys();
+
+Sends a C<GET> request to C</user/gpg_keys> and returns the decoded/deserialized response body.
+
+=head2 current_user_gpg_key
+
+    my $key = $api->current_user_gpg_key(
+        $key_id,
+    );
+
+Sends a C<GET> request to C</user/gpg_keys/:key_id> and returns the decoded/deserialized response body.
+
+=head2 create_current_user_gpg_key
+
+    $api->create_current_user_gpg_key(
+        \%params,
+    );
+
+Sends a C<POST> request to C</user/gpg_keys>.
+
+=head2 delete_current_user_gpg_key
+
+    $api->delete_current_user_gpg_key(
+        $key_id,
+    );
+
+Sends a C<DELETE> request to C</user/gpg_keys/:key_id>.
+
+=head2 user_gpg_keys
+
+    my $keys = $api->user_gpg_keys(
+        $user_id,
+    );
+
+Sends a C<GET> request to C</users/:user_id/gpg_keys> and returns the decoded/deserialized response body.
+
+=head2 user_gpg_key
+
+    my $key = $api->user_gpg_key(
+        $user_id,
+        $key_id,
+    );
+
+Sends a C<GET> request to C</users/:user_id/gpg_keys/:key_id> and returns the decoded/deserialized response body.
+
+=head2 create_user_gpg_key
+
+    my $keys = $api->create_user_gpg_key(
+        $id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</users/:id/gpg_keys> and returns the decoded/deserialized response body.
+
+=head2 delete_user_gpg_key
+
+    $api->delete_user_gpg_key(
+        $user_id,
+        $key_id,
+    );
+
+Sends a C<DELETE> request to C</users/:user_id/gpg_keys/:key_id>.
+
+=head2 current_user_emails
+
+    my $emails = $api->current_user_emails();
+
+Sends a C<GET> request to C</user/emails> and returns the decoded/deserialized response body.
+
+=head2 user_emails
+
+    my $emails = $api->user_emails(
+        $user_id,
+    );
+
+Sends a C<GET> request to C</users/:user_id/emails> and returns the decoded/deserialized response body.
+
+=head2 current_user_email
+
+    my $email = $api->current_user_email(
+        $email_id,
+    );
+
+Sends a C<GET> request to C</user/emails/:email_id> and returns the decoded/deserialized response body.
+
+=head2 create_current_user_email
+
+    my $email = $api->create_current_user_email(
+        \%params,
+    );
+
+Sends a C<POST> request to C</user/emails> and returns the decoded/deserialized response body.
+
+=head2 create_user_email
+
+    my $email = $api->create_user_email(
+        $user_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</users/:user_id/emails> and returns the decoded/deserialized response body.
+
+=head2 delete_current_user_email
+
+    $api->delete_current_user_email(
+        $email_id,
+    );
+
+Sends a C<DELETE> request to C</user/emails/:email_id>.
+
+=head2 delete_user_email
+
+    $api->delete_user_email(
+        $user_id,
+        $email_id,
+    );
+
+Sends a C<DELETE> request to C</users/:user_id/emails/:email_id>.
+
+=head2 block_user
+
+    $api->block_user(
+        $user_id,
+    );
+
+Sends a C<POST> request to C</users/:user_id/block>.
+
+=head2 unblock_user
+
+    $api->unblock_user(
+        $user_id,
+    );
+
+Sends a C<POST> request to C</users/:user_id/unblock>.
+
+=head2 user_impersonation_tokens
+
+    my $tokens = $api->user_impersonation_tokens(
+        $user_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C</users/:user_id/impersonation_tokens> and returns the decoded/deserialized response body.
+
+=head2 user_impersonation_token
+
+    my $token = $api->user_impersonation_token(
+        $user_id,
+        $impersonation_token_id,
+    );
+
+Sends a C<GET> request to C</users/:user_id/impersonation_tokens/:impersonation_token_id> and returns the decoded/deserialized response body.
+
+=head2 create_user_impersonation_token
+
+    my $token = $api->create_user_impersonation_token(
+        $user_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</users/:user_id/impersonation_tokens> and returns the decoded/deserialized response body.
+
+=head2 delete_user_impersonation_token
+
+    $api->delete_user_impersonation_token(
+        $user_id,
+        $impersonation_token_id,
+    );
+
+Sends a C<DELETE> request to C</users/:user_id/impersonation_tokens/:impersonation_token_id>.
+
+=head2 all_user_activities
+
+    my $activities = $api->all_user_activities();
+
+Sends a C<GET> request to C</user/activities> and returns the decoded/deserialized response body.
+
+=head1 VALIDATE CI CONFIGURATION METHODS
+
+See L<https://docs.gitlab.com/ce/api/lint.html>.
+
+=head2 lint
+
+    my $result = $api->lint(
+        \%params,
+    );
+
+Sends a C<POST> request to C</lint> and returns the decoded/deserialized response body.
+
+=head1 VERSION METHODS
+
+See L<https://docs.gitlab.com/ce/api/version.html>.
+
+=head2 version
+
+    my $version = $api->version();
+
+Sends a C<GET> request to C</version> and returns the decoded/deserialized response body.
+
+=head1 WIKI METHODS
+
+See L<https://docs.gitlab.com/ce/api/wikis.html>.
+
+=head2 wiki_pages
+
+    my $pages = $api->wiki_pages(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/wikis> and returns the decoded/deserialized response body.
+
+=head2 wiki_page
+
+    my $pages = $api->wiki_page(
+        $project_id,
+        $slug,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/wikis/:slug> and returns the decoded/deserialized response body.
+
+=head2 create_wiki_page
+
+    my $page = $api->create_wiki_page(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C</projects/:project_id/wikis> and returns the decoded/deserialized response body.
+
+=head2 edit_wiki_page
+
+    my $page = $api->edit_wiki_page(
+        $project_id,
+        $slug,
+        \%params,
+    );
+
+Sends a C<PUT> request to C</projects/:project_id/wikis/:slug> and returns the decoded/deserialized response body.
+
+=head2 delete_wiki_page
+
+    $api->delete_wiki_page(
+        $project_id,
+        $slug,
+    );
+
+Sends a C<DELETE> request to C</projects/:project_id/wikis/:slug>.
 
 =head1 SEE ALSO
 

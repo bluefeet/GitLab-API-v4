@@ -1,0 +1,13 @@
+---
+- jobs: jobs = GET /projects/:project_id/jobs?
+- pipeline_jobs: jobs = GET /projects/:project_id/pipelines/:pipeline_id/jobs?
+- job: job = GET /projects/:project_id/jobs/:job_id
+- job_artifacts: artifacts = GET /projects/:project_id/jobs/:job_id/artifacts
+- job_artifacts_archive: archive = GET /projects/:project_id/jobs/artifacts/:ref_name/download?
+- job_artifacts_file: file = GET /projects/:project_id/jobs/:job_id/artifacts/:artifact_path
+- job_trace_file: file = GET /projects/:project_id/jobs/:job_id/trace
+- cancel_job: job = POST /projects/:project_id/jobs/:job_id/cancel
+- retry_job: job = POST /projects/:project_id/jobs/:job_id/retry
+- erase_job: job = POST /projects/:project_id/jobs/:job_id/erase
+- keep_job_artifacts: job = POST /projects/:project_id/jobs/:job_id/artifacts/keep
+- play_job: job = POST /projects/:project_id/jobs/:job_id/play
