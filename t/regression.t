@@ -7,15 +7,15 @@ use Log::Any::Adapter 'TAP';
 use GitLab::API::v4;
 
 my $url   = $ENV{GITLAB_API_V4_URL};
-my $token = $ENV{GITLAB_API_V4_TOKEN};
+my $token = $ENV{GITLAB_API_V4_PRIVATE_TOKEN};
 
 plan skip_all =>
-    'Set the GITLAB_API_V4_URL and GITLAB_API_V4_TOKEN env vars to run this test.'
+    'Set the GITLAB_API_V4_URL and GITLAB_API_V4_PRIVATE_TOKEN env vars to run this test.'
     unless $url and $token;
 
 my $api = GitLab::API::v4->new(
-    url   => $url,
-    token => $token,
+    url           => $url,
+    private_token => $token,
 );
 
 my $stamp = time();

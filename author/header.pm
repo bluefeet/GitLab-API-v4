@@ -9,8 +9,8 @@ GitLab::API::v4 - A complete GitLab API v4 client.
     use GitLab::API::v4;
     
     my $api = GitLab::API::v4->new(
-        url   => $v4_api_url,
-        token => $token,
+        url           => $v4_api_url,
+        private_token => $token,
     );
     
     my $branches = $api->branches( $project_id );
@@ -26,13 +26,8 @@ interface (CLI).
 
 =head1 CREDENTIALS
 
-Authentication credentials may be defined by setting either the L</token>,
-the L</login> and L</password>, or the L</email> and L</password> arguments.
-
-When the object is constructed the L</login>, L</email>, and L</password>
-arguments are used to call L</session> to generate a token.  The token is
-saved in the L</token> attribute, and the login/email/password arguments
-are discarded.
+Authentication credentials may be defined by setting either the L</access_token>
+or L</private_token> arguments.
 
 If no credentials are supplied then the client will be anonymous and greatly
 limited in what it can do with the API.
@@ -66,18 +61,6 @@ specified as either a numeric project C<ID>, or as a
 C<NAMESPACE_PATH/PROJECT_PATH> in many cases.  Perhaps even
 all cases, but the GitLab documentation on this point is vague.
 
-=head2 RETURN VALUES
-
-Many of this module's methods should return a value but do not
-currently.  This is due to the fact that this module was built
-as a strict representation of GitLab's own documentation which
-is often inconsistent.
-
-If you find a method that should provide a return value, but
-doesn't currently, please verify that GitLab actually does
-return a value and then submit a pull request or open an issue.
-See L</CONTRIBUTING> for more info.
-
 =cut
 
 use GitLab::API::v4::RESTClient;
@@ -85,45 +68,80 @@ use GitLab::API::v4::Paginator;
 
 use Types::Standard -types;
 use Types::Common::String -types;
+use Types::Common::Numeric -types;
+use Class::Method::Modifiers qw( fresh );
 use URI::Escape;
 use Carp qw( croak );
 use Log::Any qw( $log );
+use Try::Tiny;
 
 use Moo;
-use strictures 1;
+use strictures 2;
 use namespace::clean;
-
-around BUILDARGS => sub{
-    my $orig = shift;
-    my $class = shift;
-
-    my $args = $class->$orig( @_ );
-
-    my $session_args = {};
-    foreach my $key (qw( login email password )) {
-        next if !exists $args->{$key};
-        $session_args->{$key} = delete $args->{$key};
-    }
-
-    if (%$session_args) {
-        my $api = $class->new( $args );
-        my $session = $api->session( $session_args );
-        $args->{token} = $session->{private_token};
-    }
-
-    return $args;
-};
 
 sub BUILD {
     my ($self) = @_;
 
     $log->debugf( "An instance of %s has been created.", ref($self) );
 
-    $self->rest_client->set_persistent_header(
-        'PRIVATE-TOKEN' => $self->token(),
-    ) if $self->has_token();
+    return;
+}
+
+sub _clone_args {
+    my ($self) = @_;
+
+    return {
+        url         => $self->url(),
+        retries     => $self->retries(),
+        rest_client => $self->rest_client(),
+        $self->_has_access_token() ? (access_token=>$self->access_token()) : (),
+        $self->_has_private_token() ? (private_token=>$self->private_token()) : (),
+    };
+}
+
+sub _clone {
+    my $self = shift;
+
+    my $class = ref $self;
+    my $args = {
+        %{ $self->_clone_args() },
+        %{ $class->BUILDARGS( @_ ) },
+    };
+
+    return $class->new( $args );
+}
+
+sub _set_headers {
+    my ($self) = @_;
+
+    $self->rest_client->set_header(
+        'Authorization' => 'Bearer ' . $self->access_token(),
+    ) if $self->_has_access_token();
+
+    $self->rest_client->set_header(
+        'Private-Token' => $self->private_token(),
+    ) if $self->_has_private_token();
+
+    $self->rest_client->set_header(
+        'Sudo' => $self->sudo_user(),
+    ) if $self->_has_sudo_user();
 
     return;
+}
+
+sub _call_rest_method {
+    my ($self, $method, @args) = @_;
+
+    $self->_set_headers();
+
+    my (@ret, $errored, $error);
+    try { @ret = $self->rest_client->$method( @args ) }
+    catch { ($errored,$error) = (1,$_) };
+
+    $self->rest_client->clear_headers();
+    die $error if $errored;
+
+    return wantarray() ? @ret : $ret[0];
 }
 
 =head1 REQUIRED ARGUMENTS
@@ -143,41 +161,61 @@ has url => (
 
 =head1 OPTIONAL ARGUMENTS
 
-=head2 token
+=head2 access_token
 
-A GitLab API token.
-If set then neither L</login> or L</email> may be set.
-Read more in L</CREDENTIALS>.
+A GitLab API OAuth2 token.  If set then L</private_token> may not be set.
+
+See L<https://docs.gitlab.com/ce/api/#oauth2-tokens>.
 
 =cut
 
-has token => (
+has access_token => (
     is        => 'ro',
     isa       => NonEmptySimpleStr,
-    predicate => 'has_token',
+    predicate => '_has_access_token',
 );
 
-=head2 login
+=head2 private_token
 
-A GitLab user login name.
-If set then L</password> must be set.
-Read more in L</CREDENTIALS>.
+A GitLab API personal token.  If set then L</access_token> may not be set.
 
-=head2 email
-
-A GitLab user email.
-If set then L</password> must be set.
-Read more in L</CREDENTIALS>.
-
-=head2 password
-
-A GitLab user password.
-This must be set if either L</login> or L</email> are set.
-Read more in L</CREDENTIALS>.
+See L<https://docs.gitlab.com/ce/api/#personal-access-tokens>.
 
 =cut
 
-# The above three args are virtual and get stripped out in BUILDARGS.
+has private_token => (
+    is        => 'ro',
+    isa       => NonEmptySimpleStr,
+    predicate => '_has_private_token',
+);
+
+=head2 sudo_user
+
+The user to execute API calls as.  You may find it more useful to use the
+L</sudo> method instead.
+
+See L<https://docs.gitlab.com/ce/api/#sudo>.
+
+=cut
+
+has sudo_user => (
+    is        => 'ro',
+    isa       => NonEmptySimpleStr,
+    predicate => '_has_sudo_user',
+);
+
+=head2 retries
+
+The number of times the request should be retried in case it does not succeed.
+Defaults to C<0> (false), meaning that a failed request will not be retried.
+
+=cut
+
+has retries => (
+    is      => 'ro',
+    isa     => PositiveOrZeroInt,
+    default => 0,
+);
 
 =head2 rest_client
 
@@ -190,7 +228,6 @@ should not be necessary.
 has rest_client => (
     is      => 'lazy',
     isa     => InstanceOf[ 'GitLab::API::v4::RESTClient' ],
-    handles => [qw( post get head put delete options )],
 );
 sub _build_rest_client {
     my ($self) = @_;
@@ -208,20 +245,6 @@ sub _build_rest_client {
 
     return $rest;
 }
-
-=head2 retries
-
-The number of times the request should be retried in case it does not succeed.
-Defaults to 0, meaning that a failed request will not be retried.
-
-=cut
-
-has retries => (
-    is      => 'ro',
-    isa     => Int,
-    lazy    => 1,
-    default => 0,
-);
 
 =head1 UTILITY METHODS
 
@@ -262,6 +285,25 @@ sub paginator {
         method => $method,
         args   => \@args,
         params => $params,
+    );
+}
+
+=head2 sudo
+
+    $api->sudo('fred')->create_issue(...);
+
+Returns a new instance of L<GitLab::API::v4> with the L</sudo_user> argument
+set.
+
+See L<https://docs.gitlab.com/ce/api/#sudo>.
+
+=cut
+
+sub sudo {
+    my ($self, $user) = @_;
+
+    return $self->_clone(
+        sudo_user => $user,
     );
 }
 

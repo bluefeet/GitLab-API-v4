@@ -28,12 +28,12 @@ use Try::Tiny;
 use strictures 1;
 use namespace::clean;
 use Log::Any qw( $log );
-use Types::Standard qw( Int );
+use Types::Common::Numeric -types;
 
 has retries => (
-  is => 'ro',
-  isa => Int,
-  default => 0,
+    is      => 'ro',
+    isa     => PositiveOrZeroInt,
+    default => 0,
 );
 
 with 'Role::REST::Client';

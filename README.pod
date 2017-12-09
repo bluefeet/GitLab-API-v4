@@ -9,8 +9,8 @@ GitLab::API::v4 - A complete GitLab API v4 client.
     use GitLab::API::v4;
     
     my $api = GitLab::API::v4->new(
-        url   => $v4_api_url,
-        token => $token,
+        url           => $v4_api_url,
+        private_token => $token,
     );
     
     my $branches = $api->branches( $project_id );
@@ -26,13 +26,8 @@ interface (CLI).
 
 =head1 CREDENTIALS
 
-Authentication credentials may be defined by setting either the L</token>,
-the L</login> and L</password>, or the L</email> and L</password> arguments.
-
-When the object is constructed the L</login>, L</email>, and L</password>
-arguments are used to call L</session> to generate a token.  The token is
-saved in the L</token> attribute, and the login/email/password arguments
-are discarded.
+Authentication credentials may be defined by setting either the L</access_token>
+or L</private_token> arguments.
 
 If no credentials are supplied then the client will be anonymous and greatly
 limited in what it can do with the API.
@@ -66,18 +61,6 @@ specified as either a numeric project C<ID>, or as a
 C<NAMESPACE_PATH/PROJECT_PATH> in many cases.  Perhaps even
 all cases, but the GitLab documentation on this point is vague.
 
-=head2 RETURN VALUES
-
-Many of this module's methods should return a value but do not
-currently.  This is due to the fact that this module was built
-as a strict representation of GitLab's own documentation which
-is often inconsistent.
-
-If you find a method that should provide a return value, but
-doesn't currently, please verify that GitLab actually does
-return a value and then submit a pull request or open an issue.
-See L</CONTRIBUTING> for more info.
-
 =head1 REQUIRED ARGUMENTS
 
 =head2 url
@@ -87,40 +70,35 @@ like C<http://git.example.com/api/v4>.
 
 =head1 OPTIONAL ARGUMENTS
 
-=head2 token
+=head2 access_token
 
-A GitLab API token.
-If set then neither L</login> or L</email> may be set.
-Read more in L</CREDENTIALS>.
+A GitLab API OAuth2 token.  If set then L</private_token> may not be set.
 
-=head2 login
+See L<https://docs.gitlab.com/ce/api/#oauth2-tokens>.
 
-A GitLab user login name.
-If set then L</password> must be set.
-Read more in L</CREDENTIALS>.
+=head2 private_token
 
-=head2 email
+A GitLab API personal token.  If set then L</access_token> may not be set.
 
-A GitLab user email.
-If set then L</password> must be set.
-Read more in L</CREDENTIALS>.
+See L<https://docs.gitlab.com/ce/api/#personal-access-tokens>.
 
-=head2 password
+=head2 sudo_user
 
-A GitLab user password.
-This must be set if either L</login> or L</email> are set.
-Read more in L</CREDENTIALS>.
+The user to execute API calls as.  You may find it more useful to use the
+L</sudo> method instead.
+
+See L<https://docs.gitlab.com/ce/api/#sudo>.
+
+=head2 retries
+
+The number of times the request should be retried in case it does not succeed.
+Defaults to C<0> (false), meaning that a failed request will not be retried.
 
 =head2 rest_client
 
 An instance of L<GitLab::API::v4::RESTClient>.  Typically you will not
 be setting this as it defaults to a new instance and customization
 should not be necessary.
-
-=head2 retries
-
-The number of times the request should be retried in case it does not succeed.
-Defaults to 0, meaning that a failed request will not be retried.
 
 =head1 UTILITY METHODS
 
@@ -148,6 +126,15 @@ Given a method who supports the C<page> and C<per_page> parameters,
 and returns an array ref, this will return a L<GitLab::API::v4::Paginator>
 object that will allow you to walk the records one page or one record
 at a time.
+
+=head2 sudo
+
+    $api->sudo('fred')->create_issue(...);
+
+Returns a new instance of L<GitLab::API::v4> with the L</sudo_user> argument
+set.
+
+See L<https://docs.gitlab.com/ce/api/#sudo>.
 
 =head1 AWARD EMOJI METHODS
 
@@ -2428,11 +2415,11 @@ Sends a C<GET> request to C</projects/:project_id/users> and returns the decoded
 
 =head2 create_project
 
-    $api->create_project(
+    my $project = $api->create_project(
         \%params,
     );
 
-Sends a C<POST> request to C</projects>.
+Sends a C<POST> request to C</projects> and returns the decoded/deserialized response body.
 
 =head2 create_project_for_user
 

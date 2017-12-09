@@ -3,7 +3,7 @@
 - user_projects: projects = GET /users/:user_id/projects?
 - project: project = GET /projects/:project_id
 - project_users: users = GET /projects/:project_id/users
-- create_project: POST /projects?
+- create_project: project = POST /projects?
 - create_project_for_user: POST /projects/user/:user_id?
 - edit_project: PUT /projects/:project_id?
 - fork_project: POST /pojects/fork/:project_id?

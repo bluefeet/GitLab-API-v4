@@ -103,7 +103,7 @@ foreach my $section_name (keys %$section_pack) {
         my $method_sub = lc( $method );
         print '    ';
         print 'return ' if $return;
-        print "\$self->$method_sub( \$path";
+        print "\$self->_call_rest_method( '$method_sub', \$path";
         print ", ( defined(\$params) ? \$params : () )" if $params_ok;
         print " );\n";
         print "    return;\n" if !$return;
