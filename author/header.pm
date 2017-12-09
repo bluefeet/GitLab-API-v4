@@ -24,6 +24,26 @@ GitLab's own L<API Documentation|http://doc.gitlab.com/ce/api/README.html>.
 Note that this distribution also includes the L<gitlab-api-v4> command-line
 interface (CLI).
 
+=head2 UPGRADING
+
+If you are upgrading from L<GitLab::API::v3> make sure you read:
+
+L<https://docs.gitlab.com/ce/api/v3_to_v4.html>
+
+Also, review the C<Changes> file included in the distribution as it outlines
+the changes made to convert the v3 module to v4:
+
+L<https://github.com/bluefeet/GitLab-API-v4/blob/master/Changes>
+
+Finally, be aware that many methods were added, removed, renamed, and/or altered.
+If you want to review exactly what was changed you can use GitHub's compare tool:
+
+L<https://github.com/bluefeet/GitLab-API-v4/compare/72e384775c9570f60f8ef68dee3a1eecd347fb69...master>
+
+Or clone the repo and run this command:
+
+C<git diff 72e384775c9570f60f8ef68dee3a1eecd347fb69..HEAD -- author/sections/>
+
 =head2 CREDENTIALS
 
 Authentication credentials may be defined by setting either the L</access_token>
