@@ -24,7 +24,7 @@ GitLab's own L<API Documentation|http://doc.gitlab.com/ce/api/README.html>.
 Note that this distribution also includes the L<gitlab-api-v4> command-line
 interface (CLI).
 
-=head1 CREDENTIALS
+=head2 CREDENTIALS
 
 Authentication credentials may be defined by setting either the L</access_token>
 or L</private_token> arguments.
