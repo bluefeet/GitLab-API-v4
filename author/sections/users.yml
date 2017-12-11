@@ -18,7 +18,7 @@
 - delete_current_user_gpg_key: DELETE /user/gpg_keys/:key_id
 - user_gpg_keys: keys = GET /users/:user_id/gpg_keys
 - user_gpg_key: key = GET /users/:user_id/gpg_keys/:key_id
-- create_user_gpg_key: keys = POST /users/:id/gpg_keys?
+- create_user_gpg_key: keys = POST /users/:user_id/gpg_keys?
 - delete_user_gpg_key: DELETE /users/:user_id/gpg_keys/:key_id
 - current_user_emails: emails = GET /user/emails
 - user_emails: emails = GET /users/:user_id/emails

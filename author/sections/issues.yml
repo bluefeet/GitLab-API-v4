@@ -11,7 +11,7 @@
 - unsubscribe_from_issue: issue = POST /projects/:project_id/issues/:issue_iid/unsubscribe
 - create_issue_todo: todo = POST /projects/:project_id/issues/:issue_iid/todo
 - set_issue_time_estimate: tracking = POST /projects/:project_id/issues/:issue_iid/time_estimate?
-- reset_issue_time_estimate: tracking = POST /projects/:id/issues/:issue_iid/reset_time_estimate
+- reset_issue_time_estimate: tracking = POST /projects/:project_id/issues/:issue_iid/reset_time_estimate
 - add_issue_spent_time: tracking = POST /projects/:project_id/issues/:issue_iid/add_spent_time?
 - reset_issue_spent_time: tracking = POST /projects/:project_id/issues/:issue_iid/reset_spent_time
 - issue_time_stats: tracking = GET /projects/:project_id/issues/:issue_iid/time_stats

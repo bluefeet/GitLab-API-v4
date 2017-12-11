@@ -249,22 +249,22 @@ Sends a C<POST> request to C</projects/:project_id/snippets/:snippet_id/award_em
 =head2 delete_issue_award_emoji
 
     my $award_emoji = $api->delete_issue_award_emoji(
-        $id,
+        $project_id,
         $issue_id,
         $award_id,
     );
 
-Sends a C<DELETE> request to C</projects/:id/issues/:issue_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
+Sends a C<DELETE> request to C</projects/:project_id/issues/:issue_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
 
 =head2 delete_merge_request_award_emoji
 
     my $award_emoji = $api->delete_merge_request_award_emoji(
-        $id,
+        $project_id,
         $merge_request_id,
         $award_id,
     );
 
-Sends a C<DELETE> request to C</projects/:id/merge_requests/:merge_request_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
+Sends a C<DELETE> request to C</projects/:project_id/merge_requests/:merge_request_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
 
 =head2 delete_snippet_award_emoji
 
@@ -1126,9 +1126,9 @@ Sends a C<POST> request to C</groups/:group_id/members> and returns the decoded/
 
 Sends a C<POST> request to C</projects/:project_id/members> and returns the decoded/deserialized response body.
 
-=head2 edit_group_member
+=head2 update_group_member
 
-    my $member = $api->edit_group_member(
+    my $member = $api->update_group_member(
         $group_id,
         $user_id,
         \%params,
@@ -1136,9 +1136,9 @@ Sends a C<POST> request to C</projects/:project_id/members> and returns the deco
 
 Sends a C<PUT> request to C</groups/:group_id/members/:user_id> and returns the decoded/deserialized response body.
 
-=head2 edit_project_member
+=head2 update_project_member
 
-    my $member = $api->edit_project_member(
+    my $member = $api->update_project_member(
         $project_id,
         $user_id,
         \%params,
@@ -1281,11 +1281,11 @@ Sends a C<POST> request to C</projects/:project_id/issues/:issue_iid/time_estima
 =head2 reset_issue_time_estimate
 
     my $tracking = $api->reset_issue_time_estimate(
-        $id,
+        $project_id,
         $issue_iid,
     );
 
-Sends a C<POST> request to C</projects/:id/issues/:issue_iid/reset_time_estimate> and returns the decoded/deserialized response body.
+Sends a C<POST> request to C</projects/:project_id/issues/:issue_iid/reset_time_estimate> and returns the decoded/deserialized response body.
 
 =head2 add_issue_spent_time
 
@@ -1742,11 +1742,11 @@ Sends a C<POST> request to C</projects/:project_id/merge_requests/:merge_request
 =head2 reset_merge_request_time_estimate
 
     my $tracking = $api->reset_merge_request_time_estimate(
-        $id,
+        $project_id,
         $merge_request_iid,
     );
 
-Sends a C<POST> request to C</projects/:id/merge_requests/:merge_request_iid/reset_time_estimate> and returns the decoded/deserialized response body.
+Sends a C<POST> request to C</projects/:project_id/merge_requests/:merge_request_iid/reset_time_estimate> and returns the decoded/deserialized response body.
 
 =head2 add_merge_request_spent_time
 
@@ -2300,11 +2300,11 @@ Sends a C<POST> request to C</projects/:project_id/triggers/:trigger_id/take_own
 =head2 delete_trigger
 
     $api->delete_trigger(
-        $id,
+        $project_id,
         $trigger_id,
     );
 
-Sends a C<DELETE> request to C</projects/:id/triggers/:trigger_id>.
+Sends a C<DELETE> request to C</projects/:project_id/triggers/:trigger_id>.
 
 =head1 PIPELINE SCHEDULE METHODS
 
@@ -3135,9 +3135,9 @@ Sends a C<DELETE> request to C</projects/:project_id/repository/tags/:tag_name>.
 
 Sends a C<POST> request to C</projects/:project_id/repository/tags/:tag_name/release>.
 
-=head2 update_release
+=head2 edit_release
 
-    $api->update_release(
+    $api->edit_release(
         $project_id,
         $tag_name,
         \%params,
@@ -3306,11 +3306,11 @@ Sends a C<GET> request to C</users/:user_id/gpg_keys/:key_id> and returns the de
 =head2 create_user_gpg_key
 
     my $keys = $api->create_user_gpg_key(
-        $id,
+        $user_id,
         \%params,
     );
 
-Sends a C<POST> request to C</users/:id/gpg_keys> and returns the decoded/deserialized response body.
+Sends a C<POST> request to C</users/:user_id/gpg_keys> and returns the decoded/deserialized response body.
 
 =head2 delete_user_gpg_key
 

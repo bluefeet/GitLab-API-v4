@@ -4,4 +4,4 @@
 - create_trigger: trigger = POST /projects/:project_id/triggers?
 - edit_trigger: trigger = PUT /projects/:project_id/triggers/:trigger_id?
 - take_ownership_of_trigger: trigger = POST /projects/:project_id/triggers/:trigger_id/take_ownership
-- delete_trigger: DELETE /projects/:id/triggers/:trigger_id
+- delete_trigger: DELETE /projects/:project_id/triggers/:trigger_id

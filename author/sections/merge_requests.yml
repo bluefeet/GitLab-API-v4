@@ -16,7 +16,7 @@
 - merge_request_diff_versions: versions = GET /projects/:project_id/merge_requests/:merge_request_iid/versions
 - merge_request_diff_version: version = GET /projects/:project_id/merge_requests/:merge_request_iid/versions/:version_id
 - set_merge_request_time_estimate: tracking = POST /projects/:project_id/merge_requests/:merge_request_iid/time_estimate?
-- reset_merge_request_time_estimate: tracking = POST /projects/:id/merge_requests/:merge_request_iid/reset_time_estimate
+- reset_merge_request_time_estimate: tracking = POST /projects/:project_id/merge_requests/:merge_request_iid/reset_time_estimate
 - add_merge_request_spent_time: tracking = POST /projects/:project_id/merge_requests/:merge_request_iid/add_spent_time?
 - reset_merge_request_spent_time: tracking = POST /projects/:project_id/merge_requests/:merge_request_iid/reset_spent_time
 - merge_request_time_stats: tracking = GET /projects/:project_id/merge_requests/:merge_request_iid/time_stats

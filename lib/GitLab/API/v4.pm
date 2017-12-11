@@ -526,19 +526,19 @@ sub create_snippet_award_emoji {
 =head2 delete_issue_award_emoji
 
     my $award_emoji = $api->delete_issue_award_emoji(
-        $id,
+        $project_id,
         $issue_id,
         $award_id,
     );
 
-Sends a C<DELETE> request to C</projects/:id/issues/:issue_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
+Sends a C<DELETE> request to C</projects/:project_id/issues/:issue_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
 
 =cut
 
 sub delete_issue_award_emoji {
     my $self = shift;
     croak 'delete_issue_award_emoji must be called with 3 arguments' if @_ != 3;
-    croak 'The #1 argument ($id) to delete_issue_award_emoji must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #1 argument ($project_id) to delete_issue_award_emoji must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($issue_id) to delete_issue_award_emoji must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The #3 argument ($award_id) to delete_issue_award_emoji must be a scalar' if ref($_[2]) or (!defined $_[2]);
     my $path = sprintf('/projects/%s/issues/%s/award_emoji/%s', (map { uri_escape($_) } @_));
@@ -548,19 +548,19 @@ sub delete_issue_award_emoji {
 =head2 delete_merge_request_award_emoji
 
     my $award_emoji = $api->delete_merge_request_award_emoji(
-        $id,
+        $project_id,
         $merge_request_id,
         $award_id,
     );
 
-Sends a C<DELETE> request to C</projects/:id/merge_requests/:merge_request_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
+Sends a C<DELETE> request to C</projects/:project_id/merge_requests/:merge_request_id/award_emoji/:award_id> and returns the decoded/deserialized response body.
 
 =cut
 
 sub delete_merge_request_award_emoji {
     my $self = shift;
     croak 'delete_merge_request_award_emoji must be called with 3 arguments' if @_ != 3;
-    croak 'The #1 argument ($id) to delete_merge_request_award_emoji must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #1 argument ($project_id) to delete_merge_request_award_emoji must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($merge_request_id) to delete_merge_request_award_emoji must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The #3 argument ($award_id) to delete_merge_request_award_emoji must be a scalar' if ref($_[2]) or (!defined $_[2]);
     my $path = sprintf('/projects/%s/merge_requests/%s/award_emoji/%s', (map { uri_escape($_) } @_));
@@ -2465,9 +2465,9 @@ sub add_project_member {
     return $self->_call_rest_method( 'post', $path, ( defined($params) ? $params : () ) );
 }
 
-=head2 edit_group_member
+=head2 update_group_member
 
-    my $member = $api->edit_group_member(
+    my $member = $api->update_group_member(
         $group_id,
         $user_id,
         \%params,
@@ -2477,20 +2477,20 @@ Sends a C<PUT> request to C</groups/:group_id/members/:user_id> and returns the 
 
 =cut
 
-sub edit_group_member {
+sub update_group_member {
     my $self = shift;
-    croak 'edit_group_member must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
-    croak 'The #1 argument ($group_id) to edit_group_member must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($user_id) to edit_group_member must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    croak 'The last argument (\%params) to edit_group_member must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    croak 'update_group_member must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($group_id) to update_group_member must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($user_id) to update_group_member must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to update_group_member must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
     my $params = (@_ == 3) ? pop() : undef;
     my $path = sprintf('/groups/%s/members/%s', (map { uri_escape($_) } @_));
     return $self->_call_rest_method( 'put', $path, ( defined($params) ? $params : () ) );
 }
 
-=head2 edit_project_member
+=head2 update_project_member
 
-    my $member = $api->edit_project_member(
+    my $member = $api->update_project_member(
         $project_id,
         $user_id,
         \%params,
@@ -2500,12 +2500,12 @@ Sends a C<PUT> request to C</projects/:project_id/members/:user_id> and returns 
 
 =cut
 
-sub edit_project_member {
+sub update_project_member {
     my $self = shift;
-    croak 'edit_project_member must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
-    croak 'The #1 argument ($project_id) to edit_project_member must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($user_id) to edit_project_member must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    croak 'The last argument (\%params) to edit_project_member must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    croak 'update_project_member must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to update_project_member must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($user_id) to update_project_member must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to update_project_member must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
     my $params = (@_ == 3) ? pop() : undef;
     my $path = sprintf('/projects/%s/members/%s', (map { uri_escape($_) } @_));
     return $self->_call_rest_method( 'put', $path, ( defined($params) ? $params : () ) );
@@ -2812,18 +2812,18 @@ sub set_issue_time_estimate {
 =head2 reset_issue_time_estimate
 
     my $tracking = $api->reset_issue_time_estimate(
-        $id,
+        $project_id,
         $issue_iid,
     );
 
-Sends a C<POST> request to C</projects/:id/issues/:issue_iid/reset_time_estimate> and returns the decoded/deserialized response body.
+Sends a C<POST> request to C</projects/:project_id/issues/:issue_iid/reset_time_estimate> and returns the decoded/deserialized response body.
 
 =cut
 
 sub reset_issue_time_estimate {
     my $self = shift;
     croak 'reset_issue_time_estimate must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($id) to reset_issue_time_estimate must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #1 argument ($project_id) to reset_issue_time_estimate must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($issue_iid) to reset_issue_time_estimate must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/projects/%s/issues/%s/reset_time_estimate', (map { uri_escape($_) } @_));
     return $self->_call_rest_method( 'post', $path );
@@ -3829,18 +3829,18 @@ sub set_merge_request_time_estimate {
 =head2 reset_merge_request_time_estimate
 
     my $tracking = $api->reset_merge_request_time_estimate(
-        $id,
+        $project_id,
         $merge_request_iid,
     );
 
-Sends a C<POST> request to C</projects/:id/merge_requests/:merge_request_iid/reset_time_estimate> and returns the decoded/deserialized response body.
+Sends a C<POST> request to C</projects/:project_id/merge_requests/:merge_request_iid/reset_time_estimate> and returns the decoded/deserialized response body.
 
 =cut
 
 sub reset_merge_request_time_estimate {
     my $self = shift;
     croak 'reset_merge_request_time_estimate must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($id) to reset_merge_request_time_estimate must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #1 argument ($project_id) to reset_merge_request_time_estimate must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($merge_request_iid) to reset_merge_request_time_estimate must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/projects/%s/merge_requests/%s/reset_time_estimate', (map { uri_escape($_) } @_));
     return $self->_call_rest_method( 'post', $path );
@@ -5060,18 +5060,18 @@ sub take_ownership_of_trigger {
 =head2 delete_trigger
 
     $api->delete_trigger(
-        $id,
+        $project_id,
         $trigger_id,
     );
 
-Sends a C<DELETE> request to C</projects/:id/triggers/:trigger_id>.
+Sends a C<DELETE> request to C</projects/:project_id/triggers/:trigger_id>.
 
 =cut
 
 sub delete_trigger {
     my $self = shift;
     croak 'delete_trigger must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($id) to delete_trigger must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #1 argument ($project_id) to delete_trigger must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($trigger_id) to delete_trigger must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('/projects/%s/triggers/%s', (map { uri_escape($_) } @_));
     $self->_call_rest_method( 'delete', $path );
@@ -6933,9 +6933,9 @@ sub create_release {
     return;
 }
 
-=head2 update_release
+=head2 edit_release
 
-    $api->update_release(
+    $api->edit_release(
         $project_id,
         $tag_name,
         \%params,
@@ -6945,12 +6945,12 @@ Sends a C<PUT> request to C</projects/:project_id/repository/tags/:tag_name/rele
 
 =cut
 
-sub update_release {
+sub edit_release {
     my $self = shift;
-    croak 'update_release must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
-    croak 'The #1 argument ($project_id) to update_release must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($tag_name) to update_release must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    croak 'The last argument (\%params) to update_release must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    croak 'edit_release must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to edit_release must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($tag_name) to edit_release must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to edit_release must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
     my $params = (@_ == 3) ? pop() : undef;
     my $path = sprintf('/projects/%s/repository/tags/%s/release', (map { uri_escape($_) } @_));
     $self->_call_rest_method( 'put', $path, ( defined($params) ? $params : () ) );
@@ -7323,18 +7323,18 @@ sub user_gpg_key {
 =head2 create_user_gpg_key
 
     my $keys = $api->create_user_gpg_key(
-        $id,
+        $user_id,
         \%params,
     );
 
-Sends a C<POST> request to C</users/:id/gpg_keys> and returns the decoded/deserialized response body.
+Sends a C<POST> request to C</users/:user_id/gpg_keys> and returns the decoded/deserialized response body.
 
 =cut
 
 sub create_user_gpg_key {
     my $self = shift;
     croak 'create_user_gpg_key must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
-    croak 'The #1 argument ($id) to create_user_gpg_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #1 argument ($user_id) to create_user_gpg_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The last argument (\%params) to create_user_gpg_key must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = (@_ == 2) ? pop() : undef;
     my $path = sprintf('/users/%s/gpg_keys', (map { uri_escape($_) } @_));
