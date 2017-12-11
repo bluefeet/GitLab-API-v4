@@ -1,0 +1,19 @@
+#!/bin/sh
+
+docker stop test-gitlab-api-v4
+
+sleep 5
+
+docker run -d --rm \
+    -p 80:80 \
+    --name test-gitlab-api-v4 \
+    gitlab/gitlab-ce:10.2.2-ce.0
+
+echo 1. Open you browser to: http://localhost \(it may take several minutes for it to respond\)
+echo 2. And set a password for the root user.
+echo 3. Then login and goto: http://localhost/profile/personal_access_tokens
+echo 4. Create a new private token \(use this token below\).
+echo 5. Then set the following env vars:
+echo export GITLAB_API_V4_URL=http://localhost/api/v4
+echo export GITLAB_API_V4_PRIVATE_TOKEN=
+echo 6. You should now be able to run: t/regression.t
