@@ -1,5 +1,7 @@
 package GitLab::API::v4;
 
+=encoding utf8
+
 =head1 NAME
 
 GitLab::API::v4 - A complete GitLab API v4 client.
