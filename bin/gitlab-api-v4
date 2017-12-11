@@ -48,11 +48,7 @@ Log::Any::Adapter->set(
 $url   ||= $ENV{GITLAB_API_V4_URL};
 $token ||= $ENV{GITLAB_API_V4_TOKEN};
 
-my $visibility_levels = {
-    '--visibility-level-private'  => $GITLAB_VISIBILITY_LEVEL_PRIVATE,
-    '--visibility-level-internal' => $GITLAB_VISIBILITY_LEVEL_INTERNAL,
-    '--visibility-level-public'   => $GITLAB_VISIBILITY_LEVEL_PUBLIC,
-};
+$retries ||= 0;
 
 my $access_levels = {
     '--access-level-guest'     => $GITLAB_ACCESS_LEVEL_GUEST,
@@ -65,10 +61,7 @@ my $access_levels = {
 my @args;
 my $params = {};
 foreach my $arg (@ARGV) {
-    if (defined $visibility_levels->{$arg}) {
-        $params->{visibility_level} = $visibility_levels->{$arg};
-    }
-    elsif (defined $access_levels->{$arg}) {
+    if (defined $access_levels->{$arg}) {
         $params->{access_level} = $access_levels->{$arg};
     }
     elsif ($arg =~ m{^--(no-|)?([^\s=]+)(=(\S+)|)$}) {
@@ -225,12 +218,6 @@ Any arguments that the L</method> requires.
     --<param>=<value> ...
 
 Any parameters that the L</method> accepts.
-
-=head2 visibility level
-
-    --visibility-level-private
-    --visibility-level-internal
-    --visibility-level-public
 
 =head2 access level
 

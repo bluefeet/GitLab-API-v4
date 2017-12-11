@@ -2,6 +2,8 @@ Revision history for Perl extension GitLab::API::v4.
 
 {{$NEXT}}
 
+- Fixed gitlab-api-v4 script to actually work.
+
 0.01 2017-12-11
 
  - Added the sudo method and the sudo_user argument.
