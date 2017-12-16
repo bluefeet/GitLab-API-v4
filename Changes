@@ -2,6 +2,7 @@ Revision history for Perl extension GitLab::API::v4.
 
 {{$NEXT}}
 
+- Fix double-slashes in URL paths.
 - Fixed gitlab-api-v4 script to actually work.
 
 0.01 2017-12-11

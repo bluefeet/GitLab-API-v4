@@ -98,6 +98,7 @@ foreach my $section_name (keys %$section_pack) {
 
         my $sprintf_path = $path;
         $sprintf_path =~ s{:[^/]+}{%s}g;
+        $sprintf_path =~ s{^/}{};
         print "    my \$path = sprintf('$sprintf_path', (map { uri_escape(\$_) } \@_));\n";
 
         my $method_sub = lc( $method );
