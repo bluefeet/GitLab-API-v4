@@ -8,7 +8,7 @@ use Log::Any qw( $log );
 use Log::Any::Adapter;
 use Log::Any::Adapter::Screen;
 use Try::Tiny;
-use Data::Serializer;
+use JSON;
 
 use Getopt::Long;
 use Pod::Usage qw( pod2usage );
@@ -19,7 +19,6 @@ GetOptions(
     'url=s'    => \my $url,
     'token=s'  => \my $token,
     'all'      => \my $all,
-    'format=s' => \my $format,
     'retry=i'  => \my $retries,
 
     'help'     => \my $help,
@@ -35,9 +34,6 @@ if ($help or @ARGV and $ARGV[0] eq 'help') {
 my $min_level = 'warning';
 $min_level = 'trace' if $verbose;
 $min_level = 'error' if $quiet;
-
-$format //= 'YAML';
-my $serializer = Data::Serializer::Raw->new( serializer=>$format );
 
 Log::Any::Adapter->set(
     'Screen',
@@ -96,45 +92,13 @@ try {
 
     $data = $data->all() if $all;
 
-    exit 0 if !defined $data;
-
-    # Replace all non HASH/ARRAY references with strings.  This is
-    # implemented generically, but really only causes JSON boolean
-    # object to be stringified which makes sense for non-JSON serializers.
-    if (ref $data) {
-        $data = clean_data( $data ) if $format ne 'JSON';
-        print $serializer->serialize( $data );
-    }
-    else {
-        print $data;
-    }
+    my $json = JSON->new->allow_nonref();
+    print $json->encode( $data );
 }
 catch {
     $log->fatal( $_ );
     exit 1;
 };
-
-sub clean_data {
-    my ($data) = @_;
-
-    if (ref($data) eq 'ARRAY') {
-        $data = [
-            map { clean_data( $_ ) }
-            @$data
-        ];
-    }
-    elsif (ref($data) eq 'HASH') {
-        $data = {
-            map { $_ => clean_data( $data->{$_} ) }
-            keys( %$data )
-        };
-    }
-    elsif (ref $data) {
-        $data = "$data";
-    }
-
-    return $data;
-}
 
 __END__
 
@@ -188,17 +152,6 @@ environment variable if possible.
     --all
 
 Retrieves all results when the results would normally be paged.
-
-=head2 format
-
-    --format=<format>
-    --format=YAML
-    --format=JSON
-    --format=XML::Simple
-
-Specify the output format used when returning the result of an API call.
-Accepts any serializer that L<Data::Serializer> supports.  Defaults to
-C<YAML>.
 
 =head2 method
 

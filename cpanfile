@@ -23,8 +23,7 @@ requires 'Getopt::Long' => 0;
 requires 'Pod::Usage' => 0;
 requires 'Log::Any::Adapter' => '1.703';
 requires 'Log::Any::Adapter::Screen' => '0.13';
-requires 'YAML' => '1.21';
-requires 'Data::Serializer' => '0.60';
+requires 'JSON' => '2.92';
 
 on test => sub {
     requires 'Test2::V0' => '0.000094';
