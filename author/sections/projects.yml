@@ -6,7 +6,7 @@
 - create_project: project = POST /projects?
 - create_project_for_user: POST /projects/user/:user_id?
 - edit_project: PUT /projects/:project_id?
-- fork_project: POST /pojects/fork/:project_id?
+- fork_project: POST /projects/:project_id/fork?
 - project_forks: forks = GET /projects/:project_id/forks?
 - start_project: project = POST /projects/:project_id/star
 - unstar_project: project = POST /projects/:project_id/unstar

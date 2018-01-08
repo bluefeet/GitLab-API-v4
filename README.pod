@@ -2468,7 +2468,7 @@ Sends a C<PUT> request to C</projects/:project_id>.
         \%params,
     );
 
-Sends a C<POST> request to C</pojects/fork/:project_id>.
+Sends a C<POST> request to C</projects/:project_id/fork>.
 
 =head2 project_forks
 
