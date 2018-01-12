@@ -2,6 +2,8 @@ Revision history for Perl extension GitLab::API::v4.
 
 {{$NEXT}}
 
+0.03 2018-01-12
+
 - Greatly extended authentication and configuration options for the
   gitlab-api-v4 script; added GitLab::API::v4::Config.
 - The gitlab-api-v4 script now always outputs JSON (the default was YAML,
