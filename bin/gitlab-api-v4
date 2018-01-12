@@ -1,8 +1,9 @@
 #!/usr/bin/env perl
-use strictures 1;
+use strictures 2;
 
 use GitLab::API::v4;
 use GitLab::API::v4::Constants qw( :all );
+use GitLab::API::v4::Config;
 
 use Log::Any qw( $log );
 use Log::Any::Adapter;
@@ -16,35 +17,29 @@ use Pod::Usage qw( pod2usage );
 Getopt::Long::Configure('pass_through');
 
 GetOptions(
-    'url=s'    => \my $url,
-    'token=s'  => \my $token,
-    'all'      => \my $all,
-    'retry=i'  => \my $retries,
+    'all' => \my $all,
 
-    'help'     => \my $help,
-    'verbose'  => \my $verbose,
-    'quiet'    => \my $quiet,
-) or die "ERROR: Unable to process options!\n";
+    'help'    => \my $help,
+    'verbose' => \my $verbose,
+    'quiet'   => \my $quiet,
+) or fail('Unable to process options!');
 
 if ($help or @ARGV and $ARGV[0] eq 'help') {
     pod2usage( -verbose => 2 );
     exit 0;
 }
 
-my $min_level = 'warning';
+my $min_level = 'info';
 $min_level = 'trace' if $verbose;
 $min_level = 'error' if $quiet;
+
+my $config = GitLab::API::v4::Config->new();
 
 Log::Any::Adapter->set(
     'Screen',
     min_level => $min_level,
     stderr    => 1,
 );
-
-$url   ||= $ENV{GITLAB_API_V4_URL};
-$token ||= $ENV{GITLAB_API_V4_TOKEN};
-
-$retries ||= 0;
 
 my $access_levels = {
     '--access-level-guest'     => $GITLAB_ACCESS_LEVEL_GUEST,
@@ -72,13 +67,16 @@ foreach my $arg (@ARGV) {
 }
 
 my $method = shift( @args );
+fail( 'No method was specified.' ) if !$method;
+$method =~ s{-}{_}g;
+
+if ($method eq 'configure') {
+    $config->configure();
+    exit;
+}
 
 try {
-    my $api = GitLab::API::v4->new(
-        url     => $url,
-        token   => $token,
-        retries => $retries,
-    );
+    my $api = GitLab::API::v4->new( $config->args() );
 
     if ($all) {
         @args = ( $method, @args );
@@ -96,9 +94,13 @@ try {
     print $json->encode( $data );
 }
 catch {
-    $log->fatal( $_ );
-    exit 1;
+    fail( $_ );
 };
+
+sub fail {
+    $log->fatal( @_ );
+    exit 1;
+}
 
 __END__
 
@@ -118,40 +120,23 @@ gitlab-api-v4 - Command line interface to the GitLab API v4.
     gitlab-api-v4 project <project_id>
     
     # Create an admin user:
-    gitlab-api-v4 create_user \
+    gitlab-api-v4 create-user \
         --email=<email> --password=<password> --username=<username> --name=<name> --admin
 
-=head1 ARGUMENTS
+=head1 CONFIGURING
 
-=head2 url
+You may configure this module with envornment variables, command line options,
+and a configuration file.  To setup the configuration file run:
 
-    --url=<url>
+    gitlab-api-v4 configure
 
-The URL to to your GitLab API v4 API base.  Typically this will
-be something like C<http://git.example.com/api/v4>.
+This will ask several interactive questions to help you configure this script.
+The information, which may include GitLab authentication tokens, is stored in
+C<~/.gitlab-api-v4.json>.
 
-You can alternatively set this by specifying the C<GITLAB_API_V4_URL>
-environment variable.
+Read more at L<GitLab::API::v4::Config>.
 
-=head2 token
-
-    --token=<token>
-
-The API token to access the API with.
-
-Alternatively you can set the C<GITLAB_API_V4_TOKEN> environment
-variable.
-
-WARNING: As a general rule it is highly discouraged to put sensitive
-information into command arguments such as your private API token since
-arguments can be seen by other users of the system.  Please use the
-environment variable if possible.
-
-=head2 all
-
-    --all
-
-Retrieves all results when the results would normally be paged.
+=head1 OPTIONS
 
 =head2 method
 
@@ -180,20 +165,15 @@ Any parameters that the L</method> accepts.
     --access-level-master
     --access-level-owner
 
-=head2 help
+=head2 all
 
-    help
-    --help
+    --all
 
-Displays this handy documentation.
+Retrieves all results when the results would normally be paged.
 
-=head1 SEE ALSO
+=head1 AUTHORS
 
-L<GitLab::API::v4>.
-
-=head1 AUTHOR
-
-Aran Clary Deltac <bluefeetE<64>gmail.com>
+See L<GitLab::API::v4/AUTHOR> and L<GitLab::API::v4/CONTRIBUTORS>.
 
 =head1 LICENSE
 

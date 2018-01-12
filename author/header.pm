@@ -91,7 +91,6 @@ use GitLab::API::v4::Paginator;
 use Types::Standard -types;
 use Types::Common::String -types;
 use Types::Common::Numeric -types;
-use Class::Method::Modifiers qw( fresh );
 use URI::Escape;
 use Carp qw( croak );
 use Log::Any qw( $log );
@@ -171,7 +170,7 @@ sub _call_rest_method {
 =head2 url
 
 The URL to your v4 API endpoint.  Typically this will be something
-like C<http://git.example.com/api/v4>.
+like C<https://git.example.com/api/v4>.
 
 =cut
 

@@ -7,23 +7,23 @@ requires 'Types::Common::String' => '1.002001';
 requires 'Types::Common::Numeric' => '1.002001';
 
 requires 'Role::REST::Client' => '0.22';
-requires 'Class::Method::Modifiers' => '2.05';
 requires 'Const::Fast' => '0.014';
 requires 'URI::Escape' => '1.72';
 requires 'Log::Any' => '1.703';
 requires 'Try::Tiny' => '0.28';
 
-# Core perl libs.
 requires 'Carp' => 0;
 requires 'Exporter' => 0;
 requires 'Data::Dumper' => 0;
 
-# Used exclusively by: bin/gitlab-api-v4
+# Used exclusively by gitlab-api-v4 and/or GitLab::API::v4::Config.
 requires 'Getopt::Long' => 0;
 requires 'Pod::Usage' => 0;
 requires 'Log::Any::Adapter' => '1.703';
 requires 'Log::Any::Adapter::Screen' => '0.13';
 requires 'JSON' => '2.92';
+requires 'Path::Tiny' => '0.079';
+requires 'IO::Prompter' => '0.004014';
 
 on test => sub {
     requires 'Test2::V0' => '0.000094';

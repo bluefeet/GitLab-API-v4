@@ -17,7 +17,7 @@ use Types::Common::String -types;
 use Carp qw( croak );
 
 use Moo;
-use strictures 1;
+use strictures 2;
 use namespace::clean;
 
 =head1 REQUIRED ARGUMENTS
@@ -211,9 +211,9 @@ sub reset {
 1;
 __END__
 
-=head1 AUTHOR
+=head1 AUTHORS
 
-Aran Clary Deltac <bluefeetE<64>gmail.com>
+See L<GitLab::API::v4/AUTHOR> and L<GitLab::API::v4/CONTRIBUTORS>.
 
 =head1 LICENSE
 

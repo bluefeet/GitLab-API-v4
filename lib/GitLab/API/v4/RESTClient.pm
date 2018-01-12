@@ -22,21 +22,21 @@ rather than the response object itself.
 use Carp qw( confess );
 use Data::Dumper qw();
 use Role::REST::Client::Response;
-
-use Moo;
 use Try::Tiny;
-use strictures 1;
-use namespace::clean;
 use Log::Any qw( $log );
 use Types::Common::Numeric -types;
+
+use Moo;
+use strictures 2;
+use namespace::clean;
+
+with 'Role::REST::Client';
 
 has retries => (
     is      => 'ro',
     isa     => PositiveOrZeroInt,
     default => 0,
 );
-
-with 'Role::REST::Client';
 
 foreach my $method (qw( post get head put delete options )) {
     around $method => sub{
@@ -47,7 +47,7 @@ foreach my $method (qw( post get head put delete options )) {
         my $res;
         my $retry = $self->retries;
         do {
-          $log->infof( 'Making %s request against %s', uc($method), $path );
+          $log->tracef( 'Making %s request against %s', uc($method), $path );
           $res = $self->$orig( "/$path", @_ );
 
           if ($res->code =~ /^5/) {
@@ -62,6 +62,7 @@ foreach my $method (qw( post get head put delete options )) {
 
         if ($res->failed()) {
             local $Carp::Internal{ 'GitLab::API::v4::RESTClient' } = 1;
+            local $Carp::Internal{ 'GitLab::API::v4' } = 1;
 
             confess sprintf(
                 'Error %sing %s from %s (HTTP %s): %s %s',
@@ -90,9 +91,9 @@ sub _dump_one_line {
 1;
 __END__
 
-=head1 AUTHOR
+=head1 AUTHORS
 
-Aran Clary Deltac <bluefeetE<64>gmail.com>
+See L<GitLab::API::v4/AUTHOR> and L<GitLab::API::v4/CONTRIBUTORS>.
 
 =head1 LICENSE
 

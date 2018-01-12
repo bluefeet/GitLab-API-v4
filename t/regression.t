@@ -2,21 +2,20 @@
 use strictures 2;
 
 use Test2::V0;
+
+BEGIN {
+    plan skip_all =>
+        'Set the AUTHOR_TESTING env var to run this test.'
+        unless $ENV{AUTHOR_TESTING};
+}
+
 use Log::Any::Adapter 'TAP';
 
 use GitLab::API::v4;
+use GitLab::API::v4::Config;
 
-my $url   = $ENV{GITLAB_API_V4_URL};
-my $token = $ENV{GITLAB_API_V4_PRIVATE_TOKEN};
-
-plan skip_all =>
-    'Set the GITLAB_API_V4_URL and GITLAB_API_V4_PRIVATE_TOKEN env vars to run this test.'
-    unless $url and $token;
-
-my $api = GitLab::API::v4->new(
-    url           => $url,
-    private_token => $token,
-);
+my $config = GitLab::API::v4::Config->new();
+my $api = GitLab::API::v4->new( $config->args() );
 
 my $stamp = time();
 my $project_name = "tester-$stamp";
