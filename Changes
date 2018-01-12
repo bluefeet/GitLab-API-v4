@@ -2,6 +2,12 @@ Revision history for Perl extension GitLab::API::v4.
 
 {{$NEXT}}
 
+- Greatly extended authentication and configuration options for the
+  gitlab-api-v4 script; added GitLab::API::v4::Config.
+- The gitlab-api-v4 script now always outputs JSON (the default was YAML,
+  with the option to pick other formats).
+- Fixed the fork_project method to hit the correct URL.
+
 0.02 2017-12-15
 
 - Fix double-slashes in URL paths.
