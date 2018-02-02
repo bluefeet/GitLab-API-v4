@@ -2423,6 +2423,7 @@ Sends a C<GET> request to C</users/:user_id/projects> and returns the decoded/de
 
     my $project = $api->project(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C</projects/:project_id> and returns the decoded/deserialized response body.

@@ -5326,6 +5326,7 @@ sub user_projects {
 
     my $project = $api->project(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C</projects/:project_id> and returns the decoded/deserialized response body.
@@ -5334,10 +5335,12 @@ Sends a C<GET> request to C</projects/:project_id> and returns the decoded/deser
 
 sub project {
     my $self = shift;
-    croak 'project must be called with 1 arguments' if @_ != 1;
+    croak 'project must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to project must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to project must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
     my $path = sprintf('projects/%s', (map { uri_escape($_) } @_));
-    return $self->_call_rest_method( 'get', $path );
+    return $self->_call_rest_method( 'get', $path, ( defined($params) ? $params : () ) );
 }
 
 =head2 project_users
