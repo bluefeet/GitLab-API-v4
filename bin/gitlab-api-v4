@@ -90,6 +90,7 @@ try {
 
     $data = $data->all() if $all;
 
+    binmode STDOUT, ':utf8';
     my $json = JSON->new->allow_nonref();
     print $json->encode( $data );
 }
