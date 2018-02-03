@@ -2,6 +2,8 @@ Revision history for Perl extension GitLab::API::v4.
 
 {{$NEXT}}
 
+0.04 2018-02-03
+
 - Support parameters in the project method.
 - Allow wide characters when printing the response output in the
   gitlab-api-v4 script.
