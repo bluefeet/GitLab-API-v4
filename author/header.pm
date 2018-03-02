@@ -62,7 +62,7 @@ these states as named variables.
 
 =head2 EXCEPTIONS
 
-The API methods will all throw (hopefully) a useful exception if
+The API methods will all throw a useful exception if
 an unsuccessful response is received from the API.  That is except for
 C<GET> requests that return a C<404> response - these will return C<undef>
 for methods that return a value.
