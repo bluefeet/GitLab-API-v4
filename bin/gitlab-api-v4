@@ -11,17 +11,20 @@ use Log::Any::Adapter::Screen;
 use Try::Tiny;
 use JSON;
 
-use Getopt::Long;
+use Getopt::Long qw( GetOptions );
 use Pod::Usage qw( pod2usage );
 
-Getopt::Long::Configure('pass_through');
+Getopt::Long::Configure(qw(
+    gnu_getopt no_ignore_case
+    pass_through
+));
 
 GetOptions(
-    'all' => \my $all,
+    'a|all' => \my $all,
 
-    'help'    => \my $help,
-    'verbose' => \my $verbose,
-    'quiet'   => \my $quiet,
+    'h|help'    => \my $help,
+    'v|verbose' => \my $verbose,
+    'q|quiet'   => \my $quiet,
 ) or fail('Unable to process options!');
 
 if ($help or @ARGV and $ARGV[0] eq 'help') {
@@ -55,7 +58,7 @@ foreach my $arg (@ARGV) {
     if (defined $access_levels->{$arg}) {
         $params->{access_level} = $access_levels->{$arg};
     }
-    elsif ($arg =~ m{^--(no-|)?([^\s=]+)(=(\S+)|)$}) {
+    elsif ($arg =~ m{^--(no-|)?([^\s=]+)(=(.*)|)$}) {
         my ($no, $key, $has_value, $value) = ($1, $2, $3, $4);
         $key =~ s{-}{_}g;
         $value = $has_value ? $value : $no ? 0 : 1;
