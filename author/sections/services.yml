@@ -1,3 +1,4 @@
 ---
+- get_project_service: service = GET /projects/:project_id/services/:service_name
 - edit_project_service: PUT /projects/:project_id/services/:service_name?
 - delete_project_service: DELETE /projects/:project_id/services/:service_name
