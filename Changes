@@ -2,6 +2,8 @@ Revision history for Perl extension GitLab::API::v4.
 
 {{$NEXT}}
 
+- Add the project_service method.
+
 0.05 2018-03-06
 
 - Fixup gitlab-api-v4 to support parameters who's values are empty or have

@@ -62,6 +62,10 @@ José Joaquín Atria <jjatriaE<64>gmail.com>
 
 Dave Webb <githubE<64>d5ve.com>
 
+=item *
+
+Simon Ruderich <simonE<64>ruderich.org>
+
 =back
 
 =head1 ACKNOWLEDGEMENTS

@@ -6606,9 +6606,9 @@ sub disable_project_runner {
 
 See L<https://docs.gitlab.com/ce/api/services.html>.
 
-=head2 get_project_service
+=head2 project_service
 
-    my $service = $api->get_project_service(
+    my $service = $api->project_service(
         $project_id,
         $service_name,
     );
@@ -6617,11 +6617,11 @@ Sends a C<GET> request to C</projects/:project_id/services/:service_name> and re
 
 =cut
 
-sub get_project_service {
+sub project_service {
     my $self = shift;
-    croak 'get_project_service must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($project_id) to get_project_service must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($service_name) to get_project_service must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'project_service must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to project_service must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($service_name) to project_service must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $path = sprintf('projects/%s/services/%s', (map { uri_escape($_) } @_));
     return $self->_call_rest_method( 'get', $path );
 }
@@ -7868,6 +7868,10 @@ José Joaquín Atria <jjatriaE<64>gmail.com>
 =item *
 
 Dave Webb <githubE<64>d5ve.com>
+
+=item *
+
+Simon Ruderich <simonE<64>ruderich.org>
 
 =back
 

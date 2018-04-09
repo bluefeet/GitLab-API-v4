@@ -2990,6 +2990,15 @@ Sends a C<DELETE> request to C</projects/:project_id/runners/:runner_id> and ret
 
 See L<https://docs.gitlab.com/ce/api/services.html>.
 
+=head2 project_service
+
+    my $service = $api->project_service(
+        $project_id,
+        $service_name,
+    );
+
+Sends a C<GET> request to C</projects/:project_id/services/:service_name> and returns the decoded/deserialized response body.
+
 =head2 edit_project_service
 
     $api->edit_project_service(
@@ -3563,6 +3572,10 @@ José Joaquín Atria <jjatriaE<64>gmail.com>
 =item *
 
 Dave Webb <githubE<64>d5ve.com>
+
+=item *
+
+Simon Ruderich <simonE<64>ruderich.org>
 
 =back
 
