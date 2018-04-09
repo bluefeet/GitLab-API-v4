@@ -2,6 +2,8 @@ Revision history for Perl extension GitLab::API::v4.
 
 {{$NEXT}}
 
+0.06 2018-04-09
+
 - Add the project_service method.
 
 0.05 2018-03-06
