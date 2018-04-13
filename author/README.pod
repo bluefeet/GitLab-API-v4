@@ -12,8 +12,8 @@ individual sections.
 The YAML files in the C<author/sections/> directory have lines
 like this:
 
-    - SUB: HTTP_METHOD PATH
-    - SUB: RETURN = HTTP_METHOD PATH?
+    - SUB: HTTP_METHOD PATH [NS]
+    - SUB: RETURN = HTTP_METHOD PATH? [NS]
 
 =head2 SUB
 
@@ -45,6 +45,10 @@ be injected in place of C<:bar>.
 
 If the PATH ends with a C<?> then this signifies that the API
 endpoint accepts query parameters.
+
+=head2 NS
+
+NS "No Serialize" Just return raw contents do not try to serialize it.
 
 =head1 GENERATING
 

@@ -38,4 +38,16 @@ while ($api->project( $project_id )) {
 }
 ok( 1, 'project deleted' );
 
+my $create_user = $api->create_user({'username'=>'maryp','email'=>'maryp@test.example.com','password'=>'d5fzHF7tfgh','name'=>'Mary Poppins'});
+ok( 1, 'user created' );
+my $found_user = $api->users({'username'=>'maryp'});
+ok( $found_user, 'user found' );
+my $user_id = $found_user->[0]->{'id'};
+my $block_user = $api->block_user($user_id);
+ok( $block_user eq 'true', 'user blocked' );
+$block_user = $api->unblock_user($user_id);
+ok( $block_user eq 'true', 'user unblocked' );
+$api->delete_user($user_id);
+ok( 1, 'user deleted' );
+
 done_testing;

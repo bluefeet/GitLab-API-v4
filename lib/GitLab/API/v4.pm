@@ -7070,11 +7070,11 @@ sub edit_user {
 
 =head2 delete_user
 
-    my $user = $api->delete_user(
+    $api->delete_user(
         $user_id,
     );
 
-Sends a C<DELETE> request to C</users/:user_id> and returns the decoded/deserialized response body.
+Sends a C<DELETE> request to C</users/:user_id>.
 
 =cut
 
@@ -7083,7 +7083,8 @@ sub delete_user {
     croak 'delete_user must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($user_id) to delete_user must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('users/%s', (map { uri_escape($_) } @_));
-    return $self->_call_rest_method( 'delete', $path );
+    $self->_call_rest_method( 'delete', $path,undef,{'deserializer' => undef} );
+    return;
 }
 
 =head2 current_user
@@ -7519,11 +7520,11 @@ sub delete_user_email {
 
 =head2 block_user
 
-    $api->block_user(
+    my $status = $api->block_user(
         $user_id,
     );
 
-Sends a C<POST> request to C</users/:user_id/block>.
+Sends a C<POST> request to C</users/:user_id/block> and returns the raw response body.
 
 =cut
 
@@ -7532,17 +7533,16 @@ sub block_user {
     croak 'block_user must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($user_id) to block_user must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('users/%s/block', (map { uri_escape($_) } @_));
-    $self->_call_rest_method( 'post', $path );
-    return;
+    return $self->_call_rest_method( 'post', $path,undef,{'deserializer' => undef} );
 }
 
 =head2 unblock_user
 
-    $api->unblock_user(
+    my $status = $api->unblock_user(
         $user_id,
     );
 
-Sends a C<POST> request to C</users/:user_id/unblock>.
+Sends a C<POST> request to C</users/:user_id/unblock> and returns the raw response body.
 
 =cut
 
@@ -7551,8 +7551,7 @@ sub unblock_user {
     croak 'unblock_user must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($user_id) to unblock_user must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $path = sprintf('users/%s/unblock', (map { uri_escape($_) } @_));
-    $self->_call_rest_method( 'post', $path );
-    return;
+    return $self->_call_rest_method( 'post', $path,undef,{'deserializer' => undef} );
 }
 
 =head2 user_impersonation_tokens

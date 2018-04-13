@@ -3,7 +3,7 @@
 - user: user = GET /users/:user_id
 - create_user: POST /users?
 - edit_user: PUT /users/:user_id?
-- delete_user: user = DELETE /users/:user_id
+- delete_user: DELETE /users/:user_id NS
 - current_user: user = GET /user
 - current_user_ssh_keys: keys = GET /user/keys
 - user_ssh_keys: keys = GET /users/:user_id/keys
@@ -27,8 +27,8 @@
 - create_user_email: email = POST /users/:user_id/emails?
 - delete_current_user_email: DELETE /user/emails/:email_id
 - delete_user_email: DELETE /users/:user_id/emails/:email_id
-- block_user: POST /users/:user_id/block
-- unblock_user: POST /users/:user_id/unblock
+- block_user: status = POST /users/:user_id/block NS
+- unblock_user: status = POST /users/:user_id/unblock NS
 - user_impersonation_tokens: tokens = GET /users/:user_id/impersonation_tokens?
 - user_impersonation_token: token = GET /users/:user_id/impersonation_tokens/:impersonation_token_id
 - create_user_impersonation_token: token = POST /users/:user_id/impersonation_tokens?
