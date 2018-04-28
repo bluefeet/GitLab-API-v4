@@ -66,6 +66,10 @@ Dave Webb <githubE<64>d5ve.com>
 
 Simon Ruderich <simonE<64>ruderich.org>
 
+=item *
+
+royce55 <royceE<64>ecs.vuw.ac.nz>
+
 =back
 
 =head1 ACKNOWLEDGEMENTS

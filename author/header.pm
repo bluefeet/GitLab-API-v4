@@ -85,20 +85,25 @@ all cases, but the GitLab documentation on this point is vague.
 
 =cut
 
-use GitLab::API::v4::RESTClient;
 use GitLab::API::v4::Paginator;
 
 use Types::Standard -types;
 use Types::Common::String -types;
 use Types::Common::Numeric -types;
 use URI::Escape;
-use Carp qw( croak );
+use Carp qw( croak confess );
 use Log::Any qw( $log );
 use Try::Tiny;
+use URI;
+use HTTP::Tiny;
+use JSON;
 
 use Moo;
 use strictures 2;
 use namespace::clean;
+
+my $http_tiny = HTTP::Tiny->new();
+my $json = JSON->new->utf8->allow_nonref();
 
 sub BUILD {
     my ($self) = @_;
@@ -108,13 +113,93 @@ sub BUILD {
     return;
 }
 
+has _prepared_url => (
+    is       => 'lazy',
+    init_arg => undef,
+);
+sub _build__prepared_url {
+    my ($self) = @_;
+    my $url = $self->url();
+    $url =~ s{/+$}{};
+    return URI->new( $url )->canonical();
+}
+
+sub _call_rest_method {
+    my ($self, $method, $path, $params) = @_;
+
+    $method = uc( $method );
+
+    $log->tracef( 'Making %s request against %s', $method, $path );
+
+    my $url = $self->_prepared_url->clone();
+    $url->path( $url->path() . '/' . $path );
+
+    my $headers = {};
+    $headers->{'authorization'} = 'Bearer ' . $self->access_token()
+        if $self->_has_access_token();
+    $headers->{'private-token'} = $self->private_token()
+        if $self->_has_private_token();
+    $headers->{'sudo'} = $self->sudo_user()
+        if $self->_has_sudo_user();
+
+    my $req_content = '';
+    if ($params) {
+        if ($method eq 'GET' or $method eq 'HEAD') {
+            $url->query_form( $params );
+        }
+        else {
+            $req_content = $json->encode( $params );
+            $headers->{'content-type'} = 'application/json';
+            $headers->{'content-length'} = length( $req_content );
+        }
+    }
+
+    $url = "$url"; # no need to stringify on every retry
+
+    my $res;
+    my $tries_left = $self->retries();
+    do {
+        $res = $http_tiny->request(
+            $method, $url,
+            {
+                headers => $headers,
+                content => $req_content,
+            },
+        );
+        if ($res->{status} =~ m{^5}) {
+            $tries_left--;
+            $log->warn('Request failed; retrying...') if $tries_left > 0;
+        }
+        else {
+            $tries_left = 0
+        }
+    } while $tries_left > 0;
+
+    if ($res->{status} eq '404' and $method eq 'GET') {
+        return undef;
+    }
+
+    if ($res->{success}) {
+        my $type = $res->{headers}->{'content-type'} || '';
+        return $res->{content} if $type ne 'application/json';
+        return $json->decode( $res->{content} );
+    }
+
+    local $Carp::Internal{ 'GitLab::API::v4' } = 1;
+    my $one_line_res_content = $res->{content};
+    $one_line_res_content =~ s{\s+}{ }g;
+    confess sprintf(
+        'Error %sing %s (HTTP %s): %s %s',
+        $method, $url, $res->{status}, $res->{reason}, $one_line_res_content,
+    );
+}
+
 sub _clone_args {
     my ($self) = @_;
 
     return {
         url         => $self->url(),
         retries     => $self->retries(),
-        rest_client => $self->rest_client(),
         $self->_has_access_token() ? (access_token=>$self->access_token()) : (),
         $self->_has_private_token() ? (private_token=>$self->private_token()) : (),
     };
@@ -130,39 +215,6 @@ sub _clone {
     };
 
     return $class->new( $args );
-}
-
-sub _set_headers {
-    my ($self) = @_;
-
-    $self->rest_client->set_header(
-        'Authorization' => 'Bearer ' . $self->access_token(),
-    ) if $self->_has_access_token();
-
-    $self->rest_client->set_header(
-        'Private-Token' => $self->private_token(),
-    ) if $self->_has_private_token();
-
-    $self->rest_client->set_header(
-        'Sudo' => $self->sudo_user(),
-    ) if $self->_has_sudo_user();
-
-    return;
-}
-
-sub _call_rest_method {
-    my ($self, $method, @args) = @_;
-
-    $self->_set_headers();
-
-    my (@ret, $errored, $error);
-    try { @ret = $self->rest_client->$method( @args ) }
-    catch { ($errored,$error) = (1,$_) };
-
-    $self->rest_client->clear_headers();
-    die $error if $errored;
-
-    return wantarray() ? @ret : $ret[0];
 }
 
 =head1 REQUIRED ARGUMENTS
@@ -237,35 +289,6 @@ has retries => (
     isa     => PositiveOrZeroInt,
     default => 0,
 );
-
-=head2 rest_client
-
-An instance of L<GitLab::API::v4::RESTClient>.  Typically you will not
-be setting this as it defaults to a new instance and customization
-should not be necessary.
-
-=cut
-
-has rest_client => (
-    is      => 'lazy',
-    isa     => InstanceOf[ 'GitLab::API::v4::RESTClient' ],
-);
-sub _build_rest_client {
-    my ($self) = @_;
-
-    my $url = '' . $self->url();
-    my $class = 'GitLab::API::v4::RESTClient';
-
-    $log->debugf( 'Creating a %s instance pointed at %s.', $class, $url );
-
-    my $rest = $class->new(
-        server  => $url,
-        type    => 'application/json',
-        retries => $self->retries,
-    );
-
-    return $rest;
-}
 
 =head1 UTILITY METHODS
 

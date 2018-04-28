@@ -26,9 +26,9 @@ foreach my $section_name (keys %$section_pack) {
     foreach my $sub (keys %$endpoint_pack) {
         my $spec = $endpoint_pack->{$sub};
 
-        my ($return, $method, $path, $params_ok, $noserialize);
-        if ($spec =~ m{^(?:(\S+) = |)(GET|POST|PUT|DELETE) (\S+?)(\??)(?: (NS)|)$}) {
-            ($return, $method, $path, $params_ok, $noserialize) = ($1, $2, $3, $4, $5);
+        my ($return, $method, $path, $params_ok);
+        if ($spec =~ m{^(?:(\S+) = |)(GET|POST|PUT|DELETE) (\S+?)(\??)$}) {
+            ($return, $method, $path, $params_ok) = ($1, $2, $3, $4);
         }
         else {
             die "Invalid spec ($sub): $spec";
@@ -59,13 +59,7 @@ foreach my $section_name (keys %$section_pack) {
         print ");\n\n";
 
         print "Sends a C<$method> request to C<$path>";
-        if ($return) {
-            if ($noserialize) {
-                print " and returns the raw response body";
-            } else {
-                print " and returns the decoded/deserialized response body";
-            }
-        }
+        print " and returns the decoded/deserialized response body" if $return;
         print ".\n\n=cut\n\n";
 
         print "sub $sub {\n";
@@ -112,10 +106,6 @@ foreach my $section_name (keys %$section_pack) {
         print 'return ' if $return;
         print "\$self->_call_rest_method( '$method_sub', \$path";
         print ", ( defined(\$params) ? \$params : () )" if $params_ok;
-        if ($noserialize) {
-            print ",undef" if ! $params_ok;
-            print ",{'deserializer' => undef}";
-        }
         print " );\n";
         print "    return;\n" if !$return;
         print "}\n\n";

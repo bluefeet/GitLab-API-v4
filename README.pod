@@ -116,12 +116,6 @@ See L<https://docs.gitlab.com/ce/api/#sudo>.
 The number of times the request should be retried in case it does not succeed.
 Defaults to C<0> (false), meaning that a failed request will not be retried.
 
-=head2 rest_client
-
-An instance of L<GitLab::API::v4::RESTClient>.  Typically you will not
-be setting this as it defaults to a new instance and customization
-should not be necessary.
-
 =head1 UTILITY METHODS
 
 =head2 paginator
@@ -3200,11 +3194,11 @@ Sends a C<PUT> request to C</users/:user_id>.
 
 =head2 delete_user
 
-    my $user = $api->delete_user(
+    $api->delete_user(
         $user_id,
     );
 
-Sends a C<DELETE> request to C</users/:user_id> and returns the decoded/deserialized response body.
+Sends a C<DELETE> request to C</users/:user_id>.
 
 =head2 current_user
 
@@ -3576,6 +3570,10 @@ Dave Webb <githubE<64>d5ve.com>
 =item *
 
 Simon Ruderich <simonE<64>ruderich.org>
+
+=item *
+
+royce55 <royceE<64>ecs.vuw.ac.nz>
 
 =back
 

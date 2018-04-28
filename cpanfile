@@ -6,7 +6,10 @@ requires 'Types::Standard' => '1.002001';
 requires 'Types::Common::String' => '1.002001';
 requires 'Types::Common::Numeric' => '1.002001';
 
-requires 'Role::REST::Client' => '0.22';
+requires 'HTTP::Tiny' => '0.059';
+requires 'URI' => '1.62';
+requires 'JSON' => '2.59';
+
 requires 'Const::Fast' => '0.014';
 requires 'URI::Escape' => '1.72';
 requires 'Log::Any' => '1.703';
@@ -21,7 +24,6 @@ requires 'Getopt::Long' => 0;
 requires 'Pod::Usage' => 0;
 requires 'Log::Any::Adapter' => '1.703';
 requires 'Log::Any::Adapter::Screen' => '0.13';
-requires 'JSON' => '2.92';
 requires 'Path::Tiny' => '0.079';
 requires 'IO::Prompter' => '0.004014';
 
