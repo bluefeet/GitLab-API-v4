@@ -79,9 +79,9 @@ just before each API call.
 =head2 PROJECT ID
 
 Note that many API calls require a C<$project_id>.  This can be
-specified as either a numeric project C<ID>, or as a
-C<NAMESPACE_PATH/PROJECT_PATH> in many cases.  Perhaps even
-all cases, but the GitLab documentation on this point is vague.
+specified as a numeric project C<ID> or, in many cases, maybe all cases,
+as a C<NAMESPACE_PATH/PROJECT_PATH> string.  The GitLab documentation on
+this point is vague.
 
 =head1 REQUIRED ARGUMENTS
 
@@ -113,8 +113,9 @@ See L<https://docs.gitlab.com/ce/api/#sudo>.
 
 =head2 retries
 
-The number of times the request should be retried in case it does not succeed.
-Defaults to C<0> (false), meaning that a failed request will not be retried.
+The number of times the request should be retried in case it fails (5XX HTTP
+response code).  Defaults to C<0> (false), meaning that a failed request will
+not be retried.
 
 =head1 UTILITY METHODS
 

@@ -79,9 +79,9 @@ just before each API call.
 =head2 PROJECT ID
 
 Note that many API calls require a C<$project_id>.  This can be
-specified as either a numeric project C<ID>, or as a
-C<NAMESPACE_PATH/PROJECT_PATH> in many cases.  Perhaps even
-all cases, but the GitLab documentation on this point is vague.
+specified as a numeric project C<ID> or, in many cases, maybe all cases,
+as a C<NAMESPACE_PATH/PROJECT_PATH> string.  The GitLab documentation on
+this point is vague.
 
 =cut
 
@@ -182,7 +182,8 @@ sub _call_rest_method {
     if ($res->{status} eq '404' and $method eq 'GET' and $return_content) {
         return undef;
     }
-    elsif ($res->{success}) {
+
+    if ($res->{success}) {
         return if !$return_content;
         my $type = $res->{headers}->{'content-type'} || '';
         return $res->{content} if $type ne 'application/json';
@@ -283,8 +284,9 @@ has sudo_user => (
 
 =head2 retries
 
-The number of times the request should be retried in case it does not succeed.
-Defaults to C<0> (false), meaning that a failed request will not be retried.
+The number of times the request should be retried in case it fails (5XX HTTP
+response code).  Defaults to C<0> (false), meaning that a failed request will
+not be retried.
 
 =cut
 
