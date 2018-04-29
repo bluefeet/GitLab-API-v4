@@ -125,7 +125,7 @@ sub _build__prepared_url {
 }
 
 sub _call_rest_method {
-    my ($self, $method, $path, $params) = @_;
+    my ($self, $method, $path, $params, $return_content) = @_;
 
     $method = uc( $method );
 
@@ -176,10 +176,12 @@ sub _call_rest_method {
     } while $tries_left > 0;
 
     if ($res->{status} eq '404' and $method eq 'GET') {
+        return if !$return_content;
         return undef;
     }
 
     if ($res->{success}) {
+        return if !$return_content;
         my $type = $res->{headers}->{'content-type'} || '';
         return $res->{content} if $type ne 'application/json';
         return $json->decode( $res->{content} );

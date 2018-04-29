@@ -59,7 +59,7 @@ foreach my $section_name (keys %$section_pack) {
         print ");\n\n";
 
         print "Sends a C<$method> request to C<$path>";
-        print " and returns the decoded/deserialized response body" if $return;
+        print " and returns the decoded response body" if $return;
         print ".\n\n=cut\n\n";
 
         print "sub $sub {\n";
@@ -105,7 +105,8 @@ foreach my $section_name (keys %$section_pack) {
         print '    ';
         print 'return ' if $return;
         print "\$self->_call_rest_method( '$method_sub', \$path";
-        print ", ( defined(\$params) ? \$params : () )" if $params_ok;
+        print $params_ok ? ", \$params" : ', undef';
+        print $return ? ', 1' : ', 0';
         print " );\n";
         print "    return;\n" if !$return;
         print "}\n\n";
