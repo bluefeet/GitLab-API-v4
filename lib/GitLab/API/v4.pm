@@ -179,12 +179,10 @@ sub _call_rest_method {
         }
     } while $tries_left > 0;
 
-    if ($res->{status} eq '404' and $method eq 'GET') {
-        return if !$return_content;
+    if ($res->{status} eq '404' and $method eq 'GET' and $return_content) {
         return undef;
     }
-
-    if ($res->{success}) {
+    elsif ($res->{success}) {
         return if !$return_content;
         my $type = $res->{headers}->{'content-type'} || '';
         return $res->{content} if $type ne 'application/json';
