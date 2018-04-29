@@ -96,15 +96,10 @@ foreach my $section_name (keys %$section_pack) {
             print "    croak \"The $sub method does not take any arguments\" if \@_;\n";
         }
 
-        my $sprintf_path = $path;
-        $sprintf_path =~ s{:[^/]+}{%s}g;
-        $sprintf_path =~ s{^/}{};
-        print "    my \$path = sprintf('$sprintf_path', (map { uri_escape(\$_) } \@_));\n";
-
         my $method_sub = lc( $method );
         print '    ';
         print 'return ' if $return;
-        print "\$self->_call_rest_method( '$method_sub', \$path";
+        print "\$self->_call_rest_method( '$method_sub', '$path', [\@_]";
         print $params_ok ? ", \$params" : ', undef';
         print $return ? ', 1' : ', 0';
         print " );\n";

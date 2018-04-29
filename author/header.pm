@@ -125,11 +125,15 @@ sub _build__prepared_url {
 }
 
 sub _call_rest_method {
-    my ($self, $method, $path, $params, $return_content) = @_;
+    my ($self, $method, $path, $path_vars, $params, $return_content) = @_;
+
+    $log->tracef( 'Making %s request against %s', $method, $path );
 
     $method = uc( $method );
 
-    $log->tracef( 'Making %s request against %s', $method, $path );
+    $path =~ s{:[^/]+}{%s}g;
+    $path =~ s{^/}{};
+    $path = sprintf($path, (map { uri_escape($_) } @$path_vars)) if @$path_vars;
 
     my $url = $self->_prepared_url->clone();
     $url->path( $url->path() . '/' . $path );
