@@ -1,13 +1,13 @@
 ---
-- custom_user_attributes: attributes = GET /users/:user_id/custom_attributes
-- custom_group_attributes: attributes = GET /groups/:group_id/custom_attributes
-- custom_project_attributes: attributes = GET /projects/:project_id/custom_attributes
-- custom_user_attribute: attribute = GET /users/:user_id/custom_attributes/:attribute_key
-- custom_group_attribute: attribute = GET /groups/:group_id/custom_attributes/:attribute_key
-- custom_project_attribute: attribute = GET /projects/:project_id/custom_attributes/:attribute_key
-- set_custom_user_attribute: attribute = PUT /users/:user_id/custom_attributes/:attribute_key?
-- set_custom_group_attribute: attribute = PUT /groups/:group_id/custom_attributes/:attribute_key?
-- set_custom_project_attribute: attribute = PUT /projects/:project_id/custom_attributes/:attribute_key?
-- delete_custom_user_attribute: DELETE /users/:user_id/custom_attributes/:attribute_key
-- delete_custom_group_attribute: DELETE /groups/:group_id/custom_attributes/:attribute_key
-- delete_custom_project_attribute: DELETE /projects/:project_id/custom_attributes/:attribute_key
+- custom_user_attributes: attributes = GET users/:user_id/custom_attributes
+- custom_group_attributes: attributes = GET groups/:group_id/custom_attributes
+- custom_project_attributes: attributes = GET projects/:project_id/custom_attributes
+- custom_user_attribute: attribute = GET users/:user_id/custom_attributes/:attribute_key
+- custom_group_attribute: attribute = GET groups/:group_id/custom_attributes/:attribute_key
+- custom_project_attribute: attribute = GET projects/:project_id/custom_attributes/:attribute_key
+- set_custom_user_attribute: attribute = PUT users/:user_id/custom_attributes/:attribute_key?
+- set_custom_group_attribute: attribute = PUT groups/:group_id/custom_attributes/:attribute_key?
+- set_custom_project_attribute: attribute = PUT projects/:project_id/custom_attributes/:attribute_key?
+- delete_custom_user_attribute: DELETE users/:user_id/custom_attributes/:attribute_key
+- delete_custom_group_attribute: DELETE groups/:group_id/custom_attributes/:attribute_key
+- delete_custom_project_attribute: DELETE projects/:project_id/custom_attributes/:attribute_key

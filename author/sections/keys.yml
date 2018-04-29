@@ -1,2 +1,2 @@
 ---
-- key: key = GET /keys/:key_id
+- key: key = GET keys/:key_id

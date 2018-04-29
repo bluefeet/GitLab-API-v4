@@ -139,10 +139,7 @@ sub _call_rest_method {
 
     $log->tracef( 'Making %s request against %s', $method, $path );
 
-    $method = uc( $method );
-
     $path =~ s{:[^/]+}{%s}g;
-    $path =~ s{^/}{};
     $path = sprintf($path, (map { uri_escape($_) } @$path_vars)) if @$path_vars;
 
     my $url = $self->_prepared_url->clone();

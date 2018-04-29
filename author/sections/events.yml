@@ -1,4 +1,4 @@
 ---
-- all_events: events = GET /events?
-- user_events: events = GET /users/:user_id/events?
-- project_events: events = GET /projects/:project_id/events?
+- all_events: events = GET events?
+- user_events: events = GET users/:user_id/events?
+- project_events: events = GET projects/:project_id/events?

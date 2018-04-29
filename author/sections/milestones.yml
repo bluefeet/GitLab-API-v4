@@ -1,7 +1,7 @@
 ---
-- project_milestones: milestones = GET /projects/:project_id/milestones?
-- project_milestone: milestone = GET /projects/:project_id/milestones/:milestone_id
-- create_project_milestone: milestone = POST /projects/:project_id/milestones?
-- edit_project_milestone: milestone = PUT /projects/:project_id/milestones/:milestone_id?
-- project_milestone_issues: issues = GET /projects/:project_id/milestones/:milestone_id/issues
-- project_milestone_merge_requests: merge_requests = GET /projects/:project_id/milestones/:milestone_id/merge_requests
+- project_milestones: milestones = GET projects/:project_id/milestones?
+- project_milestone: milestone = GET projects/:project_id/milestones/:milestone_id
+- create_project_milestone: milestone = POST projects/:project_id/milestones?
+- edit_project_milestone: milestone = PUT projects/:project_id/milestones/:milestone_id?
+- project_milestone_issues: issues = GET projects/:project_id/milestones/:milestone_id/issues
+- project_milestone_merge_requests: merge_requests = GET projects/:project_id/milestones/:milestone_id/merge_requests

@@ -27,7 +27,7 @@ foreach my $section_name (keys %$section_pack) {
         my $spec = $endpoint_pack->{$sub};
 
         my ($return, $method, $path, $params_ok);
-        if ($spec =~ m{^(?:(\S+) = |)(GET|POST|PUT|DELETE) (\S+?)(\??)$}) {
+        if ($spec =~ m{^(?:(\S+) = |)(GET|POST|PUT|DELETE) ([^/\s]\S*?[^/\s]?)(\??)$}) {
             ($return, $method, $path, $params_ok) = ($1, $2, $3, $4);
         }
         else {
@@ -96,10 +96,9 @@ foreach my $section_name (keys %$section_pack) {
             print "    croak \"The $sub method does not take any arguments\" if \@_;\n";
         }
 
-        my $method_sub = lc( $method );
         print '    ';
         print 'return ' if $return;
-        print "\$self->_call_rest_method( '$method_sub', '$path', [\@_]";
+        print "\$self->_call_rest_method( '$method', '$path', [\@_]";
         print $params_ok ? ", \$params" : ', undef';
         print $return ? ', 1' : ', 0';
         print " );\n";

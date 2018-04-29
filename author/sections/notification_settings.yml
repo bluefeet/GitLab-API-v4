@@ -1,7 +1,7 @@
 ---
-- global_notification_settings: settings = GET /notification_settings
-- set_global_notification_settings: settings = PUT /notification_settings?
-- group_notification_settings: settings = GET /groups/:group_id/notification_settings
-- project_notification_settings: settings = GET /projects/:project_id/notification_settings
-- set_group_notification_settings: settings = PUT /groups/:group_id/notification_settings?
-- set_project_notification_settings: settings = PUT /projects/:project_id/notification_settings?
+- global_notification_settings: settings = GET notification_settings
+- set_global_notification_settings: settings = PUT notification_settings?
+- group_notification_settings: settings = GET groups/:group_id/notification_settings
+- project_notification_settings: settings = GET projects/:project_id/notification_settings
+- set_group_notification_settings: settings = PUT groups/:group_id/notification_settings?
+- set_project_notification_settings: settings = PUT projects/:project_id/notification_settings?

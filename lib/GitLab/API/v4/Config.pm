@@ -1,5 +1,7 @@
 package GitLab::API::v4::Config;
 
+=encoding utf8
+
 =head1 NAME
 
 GitLab::API::v4::Config - Load configuration from a file, environment,

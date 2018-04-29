@@ -1,7 +1,7 @@
 ---
-- tree: tree = GET /projects/:project_id/repository/tree?
-- blob: blob = GET /projects/:project_id/repository/blobs/:sha
-- raw_blob: raw_blob = GET /projects/:project_id/repository/blobs/:sha/raw
-- archive: archive = GET /projects/:project_id/repository/archive?
-- compare: comparison = GET /projects/:project_id/repository/compare?
-- contributors: contributors = GET /projects/:project_id/repository/contributors
+- tree: tree = GET projects/:project_id/repository/tree?
+- blob: blob = GET projects/:project_id/repository/blobs/:sha
+- raw_blob: raw_blob = GET projects/:project_id/repository/blobs/:sha/raw
+- archive: archive = GET projects/:project_id/repository/archive?
+- compare: comparison = GET projects/:project_id/repository/compare?
+- contributors: contributors = GET projects/:project_id/repository/contributors

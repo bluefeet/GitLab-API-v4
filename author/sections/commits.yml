@@ -1,10 +1,10 @@
 ---
-- commits: commits = GET /projects/:project_id/repository/commits?
-- create_commit: commit = POST /projects/:project_id/repository/commits?
-- commit: commit = GET /projects/:project_id/repository/commits/:commit_sha
-- cherry_pick_commit: commit = POST /projects/:project_id/repository/commits/:commit_sha/cherry_pick?
-- commit_diff: diff = GET /projects/:project_id/repository/commits/:commit_sha/diff
-- commit_comments: comments = GET /projects/:project_id/repository/commits/:commit_sha/comments
-- create_commit_comment: POST /projects/:project_id/repository/commits/:commit_sha/comments?
-- commit_statuses: build_statuses = GET /projects/:project_id/repository/commits/:commit_sha/statuses?
-- create_commit_status: build_status = POST /projects/:project_id/statuses/:commit_sha?
+- commits: commits = GET projects/:project_id/repository/commits?
+- create_commit: commit = POST projects/:project_id/repository/commits?
+- commit: commit = GET projects/:project_id/repository/commits/:commit_sha
+- cherry_pick_commit: commit = POST projects/:project_id/repository/commits/:commit_sha/cherry_pick?
+- commit_diff: diff = GET projects/:project_id/repository/commits/:commit_sha/diff
+- commit_comments: comments = GET projects/:project_id/repository/commits/:commit_sha/comments
+- create_commit_comment: POST projects/:project_id/repository/commits/:commit_sha/comments?
+- commit_statuses: build_statuses = GET projects/:project_id/repository/commits/:commit_sha/statuses?
+- create_commit_status: build_status = POST projects/:project_id/statuses/:commit_sha?

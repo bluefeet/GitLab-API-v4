@@ -1,2 +1,2 @@
 ---
-- version: version = GET /version
+- version: version = GET version

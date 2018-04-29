@@ -1,6 +1,6 @@
 ---
-- environments: environments = GET /projects/:project_id/environments
-- create_environment: environment = POST /projects/:project_id/environments?
-- edit_environment: environment = PUT /projects/:project_id/environments/:environments_id?
-- delete_environment: DELETE /projects/:project_id/environments/:environment_id
-- stop_environment: environment = POST /projects/:project_id/environments/:environment_id/stop
+- environments: environments = GET projects/:project_id/environments
+- create_environment: environment = POST projects/:project_id/environments?
+- edit_environment: environment = PUT projects/:project_id/environments/:environments_id?
+- delete_environment: DELETE projects/:project_id/environments/:environment_id
+- stop_environment: environment = POST projects/:project_id/environments/:environment_id/stop

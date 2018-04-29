@@ -1,6 +1,6 @@
 ---
-- pipelines: pipelines = GET /projects/:project_id/pipelines?
-- pipeline: pipeline = GET /projects/:project_id/pipelines/:pipeline_id
-- create_pipeline: pipeline = POST /projects/:project_id/pipeline?
-- retry_pipeline_jobs: pipeline = POST /projects/:project_id/pipelines/:pipeline_id/retry
-- cancel_pipeline_jobs: pipeline = POST /projects/:project_id/pipelines/:pipeline_id/cancel
+- pipelines: pipelines = GET projects/:project_id/pipelines?
+- pipeline: pipeline = GET projects/:project_id/pipelines/:pipeline_id
+- create_pipeline: pipeline = POST projects/:project_id/pipeline?
+- retry_pipeline_jobs: pipeline = POST projects/:project_id/pipelines/:pipeline_id/retry
+- cancel_pipeline_jobs: pipeline = POST projects/:project_id/pipelines/:pipeline_id/cancel

@@ -1,26 +1,26 @@
 ---
-- projects: projects = GET /projects?
-- user_projects: projects = GET /users/:user_id/projects?
-- project: project = GET /projects/:project_id?
-- project_users: users = GET /projects/:project_id/users
-- create_project: project = POST /projects?
-- create_project_for_user: POST /projects/user/:user_id?
-- edit_project: PUT /projects/:project_id?
-- fork_project: POST /projects/:project_id/fork?
-- project_forks: forks = GET /projects/:project_id/forks?
-- start_project: project = POST /projects/:project_id/star
-- unstar_project: project = POST /projects/:project_id/unstar
-- archive_project: project = POST /projects/:project_id/archive
-- unarchive_project: project = POST /projects/:project_id/unarchive
-- delete_project: DELETE /projects/:project_id
-- upload_file_to_project: upload = POST /projects/:project_id/uploads?
-- share_project_with_group: POST /projects/:project_id/share?
-- unshare_project_with_group: DELETE /projects/:project_id/share/:group_id
-- project_hooks: hooks = GET /projects/:project_id/hooks
-- project_hook: hook = GET /project/:project_id/hooks/:hook_id
-- create_project_hook: POST /projects/:project_id/hooks?
-- edit_project_hook: PUT /projects/:project_id/hooks/:hook_id?
-- delete_project_hook: hook = DELETE /projects/:project_id/hooks/:hook_id
-- set_project_fork: POST /projects/:project_id/fork/:from_project_id
-- clear_project_fork: DELETE /projects/:project_id/fork
-- start_housekeeping: POST /projects/:project_id/housekeeping
+- projects: projects = GET projects?
+- user_projects: projects = GET users/:user_id/projects?
+- project: project = GET projects/:project_id?
+- project_users: users = GET projects/:project_id/users
+- create_project: project = POST projects?
+- create_project_for_user: POST projects/user/:user_id?
+- edit_project: PUT projects/:project_id?
+- fork_project: POST projects/:project_id/fork?
+- project_forks: forks = GET projects/:project_id/forks?
+- start_project: project = POST projects/:project_id/star
+- unstar_project: project = POST projects/:project_id/unstar
+- archive_project: project = POST projects/:project_id/archive
+- unarchive_project: project = POST projects/:project_id/unarchive
+- delete_project: DELETE projects/:project_id
+- upload_file_to_project: upload = POST projects/:project_id/uploads?
+- share_project_with_group: POST projects/:project_id/share?
+- unshare_project_with_group: DELETE projects/:project_id/share/:group_id
+- project_hooks: hooks = GET projects/:project_id/hooks
+- project_hook: hook = GET project/:project_id/hooks/:hook_id
+- create_project_hook: POST projects/:project_id/hooks?
+- edit_project_hook: PUT projects/:project_id/hooks/:hook_id?
+- delete_project_hook: hook = DELETE projects/:project_id/hooks/:hook_id
+- set_project_fork: POST projects/:project_id/fork/:from_project_id
+- clear_project_fork: DELETE projects/:project_id/fork
+- start_housekeeping: POST projects/:project_id/housekeeping

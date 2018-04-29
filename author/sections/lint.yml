@@ -1,2 +1,2 @@
 ---
-- lint: result = POST /lint?
+- lint: result = POST lint?

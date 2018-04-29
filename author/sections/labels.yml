@@ -1,7 +1,7 @@
 ---
-- labels: labels = GET /projects/:project_id/labels
-- create_label: label = POST /projects/:project_id/labels?
-- delete_label: DELETE /projects/:project_id/labels?
-- edit_label: label = PUT /projects/:project_id/labels?
-- subscribe_to_label: label = POST /projects/:project_id/labels/:label_id/subscribe
-- unsubscribe_from_label: POST /projects/:project_id/labels/:label_id/unsubscribe
+- labels: labels = GET projects/:project_id/labels
+- create_label: label = POST projects/:project_id/labels?
+- delete_label: DELETE projects/:project_id/labels?
+- edit_label: label = PUT projects/:project_id/labels?
+- subscribe_to_label: label = POST projects/:project_id/labels/:label_id/subscribe
+- unsubscribe_from_label: POST projects/:project_id/labels/:label_id/unsubscribe

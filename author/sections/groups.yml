@@ -1,13 +1,13 @@
 ---
-- groups: groups = GET /groups?
-- group_subgroups: subgroups = GET /groups/:group_id/subgroups?
-- group_projects: projects = GET /groups/:group_id/projects?
-- group: group = GET /groups/:group_id
-- create_group: POST /groups?
-- transfer_project_to_group: POST /groups/:group_id/projects/:project_id
-- edit_group: group = PUT /groups/:group_id?
-- delete_group: DELETE /groups/:group_id
-- sync_group_with_ldap: POST /groups/:group_id/ldap_sync
-- create_ldap_group_link: POST /groups/:group_id/ldap_group_links?
-- delete_ldap_group_link: DELETE /groups/:group_id/ldap_group_links/:cn
-- delete_ldap_provider_group_link: DELETE /groups/:group_id/ldap_group_links/:provider/:cn
+- groups: groups = GET groups?
+- group_subgroups: subgroups = GET groups/:group_id/subgroups?
+- group_projects: projects = GET groups/:group_id/projects?
+- group: group = GET groups/:group_id
+- create_group: POST groups?
+- transfer_project_to_group: POST groups/:group_id/projects/:project_id
+- edit_group: group = PUT groups/:group_id?
+- delete_group: DELETE groups/:group_id
+- sync_group_with_ldap: POST groups/:group_id/ldap_sync
+- create_ldap_group_link: POST groups/:group_id/ldap_group_links?
+- delete_ldap_group_link: DELETE groups/:group_id/ldap_group_links/:cn
+- delete_ldap_provider_group_link: DELETE groups/:group_id/ldap_group_links/:provider/:cn

@@ -1,5 +1,7 @@
 package GitLab::API::v4::Constants;
 
+=encoding utf8
+
 =head1 NAME
 
 GitLab::API::v4::Constants - GitLab API v4 constants.
