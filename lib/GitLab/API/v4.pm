@@ -54,6 +54,10 @@ or L</private_token> arguments.
 If no credentials are supplied then the client will be anonymous and greatly
 limited in what it can do with the API.
 
+Extra care has been taken to hide the token arguments behind closures.  This way,
+if you dump your api object, your tokens won't accidentally leak into places you
+don't want them to.
+
 =head2 CONSTANTS
 
 The GitLab API, in rare cases, uses a numeric value to represent a state.
@@ -108,6 +112,11 @@ my $json = JSON->new->utf8->allow_nonref();
 sub BUILD {
     my ($self) = @_;
 
+    # Ensure any token arguments get moved into their closure before we return
+    # the built object.
+    $self->access_token();
+    $self->private_token();
+
     $log->debugf( "An instance of %s has been created.", ref($self) );
 
     return;
@@ -116,8 +125,9 @@ sub BUILD {
 has _prepared_url => (
     is       => 'lazy',
     init_arg => undef,
+    builder  => '_build_prepared_url',
 );
-sub _build__prepared_url {
+sub _build_prepared_url {
     my ($self) = @_;
     my $url = $self->url();
     $url =~ s{/+$}{};
@@ -140,11 +150,11 @@ sub _call_rest_method {
 
     my $headers = {};
     $headers->{'authorization'} = 'Bearer ' . $self->access_token()
-        if $self->_has_access_token();
+        if defined $self->access_token();
     $headers->{'private-token'} = $self->private_token()
-        if $self->_has_private_token();
+        if defined $self->private_token();
     $headers->{'sudo'} = $self->sudo_user()
-        if $self->_has_sudo_user();
+        if defined $self->sudo_user();
 
     my $req_content = '';
     if ($params) {
@@ -205,8 +215,8 @@ sub _clone_args {
     return {
         url         => $self->url(),
         retries     => $self->retries(),
-        $self->_has_access_token() ? (access_token=>$self->access_token()) : (),
-        $self->_has_private_token() ? (private_token=>$self->private_token()) : (),
+        (defined $self->access_token()) ? (access_token=>$self->access_token()) : (),
+        (defined $self->private_token()) ? (private_token=>$self->private_token()) : (),
     };
 }
 
@@ -220,6 +230,13 @@ sub _clone {
     };
 
     return $class->new( $args );
+}
+
+# Little utility method that avoids any ambiguity in whether a closer is
+# causing circular references.  Don't ever pass it a ref.
+sub _make_safe_closure {
+    my ($ret) = @_;
+    return sub{ $ret };
 }
 
 =head1 REQUIRED ARGUMENTS
@@ -247,11 +264,30 @@ See L<https://docs.gitlab.com/ce/api/#oauth2-tokens>.
 
 =cut
 
-has access_token => (
+has _access_token_arg => (
     is        => 'ro',
     isa       => NonEmptySimpleStr,
-    predicate => '_has_access_token',
+    init_arg  => 'access_token',
+    clearer   => '_clear_access_token_arg',
 );
+
+has _access_token_closure => (
+    is       => 'lazy',
+    isa      => CodeRef,
+    init_arg => undef,
+    builder  => '_build_access_token_closure',
+);
+sub _build_access_token_closure {
+    my ($self) = @_;
+    my $token = $self->_access_token_arg();
+    $self->_clear_access_token_arg();
+    return _make_safe_closure( $token );
+}
+
+sub access_token {
+    my ($self) = @_;
+    return $self->_access_token_closure->();
+}
 
 =head2 private_token
 
@@ -261,11 +297,30 @@ See L<https://docs.gitlab.com/ce/api/#personal-access-tokens>.
 
 =cut
 
-has private_token => (
+has _private_token_arg => (
     is        => 'ro',
     isa       => NonEmptySimpleStr,
-    predicate => '_has_private_token',
+    init_arg  => 'private_token',
+    clearer   => '_clear_private_token_arg',
 );
+
+has _private_token_closure => (
+    is       => 'lazy',
+    isa      => CodeRef,
+    init_arg => undef,
+    builder  => '_build_private_token_closure',
+);
+sub _build_private_token_closure {
+    my ($self) = @_;
+    my $token = $self->_private_token_arg();
+    $self->_clear_private_token_arg();
+    return _make_safe_closure( $token );
+}
+
+sub private_token {
+    my ($self) = @_;
+    return $self->_private_token_closure->();
+}
 
 =head2 sudo_user
 
@@ -277,9 +332,8 @@ See L<https://docs.gitlab.com/ce/api/#sudo>.
 =cut
 
 has sudo_user => (
-    is        => 'ro',
-    isa       => NonEmptySimpleStr,
-    predicate => '_has_sudo_user',
+    is  => 'ro',
+    isa => NonEmptySimpleStr,
 );
 
 =head2 retries

@@ -54,6 +54,10 @@ or L</private_token> arguments.
 If no credentials are supplied then the client will be anonymous and greatly
 limited in what it can do with the API.
 
+Extra care has been taken to hide the token arguments behind closures.  This way,
+if you dump your api object, your tokens won't accidentally leak into places you
+don't want them to.
+
 =head2 CONSTANTS
 
 The GitLab API, in rare cases, uses a numeric value to represent a state.
