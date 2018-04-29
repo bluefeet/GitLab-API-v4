@@ -89,25 +89,18 @@ this point is vague.
 
 =cut
 
+use GitLab::API::v4::RESTClient;
 use GitLab::API::v4::Paginator;
 
 use Types::Standard -types;
 use Types::Common::String -types;
 use Types::Common::Numeric -types;
-use URI::Escape;
-use Carp qw( croak confess );
+use Carp qw( croak );
 use Log::Any qw( $log );
-use Try::Tiny;
-use URI;
-use HTTP::Tiny;
-use JSON;
 
 use Moo;
 use strictures 2;
 use namespace::clean;
-
-my $http_tiny = HTTP::Tiny->new();
-my $json = JSON->new->utf8->allow_nonref();
 
 sub BUILD {
     my ($self) = @_;
@@ -122,30 +115,22 @@ sub BUILD {
     return;
 }
 
-has _prepared_url => (
-    is       => 'lazy',
-    init_arg => undef,
-    builder  => '_build_prepared_url',
-);
-sub _build_prepared_url {
-    my ($self) = @_;
-    my $url = $self->url();
-    $url =~ s{/+$}{};
-    return URI->new( $url )->canonical();
-}
-
 sub _call_rest_method {
     my ($self, $method, $path, $path_vars, $params, $return_content) = @_;
 
-    $log->tracef( 'Making %s request against %s', $method, $path );
+    my $options = {};
+    if (defined($params)) {
+        if ($method eq 'GET' or $method eq 'HEAD') {
+            $options->{query} = $params;
+        }
+        else {
+            $options->{content} = $params;
+        }
+    }
 
-    $path =~ s{:[^/]+}{%s}g;
-    $path = sprintf($path, (map { uri_escape($_) } @$path_vars)) if @$path_vars;
+    $options->{decode} = $return_content;
 
-    my $url = $self->_prepared_url->clone();
-    $url->path( $url->path() . '/' . $path );
-
-    my $headers = {};
+    my $headers = $options->{headers} = {};
     $headers->{'authorization'} = 'Bearer ' . $self->access_token()
         if defined $self->access_token();
     $headers->{'private-token'} = $self->private_token()
@@ -153,56 +138,8 @@ sub _call_rest_method {
     $headers->{'sudo'} = $self->sudo_user()
         if defined $self->sudo_user();
 
-    my $req_content = '';
-    if ($params) {
-        if ($method eq 'GET' or $method eq 'HEAD') {
-            $url->query_form( $params );
-        }
-        else {
-            $req_content = $json->encode( $params );
-            $headers->{'content-type'} = 'application/json';
-            $headers->{'content-length'} = length( $req_content );
-        }
-    }
-
-    $url = "$url"; # no need to stringify on every retry
-
-    my $res;
-    my $tries_left = $self->retries();
-    do {
-        $res = $http_tiny->request(
-            $method, $url,
-            {
-                headers => $headers,
-                content => $req_content,
-            },
-        );
-        if ($res->{status} =~ m{^5}) {
-            $tries_left--;
-            $log->warn('Request failed; retrying...') if $tries_left > 0;
-        }
-        else {
-            $tries_left = 0
-        }
-    } while $tries_left > 0;
-
-    if ($res->{status} eq '404' and $method eq 'GET' and $return_content) {
-        return undef;
-    }
-
-    if ($res->{success}) {
-        return if !$return_content;
-        my $type = $res->{headers}->{'content-type'} || '';
-        return $res->{content} if $type ne 'application/json';
-        return $json->decode( $res->{content} );
-    }
-
-    local $Carp::Internal{ 'GitLab::API::v4' } = 1;
-    my $one_line_res_content = $res->{content};
-    $one_line_res_content =~ s{\s+}{ }g;
-    confess sprintf(
-        'Error %sing %s (HTTP %s): %s %s',
-        $method, $url, $res->{status}, $res->{reason}, $one_line_res_content,
+    return $self->rest_client->request(
+        $method, $path, $path_vars, $options,
     );
 }
 
@@ -212,6 +149,7 @@ sub _clone_args {
     return {
         url         => $self->url(),
         retries     => $self->retries(),
+        rest_client => $self->rest_client(),
         (defined $self->access_token()) ? (access_token=>$self->access_token()) : (),
         (defined $self->private_token()) ? (private_token=>$self->private_token()) : (),
     };
@@ -319,6 +257,20 @@ sub private_token {
     return $self->_private_token_closure->();
 }
 
+=head2 retries
+
+The number of times the request should be retried in case it fails (5XX HTTP
+response code).  Defaults to C<0> (false), meaning that a failed request will
+not be retried.
+
+=cut
+
+has retries => (
+    is      => 'ro',
+    isa     => PositiveOrZeroInt,
+    default => 0,
+);
+
 =head2 sudo_user
 
 The user to execute API calls as.  You may find it more useful to use the
@@ -333,19 +285,26 @@ has sudo_user => (
     isa => NonEmptySimpleStr,
 );
 
-=head2 retries
+=head2 rest_client
 
-The number of times the request should be retried in case it fails (5XX HTTP
-response code).  Defaults to C<0> (false), meaning that a failed request will
-not be retried.
+An instance of L<GitLab::API::v4::RESTClient>.  Typically you will not
+be setting this as it defaults to a new instance and customization
+should not be necessary.
 
 =cut
 
-has retries => (
-    is      => 'ro',
-    isa     => PositiveOrZeroInt,
-    default => 0,
+has rest_client => (
+    is  => 'lazy',
+    isa => InstanceOf[ 'GitLab::API::v4::RESTClient' ],
 );
+sub _build_rest_client {
+    my ($self) = @_;
+
+    return GitLab::API::v4::RESTClient->new(
+        base_url => $self->url(),
+        retries  => $self->retries(),
+    );
+}
 
 =head1 UTILITY METHODS
 

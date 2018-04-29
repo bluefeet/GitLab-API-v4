@@ -1,25 +1,25 @@
+# Common modules.
+requires 'Moo' => '2.003000';
 requires 'strictures' => '2.000003';
 requires 'namespace::clean' => '0.27';
-
-requires 'Moo' => '2.003000';
 requires 'Types::Standard' => '1.002001';
 requires 'Types::Common::String' => '1.002001';
 requires 'Types::Common::Numeric' => '1.002001';
-
-requires 'HTTP::Tiny' => '0.059';
-requires 'URI' => '1.62';
+requires 'Log::Any' => '1.703';
+requires 'Carp' => 0;
 requires 'JSON' => '2.59';
 
-requires 'Const::Fast' => '0.014';
+# Used by GitLab::API::v4::RESTClient.
+requires 'HTTP::Tiny' => '0.059';
+requires 'URI' => '1.62';
 requires 'URI::Escape' => '1.72';
-requires 'Log::Any' => '1.703';
-requires 'Try::Tiny' => '0.28';
 
-requires 'Carp' => 0;
+# Used by GitLab::API::v4::Constants.
+requires 'Const::Fast' => '0.014';
 requires 'Exporter' => 0;
-requires 'Data::Dumper' => 0;
 
-# Used exclusively by gitlab-api-v4 and/or GitLab::API::v4::Config.
+# Used by gitlab-api-v4 and/or GitLab::API::v4::Config.
+requires 'Try::Tiny' => '0.28';
 requires 'Getopt::Long' => 0;
 requires 'Pod::Usage' => 0;
 requires 'Log::Any::Adapter' => '1.703';

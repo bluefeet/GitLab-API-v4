@@ -108,6 +108,12 @@ A GitLab API personal token.  If set then L</access_token> may not be set.
 
 See L<https://docs.gitlab.com/ce/api/#personal-access-tokens>.
 
+=head2 retries
+
+The number of times the request should be retried in case it fails (5XX HTTP
+response code).  Defaults to C<0> (false), meaning that a failed request will
+not be retried.
+
 =head2 sudo_user
 
 The user to execute API calls as.  You may find it more useful to use the
@@ -115,11 +121,11 @@ L</sudo> method instead.
 
 See L<https://docs.gitlab.com/ce/api/#sudo>.
 
-=head2 retries
+=head2 rest_client
 
-The number of times the request should be retried in case it fails (5XX HTTP
-response code).  Defaults to C<0> (false), meaning that a failed request will
-not be retried.
+An instance of L<GitLab::API::v4::RESTClient>.  Typically you will not
+be setting this as it defaults to a new instance and customization
+should not be necessary.
 
 =head1 UTILITY METHODS
 
