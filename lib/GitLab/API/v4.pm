@@ -7216,11 +7216,11 @@ sub delete_user_email {
 
 =head2 block_user
 
-    $api->block_user(
+    my $success = $api->block_user(
         $user_id,
     );
 
-Sends a C<POST> request to C<users/:user_id/block>.
+Sends a C<POST> request to C<users/:user_id/block> and returns the decoded response body.
 
 =cut
 
@@ -7228,17 +7228,16 @@ sub block_user {
     my $self = shift;
     croak 'block_user must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($user_id) to block_user must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    $self->_call_rest_method( 'POST', 'users/:user_id/block', [@_], undef, 0 );
-    return;
+    return $self->_call_rest_method( 'POST', 'users/:user_id/block', [@_], undef, 1 );
 }
 
 =head2 unblock_user
 
-    $api->unblock_user(
+    my $success = $api->unblock_user(
         $user_id,
     );
 
-Sends a C<POST> request to C<users/:user_id/unblock>.
+Sends a C<POST> request to C<users/:user_id/unblock> and returns the decoded response body.
 
 =cut
 
@@ -7246,8 +7245,7 @@ sub unblock_user {
     my $self = shift;
     croak 'unblock_user must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($user_id) to unblock_user must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    $self->_call_rest_method( 'POST', 'users/:user_id/unblock', [@_], undef, 0 );
-    return;
+    return $self->_call_rest_method( 'POST', 'users/:user_id/unblock', [@_], undef, 1 );
 }
 
 =head2 user_impersonation_tokens

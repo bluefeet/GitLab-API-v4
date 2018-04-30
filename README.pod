@@ -3396,19 +3396,19 @@ Sends a C<DELETE> request to C<users/:user_id/emails/:email_id>.
 
 =head2 block_user
 
-    $api->block_user(
+    my $success = $api->block_user(
         $user_id,
     );
 
-Sends a C<POST> request to C<users/:user_id/block>.
+Sends a C<POST> request to C<users/:user_id/block> and returns the decoded response body.
 
 =head2 unblock_user
 
-    $api->unblock_user(
+    my $success = $api->unblock_user(
         $user_id,
     );
 
-Sends a C<POST> request to C<users/:user_id/unblock>.
+Sends a C<POST> request to C<users/:user_id/unblock> and returns the decoded response body.
 
 =head2 user_impersonation_tokens
 

@@ -41,10 +41,10 @@ subtest users => sub{
     ok( $found_user, 'user found' );
     my $user_id = $found_user->[0]->{'id'};
 
-    $api->block_user($user_id);
-    pass 'user blocked';
-    $api->unblock_user($user_id);
-    pass 'user unblocked';
+    ok( $api->block_user($user_id), 'user blocked' );
+    ok( (!$api->block_user($user_id)), 'user cannot be blocked again' );
+    ok( $api->unblock_user($user_id), 'user unblocked' );
+    ok( (!$api->unblock_user($user_id)), 'user cannot be unblocked again' );
     $api->delete_user($user_id);
     pass 'user deleted';
 };

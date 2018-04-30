@@ -27,8 +27,8 @@
 - create_user_email: email = POST users/:user_id/emails?
 - delete_current_user_email: DELETE user/emails/:email_id
 - delete_user_email: DELETE users/:user_id/emails/:email_id
-- block_user: POST users/:user_id/block
-- unblock_user: POST users/:user_id/unblock
+- block_user: success = POST users/:user_id/block
+- unblock_user: success = POST users/:user_id/unblock
 - user_impersonation_tokens: tokens = GET users/:user_id/impersonation_tokens?
 - user_impersonation_token: token = GET users/:user_id/impersonation_tokens/:impersonation_token_id
 - create_user_impersonation_token: token = POST users/:user_id/impersonation_tokens?
