@@ -116,19 +116,7 @@ sub BUILD {
 }
 
 sub _call_rest_method {
-    my ($self, $method, $path, $path_vars, $params, $return_content) = @_;
-
-    my $options = {};
-    if (defined($params)) {
-        if ($method eq 'GET' or $method eq 'HEAD') {
-            $options->{query} = $params;
-        }
-        else {
-            $options->{content} = $params;
-        }
-    }
-
-    $options->{decode} = $return_content;
+    my ($self, $method, $path, $path_vars, $options) = @_;
 
     my $headers = $options->{headers} = {};
     $headers->{'authorization'} = 'Bearer ' . $self->access_token()

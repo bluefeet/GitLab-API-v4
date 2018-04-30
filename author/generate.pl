@@ -96,12 +96,17 @@ foreach my $section_name (keys %$section_pack) {
             print "    croak \"The $sub method does not take any arguments\" if \@_;\n";
         }
 
+
+        print "    my \$options = {};\n";
+        print "    \$options->{decode} = 0;\n" if !$return;
+        if ($params_ok) {
+            my $params_key = ($method eq 'GET' or $method eq 'HEAD') ? 'query' : 'content';
+            print "    \$options->{$params_key} = \$params if defined \$params;\n";
+        }
+
         print '    ';
         print 'return ' if $return;
-        print "\$self->_call_rest_method( '$method', '$path', [\@_]";
-        print $params_ok ? ", \$params" : ', undef';
-        print $return ? ', 1' : ', 0';
-        print " );\n";
+        print "\$self->_call_rest_method( '$method', '$path', [\@_], \$options );\n";
         print "    return;\n" if !$return;
         print "}\n\n";
     }}
