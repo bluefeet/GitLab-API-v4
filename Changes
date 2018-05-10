@@ -2,6 +2,8 @@ Revision history for Perl extension GitLab::API::v4.
 
 {{$NEXT}}
 
+0.07 2018-05-10
+
 - Completely overhaul ::RestClient to use HTTP::Tiny instead of
   Role::REST::Client.  This change will make it much easier to alter the
   behavior of the HTTP communication.
