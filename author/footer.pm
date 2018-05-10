@@ -34,7 +34,7 @@ L<open a ticket|https://github.com/bluefeet/GitLab-API-v4/issues>.
 
 Aran Clary Deltac <bluefeetE<64>gmail.com>
 
-=head2 CONTRIBUTORS
+=head1 CONTRIBUTORS
 
 =over
 

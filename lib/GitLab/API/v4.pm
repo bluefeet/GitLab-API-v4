@@ -26,7 +26,7 @@ GitLab's own L<API Documentation|http://doc.gitlab.com/ce/api/README.html>.
 Note that this distribution also includes the L<gitlab-api-v4> command-line
 interface (CLI).
 
-=head2 UPGRADING
+=head2 Upgrading
 
 If you are upgrading from L<GitLab::API::v3> make sure you read:
 
@@ -46,7 +46,7 @@ Or clone the repo and run this command:
 
 C<git diff 72e384775c9570f60f8ef68dee3a1eecd347fb69..HEAD -- author/sections/>
 
-=head2 CREDENTIALS
+=head2 Credentials
 
 Authentication credentials may be defined by setting either the L</access_token>
 or L</private_token> arguments.
@@ -58,13 +58,13 @@ Extra care has been taken to hide the token arguments behind closures.  This way
 if you dump your api object, your tokens won't accidentally leak into places you
 don't want them to.
 
-=head2 CONSTANTS
+=head2 Constants
 
 The GitLab API, in rare cases, uses a numeric value to represent a state.
 To make life easier the L<GitLab::API::v4::Constants> module exposes
 these states as named variables.
 
-=head2 EXCEPTIONS
+=head2 Exceptions
 
 The API methods will all throw a useful exception if
 an unsuccessful response is received from the API.  That is except for
@@ -74,13 +74,13 @@ for methods that return a value.
 If you'd like to catch and handle these exceptions consider using
 L<Try::Tiny>.
 
-=head2 LOGGING
+=head2 Logging
 
 This module uses L<Log::Any> and produces some debug messages here
 and there, but the most useful bits are the info messages produced
 just before each API call.
 
-=head2 PROJECT ID
+=head2 Project ID
 
 Note that many API calls require a C<$project_id>.  This can be
 specified as a numeric project C<ID> or, in many cases, maybe all cases,
@@ -8084,7 +8084,7 @@ L<open a ticket|https://github.com/bluefeet/GitLab-API-v4/issues>.
 
 Aran Clary Deltac <bluefeetE<64>gmail.com>
 
-=head2 CONTRIBUTORS
+=head1 CONTRIBUTORS
 
 =over
 
