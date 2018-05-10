@@ -7200,6 +7200,61 @@ sub edit_release {
 
 See L<https://docs.gitlab.com/ce/api/todos.html>.
 
+=head2 todos
+
+    my $todos = $api->todos(
+        \%params,
+    );
+
+Sends a C<GET> request to C<todos> and returns the decoded response body.
+
+=cut
+
+sub todos {
+    my $self = shift;
+    croak 'todos must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to todos must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    my $params = (@_ == 1) ? pop() : undef;
+    my $options = {};
+    $options->{query} = $params if defined $params;
+    return $self->_call_rest_method( 'GET', 'todos', [@_], $options );
+}
+
+=head2 mark_todo_done
+
+    my $todo = $api->mark_todo_done(
+        $todo_id,
+    );
+
+Sends a C<POST> request to C<todos/:todo_id/mark_as_done> and returns the decoded response body.
+
+=cut
+
+sub mark_todo_done {
+    my $self = shift;
+    croak 'mark_todo_done must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($todo_id) to mark_todo_done must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $options = {};
+    return $self->_call_rest_method( 'POST', 'todos/:todo_id/mark_as_done', [@_], $options );
+}
+
+=head2 mark_all_todos_done
+
+    $api->mark_all_todos_done();
+
+Sends a C<POST> request to C<todos/mark_as_done>.
+
+=cut
+
+sub mark_all_todos_done {
+    my $self = shift;
+    croak "The mark_all_todos_done method does not take any arguments" if @_;
+    my $options = {};
+    $options->{decode} = 0;
+    $self->_call_rest_method( 'POST', 'todos/mark_as_done', [@_], $options );
+    return;
+}
+
 =head1 USER METHODS
 
 See L<https://docs.gitlab.com/ce/api/users.html>.

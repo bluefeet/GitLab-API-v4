@@ -1,1 +1,4 @@
 ---
+- todos: todos = GET todos?
+- mark_todo_done: todo = POST todos/:todo_id/mark_as_done
+- mark_all_todos_done: POST todos/mark_as_done

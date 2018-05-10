@@ -3166,6 +3166,28 @@ Sends a C<PUT> request to C<projects/:project_id/repository/tags/:tag_name/relea
 
 See L<https://docs.gitlab.com/ce/api/todos.html>.
 
+=head2 todos
+
+    my $todos = $api->todos(
+        \%params,
+    );
+
+Sends a C<GET> request to C<todos> and returns the decoded response body.
+
+=head2 mark_todo_done
+
+    my $todo = $api->mark_todo_done(
+        $todo_id,
+    );
+
+Sends a C<POST> request to C<todos/:todo_id/mark_as_done> and returns the decoded response body.
+
+=head2 mark_all_todos_done
+
+    $api->mark_all_todos_done();
+
+Sends a C<POST> request to C<todos/mark_as_done>.
+
 =head1 USER METHODS
 
 See L<https://docs.gitlab.com/ce/api/users.html>.
