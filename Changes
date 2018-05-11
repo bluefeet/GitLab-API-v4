@@ -2,6 +2,10 @@ Revision history for Perl extension GitLab::API::v4.
 
 {{$NEXT}}
 
+- Add project_languages method.
+- Remove upload_file_to_project since it doesn't work.  Will re-add when
+  it is made to work later.
+
 0.07 2018-05-10
 
 - Completely overhaul ::RestClient to use HTTP::Tiny instead of

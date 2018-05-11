@@ -2501,6 +2501,14 @@ Sends a C<POST> request to C<projects/:project_id/star> and returns the decoded 
 
 Sends a C<POST> request to C<projects/:project_id/unstar> and returns the decoded response body.
 
+=head2 project_languages
+
+    my $languages = $api->project_languages(
+        $project_id,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/languages> and returns the decoded response body.
+
 =head2 archive_project
 
     my $project = $api->archive_project(
@@ -2524,15 +2532,6 @@ Sends a C<POST> request to C<projects/:project_id/unarchive> and returns the dec
     );
 
 Sends a C<DELETE> request to C<projects/:project_id>.
-
-=head2 upload_file_to_project
-
-    my $upload = $api->upload_file_to_project(
-        $project_id,
-        \%params,
-    );
-
-Sends a C<POST> request to C<projects/:project_id/uploads> and returns the decoded response body.
 
 =head2 share_project_with_group
 

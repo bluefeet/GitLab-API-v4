@@ -10,10 +10,12 @@
 - project_forks: forks = GET projects/:project_id/forks?
 - start_project: project = POST projects/:project_id/star
 - unstar_project: project = POST projects/:project_id/unstar
+- project_languages: languages = GET projects/:project_id/languages
 - archive_project: project = POST projects/:project_id/archive
 - unarchive_project: project = POST projects/:project_id/unarchive
 - delete_project: DELETE projects/:project_id
-- upload_file_to_project: upload = POST projects/:project_id/uploads?
+# TODO: Support multi-part uploads in ::RestClient.
+#- upload_file_to_project: upload = POST projects/:project_id/uploads?
 - share_project_with_group: POST projects/:project_id/share?
 - unshare_project_with_group: DELETE projects/:project_id/share/:group_id
 - project_hooks: hooks = GET projects/:project_id/hooks
@@ -24,3 +26,5 @@
 - set_project_fork: POST projects/:project_id/fork/:from_project_id
 - clear_project_fork: DELETE projects/:project_id/fork
 - start_housekeeping: POST projects/:project_id/housekeeping
+# TODO: Support undecoded responses, maybe more.
+#- download_project_snapshot: snapshot = GET projects/:project_id/snapshot
