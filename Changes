@@ -2,6 +2,8 @@ Revision history for Perl extension GitLab::API::v4.
 
 {{$NEXT}}
 
+0.08 2018-05-14
+
 - Many API endpoints which return lists and did not support parameters now do
   in order for pagination arguments, and the paginator, to be used with them.
 - Add project_languages method.
