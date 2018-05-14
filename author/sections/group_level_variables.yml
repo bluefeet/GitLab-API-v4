@@ -1,5 +1,5 @@
 ---
-- group_variables: variables = GET groups/:group_id/variables
+- group_variables: variables = GET groups/:group_id/variables?
 - group_variable: variable = GET groups/:group_id/variables/:variable_key
 - create_group_variable: variable = POST groups/:group_id/variables?
 - edit_group_variable: variable = PUT groups/:group_id/variables/:variable_key?

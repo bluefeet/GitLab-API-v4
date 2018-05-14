@@ -1,5 +1,5 @@
 ---
-- project_variables: variables = GET projects/:project_id/variables
+- project_variables: variables = GET projects/:project_id/variables?
 - project_variable: variable = GET projects/:project_id/variables/:variable_key
 - create_project_variable: variable = POST projects/:project_id/variables?
 - edit_project_variable: variable = PUT projects/:project_id/variables/:variable_key?

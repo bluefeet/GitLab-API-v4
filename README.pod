@@ -172,6 +172,7 @@ See L<https://docs.gitlab.com/ce/api/award_emoji.html>.
     my $award_emojis = $api->issue_award_emojis(
         $project_id,
         $issue_iid,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid/award_emoji> and returns the decoded response body.
@@ -181,6 +182,7 @@ Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid/award_emoji> 
     my $award_emojis = $api->merge_request_award_emojis(
         $project_id,
         $merge_request_iid,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/award_emoji> and returns the decoded response body.
@@ -190,6 +192,7 @@ Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_i
     my $award_emojis = $api->snippet_award_emojis(
         $project_id,
         $merge_request_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_id/award_emoji> and returns the decoded response body.
@@ -377,6 +380,7 @@ See L<https://doc.gitlab.com/ce/api/branches.html>.
 
     my $branches = $api->branches(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/repository/branches> and returns the decoded response body.
@@ -422,7 +426,9 @@ See L<https://docs.gitlab.com/ce/api/broadcast_messages.html>.
 
 =head2 broadcast_messages
 
-    my $messages = $api->broadcast_messages();
+    my $messages = $api->broadcast_messages(
+        \%params,
+    );
 
 Sends a C<GET> request to C<broadcast_messages> and returns the decoded response body.
 
@@ -467,6 +473,7 @@ See L<https://docs.gitlab.com/ce/api/project_level_variables.html>.
 
     my $variables = $api->project_variables(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/variables> and returns the decoded response body.
@@ -516,6 +523,7 @@ See L<https://docs.gitlab.com/ce/api/group_level_variables.html>.
 
     my $variables = $api->group_variables(
         $group_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<groups/:group_id/variables> and returns the decoded response body.
@@ -603,6 +611,7 @@ Sends a C<POST> request to C<projects/:project_id/repository/commits/:commit_sha
     my $diff = $api->commit_diff(
         $project_id,
         $commit_sha,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/repository/commits/:commit_sha/diff> and returns the decoded response body.
@@ -612,6 +621,7 @@ Sends a C<GET> request to C<projects/:project_id/repository/commits/:commit_sha/
     my $comments = $api->commit_comments(
         $project_id,
         $commit_sha,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/repository/commits/:commit_sha/comments> and returns the decoded response body.
@@ -766,6 +776,7 @@ See L<https://docs.gitlab.com/ce/api/deployments.html>.
 
     my $deployments = $api->deployments(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/deployments> and returns the decoded response body.
@@ -785,7 +796,9 @@ See L<https://docs.gitlab.com/ce/api/deploy_keys.html>.
 
 =head2 all_deploy_keys
 
-    my $keys = $api->all_deploy_keys();
+    my $keys = $api->all_deploy_keys(
+        \%params,
+    );
 
 Sends a C<GET> request to C<deploy_keys> and returns the decoded response body.
 
@@ -793,6 +806,7 @@ Sends a C<GET> request to C<deploy_keys> and returns the decoded response body.
 
     my $keys = $api->deploy_keys(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/deploy_keys> and returns the decoded response body.
@@ -841,6 +855,7 @@ See L<https://docs.gitlab.com/ce/api/environments.html>.
 
     my $environments = $api->environments(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/environments> and returns the decoded response body.
@@ -937,7 +952,9 @@ See L<https://docs.gitlab.com/ce/api/templates/gitignores.html>.
 
 =head2 gitignores_templates
 
-    my $templates = $api->gitignores_templates();
+    my $templates = $api->gitignores_templates(
+        \%params,
+    );
 
 Sends a C<GET> request to C<templates/gitignores> and returns the decoded response body.
 
@@ -955,7 +972,9 @@ See L<https://docs.gitlab.com/ce/api/templates/gitlab_ci_ymls.html>.
 
 =head2 gitlab_ci_ymls_templates
 
-    my $templates = $api->gitlab_ci_ymls_templates();
+    my $templates = $api->gitlab_ci_ymls_templates(
+        \%params,
+    );
 
 Sends a C<GET> request to C<templates/gitlab_ci_ymls> and returns the decoded response body.
 
@@ -1348,6 +1367,7 @@ See L<https://docs.gitlab.com/ce/api/boards.html>.
 
     my $boards = $api->project_boards(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/boards> and returns the decoded response body.
@@ -1357,6 +1377,7 @@ Sends a C<GET> request to C<projects/:project_id/boards> and returns the decoded
     my $lists = $api->project_board_lists(
         $project_id,
         $board_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/boards/:board_id/lists> and returns the decoded response body.
@@ -1537,6 +1558,7 @@ See L<https://docs.gitlab.com/ce/api/labels.html>.
 
     my $labels = $api->labels(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/labels> and returns the decoded response body.
@@ -1686,6 +1708,7 @@ Sends a C<PUT> request to C<projects/:project_id/merge_requests/:merge_request_i
     my $issues = $api->merge_request_closes_issues(
         $project_id,
         $merge_request_iid,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/closes_issues> and returns the decoded response body.
@@ -1829,6 +1852,7 @@ Sends a C<PUT> request to C<projects/:project_id/milestones/:milestone_id> and r
     my $issues = $api->project_milestone_issues(
         $project_id,
         $milestone_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/milestones/:milestone_id/issues> and returns the decoded response body.
@@ -1838,6 +1862,7 @@ Sends a C<GET> request to C<projects/:project_id/milestones/:milestone_id/issues
     my $merge_requests = $api->project_milestone_merge_requests(
         $project_id,
         $milestone_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/milestones/:milestone_id/merge_requests> and returns the decoded response body.
@@ -1888,6 +1913,7 @@ Sends a C<PUT> request to C<groups/:group_id/milestones/:milestone_id> and retur
     my $issues = $api->group_milestone_issues(
         $group_id,
         $milestone_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<groups/:group_id/milestones/:milestone_id/issues> and returns the decoded response body.
@@ -1897,6 +1923,7 @@ Sends a C<GET> request to C<groups/:group_id/milestones/:milestone_id/issues> an
     my $merge_requests = $api->group_milestone_merge_requests(
         $group_id,
         $milestone_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<groups/:group_id/milestones/:milestone_id/merge_requests> and returns the decoded response body.
@@ -2157,7 +2184,9 @@ See L<https://docs.gitlab.com/ce/api/pages_domains.html>.
 
 =head2 global_pages_domains
 
-    my $domains = $api->global_pages_domains();
+    my $domains = $api->global_pages_domains(
+        \%params,
+    );
 
 Sends a C<GET> request to C<pages/domains> and returns the decoded response body.
 
@@ -2165,6 +2194,7 @@ Sends a C<GET> request to C<pages/domains> and returns the decoded response body
 
     my $domains = $api->pages_domains(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/pages/domains> and returns the decoded response body.
@@ -2263,6 +2293,7 @@ See L<https://docs.gitlab.com/ce/api/pipeline_triggers.html>.
 
     my $triggers = $api->triggers(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/triggers> and returns the decoded response body.
@@ -2437,6 +2468,7 @@ Sends a C<GET> request to C<projects/:project_id> and returns the decoded respon
 
     my $users = $api->project_users(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/users> and returns the decoded response body.
@@ -2629,6 +2661,7 @@ See L<https://docs.gitlab.com/ce/api/access_requests.html>.
 
     my $requests = $api->group_access_requests(
         $group_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<groups/:group_id/access_requests> and returns the decoded response body.
@@ -2637,6 +2670,7 @@ Sends a C<GET> request to C<groups/:group_id/access_requests> and returns the de
 
     my $requests = $api->project_access_requests(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/access_requests> and returns the decoded response body.
@@ -2701,6 +2735,7 @@ See L<https://docs.gitlab.com/ce/api/project_snippets.html>.
 
     my $snippets = $api->snippets(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/snippets> and returns the decoded response body.
@@ -2768,6 +2803,7 @@ See L<https://docs.gitlab.com/ce/api/protected_branches.html>.
 
     my $branches = $api->protected_branches(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/protected_branches> and returns the decoded response body.
@@ -2852,6 +2888,7 @@ Sends a C<GET> request to C<projects/:project_id/repository/compare> and returns
 
     my $contributors = $api->contributors(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/repository/contributors> and returns the decoded response body.
@@ -2968,6 +3005,7 @@ Sends a C<GET> request to C<runners/:runner_id/jobs> and returns the decoded res
 
     my $runners = $api->project_runners(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/runners> and returns the decoded response body.
@@ -3074,7 +3112,9 @@ See L<https://docs.gitlab.com/ce/api/system_hooks.html>.
 
 =head2 hooks
 
-    my $hooks = $api->hooks();
+    my $hooks = $api->hooks(
+        \%params,
+    );
 
 Sends a C<GET> request to C<hooks> and returns the decoded response body.
 
@@ -3110,6 +3150,7 @@ See L<https://docs.gitlab.com/ce/api/tags.html>.
 
     my $tags = $api->tags(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/repository/tags> and returns the decoded response body.
@@ -3240,7 +3281,9 @@ Sends a C<GET> request to C<user> and returns the decoded response body.
 
 =head2 current_user_ssh_keys
 
-    my $keys = $api->current_user_ssh_keys();
+    my $keys = $api->current_user_ssh_keys(
+        \%params,
+    );
 
 Sends a C<GET> request to C<user/keys> and returns the decoded response body.
 
@@ -3248,6 +3291,7 @@ Sends a C<GET> request to C<user/keys> and returns the decoded response body.
 
     my $keys = $api->user_ssh_keys(
         $user_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<users/:user_id/keys> and returns the decoded response body.
@@ -3296,7 +3340,9 @@ Sends a C<DELETE> request to C<users/:user_id/keys/:key_id>.
 
 =head2 current_user_gpg_keys
 
-    my $keys = $api->current_user_gpg_keys();
+    my $keys = $api->current_user_gpg_keys(
+        \%params,
+    );
 
 Sends a C<GET> request to C<user/gpg_keys> and returns the decoded response body.
 
@@ -3328,6 +3374,7 @@ Sends a C<DELETE> request to C<user/gpg_keys/:key_id>.
 
     my $keys = $api->user_gpg_keys(
         $user_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<users/:user_id/gpg_keys> and returns the decoded response body.
@@ -3361,7 +3408,9 @@ Sends a C<DELETE> request to C<users/:user_id/gpg_keys/:key_id>.
 
 =head2 current_user_emails
 
-    my $emails = $api->current_user_emails();
+    my $emails = $api->current_user_emails(
+        \%params,
+    );
 
 Sends a C<GET> request to C<user/emails> and returns the decoded response body.
 
@@ -3369,6 +3418,7 @@ Sends a C<GET> request to C<user/emails> and returns the decoded response body.
 
     my $emails = $api->user_emails(
         $user_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<users/:user_id/emails> and returns the decoded response body.
@@ -3469,7 +3519,9 @@ Sends a C<DELETE> request to C<users/:user_id/impersonation_tokens/:impersonatio
 
 =head2 all_user_activities
 
-    my $activities = $api->all_user_activities();
+    my $activities = $api->all_user_activities(
+        \%params,
+    );
 
 Sends a C<GET> request to C<user/activities> and returns the decoded response body.
 

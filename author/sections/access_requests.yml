@@ -1,6 +1,6 @@
 ---
-- group_access_requests: requests = GET groups/:group_id/access_requests
-- project_access_requests: requests = GET projects/:project_id/access_requests
+- group_access_requests: requests = GET groups/:group_id/access_requests?
+- project_access_requests: requests = GET projects/:project_id/access_requests?
 - request_group_access: request = POST groups/:group_id/access_requests
 - request_project_access: request = POST projects/:project_id/access_requests
 - approve_group_access: request = PUT groups/:group_id/access_requests/:user_id/approve

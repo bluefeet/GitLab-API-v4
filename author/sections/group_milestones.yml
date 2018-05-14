@@ -3,5 +3,5 @@
 - group_milestone: milestone = GET groups/:group_id/milestones/:milestone_id
 - create_group_milestone: milestone = POST groups/:group_id/milestones?
 - edit_group_milestone: milestone = PUT groups/:group_id/milestones/:milestone_id?
-- group_milestone_issues: issues = GET groups/:group_id/milestones/:milestone_id/issues
-- group_milestone_merge_requests: merge_requests = GET groups/:group_id/milestones/:milestone_id/merge_requests
+- group_milestone_issues: issues = GET groups/:group_id/milestones/:milestone_id/issues?
+- group_milestone_merge_requests: merge_requests = GET groups/:group_id/milestones/:milestone_id/merge_requests?

@@ -5,6 +5,6 @@
 - update_runner: runner = PUT runners/:runner_id?
 - delete_runner: runner = DELETE runners/:runner_id
 - runner_jobs: jobs = GET runners/:runner_id/jobs?
-- project_runners: runners = GET projects/:project_id/runners
+- project_runners: runners = GET projects/:project_id/runners?
 - enable_project_runner: runner = POST projects/:project_id/runners?
 - disable_project_runner: runner = DELETE projects/:project_id/runners/:runner_id

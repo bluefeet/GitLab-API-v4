@@ -1,6 +1,6 @@
 ---
-- global_pages_domains: domains = GET pages/domains
-- pages_domains: domains = GET projects/:project_id/pages/domains
+- global_pages_domains: domains = GET pages/domains?
+- pages_domains: domains = GET projects/:project_id/pages/domains?
 - pages_domain: domain = GET projects/:project_id/pages/domains/:domain
 - create_pages_domain: domain = POST projects/:project_id/pages/domains?
 - edit_pages_domain: domain = PUT projects/:project_id/pages/domains/:domain?

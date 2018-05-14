@@ -1,7 +1,7 @@
 ---
-- issue_award_emojis: award_emojis = GET projects/:project_id/issues/:issue_iid/award_emoji
-- merge_request_award_emojis: award_emojis = GET projects/:project_id/merge_requests/:merge_request_iid/award_emoji
-- snippet_award_emojis: award_emojis = GET projects/:project_id/merge_requests/:merge_request_id/award_emoji
+- issue_award_emojis: award_emojis = GET projects/:project_id/issues/:issue_iid/award_emoji?
+- merge_request_award_emojis: award_emojis = GET projects/:project_id/merge_requests/:merge_request_iid/award_emoji?
+- snippet_award_emojis: award_emojis = GET projects/:project_id/merge_requests/:merge_request_id/award_emoji?
 
 - issue_award_emoji: award_emoji = GET projects/:project_id/issues/:issue_iid/award_emoji/:award_id
 - merge_request_award_emoji: award_emoji = GET projects/:project_id/merge_requests/:merge_request_iid/award_emoji/:award_id

@@ -1,5 +1,5 @@
 ---
-- branches: branches = GET projects/:project_id/repository/branches
+- branches: branches = GET projects/:project_id/repository/branches?
 - branch: branch = GET projects/:project_id/repository/branches/:branch_name
 - create_branch: branch = POST projects/:project_id/repository/branches?
 - delete_branch: DELETE projects/:project_id/repository/branches/:branch_name

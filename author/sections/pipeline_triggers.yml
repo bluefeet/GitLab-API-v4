@@ -1,5 +1,5 @@
 ---
-- triggers: triggers = GET projects/:project_id/triggers
+- triggers: triggers = GET projects/:project_id/triggers?
 - trigger: trigger = GET projects/:project_id/triggers/:trigger_id
 - create_trigger: trigger = POST projects/:project_id/triggers?
 - edit_trigger: trigger = PUT projects/:project_id/triggers/:trigger_id?

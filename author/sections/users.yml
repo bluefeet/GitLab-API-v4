@@ -5,23 +5,23 @@
 - edit_user: PUT users/:user_id?
 - delete_user: DELETE users/:user_id
 - current_user: user = GET user
-- current_user_ssh_keys: keys = GET user/keys
-- user_ssh_keys: keys = GET users/:user_id/keys
+- current_user_ssh_keys: keys = GET user/keys?
+- user_ssh_keys: keys = GET users/:user_id/keys?
 - user_ssh_key: key = GET user/keys/:key_id
 - create_current_user_ssh_key: POST user/keys?
 - create_user_ssh_key: POST users/:user_id/keys?
 - delete_current_user_ssh_key: DELETE user/keys/:key_id
 - delete_user_ssh_key: DELETE users/:user_id/keys/:key_id
-- current_user_gpg_keys: keys = GET user/gpg_keys
+- current_user_gpg_keys: keys = GET user/gpg_keys?
 - current_user_gpg_key: key = GET user/gpg_keys/:key_id
 - create_current_user_gpg_key: POST user/gpg_keys?
 - delete_current_user_gpg_key: DELETE user/gpg_keys/:key_id
-- user_gpg_keys: keys = GET users/:user_id/gpg_keys
+- user_gpg_keys: keys = GET users/:user_id/gpg_keys?
 - user_gpg_key: key = GET users/:user_id/gpg_keys/:key_id
 - create_user_gpg_key: keys = POST users/:user_id/gpg_keys?
 - delete_user_gpg_key: DELETE users/:user_id/gpg_keys/:key_id
-- current_user_emails: emails = GET user/emails
-- user_emails: emails = GET users/:user_id/emails
+- current_user_emails: emails = GET user/emails?
+- user_emails: emails = GET users/:user_id/emails?
 - current_user_email: email = GET user/emails/:email_id
 - create_current_user_email: email = POST user/emails?
 - create_user_email: email = POST users/:user_id/emails?
@@ -33,4 +33,4 @@
 - user_impersonation_token: token = GET users/:user_id/impersonation_tokens/:impersonation_token_id
 - create_user_impersonation_token: token = POST users/:user_id/impersonation_tokens?
 - delete_user_impersonation_token: DELETE users/:user_id/impersonation_tokens/:impersonation_token_id
-- all_user_activities: activities = GET user/activities
+- all_user_activities: activities = GET user/activities?

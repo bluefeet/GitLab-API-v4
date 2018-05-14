@@ -4,4 +4,4 @@
 - raw_blob: raw_blob = GET projects/:project_id/repository/blobs/:sha/raw
 - archive: archive = GET projects/:project_id/repository/archive?
 - compare: comparison = GET projects/:project_id/repository/compare?
-- contributors: contributors = GET projects/:project_id/repository/contributors
+- contributors: contributors = GET projects/:project_id/repository/contributors?

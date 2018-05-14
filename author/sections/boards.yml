@@ -1,6 +1,6 @@
 ---
-- project_boards: boards = GET projects/:project_id/boards
-- project_board_lists: lists = GET projects/:project_id/boards/:board_id/lists
+- project_boards: boards = GET projects/:project_id/boards?
+- project_board_lists: lists = GET projects/:project_id/boards/:board_id/lists?
 - project_board_list: list = GET projects/:project_id/boards/:board_id/lists/:list_id
 - create_project_board_list: list = POST projects/:project_id/boards/:board_id/lists?
 - edit_project_board_list: list = PUT projects/:project_id/boards/:board_id/lists/:list_id?

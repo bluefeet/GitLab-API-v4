@@ -364,6 +364,7 @@ See L<https://docs.gitlab.com/ce/api/award_emoji.html>.
     my $award_emojis = $api->issue_award_emojis(
         $project_id,
         $issue_iid,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid/award_emoji> and returns the decoded response body.
@@ -372,10 +373,13 @@ Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid/award_emoji> 
 
 sub issue_award_emojis {
     my $self = shift;
-    croak 'issue_award_emojis must be called with 2 arguments' if @_ != 2;
+    croak 'issue_award_emojis must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
     croak 'The #1 argument ($project_id) to issue_award_emojis must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($issue_iid) to issue_award_emojis must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to issue_award_emojis must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'projects/:project_id/issues/:issue_iid/award_emoji', [@_], $options );
 }
 
@@ -384,6 +388,7 @@ sub issue_award_emojis {
     my $award_emojis = $api->merge_request_award_emojis(
         $project_id,
         $merge_request_iid,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/award_emoji> and returns the decoded response body.
@@ -392,10 +397,13 @@ Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_i
 
 sub merge_request_award_emojis {
     my $self = shift;
-    croak 'merge_request_award_emojis must be called with 2 arguments' if @_ != 2;
+    croak 'merge_request_award_emojis must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
     croak 'The #1 argument ($project_id) to merge_request_award_emojis must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($merge_request_iid) to merge_request_award_emojis must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to merge_request_award_emojis must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/award_emoji', [@_], $options );
 }
 
@@ -404,6 +412,7 @@ sub merge_request_award_emojis {
     my $award_emojis = $api->snippet_award_emojis(
         $project_id,
         $merge_request_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_id/award_emoji> and returns the decoded response body.
@@ -412,10 +421,13 @@ Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_i
 
 sub snippet_award_emojis {
     my $self = shift;
-    croak 'snippet_award_emojis must be called with 2 arguments' if @_ != 2;
+    croak 'snippet_award_emojis must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
     croak 'The #1 argument ($project_id) to snippet_award_emojis must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($merge_request_id) to snippet_award_emojis must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to snippet_award_emojis must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'projects/:project_id/merge_requests/:merge_request_id/award_emoji', [@_], $options );
 }
 
@@ -819,6 +831,7 @@ See L<https://doc.gitlab.com/ce/api/branches.html>.
 
     my $branches = $api->branches(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/repository/branches> and returns the decoded response body.
@@ -827,9 +840,12 @@ Sends a C<GET> request to C<projects/:project_id/repository/branches> and return
 
 sub branches {
     my $self = shift;
-    croak 'branches must be called with 1 arguments' if @_ != 1;
+    croak 'branches must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to branches must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to branches must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'projects/:project_id/repository/branches', [@_], $options );
 }
 
@@ -923,7 +939,9 @@ See L<https://docs.gitlab.com/ce/api/broadcast_messages.html>.
 
 =head2 broadcast_messages
 
-    my $messages = $api->broadcast_messages();
+    my $messages = $api->broadcast_messages(
+        \%params,
+    );
 
 Sends a C<GET> request to C<broadcast_messages> and returns the decoded response body.
 
@@ -931,8 +949,11 @@ Sends a C<GET> request to C<broadcast_messages> and returns the decoded response
 
 sub broadcast_messages {
     my $self = shift;
-    croak "The broadcast_messages method does not take any arguments" if @_;
+    croak 'broadcast_messages must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to broadcast_messages must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'broadcast_messages', [@_], $options );
 }
 
@@ -1024,6 +1045,7 @@ See L<https://docs.gitlab.com/ce/api/project_level_variables.html>.
 
     my $variables = $api->project_variables(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/variables> and returns the decoded response body.
@@ -1032,9 +1054,12 @@ Sends a C<GET> request to C<projects/:project_id/variables> and returns the deco
 
 sub project_variables {
     my $self = shift;
-    croak 'project_variables must be called with 1 arguments' if @_ != 1;
+    croak 'project_variables must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to project_variables must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to project_variables must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'projects/:project_id/variables', [@_], $options );
 }
 
@@ -1134,6 +1159,7 @@ See L<https://docs.gitlab.com/ce/api/group_level_variables.html>.
 
     my $variables = $api->group_variables(
         $group_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<groups/:group_id/variables> and returns the decoded response body.
@@ -1142,9 +1168,12 @@ Sends a C<GET> request to C<groups/:group_id/variables> and returns the decoded 
 
 sub group_variables {
     my $self = shift;
-    croak 'group_variables must be called with 1 arguments' if @_ != 1;
+    croak 'group_variables must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($group_id) to group_variables must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to group_variables must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'groups/:group_id/variables', [@_], $options );
 }
 
@@ -1333,6 +1362,7 @@ sub cherry_pick_commit {
     my $diff = $api->commit_diff(
         $project_id,
         $commit_sha,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/repository/commits/:commit_sha/diff> and returns the decoded response body.
@@ -1341,10 +1371,13 @@ Sends a C<GET> request to C<projects/:project_id/repository/commits/:commit_sha/
 
 sub commit_diff {
     my $self = shift;
-    croak 'commit_diff must be called with 2 arguments' if @_ != 2;
+    croak 'commit_diff must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
     croak 'The #1 argument ($project_id) to commit_diff must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($commit_sha) to commit_diff must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to commit_diff must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'projects/:project_id/repository/commits/:commit_sha/diff', [@_], $options );
 }
 
@@ -1353,6 +1386,7 @@ sub commit_diff {
     my $comments = $api->commit_comments(
         $project_id,
         $commit_sha,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/repository/commits/:commit_sha/comments> and returns the decoded response body.
@@ -1361,10 +1395,13 @@ Sends a C<GET> request to C<projects/:project_id/repository/commits/:commit_sha/
 
 sub commit_comments {
     my $self = shift;
-    croak 'commit_comments must be called with 2 arguments' if @_ != 2;
+    croak 'commit_comments must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
     croak 'The #1 argument ($project_id) to commit_comments must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($commit_sha) to commit_comments must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to commit_comments must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'projects/:project_id/repository/commits/:commit_sha/comments', [@_], $options );
 }
 
@@ -1706,6 +1743,7 @@ See L<https://docs.gitlab.com/ce/api/deployments.html>.
 
     my $deployments = $api->deployments(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/deployments> and returns the decoded response body.
@@ -1714,9 +1752,12 @@ Sends a C<GET> request to C<projects/:project_id/deployments> and returns the de
 
 sub deployments {
     my $self = shift;
-    croak 'deployments must be called with 1 arguments' if @_ != 1;
+    croak 'deployments must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to deployments must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to deployments must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'projects/:project_id/deployments', [@_], $options );
 }
 
@@ -1746,7 +1787,9 @@ See L<https://docs.gitlab.com/ce/api/deploy_keys.html>.
 
 =head2 all_deploy_keys
 
-    my $keys = $api->all_deploy_keys();
+    my $keys = $api->all_deploy_keys(
+        \%params,
+    );
 
 Sends a C<GET> request to C<deploy_keys> and returns the decoded response body.
 
@@ -1754,8 +1797,11 @@ Sends a C<GET> request to C<deploy_keys> and returns the decoded response body.
 
 sub all_deploy_keys {
     my $self = shift;
-    croak "The all_deploy_keys method does not take any arguments" if @_;
+    croak 'all_deploy_keys must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to all_deploy_keys must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'deploy_keys', [@_], $options );
 }
 
@@ -1763,6 +1809,7 @@ sub all_deploy_keys {
 
     my $keys = $api->deploy_keys(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/deploy_keys> and returns the decoded response body.
@@ -1771,9 +1818,12 @@ Sends a C<GET> request to C<projects/:project_id/deploy_keys> and returns the de
 
 sub deploy_keys {
     my $self = shift;
-    croak 'deploy_keys must be called with 1 arguments' if @_ != 1;
+    croak 'deploy_keys must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to deploy_keys must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to deploy_keys must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'projects/:project_id/deploy_keys', [@_], $options );
 }
 
@@ -1869,6 +1919,7 @@ See L<https://docs.gitlab.com/ce/api/environments.html>.
 
     my $environments = $api->environments(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/environments> and returns the decoded response body.
@@ -1877,9 +1928,12 @@ Sends a C<GET> request to C<projects/:project_id/environments> and returns the d
 
 sub environments {
     my $self = shift;
-    croak 'environments must be called with 1 arguments' if @_ != 1;
+    croak 'environments must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to environments must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to environments must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'projects/:project_id/environments', [@_], $options );
 }
 
@@ -2086,7 +2140,9 @@ See L<https://docs.gitlab.com/ce/api/templates/gitignores.html>.
 
 =head2 gitignores_templates
 
-    my $templates = $api->gitignores_templates();
+    my $templates = $api->gitignores_templates(
+        \%params,
+    );
 
 Sends a C<GET> request to C<templates/gitignores> and returns the decoded response body.
 
@@ -2094,8 +2150,11 @@ Sends a C<GET> request to C<templates/gitignores> and returns the decoded respon
 
 sub gitignores_templates {
     my $self = shift;
-    croak "The gitignores_templates method does not take any arguments" if @_;
+    croak 'gitignores_templates must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to gitignores_templates must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'templates/gitignores', [@_], $options );
 }
 
@@ -2123,7 +2182,9 @@ See L<https://docs.gitlab.com/ce/api/templates/gitlab_ci_ymls.html>.
 
 =head2 gitlab_ci_ymls_templates
 
-    my $templates = $api->gitlab_ci_ymls_templates();
+    my $templates = $api->gitlab_ci_ymls_templates(
+        \%params,
+    );
 
 Sends a C<GET> request to C<templates/gitlab_ci_ymls> and returns the decoded response body.
 
@@ -2131,8 +2192,11 @@ Sends a C<GET> request to C<templates/gitlab_ci_ymls> and returns the decoded re
 
 sub gitlab_ci_ymls_templates {
     my $self = shift;
-    croak "The gitlab_ci_ymls_templates method does not take any arguments" if @_;
+    croak 'gitlab_ci_ymls_templates must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to gitlab_ci_ymls_templates must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'templates/gitlab_ci_ymls', [@_], $options );
 }
 
@@ -3036,6 +3100,7 @@ See L<https://docs.gitlab.com/ce/api/boards.html>.
 
     my $boards = $api->project_boards(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/boards> and returns the decoded response body.
@@ -3044,9 +3109,12 @@ Sends a C<GET> request to C<projects/:project_id/boards> and returns the decoded
 
 sub project_boards {
     my $self = shift;
-    croak 'project_boards must be called with 1 arguments' if @_ != 1;
+    croak 'project_boards must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to project_boards must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to project_boards must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'projects/:project_id/boards', [@_], $options );
 }
 
@@ -3055,6 +3123,7 @@ sub project_boards {
     my $lists = $api->project_board_lists(
         $project_id,
         $board_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/boards/:board_id/lists> and returns the decoded response body.
@@ -3063,10 +3132,13 @@ Sends a C<GET> request to C<projects/:project_id/boards/:board_id/lists> and ret
 
 sub project_board_lists {
     my $self = shift;
-    croak 'project_board_lists must be called with 2 arguments' if @_ != 2;
+    croak 'project_board_lists must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
     croak 'The #1 argument ($project_id) to project_board_lists must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($board_id) to project_board_lists must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to project_board_lists must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'projects/:project_id/boards/:board_id/lists', [@_], $options );
 }
 
@@ -3452,6 +3524,7 @@ See L<https://docs.gitlab.com/ce/api/labels.html>.
 
     my $labels = $api->labels(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/labels> and returns the decoded response body.
@@ -3460,9 +3533,12 @@ Sends a C<GET> request to C<projects/:project_id/labels> and returns the decoded
 
 sub labels {
     my $self = shift;
-    croak 'labels must be called with 1 arguments' if @_ != 1;
+    croak 'labels must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to labels must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to labels must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'projects/:project_id/labels', [@_], $options );
 }
 
@@ -3799,6 +3875,7 @@ sub cancel_merge_when_pipeline_succeeds {
     my $issues = $api->merge_request_closes_issues(
         $project_id,
         $merge_request_iid,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/closes_issues> and returns the decoded response body.
@@ -3807,10 +3884,13 @@ Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_i
 
 sub merge_request_closes_issues {
     my $self = shift;
-    croak 'merge_request_closes_issues must be called with 2 arguments' if @_ != 2;
+    croak 'merge_request_closes_issues must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
     croak 'The #1 argument ($project_id) to merge_request_closes_issues must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($merge_request_iid) to merge_request_closes_issues must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to merge_request_closes_issues must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/closes_issues', [@_], $options );
 }
 
@@ -4121,6 +4201,7 @@ sub edit_project_milestone {
     my $issues = $api->project_milestone_issues(
         $project_id,
         $milestone_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/milestones/:milestone_id/issues> and returns the decoded response body.
@@ -4129,10 +4210,13 @@ Sends a C<GET> request to C<projects/:project_id/milestones/:milestone_id/issues
 
 sub project_milestone_issues {
     my $self = shift;
-    croak 'project_milestone_issues must be called with 2 arguments' if @_ != 2;
+    croak 'project_milestone_issues must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
     croak 'The #1 argument ($project_id) to project_milestone_issues must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($milestone_id) to project_milestone_issues must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to project_milestone_issues must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'projects/:project_id/milestones/:milestone_id/issues', [@_], $options );
 }
 
@@ -4141,6 +4225,7 @@ sub project_milestone_issues {
     my $merge_requests = $api->project_milestone_merge_requests(
         $project_id,
         $milestone_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/milestones/:milestone_id/merge_requests> and returns the decoded response body.
@@ -4149,10 +4234,13 @@ Sends a C<GET> request to C<projects/:project_id/milestones/:milestone_id/merge_
 
 sub project_milestone_merge_requests {
     my $self = shift;
-    croak 'project_milestone_merge_requests must be called with 2 arguments' if @_ != 2;
+    croak 'project_milestone_merge_requests must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
     croak 'The #1 argument ($project_id) to project_milestone_merge_requests must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($milestone_id) to project_milestone_merge_requests must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to project_milestone_merge_requests must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'projects/:project_id/milestones/:milestone_id/merge_requests', [@_], $options );
 }
 
@@ -4253,6 +4341,7 @@ sub edit_group_milestone {
     my $issues = $api->group_milestone_issues(
         $group_id,
         $milestone_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<groups/:group_id/milestones/:milestone_id/issues> and returns the decoded response body.
@@ -4261,10 +4350,13 @@ Sends a C<GET> request to C<groups/:group_id/milestones/:milestone_id/issues> an
 
 sub group_milestone_issues {
     my $self = shift;
-    croak 'group_milestone_issues must be called with 2 arguments' if @_ != 2;
+    croak 'group_milestone_issues must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
     croak 'The #1 argument ($group_id) to group_milestone_issues must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($milestone_id) to group_milestone_issues must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to group_milestone_issues must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'groups/:group_id/milestones/:milestone_id/issues', [@_], $options );
 }
 
@@ -4273,6 +4365,7 @@ sub group_milestone_issues {
     my $merge_requests = $api->group_milestone_merge_requests(
         $group_id,
         $milestone_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<groups/:group_id/milestones/:milestone_id/merge_requests> and returns the decoded response body.
@@ -4281,10 +4374,13 @@ Sends a C<GET> request to C<groups/:group_id/milestones/:milestone_id/merge_requ
 
 sub group_milestone_merge_requests {
     my $self = shift;
-    croak 'group_milestone_merge_requests must be called with 2 arguments' if @_ != 2;
+    croak 'group_milestone_merge_requests must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
     croak 'The #1 argument ($group_id) to group_milestone_merge_requests must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($milestone_id) to group_milestone_merge_requests must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to group_milestone_merge_requests must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'groups/:group_id/milestones/:milestone_id/merge_requests', [@_], $options );
 }
 
@@ -4871,7 +4967,9 @@ See L<https://docs.gitlab.com/ce/api/pages_domains.html>.
 
 =head2 global_pages_domains
 
-    my $domains = $api->global_pages_domains();
+    my $domains = $api->global_pages_domains(
+        \%params,
+    );
 
 Sends a C<GET> request to C<pages/domains> and returns the decoded response body.
 
@@ -4879,8 +4977,11 @@ Sends a C<GET> request to C<pages/domains> and returns the decoded response body
 
 sub global_pages_domains {
     my $self = shift;
-    croak "The global_pages_domains method does not take any arguments" if @_;
+    croak 'global_pages_domains must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to global_pages_domains must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'pages/domains', [@_], $options );
 }
 
@@ -4888,6 +4989,7 @@ sub global_pages_domains {
 
     my $domains = $api->pages_domains(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/pages/domains> and returns the decoded response body.
@@ -4896,9 +4998,12 @@ Sends a C<GET> request to C<projects/:project_id/pages/domains> and returns the 
 
 sub pages_domains {
     my $self = shift;
-    croak 'pages_domains must be called with 1 arguments' if @_ != 1;
+    croak 'pages_domains must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to pages_domains must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to pages_domains must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'projects/:project_id/pages/domains', [@_], $options );
 }
 
@@ -5106,6 +5211,7 @@ See L<https://docs.gitlab.com/ce/api/pipeline_triggers.html>.
 
     my $triggers = $api->triggers(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/triggers> and returns the decoded response body.
@@ -5114,9 +5220,12 @@ Sends a C<GET> request to C<projects/:project_id/triggers> and returns the decod
 
 sub triggers {
     my $self = shift;
-    croak 'triggers must be called with 1 arguments' if @_ != 1;
+    croak 'triggers must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to triggers must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to triggers must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'projects/:project_id/triggers', [@_], $options );
 }
 
@@ -5504,6 +5613,7 @@ sub project {
 
     my $users = $api->project_users(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/users> and returns the decoded response body.
@@ -5512,9 +5622,12 @@ Sends a C<GET> request to C<projects/:project_id/users> and returns the decoded 
 
 sub project_users {
     my $self = shift;
-    croak 'project_users must be called with 1 arguments' if @_ != 1;
+    croak 'project_users must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to project_users must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to project_users must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'projects/:project_id/users', [@_], $options );
 }
 
@@ -5966,6 +6079,7 @@ See L<https://docs.gitlab.com/ce/api/access_requests.html>.
 
     my $requests = $api->group_access_requests(
         $group_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<groups/:group_id/access_requests> and returns the decoded response body.
@@ -5974,9 +6088,12 @@ Sends a C<GET> request to C<groups/:group_id/access_requests> and returns the de
 
 sub group_access_requests {
     my $self = shift;
-    croak 'group_access_requests must be called with 1 arguments' if @_ != 1;
+    croak 'group_access_requests must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($group_id) to group_access_requests must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to group_access_requests must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'groups/:group_id/access_requests', [@_], $options );
 }
 
@@ -5984,6 +6101,7 @@ sub group_access_requests {
 
     my $requests = $api->project_access_requests(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/access_requests> and returns the decoded response body.
@@ -5992,9 +6110,12 @@ Sends a C<GET> request to C<projects/:project_id/access_requests> and returns th
 
 sub project_access_requests {
     my $self = shift;
-    croak 'project_access_requests must be called with 1 arguments' if @_ != 1;
+    croak 'project_access_requests must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to project_access_requests must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to project_access_requests must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'projects/:project_id/access_requests', [@_], $options );
 }
 
@@ -6126,6 +6247,7 @@ See L<https://docs.gitlab.com/ce/api/project_snippets.html>.
 
     my $snippets = $api->snippets(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/snippets> and returns the decoded response body.
@@ -6134,9 +6256,12 @@ Sends a C<GET> request to C<projects/:project_id/snippets> and returns the decod
 
 sub snippets {
     my $self = shift;
-    croak 'snippets must be called with 1 arguments' if @_ != 1;
+    croak 'snippets must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to snippets must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to snippets must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'projects/:project_id/snippets', [@_], $options );
 }
 
@@ -6280,6 +6405,7 @@ See L<https://docs.gitlab.com/ce/api/protected_branches.html>.
 
     my $branches = $api->protected_branches(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/protected_branches> and returns the decoded response body.
@@ -6288,9 +6414,12 @@ Sends a C<GET> request to C<projects/:project_id/protected_branches> and returns
 
 sub protected_branches {
     my $self = shift;
-    croak 'protected_branches must be called with 1 arguments' if @_ != 1;
+    croak 'protected_branches must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to protected_branches must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to protected_branches must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'projects/:project_id/protected_branches', [@_], $options );
 }
 
@@ -6472,6 +6601,7 @@ sub compare {
 
     my $contributors = $api->contributors(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/repository/contributors> and returns the decoded response body.
@@ -6480,9 +6610,12 @@ Sends a C<GET> request to C<projects/:project_id/repository/contributors> and re
 
 sub contributors {
     my $self = shift;
-    croak 'contributors must be called with 1 arguments' if @_ != 1;
+    croak 'contributors must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to contributors must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to contributors must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'projects/:project_id/repository/contributors', [@_], $options );
 }
 
@@ -6744,6 +6877,7 @@ sub runner_jobs {
 
     my $runners = $api->project_runners(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/runners> and returns the decoded response body.
@@ -6752,9 +6886,12 @@ Sends a C<GET> request to C<projects/:project_id/runners> and returns the decode
 
 sub project_runners {
     my $self = shift;
-    croak 'project_runners must be called with 1 arguments' if @_ != 1;
+    croak 'project_runners must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to project_runners must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to project_runners must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'projects/:project_id/runners', [@_], $options );
 }
 
@@ -6981,7 +7118,9 @@ See L<https://docs.gitlab.com/ce/api/system_hooks.html>.
 
 =head2 hooks
 
-    my $hooks = $api->hooks();
+    my $hooks = $api->hooks(
+        \%params,
+    );
 
 Sends a C<GET> request to C<hooks> and returns the decoded response body.
 
@@ -6989,8 +7128,11 @@ Sends a C<GET> request to C<hooks> and returns the decoded response body.
 
 sub hooks {
     my $self = shift;
-    croak "The hooks method does not take any arguments" if @_;
+    croak 'hooks must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to hooks must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'hooks', [@_], $options );
 }
 
@@ -7062,6 +7204,7 @@ See L<https://docs.gitlab.com/ce/api/tags.html>.
 
     my $tags = $api->tags(
         $project_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/repository/tags> and returns the decoded response body.
@@ -7070,9 +7213,12 @@ Sends a C<GET> request to C<projects/:project_id/repository/tags> and returns th
 
 sub tags {
     my $self = shift;
-    croak 'tags must be called with 1 arguments' if @_ != 1;
+    croak 'tags must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to tags must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to tags must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'projects/:project_id/repository/tags', [@_], $options );
 }
 
@@ -7376,7 +7522,9 @@ sub current_user {
 
 =head2 current_user_ssh_keys
 
-    my $keys = $api->current_user_ssh_keys();
+    my $keys = $api->current_user_ssh_keys(
+        \%params,
+    );
 
 Sends a C<GET> request to C<user/keys> and returns the decoded response body.
 
@@ -7384,8 +7532,11 @@ Sends a C<GET> request to C<user/keys> and returns the decoded response body.
 
 sub current_user_ssh_keys {
     my $self = shift;
-    croak "The current_user_ssh_keys method does not take any arguments" if @_;
+    croak 'current_user_ssh_keys must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to current_user_ssh_keys must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'user/keys', [@_], $options );
 }
 
@@ -7393,6 +7544,7 @@ sub current_user_ssh_keys {
 
     my $keys = $api->user_ssh_keys(
         $user_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<users/:user_id/keys> and returns the decoded response body.
@@ -7401,9 +7553,12 @@ Sends a C<GET> request to C<users/:user_id/keys> and returns the decoded respons
 
 sub user_ssh_keys {
     my $self = shift;
-    croak 'user_ssh_keys must be called with 1 arguments' if @_ != 1;
+    croak 'user_ssh_keys must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($user_id) to user_ssh_keys must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to user_ssh_keys must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'users/:user_id/keys', [@_], $options );
 }
 
@@ -7515,7 +7670,9 @@ sub delete_user_ssh_key {
 
 =head2 current_user_gpg_keys
 
-    my $keys = $api->current_user_gpg_keys();
+    my $keys = $api->current_user_gpg_keys(
+        \%params,
+    );
 
 Sends a C<GET> request to C<user/gpg_keys> and returns the decoded response body.
 
@@ -7523,8 +7680,11 @@ Sends a C<GET> request to C<user/gpg_keys> and returns the decoded response body
 
 sub current_user_gpg_keys {
     my $self = shift;
-    croak "The current_user_gpg_keys method does not take any arguments" if @_;
+    croak 'current_user_gpg_keys must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to current_user_gpg_keys must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'user/gpg_keys', [@_], $options );
 }
 
@@ -7592,6 +7752,7 @@ sub delete_current_user_gpg_key {
 
     my $keys = $api->user_gpg_keys(
         $user_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<users/:user_id/gpg_keys> and returns the decoded response body.
@@ -7600,9 +7761,12 @@ Sends a C<GET> request to C<users/:user_id/gpg_keys> and returns the decoded res
 
 sub user_gpg_keys {
     my $self = shift;
-    croak 'user_gpg_keys must be called with 1 arguments' if @_ != 1;
+    croak 'user_gpg_keys must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($user_id) to user_gpg_keys must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to user_gpg_keys must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'users/:user_id/gpg_keys', [@_], $options );
 }
 
@@ -7672,7 +7836,9 @@ sub delete_user_gpg_key {
 
 =head2 current_user_emails
 
-    my $emails = $api->current_user_emails();
+    my $emails = $api->current_user_emails(
+        \%params,
+    );
 
 Sends a C<GET> request to C<user/emails> and returns the decoded response body.
 
@@ -7680,8 +7846,11 @@ Sends a C<GET> request to C<user/emails> and returns the decoded response body.
 
 sub current_user_emails {
     my $self = shift;
-    croak "The current_user_emails method does not take any arguments" if @_;
+    croak 'current_user_emails must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to current_user_emails must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'user/emails', [@_], $options );
 }
 
@@ -7689,6 +7858,7 @@ sub current_user_emails {
 
     my $emails = $api->user_emails(
         $user_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<users/:user_id/emails> and returns the decoded response body.
@@ -7697,9 +7867,12 @@ Sends a C<GET> request to C<users/:user_id/emails> and returns the decoded respo
 
 sub user_emails {
     my $self = shift;
-    croak 'user_emails must be called with 1 arguments' if @_ != 1;
+    croak 'user_emails must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($user_id) to user_emails must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to user_emails must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'users/:user_id/emails', [@_], $options );
 }
 
@@ -7929,7 +8102,9 @@ sub delete_user_impersonation_token {
 
 =head2 all_user_activities
 
-    my $activities = $api->all_user_activities();
+    my $activities = $api->all_user_activities(
+        \%params,
+    );
 
 Sends a C<GET> request to C<user/activities> and returns the decoded response body.
 
@@ -7937,8 +8112,11 @@ Sends a C<GET> request to C<user/activities> and returns the decoded response bo
 
 sub all_user_activities {
     my $self = shift;
-    croak "The all_user_activities method does not take any arguments" if @_;
+    croak 'all_user_activities must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to all_user_activities must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
+    $options->{query} = $params if defined $params;
     return $self->_call_rest_method( 'GET', 'user/activities', [@_], $options );
 }
 

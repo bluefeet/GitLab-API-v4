@@ -1,5 +1,5 @@
 ---
-- snippets: snippets = GET projects/:project_id/snippets
+- snippets: snippets = GET projects/:project_id/snippets?
 - snippet: snippet = GET projects/:project_id/snippets/:snippet_id
 - create_snippet: POST projects/:project_id/snippets?
 - edit_snippet: PUT projects/:project_id/snippets/:snippet_id?
