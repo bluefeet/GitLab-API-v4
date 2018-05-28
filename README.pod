@@ -123,9 +123,14 @@ See L<https://docs.gitlab.com/ce/api/#sudo>.
 
 =head2 rest_client
 
-An instance of L<GitLab::API::v4::RESTClient>.  Typically you will not
-be setting this as it defaults to a new instance and customization
-should not be necessary.
+An instance of L<GitLab::API::v4::RESTClient> (or wharwever L</rest_client_class>
+is set to).  Typically you will not be setting this as it defaults to a new
+instance and customization should not be necessary.
+
+=head2 rest_client_class
+
+The class to use when constructing the L</rest_client>.
+Defaults to L<GitLab::API::v4::RESTClient>.
 
 =head1 UTILITY METHODS
 

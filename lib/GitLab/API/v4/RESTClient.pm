@@ -78,6 +78,12 @@ sub _build_json {
     return JSON->new->utf8->allow_nonref();
 }
 
+# The purpose of this method is for tests to have a place to inject themselves.
+sub _http_tiny_request {
+    my $self = shift;
+    return $self->http_tiny->request( @_ );
+}
+
 sub request {
     my ($self, $method, $path, $path_vars, $options) = @_;
 
@@ -116,7 +122,7 @@ sub request {
     my $res;
     my $tries_left = $self->retries();
     do {
-        $res = $self->http_tiny->request( @$req );
+        $res = $self->_http_tiny_request( @$req );
         if ($res->{status} =~ m{^5}) {
             $tries_left--;
             $log->warn('Request failed; retrying...') if $tries_left > 0;
@@ -125,7 +131,6 @@ sub request {
             $tries_left = 0
         }
     } while $tries_left > 0;
-
 
     if ($res->{status} eq '404' and $method eq 'GET') {
         return undef;
@@ -145,11 +150,18 @@ sub request {
     local $Carp::Internal{ 'GitLab::API::v4' } = 1;
     local $Carp::Internal{ 'GitLab::API::v4::RESTClient' } = 1;
 
-    my $one_line_res_content = $res->{content};
-    $one_line_res_content =~ s{\s+}{ }g;
+    my $glimpse = $res->{content} || '';
+    $glimpse =~ s{\s+}{ }g;
+    if ( length($glimpse) > 50 ) {
+        $glimpse = substr( $glimpse, 0, 50 );
+        $glimpse .= '...';
+    }
+
     confess sprintf(
         'Error %sing %s (HTTP %s): %s %s',
-        $method, $url, $res->{status}, $res->{reason}, $one_line_res_content,
+        $method, $url,
+        $res->{status}, ($res->{reason} || 'Unknown'),
+        $glimpse,
     );
 }
 

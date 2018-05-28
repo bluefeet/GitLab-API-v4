@@ -275,9 +275,9 @@ has sudo_user => (
 
 =head2 rest_client
 
-An instance of L<GitLab::API::v4::RESTClient>.  Typically you will not
-be setting this as it defaults to a new instance and customization
-should not be necessary.
+An instance of L<GitLab::API::v4::RESTClient> (or wharwever L</rest_client_class>
+is set to).  Typically you will not be setting this as it defaults to a new
+instance and customization should not be necessary.
 
 =cut
 
@@ -288,10 +288,25 @@ has rest_client => (
 sub _build_rest_client {
     my ($self) = @_;
 
-    return GitLab::API::v4::RESTClient->new(
+    return $self->rest_client_class->new(
         base_url => $self->url(),
         retries  => $self->retries(),
     );
+}
+
+=head2 rest_client_class
+
+The class to use when constructing the L</rest_client>.
+Defaults to L<GitLab::API::v4::RESTClient>.
+
+=cut
+
+has rest_client_class => (
+    is  => 'lazy',
+    isa => NonEmptySimpleStr,
+);
+sub _build_rest_client_class {
+    return 'GitLab::API::v4::RESTClient';
 }
 
 =head1 UTILITY METHODS
