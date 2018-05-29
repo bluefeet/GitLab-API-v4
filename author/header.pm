@@ -115,13 +115,13 @@ sub BUILD {
     return;
 }
 
-sub _call_rest_method {
-    my ($self, $method, $path, $path_vars, $options) = @_;
+sub _call_rest_client {
+    my ($self, $verb, $path, $path_vars, $options) = @_;
 
     $options->{headers} = $self->_auth_headers();
 
     return $self->rest_client->request(
-        $method, $path, $path_vars, $options,
+        $verb, $path, $path_vars, $options,
     );
 }
 

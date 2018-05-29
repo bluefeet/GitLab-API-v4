@@ -116,7 +116,7 @@ foreach my $section_name (keys %$section_pack) {
 
         print '    ';
         print 'return ' if $return;
-        print "\$self->_call_rest_method( '$verb', '$path', [\@_], \$options );\n";
+        print "\$self->_call_rest_client( '$verb', '$path', [\@_], \$options );\n";
         print "    return;\n" if !$return;
         print "}\n\n";
     }

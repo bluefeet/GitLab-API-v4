@@ -115,13 +115,13 @@ sub BUILD {
     return;
 }
 
-sub _call_rest_method {
-    my ($self, $method, $path, $path_vars, $options) = @_;
+sub _call_rest_client {
+    my ($self, $verb, $path, $path_vars, $options) = @_;
 
     $options->{headers} = $self->_auth_headers();
 
     return $self->rest_client->request(
-        $method, $path, $path_vars, $options,
+        $verb, $path, $path_vars, $options,
     );
 }
 
@@ -403,7 +403,7 @@ sub issue_award_emojis {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/issues/:issue_iid/award_emoji', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/issues/:issue_iid/award_emoji', [@_], $options );
 }
 
 =head2 merge_request_award_emojis
@@ -427,7 +427,7 @@ sub merge_request_award_emojis {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/award_emoji', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/award_emoji', [@_], $options );
 }
 
 =head2 snippet_award_emojis
@@ -451,7 +451,7 @@ sub snippet_award_emojis {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/merge_requests/:merge_request_id/award_emoji', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/merge_requests/:merge_request_id/award_emoji', [@_], $options );
 }
 
 =head2 issue_award_emoji
@@ -473,7 +473,7 @@ sub issue_award_emoji {
     croak 'The #2 argument ($issue_iid) to issue_award_emoji must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The #3 argument ($award_id) to issue_award_emoji must be a scalar' if ref($_[2]) or (!defined $_[2]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/issues/:issue_iid/award_emoji/:award_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/issues/:issue_iid/award_emoji/:award_id', [@_], $options );
 }
 
 =head2 merge_request_award_emoji
@@ -495,7 +495,7 @@ sub merge_request_award_emoji {
     croak 'The #2 argument ($merge_request_iid) to merge_request_award_emoji must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The #3 argument ($award_id) to merge_request_award_emoji must be a scalar' if ref($_[2]) or (!defined $_[2]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/award_emoji/:award_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/award_emoji/:award_id', [@_], $options );
 }
 
 =head2 snippet_award_emoji
@@ -517,7 +517,7 @@ sub snippet_award_emoji {
     croak 'The #2 argument ($snippet_id) to snippet_award_emoji must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The #3 argument ($award_id) to snippet_award_emoji must be a scalar' if ref($_[2]) or (!defined $_[2]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/snippets/:snippet_id/award_emoji/:award_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/snippets/:snippet_id/award_emoji/:award_id', [@_], $options );
 }
 
 =head2 create_issue_award_emoji
@@ -541,7 +541,7 @@ sub create_issue_award_emoji {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/issues/:issue_iid/award_emoji', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/issues/:issue_iid/award_emoji', [@_], $options );
 }
 
 =head2 create_merge_request_award_emoji
@@ -565,7 +565,7 @@ sub create_merge_request_award_emoji {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/merge_requests/:merge_request_iid/award_emoji', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/merge_requests/:merge_request_iid/award_emoji', [@_], $options );
 }
 
 =head2 create_snippet_award_emoji
@@ -585,7 +585,7 @@ sub create_snippet_award_emoji {
     croak 'The #1 argument ($project_id) to create_snippet_award_emoji must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($snippet_id) to create_snippet_award_emoji must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/snippets/:snippet_id/award_emoji', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/snippets/:snippet_id/award_emoji', [@_], $options );
 }
 
 =head2 delete_issue_award_emoji
@@ -607,7 +607,7 @@ sub delete_issue_award_emoji {
     croak 'The #2 argument ($issue_id) to delete_issue_award_emoji must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The #3 argument ($award_id) to delete_issue_award_emoji must be a scalar' if ref($_[2]) or (!defined $_[2]);
     my $options = {};
-    return $self->_call_rest_method( 'DELETE', 'projects/:project_id/issues/:issue_id/award_emoji/:award_id', [@_], $options );
+    return $self->_call_rest_client( 'DELETE', 'projects/:project_id/issues/:issue_id/award_emoji/:award_id', [@_], $options );
 }
 
 =head2 delete_merge_request_award_emoji
@@ -629,7 +629,7 @@ sub delete_merge_request_award_emoji {
     croak 'The #2 argument ($merge_request_id) to delete_merge_request_award_emoji must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The #3 argument ($award_id) to delete_merge_request_award_emoji must be a scalar' if ref($_[2]) or (!defined $_[2]);
     my $options = {};
-    return $self->_call_rest_method( 'DELETE', 'projects/:project_id/merge_requests/:merge_request_id/award_emoji/:award_id', [@_], $options );
+    return $self->_call_rest_client( 'DELETE', 'projects/:project_id/merge_requests/:merge_request_id/award_emoji/:award_id', [@_], $options );
 }
 
 =head2 delete_snippet_award_emoji
@@ -651,7 +651,7 @@ sub delete_snippet_award_emoji {
     croak 'The #2 argument ($snippet_id) to delete_snippet_award_emoji must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The #3 argument ($award_id) to delete_snippet_award_emoji must be a scalar' if ref($_[2]) or (!defined $_[2]);
     my $options = {};
-    return $self->_call_rest_method( 'DELETE', 'projects/:project_id/snippets/:snippet_id/award_emoji/:award_id', [@_], $options );
+    return $self->_call_rest_client( 'DELETE', 'projects/:project_id/snippets/:snippet_id/award_emoji/:award_id', [@_], $options );
 }
 
 =head2 issue_note_award_emojis
@@ -673,7 +673,7 @@ sub issue_note_award_emojis {
     croak 'The #2 argument ($issue_iid) to issue_note_award_emojis must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The #3 argument ($note_id) to issue_note_award_emojis must be a scalar' if ref($_[2]) or (!defined $_[2]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/issues/:issue_iid/notes/:note_id/award_emoji', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/issues/:issue_iid/notes/:note_id/award_emoji', [@_], $options );
 }
 
 =head2 issue_note_award_emoji
@@ -697,7 +697,7 @@ sub issue_note_award_emoji {
     croak 'The #3 argument ($note_id) to issue_note_award_emoji must be a scalar' if ref($_[2]) or (!defined $_[2]);
     croak 'The #4 argument ($award_id) to issue_note_award_emoji must be a scalar' if ref($_[3]) or (!defined $_[3]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/issues/:issue_iid/notes/:note_id/award_emoji/:award_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/issues/:issue_iid/notes/:note_id/award_emoji/:award_id', [@_], $options );
 }
 
 =head2 create_issue_note_award_emoji
@@ -723,7 +723,7 @@ sub create_issue_note_award_emoji {
     my $params = (@_ == 4) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/issues/:issue_iid/notes/:note_id/award_emoji', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/issues/:issue_iid/notes/:note_id/award_emoji', [@_], $options );
 }
 
 =head2 delete_issue_note_award_emoji
@@ -747,7 +747,7 @@ sub delete_issue_note_award_emoji {
     croak 'The #3 argument ($note_id) to delete_issue_note_award_emoji must be a scalar' if ref($_[2]) or (!defined $_[2]);
     croak 'The #4 argument ($award_id) to delete_issue_note_award_emoji must be a scalar' if ref($_[3]) or (!defined $_[3]);
     my $options = {};
-    return $self->_call_rest_method( 'DELETE', 'projects/:project_id/issues/:issue_iid/notes/:note_id/award_emoji/:award_id', [@_], $options );
+    return $self->_call_rest_client( 'DELETE', 'projects/:project_id/issues/:issue_iid/notes/:note_id/award_emoji/:award_id', [@_], $options );
 }
 
 =head2 merge_request_note_award_emojis
@@ -769,7 +769,7 @@ sub merge_request_note_award_emojis {
     croak 'The #2 argument ($merge_request_iid) to merge_request_note_award_emojis must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The #3 argument ($note_id) to merge_request_note_award_emojis must be a scalar' if ref($_[2]) or (!defined $_[2]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id/award_emoji', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id/award_emoji', [@_], $options );
 }
 
 =head2 merge_request_note_award_emoji
@@ -793,7 +793,7 @@ sub merge_request_note_award_emoji {
     croak 'The #3 argument ($note_id) to merge_request_note_award_emoji must be a scalar' if ref($_[2]) or (!defined $_[2]);
     croak 'The #4 argument ($award_id) to merge_request_note_award_emoji must be a scalar' if ref($_[3]) or (!defined $_[3]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id/award_emoji/:award_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id/award_emoji/:award_id', [@_], $options );
 }
 
 =head2 create_merge_request_note_award_emoji
@@ -819,7 +819,7 @@ sub create_merge_request_note_award_emoji {
     my $params = (@_ == 4) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id/award_emoji', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id/award_emoji', [@_], $options );
 }
 
 =head2 delete_merge_request_note_award_emoji
@@ -843,7 +843,7 @@ sub delete_merge_request_note_award_emoji {
     croak 'The #3 argument ($note_id) to delete_merge_request_note_award_emoji must be a scalar' if ref($_[2]) or (!defined $_[2]);
     croak 'The #4 argument ($award_id) to delete_merge_request_note_award_emoji must be a scalar' if ref($_[3]) or (!defined $_[3]);
     my $options = {};
-    return $self->_call_rest_method( 'DELETE', 'projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id/award_emoji/:award_id', [@_], $options );
+    return $self->_call_rest_client( 'DELETE', 'projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id/award_emoji/:award_id', [@_], $options );
 }
 
 =head1 BRANCH METHODS
@@ -869,7 +869,7 @@ sub branches {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/repository/branches', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/repository/branches', [@_], $options );
 }
 
 =head2 branch
@@ -889,7 +889,7 @@ sub branch {
     croak 'The #1 argument ($project_id) to branch must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($branch_name) to branch must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/repository/branches/:branch_name', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/repository/branches/:branch_name', [@_], $options );
 }
 
 =head2 create_branch
@@ -911,7 +911,7 @@ sub create_branch {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/repository/branches', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/repository/branches', [@_], $options );
 }
 
 =head2 delete_branch
@@ -932,7 +932,7 @@ sub delete_branch {
     croak 'The #2 argument ($branch_name) to delete_branch must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'projects/:project_id/repository/branches/:branch_name', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/repository/branches/:branch_name', [@_], $options );
     return;
 }
 
@@ -952,7 +952,7 @@ sub delete_merged_branches {
     croak 'The #1 argument ($project_id) to delete_merged_branches must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'projects/:project_id/repository/merged_branches', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/repository/merged_branches', [@_], $options );
     return;
 }
 
@@ -977,7 +977,7 @@ sub broadcast_messages {
     my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'broadcast_messages', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'broadcast_messages', [@_], $options );
 }
 
 =head2 broadcast_message
@@ -995,7 +995,7 @@ sub broadcast_message {
     croak 'broadcast_message must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($message_id) to broadcast_message must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'broadcast_messages/:message_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'broadcast_messages/:message_id', [@_], $options );
 }
 
 =head2 create_broadcast_message
@@ -1015,7 +1015,7 @@ sub create_broadcast_message {
     my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'broadcast_messages', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'broadcast_messages', [@_], $options );
 }
 
 =head2 edit_broadcast_message
@@ -1037,7 +1037,7 @@ sub edit_broadcast_message {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'PUT', 'broadcast_messages/:message_id', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'broadcast_messages/:message_id', [@_], $options );
 }
 
 =head2 delete_broadcast_message
@@ -1056,7 +1056,7 @@ sub delete_broadcast_message {
     croak 'The #1 argument ($message_id) to delete_broadcast_message must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'broadcast_messages/:message_id', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'broadcast_messages/:message_id', [@_], $options );
     return;
 }
 
@@ -1083,7 +1083,7 @@ sub project_variables {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/variables', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/variables', [@_], $options );
 }
 
 =head2 project_variable
@@ -1103,7 +1103,7 @@ sub project_variable {
     croak 'The #1 argument ($project_id) to project_variable must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($variable_key) to project_variable must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/variables/:variable_key', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/variables/:variable_key', [@_], $options );
 }
 
 =head2 create_project_variable
@@ -1125,7 +1125,7 @@ sub create_project_variable {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/variables', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/variables', [@_], $options );
 }
 
 =head2 edit_project_variable
@@ -1149,7 +1149,7 @@ sub edit_project_variable {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'PUT', 'projects/:project_id/variables/:variable_key', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'projects/:project_id/variables/:variable_key', [@_], $options );
 }
 
 =head2 delete_project_variable
@@ -1170,7 +1170,7 @@ sub delete_project_variable {
     croak 'The #2 argument ($variable_key) to delete_project_variable must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'projects/:project_id/variables/:variable_key', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/variables/:variable_key', [@_], $options );
     return;
 }
 
@@ -1197,7 +1197,7 @@ sub group_variables {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'groups/:group_id/variables', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'groups/:group_id/variables', [@_], $options );
 }
 
 =head2 group_variable
@@ -1217,7 +1217,7 @@ sub group_variable {
     croak 'The #1 argument ($group_id) to group_variable must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($variable_key) to group_variable must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'groups/:group_id/variables/:variable_key', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'groups/:group_id/variables/:variable_key', [@_], $options );
 }
 
 =head2 create_group_variable
@@ -1239,7 +1239,7 @@ sub create_group_variable {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'groups/:group_id/variables', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'groups/:group_id/variables', [@_], $options );
 }
 
 =head2 edit_group_variable
@@ -1263,7 +1263,7 @@ sub edit_group_variable {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'PUT', 'groups/:group_id/variables/:variable_key', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'groups/:group_id/variables/:variable_key', [@_], $options );
 }
 
 =head2 delete_group_variable
@@ -1284,7 +1284,7 @@ sub delete_group_variable {
     croak 'The #2 argument ($variable_key) to delete_group_variable must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'groups/:group_id/variables/:variable_key', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'groups/:group_id/variables/:variable_key', [@_], $options );
     return;
 }
 
@@ -1311,7 +1311,7 @@ sub commits {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/repository/commits', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/repository/commits', [@_], $options );
 }
 
 =head2 create_commit
@@ -1333,7 +1333,7 @@ sub create_commit {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/repository/commits', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/repository/commits', [@_], $options );
 }
 
 =head2 commit
@@ -1353,7 +1353,7 @@ sub commit {
     croak 'The #1 argument ($project_id) to commit must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($commit_sha) to commit must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/repository/commits/:commit_sha', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/repository/commits/:commit_sha', [@_], $options );
 }
 
 =head2 cherry_pick_commit
@@ -1377,7 +1377,7 @@ sub cherry_pick_commit {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/repository/commits/:commit_sha/cherry_pick', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/repository/commits/:commit_sha/cherry_pick', [@_], $options );
 }
 
 =head2 commit_diff
@@ -1401,7 +1401,7 @@ sub commit_diff {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/repository/commits/:commit_sha/diff', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/repository/commits/:commit_sha/diff', [@_], $options );
 }
 
 =head2 commit_comments
@@ -1425,7 +1425,7 @@ sub commit_comments {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/repository/commits/:commit_sha/comments', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/repository/commits/:commit_sha/comments', [@_], $options );
 }
 
 =head2 create_commit_comment
@@ -1450,7 +1450,7 @@ sub create_commit_comment {
     my $options = {};
     $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_method( 'POST', 'projects/:project_id/repository/commits/:commit_sha/comments', [@_], $options );
+    $self->_call_rest_client( 'POST', 'projects/:project_id/repository/commits/:commit_sha/comments', [@_], $options );
     return;
 }
 
@@ -1475,7 +1475,7 @@ sub commit_statuses {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/repository/commits/:commit_sha/statuses', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/repository/commits/:commit_sha/statuses', [@_], $options );
 }
 
 =head2 create_commit_status
@@ -1499,7 +1499,7 @@ sub create_commit_status {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/statuses/:commit_sha', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/statuses/:commit_sha', [@_], $options );
 }
 
 =head1 CUSTOM ATTRIBUTE METHODS
@@ -1521,7 +1521,7 @@ sub custom_user_attributes {
     croak 'custom_user_attributes must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($user_id) to custom_user_attributes must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'users/:user_id/custom_attributes', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'users/:user_id/custom_attributes', [@_], $options );
 }
 
 =head2 custom_group_attributes
@@ -1539,7 +1539,7 @@ sub custom_group_attributes {
     croak 'custom_group_attributes must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($group_id) to custom_group_attributes must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'groups/:group_id/custom_attributes', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'groups/:group_id/custom_attributes', [@_], $options );
 }
 
 =head2 custom_project_attributes
@@ -1557,7 +1557,7 @@ sub custom_project_attributes {
     croak 'custom_project_attributes must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($project_id) to custom_project_attributes must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/custom_attributes', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/custom_attributes', [@_], $options );
 }
 
 =head2 custom_user_attribute
@@ -1577,7 +1577,7 @@ sub custom_user_attribute {
     croak 'The #1 argument ($user_id) to custom_user_attribute must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($attribute_key) to custom_user_attribute must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'users/:user_id/custom_attributes/:attribute_key', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'users/:user_id/custom_attributes/:attribute_key', [@_], $options );
 }
 
 =head2 custom_group_attribute
@@ -1597,7 +1597,7 @@ sub custom_group_attribute {
     croak 'The #1 argument ($group_id) to custom_group_attribute must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($attribute_key) to custom_group_attribute must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'groups/:group_id/custom_attributes/:attribute_key', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'groups/:group_id/custom_attributes/:attribute_key', [@_], $options );
 }
 
 =head2 custom_project_attribute
@@ -1617,7 +1617,7 @@ sub custom_project_attribute {
     croak 'The #1 argument ($project_id) to custom_project_attribute must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($attribute_key) to custom_project_attribute must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/custom_attributes/:attribute_key', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/custom_attributes/:attribute_key', [@_], $options );
 }
 
 =head2 set_custom_user_attribute
@@ -1641,7 +1641,7 @@ sub set_custom_user_attribute {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'PUT', 'users/:user_id/custom_attributes/:attribute_key', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'users/:user_id/custom_attributes/:attribute_key', [@_], $options );
 }
 
 =head2 set_custom_group_attribute
@@ -1665,7 +1665,7 @@ sub set_custom_group_attribute {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'PUT', 'groups/:group_id/custom_attributes/:attribute_key', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'groups/:group_id/custom_attributes/:attribute_key', [@_], $options );
 }
 
 =head2 set_custom_project_attribute
@@ -1689,7 +1689,7 @@ sub set_custom_project_attribute {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'PUT', 'projects/:project_id/custom_attributes/:attribute_key', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'projects/:project_id/custom_attributes/:attribute_key', [@_], $options );
 }
 
 =head2 delete_custom_user_attribute
@@ -1710,7 +1710,7 @@ sub delete_custom_user_attribute {
     croak 'The #2 argument ($attribute_key) to delete_custom_user_attribute must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'users/:user_id/custom_attributes/:attribute_key', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'users/:user_id/custom_attributes/:attribute_key', [@_], $options );
     return;
 }
 
@@ -1732,7 +1732,7 @@ sub delete_custom_group_attribute {
     croak 'The #2 argument ($attribute_key) to delete_custom_group_attribute must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'groups/:group_id/custom_attributes/:attribute_key', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'groups/:group_id/custom_attributes/:attribute_key', [@_], $options );
     return;
 }
 
@@ -1754,7 +1754,7 @@ sub delete_custom_project_attribute {
     croak 'The #2 argument ($attribute_key) to delete_custom_project_attribute must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'projects/:project_id/custom_attributes/:attribute_key', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/custom_attributes/:attribute_key', [@_], $options );
     return;
 }
 
@@ -1781,7 +1781,7 @@ sub deployments {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/deployments', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/deployments', [@_], $options );
 }
 
 =head2 deployment
@@ -1801,7 +1801,7 @@ sub deployment {
     croak 'The #1 argument ($project_id) to deployment must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($deployment_id) to deployment must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/deployments/:deployment_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/deployments/:deployment_id', [@_], $options );
 }
 
 =head1 DEPLOY KEY METHODS
@@ -1825,7 +1825,7 @@ sub all_deploy_keys {
     my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'deploy_keys', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'deploy_keys', [@_], $options );
 }
 
 =head2 deploy_keys
@@ -1847,7 +1847,7 @@ sub deploy_keys {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/deploy_keys', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/deploy_keys', [@_], $options );
 }
 
 =head2 deploy_key
@@ -1867,7 +1867,7 @@ sub deploy_key {
     croak 'The #1 argument ($project_id) to deploy_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($key_id) to deploy_key must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/deploy_keys/:key_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/deploy_keys/:key_id', [@_], $options );
 }
 
 =head2 create_deploy_key
@@ -1889,7 +1889,7 @@ sub create_deploy_key {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/deploy_keys', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/deploy_keys', [@_], $options );
 }
 
 =head2 delete_deploy_key
@@ -1910,7 +1910,7 @@ sub delete_deploy_key {
     croak 'The #2 argument ($key_id) to delete_deploy_key must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'projects/:project_id/deploy_keys/:key_id', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/deploy_keys/:key_id', [@_], $options );
     return;
 }
 
@@ -1931,7 +1931,7 @@ sub enable_deploy_key {
     croak 'The #1 argument ($project_id) to enable_deploy_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($key_id) to enable_deploy_key must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/deploy_keys/:key_id/enable', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/deploy_keys/:key_id/enable', [@_], $options );
 }
 
 =head1 ENVIRONMENT METHODS
@@ -1957,7 +1957,7 @@ sub environments {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/environments', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/environments', [@_], $options );
 }
 
 =head2 create_environment
@@ -1979,7 +1979,7 @@ sub create_environment {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/environments', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/environments', [@_], $options );
 }
 
 =head2 edit_environment
@@ -2003,7 +2003,7 @@ sub edit_environment {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'PUT', 'projects/:project_id/environments/:environments_id', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'projects/:project_id/environments/:environments_id', [@_], $options );
 }
 
 =head2 delete_environment
@@ -2024,7 +2024,7 @@ sub delete_environment {
     croak 'The #2 argument ($environment_id) to delete_environment must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'projects/:project_id/environments/:environment_id', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/environments/:environment_id', [@_], $options );
     return;
 }
 
@@ -2045,7 +2045,7 @@ sub stop_environment {
     croak 'The #1 argument ($project_id) to stop_environment must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($environment_id) to stop_environment must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/environments/:environment_id/stop', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/environments/:environment_id/stop', [@_], $options );
 }
 
 =head1 EVENT METHODS
@@ -2069,7 +2069,7 @@ sub all_events {
     my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'events', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'events', [@_], $options );
 }
 
 =head2 user_events
@@ -2091,7 +2091,7 @@ sub user_events {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'users/:user_id/events', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'users/:user_id/events', [@_], $options );
 }
 
 =head2 project_events
@@ -2113,7 +2113,7 @@ sub project_events {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/events', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/events', [@_], $options );
 }
 
 =head1 FEATURE FLAG METHODS
@@ -2132,7 +2132,7 @@ sub features {
     my $self = shift;
     croak "The features method does not take any arguments" if @_;
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'features', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'features', [@_], $options );
 }
 
 =head2 set_feature
@@ -2154,7 +2154,7 @@ sub set_feature {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'features/:name', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'features/:name', [@_], $options );
 }
 
 =head1 GITIGNORES TEMPLATE METHODS
@@ -2178,7 +2178,7 @@ sub gitignores_templates {
     my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'templates/gitignores', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'templates/gitignores', [@_], $options );
 }
 
 =head2 gitignores_template
@@ -2196,7 +2196,7 @@ sub gitignores_template {
     croak 'gitignores_template must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($template_key) to gitignores_template must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'templates/gitignores/:template_key', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'templates/gitignores/:template_key', [@_], $options );
 }
 
 =head1 GITLAB CI CONFIG TEMPLATE METHODS
@@ -2220,7 +2220,7 @@ sub gitlab_ci_ymls_templates {
     my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'templates/gitlab_ci_ymls', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'templates/gitlab_ci_ymls', [@_], $options );
 }
 
 =head2 gitlab_ci_ymls_template
@@ -2238,7 +2238,7 @@ sub gitlab_ci_ymls_template {
     croak 'gitlab_ci_ymls_template must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($template_key) to gitlab_ci_ymls_template must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'templates/gitlab_ci_ymls/:template_key', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'templates/gitlab_ci_ymls/:template_key', [@_], $options );
 }
 
 =head1 GROUP METHODS
@@ -2262,7 +2262,7 @@ sub groups {
     my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'groups', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'groups', [@_], $options );
 }
 
 =head2 group_subgroups
@@ -2284,7 +2284,7 @@ sub group_subgroups {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'groups/:group_id/subgroups', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'groups/:group_id/subgroups', [@_], $options );
 }
 
 =head2 group_projects
@@ -2306,7 +2306,7 @@ sub group_projects {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'groups/:group_id/projects', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'groups/:group_id/projects', [@_], $options );
 }
 
 =head2 group
@@ -2324,7 +2324,7 @@ sub group {
     croak 'group must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($group_id) to group must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'groups/:group_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'groups/:group_id', [@_], $options );
 }
 
 =head2 create_group
@@ -2345,7 +2345,7 @@ sub create_group {
     my $options = {};
     $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_method( 'POST', 'groups', [@_], $options );
+    $self->_call_rest_client( 'POST', 'groups', [@_], $options );
     return;
 }
 
@@ -2367,7 +2367,7 @@ sub transfer_project_to_group {
     croak 'The #2 argument ($project_id) to transfer_project_to_group must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'POST', 'groups/:group_id/projects/:project_id', [@_], $options );
+    $self->_call_rest_client( 'POST', 'groups/:group_id/projects/:project_id', [@_], $options );
     return;
 }
 
@@ -2390,7 +2390,7 @@ sub edit_group {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'PUT', 'groups/:group_id', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'groups/:group_id', [@_], $options );
 }
 
 =head2 delete_group
@@ -2409,7 +2409,7 @@ sub delete_group {
     croak 'The #1 argument ($group_id) to delete_group must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'groups/:group_id', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'groups/:group_id', [@_], $options );
     return;
 }
 
@@ -2429,7 +2429,7 @@ sub sync_group_with_ldap {
     croak 'The #1 argument ($group_id) to sync_group_with_ldap must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'POST', 'groups/:group_id/ldap_sync', [@_], $options );
+    $self->_call_rest_client( 'POST', 'groups/:group_id/ldap_sync', [@_], $options );
     return;
 }
 
@@ -2453,7 +2453,7 @@ sub create_ldap_group_link {
     my $options = {};
     $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_method( 'POST', 'groups/:group_id/ldap_group_links', [@_], $options );
+    $self->_call_rest_client( 'POST', 'groups/:group_id/ldap_group_links', [@_], $options );
     return;
 }
 
@@ -2475,7 +2475,7 @@ sub delete_ldap_group_link {
     croak 'The #2 argument ($cn) to delete_ldap_group_link must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'groups/:group_id/ldap_group_links/:cn', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'groups/:group_id/ldap_group_links/:cn', [@_], $options );
     return;
 }
 
@@ -2499,7 +2499,7 @@ sub delete_ldap_provider_group_link {
     croak 'The #3 argument ($cn) to delete_ldap_provider_group_link must be a scalar' if ref($_[2]) or (!defined $_[2]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'groups/:group_id/ldap_group_links/:provider/:cn', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'groups/:group_id/ldap_group_links/:provider/:cn', [@_], $options );
     return;
 }
 
@@ -2526,7 +2526,7 @@ sub group_members {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'groups/:group_id/members', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'groups/:group_id/members', [@_], $options );
 }
 
 =head2 project_members
@@ -2548,7 +2548,7 @@ sub project_members {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/members', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/members', [@_], $options );
 }
 
 =head2 group_member
@@ -2568,7 +2568,7 @@ sub group_member {
     croak 'The #1 argument ($project_id) to group_member must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($user_id) to group_member must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'groups/:project_id/members/:user_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'groups/:project_id/members/:user_id', [@_], $options );
 }
 
 =head2 project_member
@@ -2588,7 +2588,7 @@ sub project_member {
     croak 'The #1 argument ($project_id) to project_member must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($user_id) to project_member must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/members/:user_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/members/:user_id', [@_], $options );
 }
 
 =head2 add_group_member
@@ -2610,7 +2610,7 @@ sub add_group_member {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'groups/:group_id/members', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'groups/:group_id/members', [@_], $options );
 }
 
 =head2 add_project_member
@@ -2632,7 +2632,7 @@ sub add_project_member {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/members', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/members', [@_], $options );
 }
 
 =head2 update_group_member
@@ -2656,7 +2656,7 @@ sub update_group_member {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'PUT', 'groups/:group_id/members/:user_id', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'groups/:group_id/members/:user_id', [@_], $options );
 }
 
 =head2 update_project_member
@@ -2680,7 +2680,7 @@ sub update_project_member {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'PUT', 'projects/:project_id/members/:user_id', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'projects/:project_id/members/:user_id', [@_], $options );
 }
 
 =head2 remove_group_member
@@ -2701,7 +2701,7 @@ sub remove_group_member {
     croak 'The #2 argument ($user_id) to remove_group_member must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'groups/:group_id/members/:user_id', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'groups/:group_id/members/:user_id', [@_], $options );
     return;
 }
 
@@ -2723,7 +2723,7 @@ sub remove_project_member {
     croak 'The #2 argument ($user_id) to remove_project_member must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'projects/:project_id/members/:user_id', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/members/:user_id', [@_], $options );
     return;
 }
 
@@ -2748,7 +2748,7 @@ sub global_issues {
     my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'issues', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'issues', [@_], $options );
 }
 
 =head2 group_issues
@@ -2770,7 +2770,7 @@ sub group_issues {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'groups/:group_id/issues', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'groups/:group_id/issues', [@_], $options );
 }
 
 =head2 issues
@@ -2792,7 +2792,7 @@ sub issues {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/issues', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/issues', [@_], $options );
 }
 
 =head2 issue
@@ -2812,7 +2812,7 @@ sub issue {
     croak 'The #1 argument ($project_id) to issue must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($issue_iid) to issue must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/issues/:issue_iid', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/issues/:issue_iid', [@_], $options );
 }
 
 =head2 create_issue
@@ -2834,7 +2834,7 @@ sub create_issue {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/issues', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/issues', [@_], $options );
 }
 
 =head2 edit_issue
@@ -2858,7 +2858,7 @@ sub edit_issue {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'PUT', 'projects/:project_id/issues/:issue_iid', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'projects/:project_id/issues/:issue_iid', [@_], $options );
 }
 
 =head2 delete_issue
@@ -2879,7 +2879,7 @@ sub delete_issue {
     croak 'The #2 argument ($issue_iid) to delete_issue must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'projects/:project_id/issues/:issue_iid', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/issues/:issue_iid', [@_], $options );
     return;
 }
 
@@ -2904,7 +2904,7 @@ sub move_issue {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/issues/:issue_iid/move', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/issues/:issue_iid/move', [@_], $options );
 }
 
 =head2 subscribe_to_issue
@@ -2924,7 +2924,7 @@ sub subscribe_to_issue {
     croak 'The #1 argument ($project_id) to subscribe_to_issue must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($issue_iid) to subscribe_to_issue must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/issues/:issue_iid/subscribe', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/issues/:issue_iid/subscribe', [@_], $options );
 }
 
 =head2 unsubscribe_from_issue
@@ -2944,7 +2944,7 @@ sub unsubscribe_from_issue {
     croak 'The #1 argument ($project_id) to unsubscribe_from_issue must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($issue_iid) to unsubscribe_from_issue must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/issues/:issue_iid/unsubscribe', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/issues/:issue_iid/unsubscribe', [@_], $options );
 }
 
 =head2 create_issue_todo
@@ -2964,7 +2964,7 @@ sub create_issue_todo {
     croak 'The #1 argument ($project_id) to create_issue_todo must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($issue_iid) to create_issue_todo must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/issues/:issue_iid/todo', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/issues/:issue_iid/todo', [@_], $options );
 }
 
 =head2 set_issue_time_estimate
@@ -2988,7 +2988,7 @@ sub set_issue_time_estimate {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/issues/:issue_iid/time_estimate', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/issues/:issue_iid/time_estimate', [@_], $options );
 }
 
 =head2 reset_issue_time_estimate
@@ -3008,7 +3008,7 @@ sub reset_issue_time_estimate {
     croak 'The #1 argument ($project_id) to reset_issue_time_estimate must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($issue_iid) to reset_issue_time_estimate must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/issues/:issue_iid/reset_time_estimate', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/issues/:issue_iid/reset_time_estimate', [@_], $options );
 }
 
 =head2 add_issue_spent_time
@@ -3032,7 +3032,7 @@ sub add_issue_spent_time {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/issues/:issue_iid/add_spent_time', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/issues/:issue_iid/add_spent_time', [@_], $options );
 }
 
 =head2 reset_issue_spent_time
@@ -3052,7 +3052,7 @@ sub reset_issue_spent_time {
     croak 'The #1 argument ($project_id) to reset_issue_spent_time must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($issue_iid) to reset_issue_spent_time must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/issues/:issue_iid/reset_spent_time', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/issues/:issue_iid/reset_spent_time', [@_], $options );
 }
 
 =head2 issue_time_stats
@@ -3072,7 +3072,7 @@ sub issue_time_stats {
     croak 'The #1 argument ($project_id) to issue_time_stats must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($issue_iid) to issue_time_stats must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/issues/:issue_iid/time_stats', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/issues/:issue_iid/time_stats', [@_], $options );
 }
 
 =head2 issue_closed_by
@@ -3092,7 +3092,7 @@ sub issue_closed_by {
     croak 'The #1 argument ($project_id) to issue_closed_by must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($issue_iid) to issue_closed_by must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/issues/:issue_iid/closed_by', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/issues/:issue_iid/closed_by', [@_], $options );
 }
 
 =head2 issue_user_agent_detail
@@ -3112,7 +3112,7 @@ sub issue_user_agent_detail {
     croak 'The #1 argument ($project_id) to issue_user_agent_detail must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($issue_iid) to issue_user_agent_detail must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/issues/:issue_iid/user_agent_detail', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/issues/:issue_iid/user_agent_detail', [@_], $options );
 }
 
 =head1 ISSUE BOARD METHODS
@@ -3138,7 +3138,7 @@ sub project_boards {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/boards', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/boards', [@_], $options );
 }
 
 =head2 project_board_lists
@@ -3162,7 +3162,7 @@ sub project_board_lists {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/boards/:board_id/lists', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/boards/:board_id/lists', [@_], $options );
 }
 
 =head2 project_board_list
@@ -3184,7 +3184,7 @@ sub project_board_list {
     croak 'The #2 argument ($board_id) to project_board_list must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The #3 argument ($list_id) to project_board_list must be a scalar' if ref($_[2]) or (!defined $_[2]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/boards/:board_id/lists/:list_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/boards/:board_id/lists/:list_id', [@_], $options );
 }
 
 =head2 create_project_board_list
@@ -3208,7 +3208,7 @@ sub create_project_board_list {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/boards/:board_id/lists', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/boards/:board_id/lists', [@_], $options );
 }
 
 =head2 edit_project_board_list
@@ -3234,7 +3234,7 @@ sub edit_project_board_list {
     my $params = (@_ == 4) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'PUT', 'projects/:project_id/boards/:board_id/lists/:list_id', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'projects/:project_id/boards/:board_id/lists/:list_id', [@_], $options );
 }
 
 =head2 delete_project_board_list
@@ -3257,7 +3257,7 @@ sub delete_project_board_list {
     croak 'The #3 argument ($list_id) to delete_project_board_list must be a scalar' if ref($_[2]) or (!defined $_[2]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'projects/:project_id/boards/:board_id/lists/:list_id', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/boards/:board_id/lists/:list_id', [@_], $options );
     return;
 }
 
@@ -3284,7 +3284,7 @@ sub jobs {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/jobs', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/jobs', [@_], $options );
 }
 
 =head2 pipeline_jobs
@@ -3308,7 +3308,7 @@ sub pipeline_jobs {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/pipelines/:pipeline_id/jobs', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/pipelines/:pipeline_id/jobs', [@_], $options );
 }
 
 =head2 job
@@ -3328,7 +3328,7 @@ sub job {
     croak 'The #1 argument ($project_id) to job must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($job_id) to job must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/jobs/:job_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/jobs/:job_id', [@_], $options );
 }
 
 =head2 job_artifacts
@@ -3348,7 +3348,7 @@ sub job_artifacts {
     croak 'The #1 argument ($project_id) to job_artifacts must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($job_id) to job_artifacts must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/jobs/:job_id/artifacts', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/jobs/:job_id/artifacts', [@_], $options );
 }
 
 =head2 job_artifacts_archive
@@ -3372,7 +3372,7 @@ sub job_artifacts_archive {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/jobs/artifacts/:ref_name/download', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/jobs/artifacts/:ref_name/download', [@_], $options );
 }
 
 =head2 job_artifacts_file
@@ -3394,7 +3394,7 @@ sub job_artifacts_file {
     croak 'The #2 argument ($job_id) to job_artifacts_file must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The #3 argument ($artifact_path) to job_artifacts_file must be a scalar' if ref($_[2]) or (!defined $_[2]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/jobs/:job_id/artifacts/:artifact_path', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/jobs/:job_id/artifacts/:artifact_path', [@_], $options );
 }
 
 =head2 job_trace_file
@@ -3414,7 +3414,7 @@ sub job_trace_file {
     croak 'The #1 argument ($project_id) to job_trace_file must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($job_id) to job_trace_file must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/jobs/:job_id/trace', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/jobs/:job_id/trace', [@_], $options );
 }
 
 =head2 cancel_job
@@ -3434,7 +3434,7 @@ sub cancel_job {
     croak 'The #1 argument ($project_id) to cancel_job must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($job_id) to cancel_job must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/jobs/:job_id/cancel', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/jobs/:job_id/cancel', [@_], $options );
 }
 
 =head2 retry_job
@@ -3454,7 +3454,7 @@ sub retry_job {
     croak 'The #1 argument ($project_id) to retry_job must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($job_id) to retry_job must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/jobs/:job_id/retry', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/jobs/:job_id/retry', [@_], $options );
 }
 
 =head2 erase_job
@@ -3474,7 +3474,7 @@ sub erase_job {
     croak 'The #1 argument ($project_id) to erase_job must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($job_id) to erase_job must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/jobs/:job_id/erase', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/jobs/:job_id/erase', [@_], $options );
 }
 
 =head2 keep_job_artifacts
@@ -3494,7 +3494,7 @@ sub keep_job_artifacts {
     croak 'The #1 argument ($project_id) to keep_job_artifacts must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($job_id) to keep_job_artifacts must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/jobs/:job_id/artifacts/keep', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/jobs/:job_id/artifacts/keep', [@_], $options );
 }
 
 =head2 play_job
@@ -3514,7 +3514,7 @@ sub play_job {
     croak 'The #1 argument ($project_id) to play_job must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($job_id) to play_job must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/jobs/:job_id/play', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/jobs/:job_id/play', [@_], $options );
 }
 
 =head1 KEY METHODS
@@ -3536,7 +3536,7 @@ sub key {
     croak 'key must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($key_id) to key must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'keys/:key_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'keys/:key_id', [@_], $options );
 }
 
 =head1 LABEL METHODS
@@ -3562,7 +3562,7 @@ sub labels {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/labels', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/labels', [@_], $options );
 }
 
 =head2 create_label
@@ -3584,7 +3584,7 @@ sub create_label {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/labels', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/labels', [@_], $options );
 }
 
 =head2 delete_label
@@ -3607,7 +3607,7 @@ sub delete_label {
     my $options = {};
     $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_method( 'DELETE', 'projects/:project_id/labels', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/labels', [@_], $options );
     return;
 }
 
@@ -3630,7 +3630,7 @@ sub edit_label {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'PUT', 'projects/:project_id/labels', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'projects/:project_id/labels', [@_], $options );
 }
 
 =head2 subscribe_to_label
@@ -3650,7 +3650,7 @@ sub subscribe_to_label {
     croak 'The #1 argument ($project_id) to subscribe_to_label must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($label_id) to subscribe_to_label must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/labels/:label_id/subscribe', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/labels/:label_id/subscribe', [@_], $options );
 }
 
 =head2 unsubscribe_from_label
@@ -3671,7 +3671,7 @@ sub unsubscribe_from_label {
     croak 'The #2 argument ($label_id) to unsubscribe_from_label must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'POST', 'projects/:project_id/labels/:label_id/unsubscribe', [@_], $options );
+    $self->_call_rest_client( 'POST', 'projects/:project_id/labels/:label_id/unsubscribe', [@_], $options );
     return;
 }
 
@@ -3696,7 +3696,7 @@ sub global_merge_requests {
     my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'merge_requests', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'merge_requests', [@_], $options );
 }
 
 =head2 merge_requests
@@ -3718,7 +3718,7 @@ sub merge_requests {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/merge_requests', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/merge_requests', [@_], $options );
 }
 
 =head2 merge_request
@@ -3738,7 +3738,7 @@ sub merge_request {
     croak 'The #1 argument ($project_id) to merge_request must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($merge_request_iid) to merge_request must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid', [@_], $options );
 }
 
 =head2 merge_request_commits
@@ -3758,7 +3758,7 @@ sub merge_request_commits {
     croak 'The #1 argument ($project_id) to merge_request_commits must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($merge_request_iid) to merge_request_commits must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/commits', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/commits', [@_], $options );
 }
 
 =head2 merge_request_with_changes
@@ -3778,7 +3778,7 @@ sub merge_request_with_changes {
     croak 'The #1 argument ($project_id) to merge_request_with_changes must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($merge_request_iid) to merge_request_with_changes must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/changes', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/changes', [@_], $options );
 }
 
 =head2 create_merge_request
@@ -3800,7 +3800,7 @@ sub create_merge_request {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/merge_requests', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/merge_requests', [@_], $options );
 }
 
 =head2 edit_merge_request
@@ -3824,7 +3824,7 @@ sub edit_merge_request {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'PUT', 'projects/:project_id/merge_requests/:merge_request_iid', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'projects/:project_id/merge_requests/:merge_request_iid', [@_], $options );
 }
 
 =head2 delete_merge_request
@@ -3845,7 +3845,7 @@ sub delete_merge_request {
     croak 'The #2 argument ($merge_request_iid) to delete_merge_request must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'projects/:project_id/merge_requests/:merge_request_iid', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/merge_requests/:merge_request_iid', [@_], $options );
     return;
 }
 
@@ -3870,7 +3870,7 @@ sub accept_merge_request {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'PUT', 'projects/:project_id/merge_requests/:merge_request_iid/merge', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'projects/:project_id/merge_requests/:merge_request_iid/merge', [@_], $options );
 }
 
 =head2 cancel_merge_when_pipeline_succeeds
@@ -3890,7 +3890,7 @@ sub cancel_merge_when_pipeline_succeeds {
     croak 'The #1 argument ($project_id) to cancel_merge_when_pipeline_succeeds must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($merge_request_iid) to cancel_merge_when_pipeline_succeeds must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'PUT', 'projects/:project_id/merge_requests/:merge_request_iid/cancel_merge_when_pipeline_succeeds', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'projects/:project_id/merge_requests/:merge_request_iid/cancel_merge_when_pipeline_succeeds', [@_], $options );
 }
 
 =head2 merge_request_closes_issues
@@ -3914,7 +3914,7 @@ sub merge_request_closes_issues {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/closes_issues', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/closes_issues', [@_], $options );
 }
 
 =head2 subscribe_to_merge_request
@@ -3934,7 +3934,7 @@ sub subscribe_to_merge_request {
     croak 'The #1 argument ($project_id) to subscribe_to_merge_request must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($merge_request_iid) to subscribe_to_merge_request must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/merge_requests/:merge_request_iid/subscribe', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/merge_requests/:merge_request_iid/subscribe', [@_], $options );
 }
 
 =head2 unsubscribe_from_merge_request
@@ -3954,7 +3954,7 @@ sub unsubscribe_from_merge_request {
     croak 'The #1 argument ($project_id) to unsubscribe_from_merge_request must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($merge_request_iid) to unsubscribe_from_merge_request must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/merge_requests/:merge_request_iid/unsubscribe', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/merge_requests/:merge_request_iid/unsubscribe', [@_], $options );
 }
 
 =head2 create_merge_request_todo
@@ -3974,7 +3974,7 @@ sub create_merge_request_todo {
     croak 'The #1 argument ($project_id) to create_merge_request_todo must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($merge_request_iid) to create_merge_request_todo must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/merge_requests/:merge_request_iid/todo', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/merge_requests/:merge_request_iid/todo', [@_], $options );
 }
 
 =head2 merge_request_diff_versions
@@ -3994,7 +3994,7 @@ sub merge_request_diff_versions {
     croak 'The #1 argument ($project_id) to merge_request_diff_versions must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($merge_request_iid) to merge_request_diff_versions must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/versions', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/versions', [@_], $options );
 }
 
 =head2 merge_request_diff_version
@@ -4016,7 +4016,7 @@ sub merge_request_diff_version {
     croak 'The #2 argument ($merge_request_iid) to merge_request_diff_version must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The #3 argument ($version_id) to merge_request_diff_version must be a scalar' if ref($_[2]) or (!defined $_[2]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/versions/:version_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/versions/:version_id', [@_], $options );
 }
 
 =head2 set_merge_request_time_estimate
@@ -4040,7 +4040,7 @@ sub set_merge_request_time_estimate {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/merge_requests/:merge_request_iid/time_estimate', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/merge_requests/:merge_request_iid/time_estimate', [@_], $options );
 }
 
 =head2 reset_merge_request_time_estimate
@@ -4060,7 +4060,7 @@ sub reset_merge_request_time_estimate {
     croak 'The #1 argument ($project_id) to reset_merge_request_time_estimate must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($merge_request_iid) to reset_merge_request_time_estimate must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/merge_requests/:merge_request_iid/reset_time_estimate', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/merge_requests/:merge_request_iid/reset_time_estimate', [@_], $options );
 }
 
 =head2 add_merge_request_spent_time
@@ -4084,7 +4084,7 @@ sub add_merge_request_spent_time {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/merge_requests/:merge_request_iid/add_spent_time', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/merge_requests/:merge_request_iid/add_spent_time', [@_], $options );
 }
 
 =head2 reset_merge_request_spent_time
@@ -4104,7 +4104,7 @@ sub reset_merge_request_spent_time {
     croak 'The #1 argument ($project_id) to reset_merge_request_spent_time must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($merge_request_iid) to reset_merge_request_spent_time must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/merge_requests/:merge_request_iid/reset_spent_time', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/merge_requests/:merge_request_iid/reset_spent_time', [@_], $options );
 }
 
 =head2 merge_request_time_stats
@@ -4124,7 +4124,7 @@ sub merge_request_time_stats {
     croak 'The #1 argument ($project_id) to merge_request_time_stats must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($merge_request_iid) to merge_request_time_stats must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/time_stats', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/time_stats', [@_], $options );
 }
 
 =head1 PROJECT MILESTONE METHODS
@@ -4150,7 +4150,7 @@ sub project_milestones {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/milestones', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/milestones', [@_], $options );
 }
 
 =head2 project_milestone
@@ -4170,7 +4170,7 @@ sub project_milestone {
     croak 'The #1 argument ($project_id) to project_milestone must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($milestone_id) to project_milestone must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/milestones/:milestone_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/milestones/:milestone_id', [@_], $options );
 }
 
 =head2 create_project_milestone
@@ -4192,7 +4192,7 @@ sub create_project_milestone {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/milestones', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/milestones', [@_], $options );
 }
 
 =head2 edit_project_milestone
@@ -4216,7 +4216,7 @@ sub edit_project_milestone {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'PUT', 'projects/:project_id/milestones/:milestone_id', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'projects/:project_id/milestones/:milestone_id', [@_], $options );
 }
 
 =head2 project_milestone_issues
@@ -4240,7 +4240,7 @@ sub project_milestone_issues {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/milestones/:milestone_id/issues', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/milestones/:milestone_id/issues', [@_], $options );
 }
 
 =head2 project_milestone_merge_requests
@@ -4264,7 +4264,7 @@ sub project_milestone_merge_requests {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/milestones/:milestone_id/merge_requests', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/milestones/:milestone_id/merge_requests', [@_], $options );
 }
 
 =head1 GROUP MILESTONE METHODS
@@ -4290,7 +4290,7 @@ sub group_milestones {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'groups/:group_id/milestones', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'groups/:group_id/milestones', [@_], $options );
 }
 
 =head2 group_milestone
@@ -4310,7 +4310,7 @@ sub group_milestone {
     croak 'The #1 argument ($group_id) to group_milestone must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($milestone_id) to group_milestone must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'groups/:group_id/milestones/:milestone_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'groups/:group_id/milestones/:milestone_id', [@_], $options );
 }
 
 =head2 create_group_milestone
@@ -4332,7 +4332,7 @@ sub create_group_milestone {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'groups/:group_id/milestones', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'groups/:group_id/milestones', [@_], $options );
 }
 
 =head2 edit_group_milestone
@@ -4356,7 +4356,7 @@ sub edit_group_milestone {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'PUT', 'groups/:group_id/milestones/:milestone_id', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'groups/:group_id/milestones/:milestone_id', [@_], $options );
 }
 
 =head2 group_milestone_issues
@@ -4380,7 +4380,7 @@ sub group_milestone_issues {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'groups/:group_id/milestones/:milestone_id/issues', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'groups/:group_id/milestones/:milestone_id/issues', [@_], $options );
 }
 
 =head2 group_milestone_merge_requests
@@ -4404,7 +4404,7 @@ sub group_milestone_merge_requests {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'groups/:group_id/milestones/:milestone_id/merge_requests', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'groups/:group_id/milestones/:milestone_id/merge_requests', [@_], $options );
 }
 
 =head1 NAMESPACE METHODS
@@ -4428,7 +4428,7 @@ sub namespaces {
     my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'namespaces', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'namespaces', [@_], $options );
 }
 
 =head2 namespace
@@ -4446,7 +4446,7 @@ sub namespace {
     croak 'namespace must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($namespace_id) to namespace must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'namespaces/:namespace_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'namespaces/:namespace_id', [@_], $options );
 }
 
 =head1 NOTE METHODS
@@ -4474,7 +4474,7 @@ sub issue_notes {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/issues/:issue_iid/notes', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/issues/:issue_iid/notes', [@_], $options );
 }
 
 =head2 issue_note
@@ -4496,7 +4496,7 @@ sub issue_note {
     croak 'The #2 argument ($issue_iid) to issue_note must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The #3 argument ($note_id) to issue_note must be a scalar' if ref($_[2]) or (!defined $_[2]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/issues/:issue_iid/notes/:note_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/issues/:issue_iid/notes/:note_id', [@_], $options );
 }
 
 =head2 create_issue_note
@@ -4520,7 +4520,7 @@ sub create_issue_note {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/issues/:issue_iid/notes', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/issues/:issue_iid/notes', [@_], $options );
 }
 
 =head2 edit_issue_note
@@ -4547,7 +4547,7 @@ sub edit_issue_note {
     my $options = {};
     $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_method( 'PUT', 'projects/:project_id/issues/:issue_iid/notes/:note_id', [@_], $options );
+    $self->_call_rest_client( 'PUT', 'projects/:project_id/issues/:issue_iid/notes/:note_id', [@_], $options );
     return;
 }
 
@@ -4571,7 +4571,7 @@ sub delete_issue_note {
     croak 'The #3 argument ($note_id) to delete_issue_note must be a scalar' if ref($_[2]) or (!defined $_[2]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'projects/:project_id/issues/:issue_iid/notes/:note_id', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/issues/:issue_iid/notes/:note_id', [@_], $options );
     return;
 }
 
@@ -4596,7 +4596,7 @@ sub snippet_notes {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/snippets/:snippet_id/notes', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/snippets/:snippet_id/notes', [@_], $options );
 }
 
 =head2 snippet_note
@@ -4618,7 +4618,7 @@ sub snippet_note {
     croak 'The #2 argument ($snippet_id) to snippet_note must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The #3 argument ($note_id) to snippet_note must be a scalar' if ref($_[2]) or (!defined $_[2]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/snippets/:snippet_id/notes/:note_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/snippets/:snippet_id/notes/:note_id', [@_], $options );
 }
 
 =head2 create_snippet_note
@@ -4642,7 +4642,7 @@ sub create_snippet_note {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/snippets/:snippet_id/notes', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/snippets/:snippet_id/notes', [@_], $options );
 }
 
 =head2 edit_snippet_note
@@ -4669,7 +4669,7 @@ sub edit_snippet_note {
     my $options = {};
     $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_method( 'PUT', 'projects/:project_id/snippets/:snippet_id/notes/:note_id', [@_], $options );
+    $self->_call_rest_client( 'PUT', 'projects/:project_id/snippets/:snippet_id/notes/:note_id', [@_], $options );
     return;
 }
 
@@ -4693,7 +4693,7 @@ sub delete_snippet_note {
     croak 'The #3 argument ($note_id) to delete_snippet_note must be a scalar' if ref($_[2]) or (!defined $_[2]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'projects/:project_id/snippets/:snippet_id/notes/:note_id', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/snippets/:snippet_id/notes/:note_id', [@_], $options );
     return;
 }
 
@@ -4718,7 +4718,7 @@ sub merge_request_notes {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/notes', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/notes', [@_], $options );
 }
 
 =head2 merge_request_note
@@ -4740,7 +4740,7 @@ sub merge_request_note {
     croak 'The #2 argument ($merge_request_iid) to merge_request_note must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The #3 argument ($note_id) to merge_request_note must be a scalar' if ref($_[2]) or (!defined $_[2]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id', [@_], $options );
 }
 
 =head2 create_merge_request_note
@@ -4764,7 +4764,7 @@ sub create_merge_request_note {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/merge_requests/:merge_request_iid/notes', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/merge_requests/:merge_request_iid/notes', [@_], $options );
 }
 
 =head2 edit_merge_request_note
@@ -4791,7 +4791,7 @@ sub edit_merge_request_note {
     my $options = {};
     $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_method( 'PUT', 'projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id', [@_], $options );
+    $self->_call_rest_client( 'PUT', 'projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id', [@_], $options );
     return;
 }
 
@@ -4815,7 +4815,7 @@ sub delete_merge_request_note {
     croak 'The #3 argument ($note_id) to delete_merge_request_note must be a scalar' if ref($_[2]) or (!defined $_[2]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id', [@_], $options );
     return;
 }
 
@@ -4835,7 +4835,7 @@ sub global_notification_settings {
     my $self = shift;
     croak "The global_notification_settings method does not take any arguments" if @_;
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'notification_settings', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'notification_settings', [@_], $options );
 }
 
 =head2 set_global_notification_settings
@@ -4855,7 +4855,7 @@ sub set_global_notification_settings {
     my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'PUT', 'notification_settings', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'notification_settings', [@_], $options );
 }
 
 =head2 group_notification_settings
@@ -4873,7 +4873,7 @@ sub group_notification_settings {
     croak 'group_notification_settings must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($group_id) to group_notification_settings must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'groups/:group_id/notification_settings', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'groups/:group_id/notification_settings', [@_], $options );
 }
 
 =head2 project_notification_settings
@@ -4891,7 +4891,7 @@ sub project_notification_settings {
     croak 'project_notification_settings must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($project_id) to project_notification_settings must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/notification_settings', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/notification_settings', [@_], $options );
 }
 
 =head2 set_group_notification_settings
@@ -4913,7 +4913,7 @@ sub set_group_notification_settings {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'PUT', 'groups/:group_id/notification_settings', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'groups/:group_id/notification_settings', [@_], $options );
 }
 
 =head2 set_project_notification_settings
@@ -4935,7 +4935,7 @@ sub set_project_notification_settings {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'PUT', 'projects/:project_id/notification_settings', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'projects/:project_id/notification_settings', [@_], $options );
 }
 
 =head1 OPEN SOURCE LICENSE TEMPLATE METHODS
@@ -4959,7 +4959,7 @@ sub license_templates {
     my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'templates/licenses', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'templates/licenses', [@_], $options );
 }
 
 =head2 license_template
@@ -4981,7 +4981,7 @@ sub license_template {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'templates/licenses/:template_key', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'templates/licenses/:template_key', [@_], $options );
 }
 
 =head1 PAGE DOMAIN METHODS
@@ -5005,7 +5005,7 @@ sub global_pages_domains {
     my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'pages/domains', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'pages/domains', [@_], $options );
 }
 
 =head2 pages_domains
@@ -5027,7 +5027,7 @@ sub pages_domains {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/pages/domains', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/pages/domains', [@_], $options );
 }
 
 =head2 pages_domain
@@ -5047,7 +5047,7 @@ sub pages_domain {
     croak 'The #1 argument ($project_id) to pages_domain must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($domain) to pages_domain must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/pages/domains/:domain', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/pages/domains/:domain', [@_], $options );
 }
 
 =head2 create_pages_domain
@@ -5069,7 +5069,7 @@ sub create_pages_domain {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/pages/domains', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/pages/domains', [@_], $options );
 }
 
 =head2 edit_pages_domain
@@ -5093,7 +5093,7 @@ sub edit_pages_domain {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'PUT', 'projects/:project_id/pages/domains/:domain', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'projects/:project_id/pages/domains/:domain', [@_], $options );
 }
 
 =head2 delete_pages_domain
@@ -5114,7 +5114,7 @@ sub delete_pages_domain {
     croak 'The #2 argument ($domain) to delete_pages_domain must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'projects/:project_id/pages/domains/:domain', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/pages/domains/:domain', [@_], $options );
     return;
 }
 
@@ -5141,7 +5141,7 @@ sub pipelines {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/pipelines', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/pipelines', [@_], $options );
 }
 
 =head2 pipeline
@@ -5161,7 +5161,7 @@ sub pipeline {
     croak 'The #1 argument ($project_id) to pipeline must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($pipeline_id) to pipeline must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/pipelines/:pipeline_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/pipelines/:pipeline_id', [@_], $options );
 }
 
 =head2 create_pipeline
@@ -5183,7 +5183,7 @@ sub create_pipeline {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/pipeline', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/pipeline', [@_], $options );
 }
 
 =head2 retry_pipeline_jobs
@@ -5203,7 +5203,7 @@ sub retry_pipeline_jobs {
     croak 'The #1 argument ($project_id) to retry_pipeline_jobs must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($pipeline_id) to retry_pipeline_jobs must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/pipelines/:pipeline_id/retry', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/pipelines/:pipeline_id/retry', [@_], $options );
 }
 
 =head2 cancel_pipeline_jobs
@@ -5223,7 +5223,7 @@ sub cancel_pipeline_jobs {
     croak 'The #1 argument ($project_id) to cancel_pipeline_jobs must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($pipeline_id) to cancel_pipeline_jobs must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/pipelines/:pipeline_id/cancel', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/pipelines/:pipeline_id/cancel', [@_], $options );
 }
 
 =head1 PIPELINE TRIGGER METHODS
@@ -5249,7 +5249,7 @@ sub triggers {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/triggers', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/triggers', [@_], $options );
 }
 
 =head2 trigger
@@ -5269,7 +5269,7 @@ sub trigger {
     croak 'The #1 argument ($project_id) to trigger must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($trigger_id) to trigger must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/triggers/:trigger_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/triggers/:trigger_id', [@_], $options );
 }
 
 =head2 create_trigger
@@ -5291,7 +5291,7 @@ sub create_trigger {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/triggers', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/triggers', [@_], $options );
 }
 
 =head2 edit_trigger
@@ -5315,7 +5315,7 @@ sub edit_trigger {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'PUT', 'projects/:project_id/triggers/:trigger_id', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'projects/:project_id/triggers/:trigger_id', [@_], $options );
 }
 
 =head2 take_ownership_of_trigger
@@ -5335,7 +5335,7 @@ sub take_ownership_of_trigger {
     croak 'The #1 argument ($project_id) to take_ownership_of_trigger must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($trigger_id) to take_ownership_of_trigger must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/triggers/:trigger_id/take_ownership', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/triggers/:trigger_id/take_ownership', [@_], $options );
 }
 
 =head2 delete_trigger
@@ -5356,7 +5356,7 @@ sub delete_trigger {
     croak 'The #2 argument ($trigger_id) to delete_trigger must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'projects/:project_id/triggers/:trigger_id', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/triggers/:trigger_id', [@_], $options );
     return;
 }
 
@@ -5383,7 +5383,7 @@ sub pipeline_schedules {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/pipeline_schedules', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/pipeline_schedules', [@_], $options );
 }
 
 =head2 pipeline_schedule
@@ -5403,7 +5403,7 @@ sub pipeline_schedule {
     croak 'The #1 argument ($project_id) to pipeline_schedule must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($pipeline_schedule_id) to pipeline_schedule must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/pipeline_schedules/:pipeline_schedule_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/pipeline_schedules/:pipeline_schedule_id', [@_], $options );
 }
 
 =head2 create_pipeline_schedule
@@ -5425,7 +5425,7 @@ sub create_pipeline_schedule {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/pipeline_schedules', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/pipeline_schedules', [@_], $options );
 }
 
 =head2 edit_pipeline_schedule
@@ -5449,7 +5449,7 @@ sub edit_pipeline_schedule {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'PUT', 'projects/:project_id/pipeline_schedules/:pipeline_schedule_id', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'projects/:project_id/pipeline_schedules/:pipeline_schedule_id', [@_], $options );
 }
 
 =head2 take_ownership_of_pipeline_schedule
@@ -5469,7 +5469,7 @@ sub take_ownership_of_pipeline_schedule {
     croak 'The #1 argument ($project_id) to take_ownership_of_pipeline_schedule must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($pipeline_schedule_id) to take_ownership_of_pipeline_schedule must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/pipeline_schedules/:pipeline_schedule_id/take_ownership', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/pipeline_schedules/:pipeline_schedule_id/take_ownership', [@_], $options );
 }
 
 =head2 delete_pipeline_schedule
@@ -5489,7 +5489,7 @@ sub delete_pipeline_schedule {
     croak 'The #1 argument ($project_id) to delete_pipeline_schedule must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($pipeline_schedule_id) to delete_pipeline_schedule must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'DELETE', 'projects/:project_id/pipeline_schedules/:pipeline_schedule_id', [@_], $options );
+    return $self->_call_rest_client( 'DELETE', 'projects/:project_id/pipeline_schedules/:pipeline_schedule_id', [@_], $options );
 }
 
 =head2 create_pipeline_schedule_variable
@@ -5513,7 +5513,7 @@ sub create_pipeline_schedule_variable {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/pipeline_schedules/:pipeline_schedule_id/variables', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/pipeline_schedules/:pipeline_schedule_id/variables', [@_], $options );
 }
 
 =head2 edit_pipeline_schedule_variable
@@ -5539,7 +5539,7 @@ sub edit_pipeline_schedule_variable {
     my $params = (@_ == 4) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'PUT', 'projects/:project_id/pipeline_schedules/:pipeline_schedule_id/variables/:variable_key', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'projects/:project_id/pipeline_schedules/:pipeline_schedule_id/variables/:variable_key', [@_], $options );
 }
 
 =head2 delete_pipeline_schedule_variable
@@ -5561,7 +5561,7 @@ sub delete_pipeline_schedule_variable {
     croak 'The #2 argument ($pipeline_schedule_id) to delete_pipeline_schedule_variable must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The #3 argument ($variable_key) to delete_pipeline_schedule_variable must be a scalar' if ref($_[2]) or (!defined $_[2]);
     my $options = {};
-    return $self->_call_rest_method( 'DELETE', 'projects/:project_id/pipeline_schedules/:pipeline_schedule_id/variables/:variable_key', [@_], $options );
+    return $self->_call_rest_client( 'DELETE', 'projects/:project_id/pipeline_schedules/:pipeline_schedule_id/variables/:variable_key', [@_], $options );
 }
 
 =head1 PROJECT METHODS
@@ -5585,7 +5585,7 @@ sub projects {
     my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects', [@_], $options );
 }
 
 =head2 user_projects
@@ -5607,7 +5607,7 @@ sub user_projects {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'users/:user_id/projects', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'users/:user_id/projects', [@_], $options );
 }
 
 =head2 project
@@ -5629,7 +5629,7 @@ sub project {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id', [@_], $options );
 }
 
 =head2 project_users
@@ -5651,7 +5651,7 @@ sub project_users {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/users', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/users', [@_], $options );
 }
 
 =head2 create_project
@@ -5671,7 +5671,7 @@ sub create_project {
     my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects', [@_], $options );
 }
 
 =head2 create_project_for_user
@@ -5694,7 +5694,7 @@ sub create_project_for_user {
     my $options = {};
     $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_method( 'POST', 'projects/user/:user_id', [@_], $options );
+    $self->_call_rest_client( 'POST', 'projects/user/:user_id', [@_], $options );
     return;
 }
 
@@ -5718,7 +5718,7 @@ sub edit_project {
     my $options = {};
     $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_method( 'PUT', 'projects/:project_id', [@_], $options );
+    $self->_call_rest_client( 'PUT', 'projects/:project_id', [@_], $options );
     return;
 }
 
@@ -5742,7 +5742,7 @@ sub fork_project {
     my $options = {};
     $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_method( 'POST', 'projects/:project_id/fork', [@_], $options );
+    $self->_call_rest_client( 'POST', 'projects/:project_id/fork', [@_], $options );
     return;
 }
 
@@ -5765,7 +5765,7 @@ sub project_forks {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/forks', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/forks', [@_], $options );
 }
 
 =head2 start_project
@@ -5783,7 +5783,7 @@ sub start_project {
     croak 'start_project must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($project_id) to start_project must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/star', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/star', [@_], $options );
 }
 
 =head2 unstar_project
@@ -5801,7 +5801,7 @@ sub unstar_project {
     croak 'unstar_project must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($project_id) to unstar_project must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/unstar', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/unstar', [@_], $options );
 }
 
 =head2 project_languages
@@ -5819,7 +5819,7 @@ sub project_languages {
     croak 'project_languages must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($project_id) to project_languages must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/languages', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/languages', [@_], $options );
 }
 
 =head2 archive_project
@@ -5837,7 +5837,7 @@ sub archive_project {
     croak 'archive_project must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($project_id) to archive_project must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/archive', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/archive', [@_], $options );
 }
 
 =head2 unarchive_project
@@ -5855,7 +5855,7 @@ sub unarchive_project {
     croak 'unarchive_project must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($project_id) to unarchive_project must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/unarchive', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/unarchive', [@_], $options );
 }
 
 =head2 delete_project
@@ -5874,7 +5874,7 @@ sub delete_project {
     croak 'The #1 argument ($project_id) to delete_project must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'projects/:project_id', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id', [@_], $options );
     return;
 }
 
@@ -5899,7 +5899,7 @@ sub upload_file_to_project {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/uploads', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/uploads', [@_], $options );
 }
 
 =head2 share_project_with_group
@@ -5922,7 +5922,7 @@ sub share_project_with_group {
     my $options = {};
     $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_method( 'POST', 'projects/:project_id/share', [@_], $options );
+    $self->_call_rest_client( 'POST', 'projects/:project_id/share', [@_], $options );
     return;
 }
 
@@ -5944,7 +5944,7 @@ sub unshare_project_with_group {
     croak 'The #2 argument ($group_id) to unshare_project_with_group must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'projects/:project_id/share/:group_id', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/share/:group_id', [@_], $options );
     return;
 }
 
@@ -5963,7 +5963,7 @@ sub project_hooks {
     croak 'project_hooks must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($project_id) to project_hooks must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/hooks', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/hooks', [@_], $options );
 }
 
 =head2 project_hook
@@ -5983,7 +5983,7 @@ sub project_hook {
     croak 'The #1 argument ($project_id) to project_hook must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($hook_id) to project_hook must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'project/:project_id/hooks/:hook_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'project/:project_id/hooks/:hook_id', [@_], $options );
 }
 
 =head2 create_project_hook
@@ -6006,7 +6006,7 @@ sub create_project_hook {
     my $options = {};
     $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_method( 'POST', 'projects/:project_id/hooks', [@_], $options );
+    $self->_call_rest_client( 'POST', 'projects/:project_id/hooks', [@_], $options );
     return;
 }
 
@@ -6032,7 +6032,7 @@ sub edit_project_hook {
     my $options = {};
     $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_method( 'PUT', 'projects/:project_id/hooks/:hook_id', [@_], $options );
+    $self->_call_rest_client( 'PUT', 'projects/:project_id/hooks/:hook_id', [@_], $options );
     return;
 }
 
@@ -6053,7 +6053,7 @@ sub delete_project_hook {
     croak 'The #1 argument ($project_id) to delete_project_hook must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($hook_id) to delete_project_hook must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'DELETE', 'projects/:project_id/hooks/:hook_id', [@_], $options );
+    return $self->_call_rest_client( 'DELETE', 'projects/:project_id/hooks/:hook_id', [@_], $options );
 }
 
 =head2 set_project_fork
@@ -6074,7 +6074,7 @@ sub set_project_fork {
     croak 'The #2 argument ($from_project_id) to set_project_fork must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'POST', 'projects/:project_id/fork/:from_project_id', [@_], $options );
+    $self->_call_rest_client( 'POST', 'projects/:project_id/fork/:from_project_id', [@_], $options );
     return;
 }
 
@@ -6094,7 +6094,7 @@ sub clear_project_fork {
     croak 'The #1 argument ($project_id) to clear_project_fork must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'projects/:project_id/fork', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/fork', [@_], $options );
     return;
 }
 
@@ -6114,7 +6114,7 @@ sub start_housekeeping {
     croak 'The #1 argument ($project_id) to start_housekeeping must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'POST', 'projects/:project_id/housekeeping', [@_], $options );
+    $self->_call_rest_client( 'POST', 'projects/:project_id/housekeeping', [@_], $options );
     return;
 }
 
@@ -6141,7 +6141,7 @@ sub group_access_requests {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'groups/:group_id/access_requests', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'groups/:group_id/access_requests', [@_], $options );
 }
 
 =head2 project_access_requests
@@ -6163,7 +6163,7 @@ sub project_access_requests {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/access_requests', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/access_requests', [@_], $options );
 }
 
 =head2 request_group_access
@@ -6181,7 +6181,7 @@ sub request_group_access {
     croak 'request_group_access must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($group_id) to request_group_access must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'groups/:group_id/access_requests', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'groups/:group_id/access_requests', [@_], $options );
 }
 
 =head2 request_project_access
@@ -6199,7 +6199,7 @@ sub request_project_access {
     croak 'request_project_access must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($project_id) to request_project_access must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/access_requests', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/access_requests', [@_], $options );
 }
 
 =head2 approve_group_access
@@ -6219,7 +6219,7 @@ sub approve_group_access {
     croak 'The #1 argument ($group_id) to approve_group_access must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($user_id) to approve_group_access must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'PUT', 'groups/:group_id/access_requests/:user_id/approve', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'groups/:group_id/access_requests/:user_id/approve', [@_], $options );
 }
 
 =head2 approve_project_access
@@ -6239,7 +6239,7 @@ sub approve_project_access {
     croak 'The #1 argument ($project_id) to approve_project_access must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($user_id) to approve_project_access must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'PUT', 'projects/:project_id/access_requests/:user_id/approve', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'projects/:project_id/access_requests/:user_id/approve', [@_], $options );
 }
 
 =head2 deny_group_access
@@ -6260,7 +6260,7 @@ sub deny_group_access {
     croak 'The #2 argument ($user_id) to deny_group_access must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'groups/:group_id/access_requests/:user_id', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'groups/:group_id/access_requests/:user_id', [@_], $options );
     return;
 }
 
@@ -6282,7 +6282,7 @@ sub deny_project_access {
     croak 'The #2 argument ($user_id) to deny_project_access must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'projects/:project_id/access_requests/:user_id', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/access_requests/:user_id', [@_], $options );
     return;
 }
 
@@ -6309,7 +6309,7 @@ sub snippets {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/snippets', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/snippets', [@_], $options );
 }
 
 =head2 snippet
@@ -6329,7 +6329,7 @@ sub snippet {
     croak 'The #1 argument ($project_id) to snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($snippet_id) to snippet must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/snippets/:snippet_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/snippets/:snippet_id', [@_], $options );
 }
 
 =head2 create_snippet
@@ -6352,7 +6352,7 @@ sub create_snippet {
     my $options = {};
     $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_method( 'POST', 'projects/:project_id/snippets', [@_], $options );
+    $self->_call_rest_client( 'POST', 'projects/:project_id/snippets', [@_], $options );
     return;
 }
 
@@ -6378,7 +6378,7 @@ sub edit_snippet {
     my $options = {};
     $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_method( 'PUT', 'projects/:project_id/snippets/:snippet_id', [@_], $options );
+    $self->_call_rest_client( 'PUT', 'projects/:project_id/snippets/:snippet_id', [@_], $options );
     return;
 }
 
@@ -6400,7 +6400,7 @@ sub delete_snippet {
     croak 'The #2 argument ($snippet_id) to delete_snippet must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'projects/:project_id/snippets/:snippet_id', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/snippets/:snippet_id', [@_], $options );
     return;
 }
 
@@ -6421,7 +6421,7 @@ sub snippet_content {
     croak 'The #1 argument ($project_id) to snippet_content must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($snippet_id) to snippet_content must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/snippets/:snippet_id/raw', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/snippets/:snippet_id/raw', [@_], $options );
 }
 
 =head2 snippet_user_agent_detail
@@ -6441,7 +6441,7 @@ sub snippet_user_agent_detail {
     croak 'The #1 argument ($project_id) to snippet_user_agent_detail must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($snippet_id) to snippet_user_agent_detail must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/snippets/:snippet_id/user_agent_detail', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/snippets/:snippet_id/user_agent_detail', [@_], $options );
 }
 
 =head1 PROTECTED BRANCH METHODS
@@ -6467,7 +6467,7 @@ sub protected_branches {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/protected_branches', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/protected_branches', [@_], $options );
 }
 
 =head2 protected_branch
@@ -6487,7 +6487,7 @@ sub protected_branch {
     croak 'The #1 argument ($project_id) to protected_branch must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($branch_name) to protected_branch must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/protected_branches/:branch_name', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/protected_branches/:branch_name', [@_], $options );
 }
 
 =head2 protect_branch
@@ -6509,7 +6509,7 @@ sub protect_branch {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/protected_branches', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/protected_branches', [@_], $options );
 }
 
 =head2 unprotect_branch
@@ -6530,7 +6530,7 @@ sub unprotect_branch {
     croak 'The #2 argument ($branch_name) to unprotect_branch must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'projects/:project_id/protected_branches/:branch_name', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/protected_branches/:branch_name', [@_], $options );
     return;
 }
 
@@ -6557,7 +6557,7 @@ sub tree {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/repository/tree', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/repository/tree', [@_], $options );
 }
 
 =head2 blob
@@ -6577,7 +6577,7 @@ sub blob {
     croak 'The #1 argument ($project_id) to blob must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($sha) to blob must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/repository/blobs/:sha', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/repository/blobs/:sha', [@_], $options );
 }
 
 =head2 raw_blob
@@ -6597,7 +6597,7 @@ sub raw_blob {
     croak 'The #1 argument ($project_id) to raw_blob must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($sha) to raw_blob must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/repository/blobs/:sha/raw', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/repository/blobs/:sha/raw', [@_], $options );
 }
 
 =head2 archive
@@ -6619,7 +6619,7 @@ sub archive {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/repository/archive', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/repository/archive', [@_], $options );
 }
 
 =head2 compare
@@ -6641,7 +6641,7 @@ sub compare {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/repository/compare', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/repository/compare', [@_], $options );
 }
 
 =head2 contributors
@@ -6663,7 +6663,7 @@ sub contributors {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/repository/contributors', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/repository/contributors', [@_], $options );
 }
 
 =head1 FILE METHODS
@@ -6691,7 +6691,7 @@ sub file {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/repository/files/:file_path', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/repository/files/:file_path', [@_], $options );
 }
 
 =head2 raw_file
@@ -6715,7 +6715,7 @@ sub raw_file {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/repository/files/:file_path/raw', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/repository/files/:file_path/raw', [@_], $options );
 }
 
 =head2 create_file
@@ -6740,7 +6740,7 @@ sub create_file {
     my $options = {};
     $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_method( 'POST', 'projects/:project_id/repository/files/:file_path', [@_], $options );
+    $self->_call_rest_client( 'POST', 'projects/:project_id/repository/files/:file_path', [@_], $options );
     return;
 }
 
@@ -6766,7 +6766,7 @@ sub edit_file {
     my $options = {};
     $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_method( 'PUT', 'projects/:project_id/repository/files/:file_path', [@_], $options );
+    $self->_call_rest_client( 'PUT', 'projects/:project_id/repository/files/:file_path', [@_], $options );
     return;
 }
 
@@ -6792,7 +6792,7 @@ sub delete_file {
     my $options = {};
     $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_method( 'DELETE', 'projects/:project_id/repository/files/:file_path', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/repository/files/:file_path', [@_], $options );
     return;
 }
 
@@ -6817,7 +6817,7 @@ sub runners {
     my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'runners', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'runners', [@_], $options );
 }
 
 =head2 all_runners
@@ -6837,7 +6837,7 @@ sub all_runners {
     my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'runners/all', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'runners/all', [@_], $options );
 }
 
 =head2 runner
@@ -6855,7 +6855,7 @@ sub runner {
     croak 'runner must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($runner_id) to runner must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'runners/:runner_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'runners/:runner_id', [@_], $options );
 }
 
 =head2 update_runner
@@ -6877,7 +6877,7 @@ sub update_runner {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'PUT', 'runners/:runner_id', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'runners/:runner_id', [@_], $options );
 }
 
 =head2 delete_runner
@@ -6895,7 +6895,7 @@ sub delete_runner {
     croak 'delete_runner must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($runner_id) to delete_runner must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_method( 'DELETE', 'runners/:runner_id', [@_], $options );
+    return $self->_call_rest_client( 'DELETE', 'runners/:runner_id', [@_], $options );
 }
 
 =head2 runner_jobs
@@ -6917,7 +6917,7 @@ sub runner_jobs {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'runners/:runner_id/jobs', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'runners/:runner_id/jobs', [@_], $options );
 }
 
 =head2 project_runners
@@ -6939,7 +6939,7 @@ sub project_runners {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/runners', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/runners', [@_], $options );
 }
 
 =head2 enable_project_runner
@@ -6961,7 +6961,7 @@ sub enable_project_runner {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/runners', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/runners', [@_], $options );
 }
 
 =head2 disable_project_runner
@@ -6981,7 +6981,7 @@ sub disable_project_runner {
     croak 'The #1 argument ($project_id) to disable_project_runner must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($runner_id) to disable_project_runner must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'DELETE', 'projects/:project_id/runners/:runner_id', [@_], $options );
+    return $self->_call_rest_client( 'DELETE', 'projects/:project_id/runners/:runner_id', [@_], $options );
 }
 
 =head1 SERVICE METHODS
@@ -7005,7 +7005,7 @@ sub project_service {
     croak 'The #1 argument ($project_id) to project_service must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($service_name) to project_service must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/services/:service_name', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/services/:service_name', [@_], $options );
 }
 
 =head2 edit_project_service
@@ -7030,7 +7030,7 @@ sub edit_project_service {
     my $options = {};
     $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_method( 'PUT', 'projects/:project_id/services/:service_name', [@_], $options );
+    $self->_call_rest_client( 'PUT', 'projects/:project_id/services/:service_name', [@_], $options );
     return;
 }
 
@@ -7052,7 +7052,7 @@ sub delete_project_service {
     croak 'The #2 argument ($service_name) to delete_project_service must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'projects/:project_id/services/:service_name', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/services/:service_name', [@_], $options );
     return;
 }
 
@@ -7072,7 +7072,7 @@ sub settings {
     my $self = shift;
     croak "The settings method does not take any arguments" if @_;
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'application/settings', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'application/settings', [@_], $options );
 }
 
 =head2 update_settings
@@ -7092,7 +7092,7 @@ sub update_settings {
     my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'PUT', 'application/settings', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'application/settings', [@_], $options );
 }
 
 =head1 SIDEKIQ METRIC METHODS
@@ -7111,7 +7111,7 @@ sub queue_metrics {
     my $self = shift;
     croak "The queue_metrics method does not take any arguments" if @_;
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'sidekiq/queue_metrics', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'sidekiq/queue_metrics', [@_], $options );
 }
 
 =head2 process_metrics
@@ -7126,7 +7126,7 @@ sub process_metrics {
     my $self = shift;
     croak "The process_metrics method does not take any arguments" if @_;
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'sidekiq/process_metrics', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'sidekiq/process_metrics', [@_], $options );
 }
 
 =head2 job_stats
@@ -7141,7 +7141,7 @@ sub job_stats {
     my $self = shift;
     croak "The job_stats method does not take any arguments" if @_;
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'sidekiq/job_stats', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'sidekiq/job_stats', [@_], $options );
 }
 
 =head2 compound_metrics
@@ -7156,7 +7156,7 @@ sub compound_metrics {
     my $self = shift;
     croak "The compound_metrics method does not take any arguments" if @_;
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'sidekiq/compound_metrics', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'sidekiq/compound_metrics', [@_], $options );
 }
 
 =head1 SYSTEM HOOK METHODS
@@ -7180,7 +7180,7 @@ sub hooks {
     my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'hooks', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'hooks', [@_], $options );
 }
 
 =head2 create_hook
@@ -7201,7 +7201,7 @@ sub create_hook {
     my $options = {};
     $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_method( 'POST', 'hooks', [@_], $options );
+    $self->_call_rest_client( 'POST', 'hooks', [@_], $options );
     return;
 }
 
@@ -7220,7 +7220,7 @@ sub test_hook {
     croak 'test_hook must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($hook_id) to test_hook must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'hooks/:hook_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'hooks/:hook_id', [@_], $options );
 }
 
 =head2 delete_hook
@@ -7239,7 +7239,7 @@ sub delete_hook {
     croak 'The #1 argument ($hook_id) to delete_hook must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'hooks/:hook_id', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'hooks/:hook_id', [@_], $options );
     return;
 }
 
@@ -7266,7 +7266,7 @@ sub tags {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/repository/tags', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/repository/tags', [@_], $options );
 }
 
 =head2 tag
@@ -7286,7 +7286,7 @@ sub tag {
     croak 'The #1 argument ($project_id) to tag must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($tag_name) to tag must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/repository/tags/:tag_name', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/repository/tags/:tag_name', [@_], $options );
 }
 
 =head2 create_tag
@@ -7308,7 +7308,7 @@ sub create_tag {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/repository/tags', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/repository/tags', [@_], $options );
 }
 
 =head2 delete_tag
@@ -7329,7 +7329,7 @@ sub delete_tag {
     croak 'The #2 argument ($tag_name) to delete_tag must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'projects/:project_id/repository/tags/:tag_name', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/repository/tags/:tag_name', [@_], $options );
     return;
 }
 
@@ -7355,7 +7355,7 @@ sub create_release {
     my $options = {};
     $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_method( 'POST', 'projects/:project_id/repository/tags/:tag_name/release', [@_], $options );
+    $self->_call_rest_client( 'POST', 'projects/:project_id/repository/tags/:tag_name/release', [@_], $options );
     return;
 }
 
@@ -7381,7 +7381,7 @@ sub edit_release {
     my $options = {};
     $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_method( 'PUT', 'projects/:project_id/repository/tags/:tag_name/release', [@_], $options );
+    $self->_call_rest_client( 'PUT', 'projects/:project_id/repository/tags/:tag_name/release', [@_], $options );
     return;
 }
 
@@ -7406,7 +7406,7 @@ sub todos {
     my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'todos', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'todos', [@_], $options );
 }
 
 =head2 mark_todo_done
@@ -7424,7 +7424,7 @@ sub mark_todo_done {
     croak 'mark_todo_done must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($todo_id) to mark_todo_done must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'todos/:todo_id/mark_as_done', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'todos/:todo_id/mark_as_done', [@_], $options );
 }
 
 =head2 mark_all_todos_done
@@ -7440,7 +7440,7 @@ sub mark_all_todos_done {
     croak "The mark_all_todos_done method does not take any arguments" if @_;
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'POST', 'todos/mark_as_done', [@_], $options );
+    $self->_call_rest_client( 'POST', 'todos/mark_as_done', [@_], $options );
     return;
 }
 
@@ -7465,7 +7465,7 @@ sub users {
     my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'users', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'users', [@_], $options );
 }
 
 =head2 user
@@ -7483,7 +7483,7 @@ sub user {
     croak 'user must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($user_id) to user must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'users/:user_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'users/:user_id', [@_], $options );
 }
 
 =head2 create_user
@@ -7504,7 +7504,7 @@ sub create_user {
     my $options = {};
     $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_method( 'POST', 'users', [@_], $options );
+    $self->_call_rest_client( 'POST', 'users', [@_], $options );
     return;
 }
 
@@ -7528,7 +7528,7 @@ sub edit_user {
     my $options = {};
     $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_method( 'PUT', 'users/:user_id', [@_], $options );
+    $self->_call_rest_client( 'PUT', 'users/:user_id', [@_], $options );
     return;
 }
 
@@ -7548,7 +7548,7 @@ sub delete_user {
     croak 'The #1 argument ($user_id) to delete_user must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'users/:user_id', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'users/:user_id', [@_], $options );
     return;
 }
 
@@ -7564,7 +7564,7 @@ sub current_user {
     my $self = shift;
     croak "The current_user method does not take any arguments" if @_;
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'user', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'user', [@_], $options );
 }
 
 =head2 current_user_ssh_keys
@@ -7584,7 +7584,7 @@ sub current_user_ssh_keys {
     my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'user/keys', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'user/keys', [@_], $options );
 }
 
 =head2 user_ssh_keys
@@ -7606,7 +7606,7 @@ sub user_ssh_keys {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'users/:user_id/keys', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'users/:user_id/keys', [@_], $options );
 }
 
 =head2 user_ssh_key
@@ -7624,7 +7624,7 @@ sub user_ssh_key {
     croak 'user_ssh_key must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($key_id) to user_ssh_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'user/keys/:key_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'user/keys/:key_id', [@_], $options );
 }
 
 =head2 create_current_user_ssh_key
@@ -7645,7 +7645,7 @@ sub create_current_user_ssh_key {
     my $options = {};
     $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_method( 'POST', 'user/keys', [@_], $options );
+    $self->_call_rest_client( 'POST', 'user/keys', [@_], $options );
     return;
 }
 
@@ -7669,7 +7669,7 @@ sub create_user_ssh_key {
     my $options = {};
     $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_method( 'POST', 'users/:user_id/keys', [@_], $options );
+    $self->_call_rest_client( 'POST', 'users/:user_id/keys', [@_], $options );
     return;
 }
 
@@ -7689,7 +7689,7 @@ sub delete_current_user_ssh_key {
     croak 'The #1 argument ($key_id) to delete_current_user_ssh_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'user/keys/:key_id', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'user/keys/:key_id', [@_], $options );
     return;
 }
 
@@ -7711,7 +7711,7 @@ sub delete_user_ssh_key {
     croak 'The #2 argument ($key_id) to delete_user_ssh_key must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'users/:user_id/keys/:key_id', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'users/:user_id/keys/:key_id', [@_], $options );
     return;
 }
 
@@ -7732,7 +7732,7 @@ sub current_user_gpg_keys {
     my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'user/gpg_keys', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'user/gpg_keys', [@_], $options );
 }
 
 =head2 current_user_gpg_key
@@ -7750,7 +7750,7 @@ sub current_user_gpg_key {
     croak 'current_user_gpg_key must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($key_id) to current_user_gpg_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'user/gpg_keys/:key_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'user/gpg_keys/:key_id', [@_], $options );
 }
 
 =head2 create_current_user_gpg_key
@@ -7771,7 +7771,7 @@ sub create_current_user_gpg_key {
     my $options = {};
     $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_method( 'POST', 'user/gpg_keys', [@_], $options );
+    $self->_call_rest_client( 'POST', 'user/gpg_keys', [@_], $options );
     return;
 }
 
@@ -7791,7 +7791,7 @@ sub delete_current_user_gpg_key {
     croak 'The #1 argument ($key_id) to delete_current_user_gpg_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'user/gpg_keys/:key_id', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'user/gpg_keys/:key_id', [@_], $options );
     return;
 }
 
@@ -7814,7 +7814,7 @@ sub user_gpg_keys {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'users/:user_id/gpg_keys', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'users/:user_id/gpg_keys', [@_], $options );
 }
 
 =head2 user_gpg_key
@@ -7834,7 +7834,7 @@ sub user_gpg_key {
     croak 'The #1 argument ($user_id) to user_gpg_key must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($key_id) to user_gpg_key must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'users/:user_id/gpg_keys/:key_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'users/:user_id/gpg_keys/:key_id', [@_], $options );
 }
 
 =head2 create_user_gpg_key
@@ -7856,7 +7856,7 @@ sub create_user_gpg_key {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'users/:user_id/gpg_keys', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'users/:user_id/gpg_keys', [@_], $options );
 }
 
 =head2 delete_user_gpg_key
@@ -7877,7 +7877,7 @@ sub delete_user_gpg_key {
     croak 'The #2 argument ($key_id) to delete_user_gpg_key must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'users/:user_id/gpg_keys/:key_id', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'users/:user_id/gpg_keys/:key_id', [@_], $options );
     return;
 }
 
@@ -7898,7 +7898,7 @@ sub current_user_emails {
     my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'user/emails', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'user/emails', [@_], $options );
 }
 
 =head2 user_emails
@@ -7920,7 +7920,7 @@ sub user_emails {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'users/:user_id/emails', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'users/:user_id/emails', [@_], $options );
 }
 
 =head2 current_user_email
@@ -7938,7 +7938,7 @@ sub current_user_email {
     croak 'current_user_email must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($email_id) to current_user_email must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'user/emails/:email_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'user/emails/:email_id', [@_], $options );
 }
 
 =head2 create_current_user_email
@@ -7958,7 +7958,7 @@ sub create_current_user_email {
     my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'user/emails', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'user/emails', [@_], $options );
 }
 
 =head2 create_user_email
@@ -7980,7 +7980,7 @@ sub create_user_email {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'users/:user_id/emails', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'users/:user_id/emails', [@_], $options );
 }
 
 =head2 delete_current_user_email
@@ -7999,7 +7999,7 @@ sub delete_current_user_email {
     croak 'The #1 argument ($email_id) to delete_current_user_email must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'user/emails/:email_id', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'user/emails/:email_id', [@_], $options );
     return;
 }
 
@@ -8021,7 +8021,7 @@ sub delete_user_email {
     croak 'The #2 argument ($email_id) to delete_user_email must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'users/:user_id/emails/:email_id', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'users/:user_id/emails/:email_id', [@_], $options );
     return;
 }
 
@@ -8040,7 +8040,7 @@ sub block_user {
     croak 'block_user must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($user_id) to block_user must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'users/:user_id/block', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'users/:user_id/block', [@_], $options );
 }
 
 =head2 unblock_user
@@ -8058,7 +8058,7 @@ sub unblock_user {
     croak 'unblock_user must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($user_id) to unblock_user must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_method( 'POST', 'users/:user_id/unblock', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'users/:user_id/unblock', [@_], $options );
 }
 
 =head2 user_impersonation_tokens
@@ -8080,7 +8080,7 @@ sub user_impersonation_tokens {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'users/:user_id/impersonation_tokens', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'users/:user_id/impersonation_tokens', [@_], $options );
 }
 
 =head2 user_impersonation_token
@@ -8100,7 +8100,7 @@ sub user_impersonation_token {
     croak 'The #1 argument ($user_id) to user_impersonation_token must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($impersonation_token_id) to user_impersonation_token must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'users/:user_id/impersonation_tokens/:impersonation_token_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'users/:user_id/impersonation_tokens/:impersonation_token_id', [@_], $options );
 }
 
 =head2 create_user_impersonation_token
@@ -8122,7 +8122,7 @@ sub create_user_impersonation_token {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'users/:user_id/impersonation_tokens', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'users/:user_id/impersonation_tokens', [@_], $options );
 }
 
 =head2 delete_user_impersonation_token
@@ -8143,7 +8143,7 @@ sub delete_user_impersonation_token {
     croak 'The #2 argument ($impersonation_token_id) to delete_user_impersonation_token must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'users/:user_id/impersonation_tokens/:impersonation_token_id', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'users/:user_id/impersonation_tokens/:impersonation_token_id', [@_], $options );
     return;
 }
 
@@ -8164,7 +8164,7 @@ sub all_user_activities {
     my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'user/activities', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'user/activities', [@_], $options );
 }
 
 =head1 VALIDATE CI CONFIGURATION METHODS
@@ -8188,7 +8188,7 @@ sub lint {
     my $params = (@_ == 1) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'lint', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'lint', [@_], $options );
 }
 
 =head1 VERSION METHODS
@@ -8207,7 +8207,7 @@ sub version {
     my $self = shift;
     croak "The version method does not take any arguments" if @_;
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'version', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'version', [@_], $options );
 }
 
 =head1 WIKI METHODS
@@ -8233,7 +8233,7 @@ sub wiki_pages {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/wikis', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/wikis', [@_], $options );
 }
 
 =head2 wiki_page
@@ -8253,7 +8253,7 @@ sub wiki_page {
     croak 'The #1 argument ($project_id) to wiki_page must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($slug) to wiki_page must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_method( 'GET', 'projects/:project_id/wikis/:slug', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/wikis/:slug', [@_], $options );
 }
 
 =head2 create_wiki_page
@@ -8275,7 +8275,7 @@ sub create_wiki_page {
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'POST', 'projects/:project_id/wikis', [@_], $options );
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/wikis', [@_], $options );
 }
 
 =head2 edit_wiki_page
@@ -8299,7 +8299,7 @@ sub edit_wiki_page {
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;
-    return $self->_call_rest_method( 'PUT', 'projects/:project_id/wikis/:slug', [@_], $options );
+    return $self->_call_rest_client( 'PUT', 'projects/:project_id/wikis/:slug', [@_], $options );
 }
 
 =head2 delete_wiki_page
@@ -8320,7 +8320,7 @@ sub delete_wiki_page {
     croak 'The #2 argument ($slug) to delete_wiki_page must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_method( 'DELETE', 'projects/:project_id/wikis/:slug', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/wikis/:slug', [@_], $options );
     return;
 }
 

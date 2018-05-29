@@ -88,7 +88,7 @@ sub _http_tiny_request {
 }
 
 sub request {
-    my ($self, $method, $path, $path_vars, $options) = @_;
+    my ($self, $verb, $path, $path_vars, $options) = @_;
 
     $options = { %{ $options || {} } };
     my $query = delete $options->{query};
@@ -102,7 +102,7 @@ sub request {
     # never happen as the API methods verify the argument size before we get here.
     $path = sprintf($path, (map { uri_escape($_) } @$path_vars)) if @$path_vars;
 
-    $log->tracef( 'Making %s request against %s', $method, $path );
+    $log->tracef( 'Making %s request against %s', $verb, $path );
 
     my $url = $self->_clean_base_url->clone();
     $url->path( $url->path() . '/' . $path );
@@ -110,9 +110,9 @@ sub request {
     $url = "$url"; # No more changes to the url from this point forward.
 
     my $req_method = 'request';
-    my $req = [ $method, $url, $options ];
+    my $req = [ $verb, $url, $options ];
 
-    if ($method eq 'POST' and ref($content) eq 'HASH' and $content->{file}) {
+    if ($verb eq 'POST' and ref($content) eq 'HASH' and $content->{file}) {
         $content = { %$content };
         my $file = path( delete $content->{file} );
 
@@ -135,7 +135,7 @@ sub request {
 
         $req->[0] = $req->[1]; # Replace method with url.
         $req->[1] = $data; # Put data where url was.
-        # So, req went from [$method,$url,$options] to [$url,$data,$options],
+        # So, req went from [$verb,$url,$options] to [$url,$data,$options],
         # per the post_multipart interface.
 
         $req_method = 'post_multipart';
@@ -163,7 +163,7 @@ sub request {
         }
     } while $tries_left > 0;
 
-    if ($res->{status} eq '404' and $method eq 'GET') {
+    if ($res->{status} eq '404' and $verb eq 'GET') {
         return undef;
     }
 
@@ -189,7 +189,7 @@ sub request {
 
     croak sprintf(
         'Error %sing %s (HTTP %s): %s %s',
-        $method, $url,
+        $verb, $url,
         $res->{status}, ($res->{reason} || 'Unknown'),
         $glimpse,
     );
