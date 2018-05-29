@@ -2,12 +2,7 @@
 use strictures 2;
 
 use Test2::V0;
-
-BEGIN {
-    plan skip_all =>
-        'Set the AUTHOR_TESTING env var to run this test.'
-        unless $ENV{AUTHOR_TESTING};
-}
+use Test2::Require::AuthorTesting;
 
 use Log::Any::Adapter 'TAP';
 use Path::Tiny;
