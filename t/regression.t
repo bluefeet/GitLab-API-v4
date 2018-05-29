@@ -31,27 +31,30 @@ subtest projects => sub{
     my $project = $api->project( $project_id );
     ok( $project, 'project found' );
 
-    my $file = Path::Tiny->tempfile( SUFFIX => '.txt' );
-    my $file_content = 'Hello GitLab, this is a test of ' . ref($api) . '.';
-    $file->spew( $file_content );
+    subtest upload_file_to_project => sub{
+        my $file = Path::Tiny->tempfile( SUFFIX => '.txt' );
+        my $file_content = 'Hello GitLab, this is a test of ' . ref($api) . '.';
+        $file->spew( $file_content );
 
-    my $upload = $api->upload_file_to_project(
-        $project_id,
-        { file=>"$file" },
-    );
+        my $upload = $api->upload_file_to_project(
+            $project_id,
+            { file=>"$file" },
+        );
+        ok( $upload->{url}, 'got an upload response' );
 
-    my $download_url = URI->new( $api->url() );
-    my $site_path = $download_url->path();
-    $site_path =~ s{/api/v4/?$}{};
-    my $project_path = $project->{path_with_namespace};
-    my $upload_path = $upload->{url};
-    $download_url->path( join_paths( $site_path, $project_path, $upload_path ) );
+        my $download_url = URI->new( $api->url() );
+        my $site_path = $download_url->path();
+        $site_path =~ s{/api/v4/?$}{};
+        my $project_path = $project->{path_with_namespace};
+        my $upload_path = $upload->{url};
+        $download_url->path( join_paths( $site_path, $project_path, $upload_path ) );
 
-    my $res = HTTP::Tiny->new->get(
-        $download_url,
-        { headers=>$api->_auth_headers() },
-    );
-    is( $res->{content}, $file_content, 'upload_file_to_project worked' );
+        my $res = HTTP::Tiny->new->get(
+            $download_url,
+            { headers=>$api->_auth_headers() },
+        );
+        is( $res->{content}, $file_content, 'upload_file_to_project worked' );
+    };
 
     $api->delete_project( $project_id );
     pass 'project deleted';
