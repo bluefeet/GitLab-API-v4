@@ -14,8 +14,9 @@
 - archive_project: project = POST projects/:project_id/archive
 - unarchive_project: project = POST projects/:project_id/unarchive
 - delete_project: DELETE projects/:project_id
-# TODO: Support multi-part uploads in ::RestClient.
-#- upload_file_to_project: upload = POST projects/:project_id/uploads?
+- method: upload_file_to_project
+  spec: upload = POST projects/:project_id/uploads?
+  note: The C<file> parameter must point to a readable file on the local filesystem.
 - share_project_with_group: POST projects/:project_id/share?
 - unshare_project_with_group: DELETE projects/:project_id/share/:group_id
 - project_hooks: hooks = GET projects/:project_id/hooks

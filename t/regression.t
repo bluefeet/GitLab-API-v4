@@ -10,6 +10,7 @@ BEGIN {
 }
 
 use Log::Any::Adapter 'TAP';
+use Path::Tiny;
 
 use GitLab::API::v4;
 use GitLab::API::v4::Config;
@@ -19,7 +20,7 @@ my $api = GitLab::API::v4->new( $config->args() );
 
 subtest projects => sub{
     my $stamp = time();
-    my $project_name = "tester-$stamp";
+    my $project_name = "gitlab-api-v4-test-$stamp";
 
     my $created_project = $api->create_project(
         { name=>$project_name },
@@ -27,24 +28,59 @@ subtest projects => sub{
     ok( $created_project, 'project created' );
 
     my $project_id = $created_project->{id};
-    my $found_project = $api->project( $project_id );
-    ok( $found_project, 'project found' );
+    my $project = $api->project( $project_id );
+    ok( $project, 'project found' );
+
+    my $file = Path::Tiny->tempfile( SUFFIX => '.txt' );
+    my $file_content = 'Hello GitLab, this is a test of ' . ref($api) . '.';
+    $file->spew( $file_content );
+
+    my $upload = $api->upload_file_to_project(
+        $project_id,
+        { file=>"$file" },
+    );
+
+    my $download_url = URI->new( $api->url() );
+    my $site_path = $download_url->path();
+    $site_path =~ s{/api/v4/?$}{};
+    my $project_path = $project->{path_with_namespace};
+    my $upload_path = $upload->{url};
+    $download_url->path( join_paths( $site_path, $project_path, $upload_path ) );
+
+    my $res = HTTP::Tiny->new->get(
+        $download_url,
+        { headers=>$api->_auth_headers() },
+    );
+    is( $res->{content}, $file_content, 'upload_file_to_project worked' );
 
     $api->delete_project( $project_id );
     pass 'project deleted';
 };
 
 subtest users => sub{
-    my $create_user = $api->create_user({'username'=>'maryp','email'=>'maryp@test.example.com','password'=>'d5fzHF7tfgh','name'=>'Mary Poppins'});
+    my $stamp = time();
+    my $username = "gitlab-api-v4-test-$stamp";
+    $api->create_user({
+        username   => $username,
+        email      => "$username\@example.com",
+        password   => 'd5fzHF7tfgh',
+        name       => 'GitLabAPIv4 Test',
+    });
     pass 'user created';
-    my $found_user = $api->users({'username'=>'maryp'});
-    ok( $found_user, 'user found' );
-    my $user_id = $found_user->[0]->{'id'};
 
+    my $users = $api->users({ username => $username });
+    is( @$users+0, 1, 'one user found' );
+
+    my $user = shift @$users;
+    is( $user->{username}, $username, 'user has correct username' );
+    die 'Incorrect user found' if $user->{username} ne $username;
+
+    my $user_id = $user->{id};
     ok( $api->block_user($user_id), 'user blocked' );
     ok( (!$api->block_user($user_id)), 'user cannot be blocked again' );
     ok( $api->unblock_user($user_id), 'user unblocked' );
     ok( (!$api->unblock_user($user_id)), 'user cannot be unblocked again' );
+
     $api->delete_user($user_id);
     pass 'user deleted';
 };
@@ -56,3 +92,23 @@ subtest failures => sub{
 };
 
 done_testing;
+
+sub join_paths {
+    my @paths = @_;
+
+    return() if !@paths;
+    return @paths if @paths==1;
+
+    my $first = shift @paths;
+    $first =~ s{/$}{};
+
+    my $last = pop @paths;
+    $last =~ s{^/}{};
+
+    @paths = (
+        map { $_ =~ s{^/?(.*?)/?$}{$1}; $_ }
+        @paths
+    );
+
+    return join('/', $first, @paths, $last);
+}

@@ -11,6 +11,7 @@ requires 'JSON' => '2.59';
 
 # Used by GitLab::API::v4::RESTClient.
 requires 'HTTP::Tiny' => '0.059';
+requires 'HTTP::Tiny::Multipart' => '0.05';
 requires 'URI' => '1.62';
 requires 'URI::Escape' => '1.72';
 

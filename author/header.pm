@@ -118,7 +118,17 @@ sub BUILD {
 sub _call_rest_method {
     my ($self, $method, $path, $path_vars, $options) = @_;
 
-    my $headers = $options->{headers} = {};
+    $options->{headers} = $self->_auth_headers();
+
+    return $self->rest_client->request(
+        $method, $path, $path_vars, $options,
+    );
+}
+
+sub _auth_headers {
+    my ($self) = @_;
+    my $headers = {};
+
     $headers->{'authorization'} = 'Bearer ' . $self->access_token()
         if defined $self->access_token();
     $headers->{'private-token'} = $self->private_token()
@@ -126,9 +136,7 @@ sub _call_rest_method {
     $headers->{'sudo'} = $self->sudo_user()
         if defined $self->sudo_user();
 
-    return $self->rest_client->request(
-        $method, $path, $path_vars, $options,
-    );
+    return $headers;
 }
 
 sub _clone_args {

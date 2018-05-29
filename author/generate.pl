@@ -22,24 +22,32 @@ foreach my $section_name (keys %$section_pack) {
     print "=head1 $section->{head}\n\n";
     print "See L<$section->{doc_url}>.\n\n";
 
-    foreach my $endpoint_pack (@$endpoints) {
-    foreach my $sub (keys %$endpoint_pack) {
-        my $spec = $endpoint_pack->{$sub};
+    foreach my $endpoint (@$endpoints) {
+        if (keys(%$endpoint) == 1) {
+            my ($method) = keys %$endpoint;
+            $endpoint = {
+                method => $method,
+                spec   => $endpoint->{$method},
+            };
+        }
 
-        my ($return, $method, $path, $params_ok);
+        my $method = $endpoint->{method};
+        my $spec = $endpoint->{spec};
+
+        my ($return, $verb, $path, $params_ok);
         if ($spec =~ m{^(?:(\S+) = |)(GET|POST|PUT|DELETE) ([^/\s]\S*?[^/\s]?)(\??)$}) {
-            ($return, $method, $path, $params_ok) = ($1, $2, $3, $4);
+            ($return, $verb, $path, $params_ok) = ($1, $2, $3, $4);
         }
         else {
-            die "Invalid spec ($sub): $spec";
+            die "Invalid spec ($method): $spec";
         }
 
-        print "=head2 $sub\n\n";
+        print "=head2 $method\n\n";
         print '    ';
 
         print "my \$$return = " if $return;
 
-        print "\$api->$sub(";
+        print "\$api->$method(";
 
         my @args = (
             map { ($_ =~ m{^:(.+)$}) ? "\$$1" : () }
@@ -58,11 +66,13 @@ foreach my $section_name (keys %$section_pack) {
 
         print ");\n\n";
 
-        print "Sends a C<$method> request to C<$path>";
+        print "Sends a C<$verb> request to C<$path>";
         print " and returns the decoded response body" if $return;
-        print ".\n\n=cut\n\n";
+        print ".\n\n";
+        print "$endpoint->{note}\n\n" if $endpoint->{note};
+        print "=cut\n\n";
 
-        print "sub $sub {\n";
+        print "sub $method {\n";
         print "    my \$self = shift;\n";
 
         if (@args) {
@@ -71,21 +81,21 @@ foreach my $section_name (keys %$section_pack) {
             $min_args-- if $params_ok;
 
             if ($min_args == $max_args) {
-                print "    croak '$sub must be called with $min_args arguments' if \@_ != $min_args;\n";
+                print "    croak '$method must be called with $min_args arguments' if \@_ != $min_args;\n";
             }
             else {
-                print "    croak '$sub must be called with $min_args to $max_args arguments' if \@_ < $min_args or \@_ > $max_args;\n";
+                print "    croak '$method must be called with $min_args to $max_args arguments' if \@_ < $min_args or \@_ > $max_args;\n";
             }
 
             my $i = 0;
             foreach my $arg (@args) {
                 my $is_params = ($params_ok and $i==$#args) ? 1 : 0;
                 if ($is_params) {
-                    print "    croak 'The last argument ($arg) to $sub must be a hash ref' if defined(\$_[$i]) and ref(\$_[$i]) ne 'HASH';\n";
+                    print "    croak 'The last argument ($arg) to $method must be a hash ref' if defined(\$_[$i]) and ref(\$_[$i]) ne 'HASH';\n";
                 }
                 else {
                     my $number = $i + 1;
-                    print "    croak 'The #$number argument ($arg) to $sub must be a scalar' if ref(\$_[$i]) or (!defined \$_[$i]);\n";
+                    print "    croak 'The #$number argument ($arg) to $method must be a scalar' if ref(\$_[$i]) or (!defined \$_[$i]);\n";
                 }
                 $i ++;
             }
@@ -93,23 +103,23 @@ foreach my $section_name (keys %$section_pack) {
             print "    my \$params = (\@_ == $max_args) ? pop() : undef;\n" if $params_ok;
         }
         else {
-            print "    croak \"The $sub method does not take any arguments\" if \@_;\n";
+            print "    croak \"The $method method does not take any arguments\" if \@_;\n";
         }
 
 
         print "    my \$options = {};\n";
         print "    \$options->{decode} = 0;\n" if !$return;
         if ($params_ok) {
-            my $params_key = ($method eq 'GET' or $method eq 'HEAD') ? 'query' : 'content';
+            my $params_key = ($verb eq 'GET' or $verb eq 'HEAD') ? 'query' : 'content';
             print "    \$options->{$params_key} = \$params if defined \$params;\n";
         }
 
         print '    ';
         print 'return ' if $return;
-        print "\$self->_call_rest_method( '$method', '$path', [\@_], \$options );\n";
+        print "\$self->_call_rest_method( '$verb', '$path', [\@_], \$options );\n";
         print "    return;\n" if !$return;
         print "}\n\n";
-    }}
+    }
 }}
 
 print $footer;

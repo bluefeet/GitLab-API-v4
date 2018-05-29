@@ -23,10 +23,12 @@ use Types::Common::Numeric -types;
 use Log::Any qw( $log );
 use URI::Escape;
 use HTTP::Tiny;
+use HTTP::Tiny::Multipart;
 use JSON;
 use URI;
-use Carp qw( confess );
+use Carp qw( croak confess );
 use Try::Tiny;
+use Path::Tiny;
 
 use Moo;
 use strictures 2;
@@ -80,12 +82,18 @@ sub _build_json {
 
 # The purpose of this method is for tests to have a place to inject themselves.
 sub _http_tiny_request {
-    my $self = shift;
-    return $self->http_tiny->request( @_ );
+    my ($self, $req_method, $req) = @_;
+
+    return $self->http_tiny->$req_method( @$req );
 }
 
 sub request {
     my ($self, $method, $path, $path_vars, $options) = @_;
+
+    $options = { %{ $options || {} } };
+    my $query = delete $options->{query};
+    my $content = delete $options->{content};
+    my $headers = $options->{headers} = { %{ $options->{headers} || {} } };
 
     # Convert foo/:bar/baz into foo/%s/baz.
     $path =~ s{:[^/]+}{%s}g;
@@ -98,31 +106,54 @@ sub request {
 
     my $url = $self->_clean_base_url->clone();
     $url->path( $url->path() . '/' . $path );
-    $url->query_form( $options->{query} ) if defined $options->{query};
+    $url->query_form( $query ) if defined $query;
     $url = "$url"; # No more changes to the url from this point forward.
 
-    my $headers = $options->{headers};
-    $headers = { %{ $headers || {} } }; # Clone headers since we may be modifying them.
+    my $req_method = 'request';
+    my $req = [ $method, $url, $options ];
 
-    my $content = $options->{content};
+    if ($method eq 'POST' and ref($content) eq 'HASH' and $content->{file}) {
+        $content = { %$content };
+        my $file = path( delete $content->{file} );
+
+        unless (-f $file and -r $file) {
+            local $Carp::Internal{ 'GitLab::API::v4' } = 1;
+            local $Carp::Internal{ 'GitLab::API::v4::RESTClient' } = 1;
+            croak "File $file is not readable";
+        }
+
+        # Might as well mask the filename, but leave the extension.
+        my $filename = $file->basename(); # foo/bar.txt => bar.txt
+        $filename =~ s{^.*?(\.[^.]+|)}{upload$1}; # bar.txt => upload.txt
+
+        my $data = {
+            file => {
+                filename => $filename,
+                content  => $file->slurp(),
+            },
+        };
+
+        $req->[0] = $req->[1]; # Replace method with url.
+        $req->[1] = $data; # Put data where url was.
+        # So, req went from [$method,$url,$options] to [$url,$data,$options],
+        # per the post_multipart interface.
+
+        $req_method = 'post_multipart';
+        $content = undef if ! %$content;
+    }
+
     if (ref $content) {
         $content = $self->json->encode( $content );
         $headers->{'content-type'} = 'application/json';
         $headers->{'content-length'} = length( $content );
     }
 
-    my $req = [
-        $method, $url,
-        {
-            headers => $headers,
-            defined($content) ? (content => $content) : (),
-        },
-    ];
+    $options->{content} = $content if defined $content;
 
     my $res;
     my $tries_left = $self->retries();
     do {
-        $res = $self->_http_tiny_request( @$req );
+        $res = $self->_http_tiny_request( $req_method, $req );
         if ($res->{status} =~ m{^5}) {
             $tries_left--;
             $log->warn('Request failed; retrying...') if $tries_left > 0;
@@ -139,16 +170,12 @@ sub request {
     if ($res->{success}) {
         my $decode = $options->{decode};
         $decode = 1 if !defined $decode;
-
         return $res if !$decode;
 
         # JSON decoding may fail. Catch it and provide a more contextually rich
         # error message?
         return $self->json->decode( $res->{content} );
     }
-
-    local $Carp::Internal{ 'GitLab::API::v4' } = 1;
-    local $Carp::Internal{ 'GitLab::API::v4::RESTClient' } = 1;
 
     my $glimpse = $res->{content} || '';
     $glimpse =~ s{\s+}{ }g;
@@ -157,7 +184,10 @@ sub request {
         $glimpse .= '...';
     }
 
-    confess sprintf(
+    local $Carp::Internal{ 'GitLab::API::v4' } = 1;
+    local $Carp::Internal{ 'GitLab::API::v4::RESTClient' } = 1;
+
+    croak sprintf(
         'Error %sing %s (HTTP %s): %s %s',
         $method, $url,
         $res->{status}, ($res->{reason} || 'Unknown'),

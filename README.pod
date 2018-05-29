@@ -2570,6 +2570,17 @@ Sends a C<POST> request to C<projects/:project_id/unarchive> and returns the dec
 
 Sends a C<DELETE> request to C<projects/:project_id>.
 
+=head2 upload_file_to_project
+
+    my $upload = $api->upload_file_to_project(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C<projects/:project_id/uploads> and returns the decoded response body.
+
+The C<file> parameter must point to a readable file on the local filesystem.
+
 =head2 share_project_with_group
 
     $api->share_project_with_group(

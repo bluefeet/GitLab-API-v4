@@ -118,7 +118,17 @@ sub BUILD {
 sub _call_rest_method {
     my ($self, $method, $path, $path_vars, $options) = @_;
 
-    my $headers = $options->{headers} = {};
+    $options->{headers} = $self->_auth_headers();
+
+    return $self->rest_client->request(
+        $method, $path, $path_vars, $options,
+    );
+}
+
+sub _auth_headers {
+    my ($self) = @_;
+    my $headers = {};
+
     $headers->{'authorization'} = 'Bearer ' . $self->access_token()
         if defined $self->access_token();
     $headers->{'private-token'} = $self->private_token()
@@ -126,9 +136,7 @@ sub _call_rest_method {
     $headers->{'sudo'} = $self->sudo_user()
         if defined $self->sudo_user();
 
-    return $self->rest_client->request(
-        $method, $path, $path_vars, $options,
-    );
+    return $headers;
 }
 
 sub _clone_args {
@@ -5868,6 +5876,30 @@ sub delete_project {
     $options->{decode} = 0;
     $self->_call_rest_method( 'DELETE', 'projects/:project_id', [@_], $options );
     return;
+}
+
+=head2 upload_file_to_project
+
+    my $upload = $api->upload_file_to_project(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C<projects/:project_id/uploads> and returns the decoded response body.
+
+The C<file> parameter must point to a readable file on the local filesystem.
+
+=cut
+
+sub upload_file_to_project {
+    my $self = shift;
+    croak 'upload_file_to_project must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($project_id) to upload_file_to_project must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to upload_file_to_project must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
+    my $options = {};
+    $options->{content} = $params if defined $params;
+    return $self->_call_rest_method( 'POST', 'projects/:project_id/uploads', [@_], $options );
 }
 
 =head2 share_project_with_group

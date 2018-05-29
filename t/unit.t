@@ -34,7 +34,12 @@ use strictures 2;
     }
 
     sub _http_tiny_request {
-        my ($self, $method, $url, $options) = @_;
+        my ($self, $req_method, $req) = @_;
+
+        die "req_method may only be 'request' at this time"
+            if $req_method ne 'request';
+
+        my ($method, $url, $options) = @$req;
 
         my $path = URI->new( $url )->path();
         $path =~ s{^.*api/v4/}{};
