@@ -248,7 +248,7 @@ sub configure {
     my $file = path( $self->file() );
     $file->touch();
     $file->chmod( 0600 );
-    $file->spew( $json );
+    $file->append( {truncate=>1}, $json );
 
     $log->infof( 'Configuration for GitLab::API::v4 saved to: %s', $file->absolute() );
 
