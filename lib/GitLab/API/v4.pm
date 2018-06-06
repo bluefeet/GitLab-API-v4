@@ -5973,7 +5973,7 @@ sub project_hooks {
         $hook_id,
     );
 
-Sends a C<GET> request to C<project/:project_id/hooks/:hook_id> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/hooks/:hook_id> and returns the decoded response body.
 
 =cut
 
@@ -5983,17 +5983,17 @@ sub project_hook {
     croak 'The #1 argument ($project_id) to project_hook must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($hook_id) to project_hook must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_client( 'GET', 'project/:project_id/hooks/:hook_id', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/hooks/:hook_id', [@_], $options );
 }
 
 =head2 create_project_hook
 
-    $api->create_project_hook(
+    my $hook = $api->create_project_hook(
         $project_id,
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/hooks>.
+Sends a C<POST> request to C<projects/:project_id/hooks> and returns the decoded response body.
 
 =cut
 
@@ -6004,21 +6004,19 @@ sub create_project_hook {
     croak 'The last argument (\%params) to create_project_hook must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
-    $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_client( 'POST', 'projects/:project_id/hooks', [@_], $options );
-    return;
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/hooks', [@_], $options );
 }
 
 =head2 edit_project_hook
 
-    $api->edit_project_hook(
+    my $hook = $api->edit_project_hook(
         $project_id,
         $hook_id,
         \%params,
     );
 
-Sends a C<PUT> request to C<projects/:project_id/hooks/:hook_id>.
+Sends a C<PUT> request to C<projects/:project_id/hooks/:hook_id> and returns the decoded response body.
 
 =cut
 
@@ -6030,20 +6028,18 @@ sub edit_project_hook {
     croak 'The last argument (\%params) to edit_project_hook must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
-    $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_client( 'PUT', 'projects/:project_id/hooks/:hook_id', [@_], $options );
-    return;
+    return $self->_call_rest_client( 'PUT', 'projects/:project_id/hooks/:hook_id', [@_], $options );
 }
 
 =head2 delete_project_hook
 
-    my $hook = $api->delete_project_hook(
+    $api->delete_project_hook(
         $project_id,
         $hook_id,
     );
 
-Sends a C<DELETE> request to C<projects/:project_id/hooks/:hook_id> and returns the decoded response body.
+Sends a C<DELETE> request to C<projects/:project_id/hooks/:hook_id>.
 
 =cut
 
@@ -6053,7 +6049,9 @@ sub delete_project_hook {
     croak 'The #1 argument ($project_id) to delete_project_hook must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($hook_id) to delete_project_hook must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_client( 'DELETE', 'projects/:project_id/hooks/:hook_id', [@_], $options );
+    $options->{decode} = 0;
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/hooks/:hook_id', [@_], $options );
+    return;
 }
 
 =head2 set_project_fork

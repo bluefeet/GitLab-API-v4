@@ -2614,35 +2614,35 @@ Sends a C<GET> request to C<projects/:project_id/hooks> and returns the decoded 
         $hook_id,
     );
 
-Sends a C<GET> request to C<project/:project_id/hooks/:hook_id> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/hooks/:hook_id> and returns the decoded response body.
 
 =head2 create_project_hook
 
-    $api->create_project_hook(
+    my $hook = $api->create_project_hook(
         $project_id,
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/hooks>.
+Sends a C<POST> request to C<projects/:project_id/hooks> and returns the decoded response body.
 
 =head2 edit_project_hook
 
-    $api->edit_project_hook(
+    my $hook = $api->edit_project_hook(
         $project_id,
         $hook_id,
         \%params,
     );
 
-Sends a C<PUT> request to C<projects/:project_id/hooks/:hook_id>.
+Sends a C<PUT> request to C<projects/:project_id/hooks/:hook_id> and returns the decoded response body.
 
 =head2 delete_project_hook
 
-    my $hook = $api->delete_project_hook(
+    $api->delete_project_hook(
         $project_id,
         $hook_id,
     );
 
-Sends a C<DELETE> request to C<projects/:project_id/hooks/:hook_id> and returns the decoded response body.
+Sends a C<DELETE> request to C<projects/:project_id/hooks/:hook_id>.
 
 =head2 set_project_fork
 

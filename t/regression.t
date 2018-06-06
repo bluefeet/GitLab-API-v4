@@ -51,6 +51,35 @@ subtest projects => sub{
         is( $res->{content}, $file_content, 'upload_file_to_project worked' );
     };
 
+    subtest hooks => sub{
+        my $hook = $api->create_project_hook(
+            $project->{id},
+            { url=>'http://example.com/gitlab-hook-1' },
+        );
+        ok( $hook, 'create_project_hook returned the hook' );
+
+        $hook = $api->edit_project_hook(
+            $project->{id}, $hook->{id},
+            { url=>'http://example.com/gitlab-hook-2' },
+        );
+        ok( $hook, 'edit_project_hook returned the hook' );
+        my $hook_id = $hook->{id};
+
+        $hook = $api->project_hook( $project->{id}, $hook_id );
+        ok( $hook, 'project_hook returned the hook' );
+        is( $hook->{url}, 'http://example.com/gitlab-hook-2', 'hook looks right' );
+
+        $api->delete_project_hook( $project->{id}, $hook_id );
+        $hook = $api->project_hook( $project->{id}, $hook_id );
+        ok( (!$hook), 'delete_project_hook seems to have worked' );
+
+        like(
+            dies { $api->delete_project_hook( $project->{id}, $hook_id ) },
+            qr{\b404\b},
+            'a subsequent delete_project_hook throws',
+        );
+    };
+
     $api->delete_project( $project_id );
     pass 'project deleted';
 };
