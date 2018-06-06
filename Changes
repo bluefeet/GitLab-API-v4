@@ -2,6 +2,8 @@ Revision history for Perl extension GitLab::API::v4.
 
 {{$NEXT}}
 
+0.10 2018-06-05
+
 - Fix project_hook() so it uses the correct path.
 - create_project_hook() and edit_project_hook() now return their decoded
   response (the hook).
