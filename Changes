@@ -8,6 +8,7 @@ Revision history for Perl extension GitLab::API::v4.
 - delete_project_hook() no longer tries to return anything as a successful
   delete is a 204 (no content) and a failed one is a 404.
 - Tests for all of the above.
+- Fix typo.
 
 0.09 2018-05-28
 

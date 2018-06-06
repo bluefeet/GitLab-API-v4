@@ -3675,6 +3675,10 @@ Simon Ruderich <simonE<64>ruderich.org>
 
 royce55 <royceE<64>ecs.vuw.ac.nz>
 
+=item *
+
+gregor herrmann <gregoaE<64>debian.org>
+
 =back
 
 =head1 ACKNOWLEDGEMENTS
