@@ -9,7 +9,7 @@ use Log::Any qw( $log );
 use Log::Any::Adapter;
 use Log::Any::Adapter::Screen;
 use Try::Tiny;
-use JSON;
+use JSON::MaybeXS;
 
 use Getopt::Long qw( GetOptions );
 use Pod::Usage qw( pod2usage );

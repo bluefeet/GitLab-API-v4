@@ -5,7 +5,7 @@ use strictures 2;
     package MockRESTClient;
 
     use URI;
-    use JSON;
+    use JSON::MaybeXS;
 
     use Moo;
     use strictures 2;
@@ -68,7 +68,7 @@ use strictures 2;
 
 use Test2::V0;
 use GitLab::API::v4;
-use JSON;
+use JSON::MaybeXS;
 
 subtest users => sub{
     my @users = ();

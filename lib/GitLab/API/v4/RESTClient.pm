@@ -24,7 +24,7 @@ use Log::Any qw( $log );
 use URI::Escape;
 use HTTP::Tiny;
 use HTTP::Tiny::Multipart;
-use JSON;
+use JSON::MaybeXS;
 use URI;
 use Carp qw( croak confess );
 use Try::Tiny;

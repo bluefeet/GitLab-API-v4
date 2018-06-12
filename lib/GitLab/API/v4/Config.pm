@@ -28,7 +28,7 @@ L</SYNOPSIS>.
 use Types::Standard -types;
 use Types::Common::String -types;
 use Path::Tiny;
-use JSON;
+use JSON::MaybeXS;
 use Log::Any qw( $log );
 use Getopt::Long;
 use IO::Prompter;
