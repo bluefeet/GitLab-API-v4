@@ -27,7 +27,7 @@ our %EXPORT_TAGS = ( all => \@EXPORT_OK );
 
 =head2 $GITLAB_ACCESS_LEVEL_NO_ACCESS
 
-C<10>
+C<0>
 
 =cut
 
