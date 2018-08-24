@@ -2909,7 +2909,7 @@ Sends a C<GET> request to C<projects/:project_id/repository/compare> and returns
 
 Sends a C<GET> request to C<projects/:project_id/repository/contributors> and returns the decoded response body.
 
-=head1 FILE METHODS
+=head1 REPOSITORY FILE METHODS
 
 See L<https://docs.gitlab.com/ce/api/repository_files.html>.
 
@@ -2925,13 +2925,15 @@ Sends a C<GET> request to C<projects/:project_id/repository/files/:file_path> an
 
 =head2 raw_file
 
-    my $file = $api->raw_file(
+    my $http_response = $api->raw_file(
         $project_id,
         $file_path,
         \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/repository/files/:file_path/raw> and returns the decoded response body.
+
+This method returns an L<HTTP::Tiny>-like response hash ref if successful.
 
 =head2 create_file
 

@@ -2,6 +2,11 @@ Revision history for Perl extension GitLab::API::v4.
 
 {{$NEXT}}
 
+- Fixed the raw_file method to not try to decode the respository file contents and
+  instead just return the HTTP response.  This lets the user figure out what they want
+  to do with it.
+- Renamed the POD section "FILE METHODS" to "REPOSITORY FILE METHODS", to better
+  match the GitLab API docs.
 - Add the hidden NO_ACCESS constant to ::Constants.
 
 0.10 2018-06-05

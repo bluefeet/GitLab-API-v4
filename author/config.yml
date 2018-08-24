@@ -112,7 +112,7 @@ sections:
     head: REPOSITORY METHODS
     doc_url: https://docs.gitlab.com/ce/api/repositories.html
 - repository_files:
-    head: FILE METHODS
+    head: REPOSITORY FILE METHODS
     doc_url: https://docs.gitlab.com/ce/api/repository_files.html
 - runners:
     head: RUNNER METHODS

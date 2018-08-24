@@ -106,9 +106,12 @@ foreach my $section_name (keys %$section_pack) {
             print "    croak \"The $method method does not take any arguments\" if \@_;\n";
         }
 
-
         print "    my \$options = {};\n";
-        print "    \$options->{decode} = 0;\n" if !$return;
+
+        my $no_decode = 1 if !$return;
+        $no_decode = 1 if $endpoint->{no_decode};
+        print "    \$options->{decode} = 0;\n" if $no_decode;
+
         if ($params_ok) {
             my $params_key = ($verb eq 'GET' or $verb eq 'HEAD') ? 'query' : 'content';
             print "    \$options->{$params_key} = \$params if defined \$params;\n";

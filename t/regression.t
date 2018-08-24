@@ -6,6 +6,7 @@ use Test2::Require::AuthorTesting;
 
 use Log::Any::Adapter 'TAP';
 use Path::Tiny;
+use MIME::Base64 qw( decode_base64 );
 
 use GitLab::API::v4;
 use GitLab::API::v4::Config;
@@ -49,6 +50,78 @@ subtest projects => sub{
             { headers=>$api->_auth_headers() },
         );
         is( $res->{content}, $file_content, 'upload_file_to_project worked' );
+    };
+
+    subtest 'file methods' => sub{
+        $api->create_file(
+            $project_id,
+            'foo/bar.txt',
+            {
+                branch => 'master',
+                content => 'Test of create file.',
+                commit_message => 'This is a commit.',
+            },
+        );
+
+        my $file = $api->file(
+            $project_id,
+            'foo/bar.txt',
+            { ref=>'master' },
+        );
+        is(
+            decode_base64( $file->{content} ),
+            'Test of create file.',
+            'created file is there; and looks right',
+        );
+
+        my $raw_res = $api->raw_file(
+            $project_id,
+            'foo/bar.txt',
+            { ref=>'master' },
+        );
+        is(
+            $raw_res->{content},
+            'Test of create file.',
+            'able to retrieve the file raw',
+        );
+
+        $api->edit_file(
+            $project_id,
+            'foo/bar.txt',
+            {
+                branch => 'master',
+                content => 'Test of edit file.',
+                commit_message => 'This is the next commit.',
+            },
+        );
+        my $edited_file = $api->file(
+            $project_id,
+            'foo/bar.txt',
+            { ref=>'master' },
+        );
+        is(
+            decode_base64( $edited_file->{content} ),
+            'Test of edit file.',
+            'editing a file worked',
+        );
+
+        $api->delete_file(
+            $project_id,
+            'foo/bar.txt',
+            {
+                branch => 'master',
+                commit_message => 'This is the last commit.',
+            },
+        );
+        $file = $api->file(
+            $project_id,
+            'foo/bar.txt',
+            { ref=>'master' },
+        );
+        is(
+            $file, undef,
+            'file was deleted',
+        );
     };
 
     subtest hooks => sub{

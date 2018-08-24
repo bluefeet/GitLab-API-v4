@@ -6664,7 +6664,7 @@ sub contributors {
     return $self->_call_rest_client( 'GET', 'projects/:project_id/repository/contributors', [@_], $options );
 }
 
-=head1 FILE METHODS
+=head1 REPOSITORY FILE METHODS
 
 See L<https://docs.gitlab.com/ce/api/repository_files.html>.
 
@@ -6694,13 +6694,15 @@ sub file {
 
 =head2 raw_file
 
-    my $file = $api->raw_file(
+    my $http_response = $api->raw_file(
         $project_id,
         $file_path,
         \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/repository/files/:file_path/raw> and returns the decoded response body.
+
+This method returns an L<HTTP::Tiny>-like response hash ref if successful.
 
 =cut
 
@@ -6712,6 +6714,7 @@ sub raw_file {
     croak 'The last argument (\%params) to raw_file must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
+    $options->{decode} = 0;
     $options->{query} = $params if defined $params;
     return $self->_call_rest_client( 'GET', 'projects/:project_id/repository/files/:file_path/raw', [@_], $options );
 }
