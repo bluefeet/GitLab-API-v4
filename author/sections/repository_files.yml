@@ -2,7 +2,6 @@
 - file: file = GET projects/:project_id/repository/files/:file_path?
 - method: raw_file
   spec: http_response = GET projects/:project_id/repository/files/:file_path/raw?
-  note: This method returns an L<HTTP::Tiny>-like response hash ref if successful.
   no_decode: true
 - create_file: POST projects/:project_id/repository/files/:file_path?
 - edit_file: PUT projects/:project_id/repository/files/:file_path?

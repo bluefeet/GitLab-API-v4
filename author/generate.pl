@@ -42,6 +42,10 @@ foreach my $section_name (keys %$section_pack) {
             die "Invalid spec ($method): $spec";
         }
 
+        my $no_decode = 0;
+        $no_decode = 1 if !$return;
+        $no_decode = 1 if $endpoint->{no_decode};
+
         print "=head2 $method\n\n";
         print '    ';
 
@@ -67,7 +71,10 @@ foreach my $section_name (keys %$section_pack) {
         print ");\n\n";
 
         print "Sends a C<$verb> request to C<$path>";
-        print " and returns the decoded response body" if $return;
+        if ($return) {
+            if ($no_decode) { print ' and returns the L<HTTP::Tiny> response hash ref' }
+            else { print ' and returns the decoded response body' }
+        }
         print ".\n\n";
         print "$endpoint->{note}\n\n" if $endpoint->{note};
         print "=cut\n\n";
@@ -107,9 +114,6 @@ foreach my $section_name (keys %$section_pack) {
         }
 
         print "    my \$options = {};\n";
-
-        my $no_decode = 1 if !$return;
-        $no_decode = 1 if $endpoint->{no_decode};
         print "    \$options->{decode} = 0;\n" if $no_decode;
 
         if ($params_ok) {

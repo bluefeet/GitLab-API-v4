@@ -6700,9 +6700,7 @@ sub file {
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/repository/files/:file_path/raw> and returns the decoded response body.
-
-This method returns an L<HTTP::Tiny>-like response hash ref if successful.
+Sends a C<GET> request to C<projects/:project_id/repository/files/:file_path/raw> and returns the L<HTTP::Tiny> response hash ref.
 
 =cut
 
