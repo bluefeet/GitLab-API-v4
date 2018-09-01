@@ -390,7 +390,7 @@ See L<https://docs.gitlab.com/ce/api/award_emoji.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid/award_emoji> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid/award_emoji> and returns the decoded response content.
 
 =cut
 
@@ -414,7 +414,7 @@ sub issue_award_emojis {
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/award_emoji> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/award_emoji> and returns the decoded response content.
 
 =cut
 
@@ -438,7 +438,7 @@ sub merge_request_award_emojis {
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_id/award_emoji> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_id/award_emoji> and returns the decoded response content.
 
 =cut
 
@@ -462,7 +462,7 @@ sub snippet_award_emojis {
         $award_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid/award_emoji/:award_id> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid/award_emoji/:award_id> and returns the decoded response content.
 
 =cut
 
@@ -484,7 +484,7 @@ sub issue_award_emoji {
         $award_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/award_emoji/:award_id> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/award_emoji/:award_id> and returns the decoded response content.
 
 =cut
 
@@ -506,7 +506,7 @@ sub merge_request_award_emoji {
         $award_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/snippets/:snippet_id/award_emoji/:award_id> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/snippets/:snippet_id/award_emoji/:award_id> and returns the decoded response content.
 
 =cut
 
@@ -528,7 +528,7 @@ sub snippet_award_emoji {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/issues/:issue_iid/award_emoji> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/issues/:issue_iid/award_emoji> and returns the decoded response content.
 
 =cut
 
@@ -552,7 +552,7 @@ sub create_issue_award_emoji {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/merge_requests/:merge_request_iid/award_emoji> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/merge_requests/:merge_request_iid/award_emoji> and returns the decoded response content.
 
 =cut
 
@@ -575,7 +575,7 @@ sub create_merge_request_award_emoji {
         $snippet_id,
     );
 
-Sends a C<POST> request to C<projects/:project_id/snippets/:snippet_id/award_emoji> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/snippets/:snippet_id/award_emoji> and returns the decoded response content.
 
 =cut
 
@@ -596,7 +596,7 @@ sub create_snippet_award_emoji {
         $award_id,
     );
 
-Sends a C<DELETE> request to C<projects/:project_id/issues/:issue_id/award_emoji/:award_id> and returns the decoded response body.
+Sends a C<DELETE> request to C<projects/:project_id/issues/:issue_id/award_emoji/:award_id> and returns the decoded response content.
 
 =cut
 
@@ -618,7 +618,7 @@ sub delete_issue_award_emoji {
         $award_id,
     );
 
-Sends a C<DELETE> request to C<projects/:project_id/merge_requests/:merge_request_id/award_emoji/:award_id> and returns the decoded response body.
+Sends a C<DELETE> request to C<projects/:project_id/merge_requests/:merge_request_id/award_emoji/:award_id> and returns the decoded response content.
 
 =cut
 
@@ -640,7 +640,7 @@ sub delete_merge_request_award_emoji {
         $award_id,
     );
 
-Sends a C<DELETE> request to C<projects/:project_id/snippets/:snippet_id/award_emoji/:award_id> and returns the decoded response body.
+Sends a C<DELETE> request to C<projects/:project_id/snippets/:snippet_id/award_emoji/:award_id> and returns the decoded response content.
 
 =cut
 
@@ -662,7 +662,7 @@ sub delete_snippet_award_emoji {
         $note_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid/notes/:note_id/award_emoji> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid/notes/:note_id/award_emoji> and returns the decoded response content.
 
 =cut
 
@@ -685,7 +685,7 @@ sub issue_note_award_emojis {
         $award_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid/notes/:note_id/award_emoji/:award_id> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid/notes/:note_id/award_emoji/:award_id> and returns the decoded response content.
 
 =cut
 
@@ -709,7 +709,7 @@ sub issue_note_award_emoji {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/issues/:issue_iid/notes/:note_id/award_emoji> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/issues/:issue_iid/notes/:note_id/award_emoji> and returns the decoded response content.
 
 =cut
 
@@ -735,7 +735,7 @@ sub create_issue_note_award_emoji {
         $award_id,
     );
 
-Sends a C<DELETE> request to C<projects/:project_id/issues/:issue_iid/notes/:note_id/award_emoji/:award_id> and returns the decoded response body.
+Sends a C<DELETE> request to C<projects/:project_id/issues/:issue_iid/notes/:note_id/award_emoji/:award_id> and returns the decoded response content.
 
 =cut
 
@@ -758,7 +758,7 @@ sub delete_issue_note_award_emoji {
         $note_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id/award_emoji> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id/award_emoji> and returns the decoded response content.
 
 =cut
 
@@ -781,7 +781,7 @@ sub merge_request_note_award_emojis {
         $award_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id/award_emoji/:award_id> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id/award_emoji/:award_id> and returns the decoded response content.
 
 =cut
 
@@ -805,7 +805,7 @@ sub merge_request_note_award_emoji {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id/award_emoji> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id/award_emoji> and returns the decoded response content.
 
 =cut
 
@@ -831,7 +831,7 @@ sub create_merge_request_note_award_emoji {
         $award_id,
     );
 
-Sends a C<DELETE> request to C<projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id/award_emoji/:award_id> and returns the decoded response body.
+Sends a C<DELETE> request to C<projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id/award_emoji/:award_id> and returns the decoded response content.
 
 =cut
 
@@ -857,7 +857,7 @@ See L<https://doc.gitlab.com/ce/api/branches.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/repository/branches> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/repository/branches> and returns the decoded response content.
 
 =cut
 
@@ -879,7 +879,7 @@ sub branches {
         $branch_name,
     );
 
-Sends a C<GET> request to C<projects/:project_id/repository/branches/:branch_name> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/repository/branches/:branch_name> and returns the decoded response content.
 
 =cut
 
@@ -899,7 +899,7 @@ sub branch {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/repository/branches> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/repository/branches> and returns the decoded response content.
 
 =cut
 
@@ -966,7 +966,7 @@ See L<https://docs.gitlab.com/ce/api/broadcast_messages.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<broadcast_messages> and returns the decoded response body.
+Sends a C<GET> request to C<broadcast_messages> and returns the decoded response content.
 
 =cut
 
@@ -986,7 +986,7 @@ sub broadcast_messages {
         $message_id,
     );
 
-Sends a C<GET> request to C<broadcast_messages/:message_id> and returns the decoded response body.
+Sends a C<GET> request to C<broadcast_messages/:message_id> and returns the decoded response content.
 
 =cut
 
@@ -1004,7 +1004,7 @@ sub broadcast_message {
         \%params,
     );
 
-Sends a C<POST> request to C<broadcast_messages> and returns the decoded response body.
+Sends a C<POST> request to C<broadcast_messages> and returns the decoded response content.
 
 =cut
 
@@ -1025,7 +1025,7 @@ sub create_broadcast_message {
         \%params,
     );
 
-Sends a C<PUT> request to C<broadcast_messages/:message_id> and returns the decoded response body.
+Sends a C<PUT> request to C<broadcast_messages/:message_id> and returns the decoded response content.
 
 =cut
 
@@ -1071,7 +1071,7 @@ See L<https://docs.gitlab.com/ce/api/project_level_variables.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/variables> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/variables> and returns the decoded response content.
 
 =cut
 
@@ -1093,7 +1093,7 @@ sub project_variables {
         $variable_key,
     );
 
-Sends a C<GET> request to C<projects/:project_id/variables/:variable_key> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/variables/:variable_key> and returns the decoded response content.
 
 =cut
 
@@ -1113,7 +1113,7 @@ sub project_variable {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/variables> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/variables> and returns the decoded response content.
 
 =cut
 
@@ -1136,7 +1136,7 @@ sub create_project_variable {
         \%params,
     );
 
-Sends a C<PUT> request to C<projects/:project_id/variables/:variable_key> and returns the decoded response body.
+Sends a C<PUT> request to C<projects/:project_id/variables/:variable_key> and returns the decoded response content.
 
 =cut
 
@@ -1185,7 +1185,7 @@ See L<https://docs.gitlab.com/ce/api/group_level_variables.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<groups/:group_id/variables> and returns the decoded response body.
+Sends a C<GET> request to C<groups/:group_id/variables> and returns the decoded response content.
 
 =cut
 
@@ -1207,7 +1207,7 @@ sub group_variables {
         $variable_key,
     );
 
-Sends a C<GET> request to C<groups/:group_id/variables/:variable_key> and returns the decoded response body.
+Sends a C<GET> request to C<groups/:group_id/variables/:variable_key> and returns the decoded response content.
 
 =cut
 
@@ -1227,7 +1227,7 @@ sub group_variable {
         \%params,
     );
 
-Sends a C<POST> request to C<groups/:group_id/variables> and returns the decoded response body.
+Sends a C<POST> request to C<groups/:group_id/variables> and returns the decoded response content.
 
 =cut
 
@@ -1250,7 +1250,7 @@ sub create_group_variable {
         \%params,
     );
 
-Sends a C<PUT> request to C<groups/:group_id/variables/:variable_key> and returns the decoded response body.
+Sends a C<PUT> request to C<groups/:group_id/variables/:variable_key> and returns the decoded response content.
 
 =cut
 
@@ -1299,7 +1299,7 @@ See L<https://doc.gitlab.com/ce/api/commits.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/repository/commits> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/repository/commits> and returns the decoded response content.
 
 =cut
 
@@ -1321,7 +1321,7 @@ sub commits {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/repository/commits> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/repository/commits> and returns the decoded response content.
 
 =cut
 
@@ -1343,7 +1343,7 @@ sub create_commit {
         $commit_sha,
     );
 
-Sends a C<GET> request to C<projects/:project_id/repository/commits/:commit_sha> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/repository/commits/:commit_sha> and returns the decoded response content.
 
 =cut
 
@@ -1364,7 +1364,7 @@ sub commit {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/repository/commits/:commit_sha/cherry_pick> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/repository/commits/:commit_sha/cherry_pick> and returns the decoded response content.
 
 =cut
 
@@ -1388,7 +1388,7 @@ sub cherry_pick_commit {
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/repository/commits/:commit_sha/diff> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/repository/commits/:commit_sha/diff> and returns the decoded response content.
 
 =cut
 
@@ -1412,7 +1412,7 @@ sub commit_diff {
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/repository/commits/:commit_sha/comments> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/repository/commits/:commit_sha/comments> and returns the decoded response content.
 
 =cut
 
@@ -1462,7 +1462,7 @@ sub create_commit_comment {
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/repository/commits/:commit_sha/statuses> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/repository/commits/:commit_sha/statuses> and returns the decoded response content.
 
 =cut
 
@@ -1486,7 +1486,7 @@ sub commit_statuses {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/statuses/:commit_sha> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/statuses/:commit_sha> and returns the decoded response content.
 
 =cut
 
@@ -1512,7 +1512,7 @@ See L<https://docs.gitlab.com/ce/api/custom_attributes.html>.
         $user_id,
     );
 
-Sends a C<GET> request to C<users/:user_id/custom_attributes> and returns the decoded response body.
+Sends a C<GET> request to C<users/:user_id/custom_attributes> and returns the decoded response content.
 
 =cut
 
@@ -1530,7 +1530,7 @@ sub custom_user_attributes {
         $group_id,
     );
 
-Sends a C<GET> request to C<groups/:group_id/custom_attributes> and returns the decoded response body.
+Sends a C<GET> request to C<groups/:group_id/custom_attributes> and returns the decoded response content.
 
 =cut
 
@@ -1548,7 +1548,7 @@ sub custom_group_attributes {
         $project_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/custom_attributes> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/custom_attributes> and returns the decoded response content.
 
 =cut
 
@@ -1567,7 +1567,7 @@ sub custom_project_attributes {
         $attribute_key,
     );
 
-Sends a C<GET> request to C<users/:user_id/custom_attributes/:attribute_key> and returns the decoded response body.
+Sends a C<GET> request to C<users/:user_id/custom_attributes/:attribute_key> and returns the decoded response content.
 
 =cut
 
@@ -1587,7 +1587,7 @@ sub custom_user_attribute {
         $attribute_key,
     );
 
-Sends a C<GET> request to C<groups/:group_id/custom_attributes/:attribute_key> and returns the decoded response body.
+Sends a C<GET> request to C<groups/:group_id/custom_attributes/:attribute_key> and returns the decoded response content.
 
 =cut
 
@@ -1607,7 +1607,7 @@ sub custom_group_attribute {
         $attribute_key,
     );
 
-Sends a C<GET> request to C<projects/:project_id/custom_attributes/:attribute_key> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/custom_attributes/:attribute_key> and returns the decoded response content.
 
 =cut
 
@@ -1628,7 +1628,7 @@ sub custom_project_attribute {
         \%params,
     );
 
-Sends a C<PUT> request to C<users/:user_id/custom_attributes/:attribute_key> and returns the decoded response body.
+Sends a C<PUT> request to C<users/:user_id/custom_attributes/:attribute_key> and returns the decoded response content.
 
 =cut
 
@@ -1652,7 +1652,7 @@ sub set_custom_user_attribute {
         \%params,
     );
 
-Sends a C<PUT> request to C<groups/:group_id/custom_attributes/:attribute_key> and returns the decoded response body.
+Sends a C<PUT> request to C<groups/:group_id/custom_attributes/:attribute_key> and returns the decoded response content.
 
 =cut
 
@@ -1676,7 +1676,7 @@ sub set_custom_group_attribute {
         \%params,
     );
 
-Sends a C<PUT> request to C<projects/:project_id/custom_attributes/:attribute_key> and returns the decoded response body.
+Sends a C<PUT> request to C<projects/:project_id/custom_attributes/:attribute_key> and returns the decoded response content.
 
 =cut
 
@@ -1769,7 +1769,7 @@ See L<https://docs.gitlab.com/ce/api/deployments.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/deployments> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/deployments> and returns the decoded response content.
 
 =cut
 
@@ -1791,7 +1791,7 @@ sub deployments {
         $deployment_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/deployments/:deployment_id> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/deployments/:deployment_id> and returns the decoded response content.
 
 =cut
 
@@ -1814,7 +1814,7 @@ See L<https://docs.gitlab.com/ce/api/deploy_keys.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<deploy_keys> and returns the decoded response body.
+Sends a C<GET> request to C<deploy_keys> and returns the decoded response content.
 
 =cut
 
@@ -1835,7 +1835,7 @@ sub all_deploy_keys {
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/deploy_keys> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/deploy_keys> and returns the decoded response content.
 
 =cut
 
@@ -1857,7 +1857,7 @@ sub deploy_keys {
         $key_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/deploy_keys/:key_id> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/deploy_keys/:key_id> and returns the decoded response content.
 
 =cut
 
@@ -1877,7 +1877,7 @@ sub deploy_key {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/deploy_keys> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/deploy_keys> and returns the decoded response content.
 
 =cut
 
@@ -1921,7 +1921,7 @@ sub delete_deploy_key {
         $key_id,
     );
 
-Sends a C<POST> request to C<projects/:project_id/deploy_keys/:key_id/enable> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/deploy_keys/:key_id/enable> and returns the decoded response content.
 
 =cut
 
@@ -1945,7 +1945,7 @@ See L<https://docs.gitlab.com/ce/api/environments.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/environments> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/environments> and returns the decoded response content.
 
 =cut
 
@@ -1967,7 +1967,7 @@ sub environments {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/environments> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/environments> and returns the decoded response content.
 
 =cut
 
@@ -1990,7 +1990,7 @@ sub create_environment {
         \%params,
     );
 
-Sends a C<PUT> request to C<projects/:project_id/environments/:environments_id> and returns the decoded response body.
+Sends a C<PUT> request to C<projects/:project_id/environments/:environments_id> and returns the decoded response content.
 
 =cut
 
@@ -2035,7 +2035,7 @@ sub delete_environment {
         $environment_id,
     );
 
-Sends a C<POST> request to C<projects/:project_id/environments/:environment_id/stop> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/environments/:environment_id/stop> and returns the decoded response content.
 
 =cut
 
@@ -2058,7 +2058,7 @@ See L<https://docs.gitlab.com/ce/api/events.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<events> and returns the decoded response body.
+Sends a C<GET> request to C<events> and returns the decoded response content.
 
 =cut
 
@@ -2079,7 +2079,7 @@ sub all_events {
         \%params,
     );
 
-Sends a C<GET> request to C<users/:user_id/events> and returns the decoded response body.
+Sends a C<GET> request to C<users/:user_id/events> and returns the decoded response content.
 
 =cut
 
@@ -2101,7 +2101,7 @@ sub user_events {
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/events> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/events> and returns the decoded response content.
 
 =cut
 
@@ -2124,7 +2124,7 @@ See L<https://docs.gitlab.com/ce/api/features.html>.
 
     my $features = $api->features();
 
-Sends a C<GET> request to C<features> and returns the decoded response body.
+Sends a C<GET> request to C<features> and returns the decoded response content.
 
 =cut
 
@@ -2142,7 +2142,7 @@ sub features {
         \%params,
     );
 
-Sends a C<POST> request to C<features/:name> and returns the decoded response body.
+Sends a C<POST> request to C<features/:name> and returns the decoded response content.
 
 =cut
 
@@ -2167,7 +2167,7 @@ See L<https://docs.gitlab.com/ce/api/templates/gitignores.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<templates/gitignores> and returns the decoded response body.
+Sends a C<GET> request to C<templates/gitignores> and returns the decoded response content.
 
 =cut
 
@@ -2187,7 +2187,7 @@ sub gitignores_templates {
         $template_key,
     );
 
-Sends a C<GET> request to C<templates/gitignores/:template_key> and returns the decoded response body.
+Sends a C<GET> request to C<templates/gitignores/:template_key> and returns the decoded response content.
 
 =cut
 
@@ -2209,7 +2209,7 @@ See L<https://docs.gitlab.com/ce/api/templates/gitlab_ci_ymls.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<templates/gitlab_ci_ymls> and returns the decoded response body.
+Sends a C<GET> request to C<templates/gitlab_ci_ymls> and returns the decoded response content.
 
 =cut
 
@@ -2229,7 +2229,7 @@ sub gitlab_ci_ymls_templates {
         $template_key,
     );
 
-Sends a C<GET> request to C<templates/gitlab_ci_ymls/:template_key> and returns the decoded response body.
+Sends a C<GET> request to C<templates/gitlab_ci_ymls/:template_key> and returns the decoded response content.
 
 =cut
 
@@ -2251,7 +2251,7 @@ See L<https://docs.gitlab.com/ce/api/groups.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<groups> and returns the decoded response body.
+Sends a C<GET> request to C<groups> and returns the decoded response content.
 
 =cut
 
@@ -2272,7 +2272,7 @@ sub groups {
         \%params,
     );
 
-Sends a C<GET> request to C<groups/:group_id/subgroups> and returns the decoded response body.
+Sends a C<GET> request to C<groups/:group_id/subgroups> and returns the decoded response content.
 
 =cut
 
@@ -2294,7 +2294,7 @@ sub group_subgroups {
         \%params,
     );
 
-Sends a C<GET> request to C<groups/:group_id/projects> and returns the decoded response body.
+Sends a C<GET> request to C<groups/:group_id/projects> and returns the decoded response content.
 
 =cut
 
@@ -2315,7 +2315,7 @@ sub group_projects {
         $group_id,
     );
 
-Sends a C<GET> request to C<groups/:group_id> and returns the decoded response body.
+Sends a C<GET> request to C<groups/:group_id> and returns the decoded response content.
 
 =cut
 
@@ -2378,7 +2378,7 @@ sub transfer_project_to_group {
         \%params,
     );
 
-Sends a C<PUT> request to C<groups/:group_id> and returns the decoded response body.
+Sends a C<PUT> request to C<groups/:group_id> and returns the decoded response content.
 
 =cut
 
@@ -2514,7 +2514,7 @@ See L<https://docs.gitlab.com/ce/api/members.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<groups/:group_id/members> and returns the decoded response body.
+Sends a C<GET> request to C<groups/:group_id/members> and returns the decoded response content.
 
 =cut
 
@@ -2536,7 +2536,7 @@ sub group_members {
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/members> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/members> and returns the decoded response content.
 
 =cut
 
@@ -2558,7 +2558,7 @@ sub project_members {
         $user_id,
     );
 
-Sends a C<GET> request to C<groups/:project_id/members/:user_id> and returns the decoded response body.
+Sends a C<GET> request to C<groups/:project_id/members/:user_id> and returns the decoded response content.
 
 =cut
 
@@ -2578,7 +2578,7 @@ sub group_member {
         $user_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/members/:user_id> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/members/:user_id> and returns the decoded response content.
 
 =cut
 
@@ -2598,7 +2598,7 @@ sub project_member {
         \%params,
     );
 
-Sends a C<POST> request to C<groups/:group_id/members> and returns the decoded response body.
+Sends a C<POST> request to C<groups/:group_id/members> and returns the decoded response content.
 
 =cut
 
@@ -2620,7 +2620,7 @@ sub add_group_member {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/members> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/members> and returns the decoded response content.
 
 =cut
 
@@ -2643,7 +2643,7 @@ sub add_project_member {
         \%params,
     );
 
-Sends a C<PUT> request to C<groups/:group_id/members/:user_id> and returns the decoded response body.
+Sends a C<PUT> request to C<groups/:group_id/members/:user_id> and returns the decoded response content.
 
 =cut
 
@@ -2667,7 +2667,7 @@ sub update_group_member {
         \%params,
     );
 
-Sends a C<PUT> request to C<projects/:project_id/members/:user_id> and returns the decoded response body.
+Sends a C<PUT> request to C<projects/:project_id/members/:user_id> and returns the decoded response content.
 
 =cut
 
@@ -2737,7 +2737,7 @@ See L<https://docs.gitlab.com/ce/api/issues.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<issues> and returns the decoded response body.
+Sends a C<GET> request to C<issues> and returns the decoded response content.
 
 =cut
 
@@ -2758,7 +2758,7 @@ sub global_issues {
         \%params,
     );
 
-Sends a C<GET> request to C<groups/:group_id/issues> and returns the decoded response body.
+Sends a C<GET> request to C<groups/:group_id/issues> and returns the decoded response content.
 
 =cut
 
@@ -2780,7 +2780,7 @@ sub group_issues {
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/issues> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/issues> and returns the decoded response content.
 
 =cut
 
@@ -2802,7 +2802,7 @@ sub issues {
         $issue_iid,
     );
 
-Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid> and returns the decoded response content.
 
 =cut
 
@@ -2822,7 +2822,7 @@ sub issue {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/issues> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/issues> and returns the decoded response content.
 
 =cut
 
@@ -2845,7 +2845,7 @@ sub create_issue {
         \%params,
     );
 
-Sends a C<PUT> request to C<projects/:project_id/issues/:issue_iid> and returns the decoded response body.
+Sends a C<PUT> request to C<projects/:project_id/issues/:issue_iid> and returns the decoded response content.
 
 =cut
 
@@ -2891,7 +2891,7 @@ sub delete_issue {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/issues/:issue_iid/move> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/issues/:issue_iid/move> and returns the decoded response content.
 
 =cut
 
@@ -2914,7 +2914,7 @@ sub move_issue {
         $issue_iid,
     );
 
-Sends a C<POST> request to C<projects/:project_id/issues/:issue_iid/subscribe> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/issues/:issue_iid/subscribe> and returns the decoded response content.
 
 =cut
 
@@ -2934,7 +2934,7 @@ sub subscribe_to_issue {
         $issue_iid,
     );
 
-Sends a C<POST> request to C<projects/:project_id/issues/:issue_iid/unsubscribe> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/issues/:issue_iid/unsubscribe> and returns the decoded response content.
 
 =cut
 
@@ -2954,7 +2954,7 @@ sub unsubscribe_from_issue {
         $issue_iid,
     );
 
-Sends a C<POST> request to C<projects/:project_id/issues/:issue_iid/todo> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/issues/:issue_iid/todo> and returns the decoded response content.
 
 =cut
 
@@ -2975,7 +2975,7 @@ sub create_issue_todo {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/issues/:issue_iid/time_estimate> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/issues/:issue_iid/time_estimate> and returns the decoded response content.
 
 =cut
 
@@ -2998,7 +2998,7 @@ sub set_issue_time_estimate {
         $issue_iid,
     );
 
-Sends a C<POST> request to C<projects/:project_id/issues/:issue_iid/reset_time_estimate> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/issues/:issue_iid/reset_time_estimate> and returns the decoded response content.
 
 =cut
 
@@ -3019,7 +3019,7 @@ sub reset_issue_time_estimate {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/issues/:issue_iid/add_spent_time> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/issues/:issue_iid/add_spent_time> and returns the decoded response content.
 
 =cut
 
@@ -3042,7 +3042,7 @@ sub add_issue_spent_time {
         $issue_iid,
     );
 
-Sends a C<POST> request to C<projects/:project_id/issues/:issue_iid/reset_spent_time> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/issues/:issue_iid/reset_spent_time> and returns the decoded response content.
 
 =cut
 
@@ -3062,7 +3062,7 @@ sub reset_issue_spent_time {
         $issue_iid,
     );
 
-Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid/time_stats> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid/time_stats> and returns the decoded response content.
 
 =cut
 
@@ -3082,7 +3082,7 @@ sub issue_time_stats {
         $issue_iid,
     );
 
-Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid/closed_by> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid/closed_by> and returns the decoded response content.
 
 =cut
 
@@ -3102,7 +3102,7 @@ sub issue_closed_by {
         $issue_iid,
     );
 
-Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid/user_agent_detail> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid/user_agent_detail> and returns the decoded response content.
 
 =cut
 
@@ -3126,7 +3126,7 @@ See L<https://docs.gitlab.com/ce/api/boards.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/boards> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/boards> and returns the decoded response content.
 
 =cut
 
@@ -3149,7 +3149,7 @@ sub project_boards {
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/boards/:board_id/lists> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/boards/:board_id/lists> and returns the decoded response content.
 
 =cut
 
@@ -3173,7 +3173,7 @@ sub project_board_lists {
         $list_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/boards/:board_id/lists/:list_id> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/boards/:board_id/lists/:list_id> and returns the decoded response content.
 
 =cut
 
@@ -3195,7 +3195,7 @@ sub project_board_list {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/boards/:board_id/lists> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/boards/:board_id/lists> and returns the decoded response content.
 
 =cut
 
@@ -3220,7 +3220,7 @@ sub create_project_board_list {
         \%params,
     );
 
-Sends a C<PUT> request to C<projects/:project_id/boards/:board_id/lists/:list_id> and returns the decoded response body.
+Sends a C<PUT> request to C<projects/:project_id/boards/:board_id/lists/:list_id> and returns the decoded response content.
 
 =cut
 
@@ -3272,7 +3272,7 @@ See L<https://docs.gitlab.com/ce/api/jobs.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/jobs> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/jobs> and returns the decoded response content.
 
 =cut
 
@@ -3295,7 +3295,7 @@ sub jobs {
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/pipelines/:pipeline_id/jobs> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/pipelines/:pipeline_id/jobs> and returns the decoded response content.
 
 =cut
 
@@ -3318,7 +3318,7 @@ sub pipeline_jobs {
         $job_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/jobs/:job_id> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/jobs/:job_id> and returns the decoded response content.
 
 =cut
 
@@ -3338,7 +3338,7 @@ sub job {
         $job_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/jobs/:job_id/artifacts> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/jobs/:job_id/artifacts> and returns the decoded response content.
 
 =cut
 
@@ -3359,7 +3359,7 @@ sub job_artifacts {
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/jobs/artifacts/:ref_name/download> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/jobs/artifacts/:ref_name/download> and returns the decoded response content.
 
 =cut
 
@@ -3383,7 +3383,7 @@ sub job_artifacts_archive {
         $artifact_path,
     );
 
-Sends a C<GET> request to C<projects/:project_id/jobs/:job_id/artifacts/:artifact_path> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/jobs/:job_id/artifacts/:artifact_path> and returns the decoded response content.
 
 =cut
 
@@ -3404,7 +3404,7 @@ sub job_artifacts_file {
         $job_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/jobs/:job_id/trace> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/jobs/:job_id/trace> and returns the decoded response content.
 
 =cut
 
@@ -3424,7 +3424,7 @@ sub job_trace_file {
         $job_id,
     );
 
-Sends a C<POST> request to C<projects/:project_id/jobs/:job_id/cancel> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/jobs/:job_id/cancel> and returns the decoded response content.
 
 =cut
 
@@ -3444,7 +3444,7 @@ sub cancel_job {
         $job_id,
     );
 
-Sends a C<POST> request to C<projects/:project_id/jobs/:job_id/retry> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/jobs/:job_id/retry> and returns the decoded response content.
 
 =cut
 
@@ -3464,7 +3464,7 @@ sub retry_job {
         $job_id,
     );
 
-Sends a C<POST> request to C<projects/:project_id/jobs/:job_id/erase> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/jobs/:job_id/erase> and returns the decoded response content.
 
 =cut
 
@@ -3484,7 +3484,7 @@ sub erase_job {
         $job_id,
     );
 
-Sends a C<POST> request to C<projects/:project_id/jobs/:job_id/artifacts/keep> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/jobs/:job_id/artifacts/keep> and returns the decoded response content.
 
 =cut
 
@@ -3504,7 +3504,7 @@ sub keep_job_artifacts {
         $job_id,
     );
 
-Sends a C<POST> request to C<projects/:project_id/jobs/:job_id/play> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/jobs/:job_id/play> and returns the decoded response content.
 
 =cut
 
@@ -3527,7 +3527,7 @@ See L<https://docs.gitlab.com/ce/api/keys.html>.
         $key_id,
     );
 
-Sends a C<GET> request to C<keys/:key_id> and returns the decoded response body.
+Sends a C<GET> request to C<keys/:key_id> and returns the decoded response content.
 
 =cut
 
@@ -3550,7 +3550,7 @@ See L<https://docs.gitlab.com/ce/api/labels.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/labels> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/labels> and returns the decoded response content.
 
 =cut
 
@@ -3572,7 +3572,7 @@ sub labels {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/labels> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/labels> and returns the decoded response content.
 
 =cut
 
@@ -3618,7 +3618,7 @@ sub delete_label {
         \%params,
     );
 
-Sends a C<PUT> request to C<projects/:project_id/labels> and returns the decoded response body.
+Sends a C<PUT> request to C<projects/:project_id/labels> and returns the decoded response content.
 
 =cut
 
@@ -3640,7 +3640,7 @@ sub edit_label {
         $label_id,
     );
 
-Sends a C<POST> request to C<projects/:project_id/labels/:label_id/subscribe> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/labels/:label_id/subscribe> and returns the decoded response content.
 
 =cut
 
@@ -3685,7 +3685,7 @@ See L<https://docs.gitlab.com/ce/api/merge_requests.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<merge_requests> and returns the decoded response body.
+Sends a C<GET> request to C<merge_requests> and returns the decoded response content.
 
 =cut
 
@@ -3706,7 +3706,7 @@ sub global_merge_requests {
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/merge_requests> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/merge_requests> and returns the decoded response content.
 
 =cut
 
@@ -3728,7 +3728,7 @@ sub merge_requests {
         $merge_request_iid,
     );
 
-Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid> and returns the decoded response content.
 
 =cut
 
@@ -3748,7 +3748,7 @@ sub merge_request {
         $merge_request_iid,
     );
 
-Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/commits> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/commits> and returns the decoded response content.
 
 =cut
 
@@ -3768,7 +3768,7 @@ sub merge_request_commits {
         $merge_request_iid,
     );
 
-Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/changes> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/changes> and returns the decoded response content.
 
 =cut
 
@@ -3788,7 +3788,7 @@ sub merge_request_with_changes {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/merge_requests> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/merge_requests> and returns the decoded response content.
 
 =cut
 
@@ -3811,7 +3811,7 @@ sub create_merge_request {
         \%params,
     );
 
-Sends a C<PUT> request to C<projects/:project_id/merge_requests/:merge_request_iid> and returns the decoded response body.
+Sends a C<PUT> request to C<projects/:project_id/merge_requests/:merge_request_iid> and returns the decoded response content.
 
 =cut
 
@@ -3857,7 +3857,7 @@ sub delete_merge_request {
         \%params,
     );
 
-Sends a C<PUT> request to C<projects/:project_id/merge_requests/:merge_request_iid/merge> and returns the decoded response body.
+Sends a C<PUT> request to C<projects/:project_id/merge_requests/:merge_request_iid/merge> and returns the decoded response content.
 
 =cut
 
@@ -3880,7 +3880,7 @@ sub accept_merge_request {
         $merge_request_iid,
     );
 
-Sends a C<PUT> request to C<projects/:project_id/merge_requests/:merge_request_iid/cancel_merge_when_pipeline_succeeds> and returns the decoded response body.
+Sends a C<PUT> request to C<projects/:project_id/merge_requests/:merge_request_iid/cancel_merge_when_pipeline_succeeds> and returns the decoded response content.
 
 =cut
 
@@ -3901,7 +3901,7 @@ sub cancel_merge_when_pipeline_succeeds {
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/closes_issues> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/closes_issues> and returns the decoded response content.
 
 =cut
 
@@ -3924,7 +3924,7 @@ sub merge_request_closes_issues {
         $merge_request_iid,
     );
 
-Sends a C<POST> request to C<projects/:project_id/merge_requests/:merge_request_iid/subscribe> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/merge_requests/:merge_request_iid/subscribe> and returns the decoded response content.
 
 =cut
 
@@ -3944,7 +3944,7 @@ sub subscribe_to_merge_request {
         $merge_request_iid,
     );
 
-Sends a C<POST> request to C<projects/:project_id/merge_requests/:merge_request_iid/unsubscribe> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/merge_requests/:merge_request_iid/unsubscribe> and returns the decoded response content.
 
 =cut
 
@@ -3964,7 +3964,7 @@ sub unsubscribe_from_merge_request {
         $merge_request_iid,
     );
 
-Sends a C<POST> request to C<projects/:project_id/merge_requests/:merge_request_iid/todo> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/merge_requests/:merge_request_iid/todo> and returns the decoded response content.
 
 =cut
 
@@ -3984,7 +3984,7 @@ sub create_merge_request_todo {
         $merge_request_iid,
     );
 
-Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/versions> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/versions> and returns the decoded response content.
 
 =cut
 
@@ -4005,7 +4005,7 @@ sub merge_request_diff_versions {
         $version_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/versions/:version_id> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/versions/:version_id> and returns the decoded response content.
 
 =cut
 
@@ -4027,7 +4027,7 @@ sub merge_request_diff_version {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/merge_requests/:merge_request_iid/time_estimate> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/merge_requests/:merge_request_iid/time_estimate> and returns the decoded response content.
 
 =cut
 
@@ -4050,7 +4050,7 @@ sub set_merge_request_time_estimate {
         $merge_request_iid,
     );
 
-Sends a C<POST> request to C<projects/:project_id/merge_requests/:merge_request_iid/reset_time_estimate> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/merge_requests/:merge_request_iid/reset_time_estimate> and returns the decoded response content.
 
 =cut
 
@@ -4071,7 +4071,7 @@ sub reset_merge_request_time_estimate {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/merge_requests/:merge_request_iid/add_spent_time> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/merge_requests/:merge_request_iid/add_spent_time> and returns the decoded response content.
 
 =cut
 
@@ -4094,7 +4094,7 @@ sub add_merge_request_spent_time {
         $merge_request_iid,
     );
 
-Sends a C<POST> request to C<projects/:project_id/merge_requests/:merge_request_iid/reset_spent_time> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/merge_requests/:merge_request_iid/reset_spent_time> and returns the decoded response content.
 
 =cut
 
@@ -4114,7 +4114,7 @@ sub reset_merge_request_spent_time {
         $merge_request_iid,
     );
 
-Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/time_stats> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/time_stats> and returns the decoded response content.
 
 =cut
 
@@ -4138,7 +4138,7 @@ See L<https://docs.gitlab.com/ce/api/milestones.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/milestones> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/milestones> and returns the decoded response content.
 
 =cut
 
@@ -4160,7 +4160,7 @@ sub project_milestones {
         $milestone_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/milestones/:milestone_id> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/milestones/:milestone_id> and returns the decoded response content.
 
 =cut
 
@@ -4180,7 +4180,7 @@ sub project_milestone {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/milestones> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/milestones> and returns the decoded response content.
 
 =cut
 
@@ -4203,7 +4203,7 @@ sub create_project_milestone {
         \%params,
     );
 
-Sends a C<PUT> request to C<projects/:project_id/milestones/:milestone_id> and returns the decoded response body.
+Sends a C<PUT> request to C<projects/:project_id/milestones/:milestone_id> and returns the decoded response content.
 
 =cut
 
@@ -4227,7 +4227,7 @@ sub edit_project_milestone {
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/milestones/:milestone_id/issues> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/milestones/:milestone_id/issues> and returns the decoded response content.
 
 =cut
 
@@ -4251,7 +4251,7 @@ sub project_milestone_issues {
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/milestones/:milestone_id/merge_requests> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/milestones/:milestone_id/merge_requests> and returns the decoded response content.
 
 =cut
 
@@ -4278,7 +4278,7 @@ See L<https://docs.gitlab.com/ce/api/group_milestones.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<groups/:group_id/milestones> and returns the decoded response body.
+Sends a C<GET> request to C<groups/:group_id/milestones> and returns the decoded response content.
 
 =cut
 
@@ -4300,7 +4300,7 @@ sub group_milestones {
         $milestone_id,
     );
 
-Sends a C<GET> request to C<groups/:group_id/milestones/:milestone_id> and returns the decoded response body.
+Sends a C<GET> request to C<groups/:group_id/milestones/:milestone_id> and returns the decoded response content.
 
 =cut
 
@@ -4320,7 +4320,7 @@ sub group_milestone {
         \%params,
     );
 
-Sends a C<POST> request to C<groups/:group_id/milestones> and returns the decoded response body.
+Sends a C<POST> request to C<groups/:group_id/milestones> and returns the decoded response content.
 
 =cut
 
@@ -4343,7 +4343,7 @@ sub create_group_milestone {
         \%params,
     );
 
-Sends a C<PUT> request to C<groups/:group_id/milestones/:milestone_id> and returns the decoded response body.
+Sends a C<PUT> request to C<groups/:group_id/milestones/:milestone_id> and returns the decoded response content.
 
 =cut
 
@@ -4367,7 +4367,7 @@ sub edit_group_milestone {
         \%params,
     );
 
-Sends a C<GET> request to C<groups/:group_id/milestones/:milestone_id/issues> and returns the decoded response body.
+Sends a C<GET> request to C<groups/:group_id/milestones/:milestone_id/issues> and returns the decoded response content.
 
 =cut
 
@@ -4391,7 +4391,7 @@ sub group_milestone_issues {
         \%params,
     );
 
-Sends a C<GET> request to C<groups/:group_id/milestones/:milestone_id/merge_requests> and returns the decoded response body.
+Sends a C<GET> request to C<groups/:group_id/milestones/:milestone_id/merge_requests> and returns the decoded response content.
 
 =cut
 
@@ -4417,7 +4417,7 @@ See L<https://docs.gitlab.com/ce/api/namespaces.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<namespaces> and returns the decoded response body.
+Sends a C<GET> request to C<namespaces> and returns the decoded response content.
 
 =cut
 
@@ -4437,7 +4437,7 @@ sub namespaces {
         $namespace_id,
     );
 
-Sends a C<GET> request to C<namespaces/:namespace_id> and returns the decoded response body.
+Sends a C<GET> request to C<namespaces/:namespace_id> and returns the decoded response content.
 
 =cut
 
@@ -4461,7 +4461,7 @@ See L<https://docs.gitlab.com/ce/api/notes.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid/notes> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid/notes> and returns the decoded response content.
 
 =cut
 
@@ -4485,7 +4485,7 @@ sub issue_notes {
         $note_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid/notes/:note_id> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid/notes/:note_id> and returns the decoded response content.
 
 =cut
 
@@ -4507,7 +4507,7 @@ sub issue_note {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/issues/:issue_iid/notes> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/issues/:issue_iid/notes> and returns the decoded response content.
 
 =cut
 
@@ -4583,7 +4583,7 @@ sub delete_issue_note {
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/snippets/:snippet_id/notes> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/snippets/:snippet_id/notes> and returns the decoded response content.
 
 =cut
 
@@ -4607,7 +4607,7 @@ sub snippet_notes {
         $note_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/snippets/:snippet_id/notes/:note_id> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/snippets/:snippet_id/notes/:note_id> and returns the decoded response content.
 
 =cut
 
@@ -4629,7 +4629,7 @@ sub snippet_note {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/snippets/:snippet_id/notes> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/snippets/:snippet_id/notes> and returns the decoded response content.
 
 =cut
 
@@ -4705,7 +4705,7 @@ sub delete_snippet_note {
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/notes> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/notes> and returns the decoded response content.
 
 =cut
 
@@ -4729,7 +4729,7 @@ sub merge_request_notes {
         $note_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/notes/:note_id> and returns the decoded response content.
 
 =cut
 
@@ -4751,7 +4751,7 @@ sub merge_request_note {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/merge_requests/:merge_request_iid/notes> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/merge_requests/:merge_request_iid/notes> and returns the decoded response content.
 
 =cut
 
@@ -4827,7 +4827,7 @@ See L<https://docs.gitlab.com/ce/api/notification_settings.html>.
 
     my $settings = $api->global_notification_settings();
 
-Sends a C<GET> request to C<notification_settings> and returns the decoded response body.
+Sends a C<GET> request to C<notification_settings> and returns the decoded response content.
 
 =cut
 
@@ -4844,7 +4844,7 @@ sub global_notification_settings {
         \%params,
     );
 
-Sends a C<PUT> request to C<notification_settings> and returns the decoded response body.
+Sends a C<PUT> request to C<notification_settings> and returns the decoded response content.
 
 =cut
 
@@ -4864,7 +4864,7 @@ sub set_global_notification_settings {
         $group_id,
     );
 
-Sends a C<GET> request to C<groups/:group_id/notification_settings> and returns the decoded response body.
+Sends a C<GET> request to C<groups/:group_id/notification_settings> and returns the decoded response content.
 
 =cut
 
@@ -4882,7 +4882,7 @@ sub group_notification_settings {
         $project_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/notification_settings> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/notification_settings> and returns the decoded response content.
 
 =cut
 
@@ -4901,7 +4901,7 @@ sub project_notification_settings {
         \%params,
     );
 
-Sends a C<PUT> request to C<groups/:group_id/notification_settings> and returns the decoded response body.
+Sends a C<PUT> request to C<groups/:group_id/notification_settings> and returns the decoded response content.
 
 =cut
 
@@ -4923,7 +4923,7 @@ sub set_group_notification_settings {
         \%params,
     );
 
-Sends a C<PUT> request to C<projects/:project_id/notification_settings> and returns the decoded response body.
+Sends a C<PUT> request to C<projects/:project_id/notification_settings> and returns the decoded response content.
 
 =cut
 
@@ -4948,7 +4948,7 @@ See L<https://docs.gitlab.com/ce/api/templates/licenses.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<templates/licenses> and returns the decoded response body.
+Sends a C<GET> request to C<templates/licenses> and returns the decoded response content.
 
 =cut
 
@@ -4969,7 +4969,7 @@ sub license_templates {
         \%params,
     );
 
-Sends a C<GET> request to C<templates/licenses/:template_key> and returns the decoded response body.
+Sends a C<GET> request to C<templates/licenses/:template_key> and returns the decoded response content.
 
 =cut
 
@@ -4994,7 +4994,7 @@ See L<https://docs.gitlab.com/ce/api/pages_domains.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<pages/domains> and returns the decoded response body.
+Sends a C<GET> request to C<pages/domains> and returns the decoded response content.
 
 =cut
 
@@ -5015,7 +5015,7 @@ sub global_pages_domains {
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/pages/domains> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/pages/domains> and returns the decoded response content.
 
 =cut
 
@@ -5037,7 +5037,7 @@ sub pages_domains {
         $domain,
     );
 
-Sends a C<GET> request to C<projects/:project_id/pages/domains/:domain> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/pages/domains/:domain> and returns the decoded response content.
 
 =cut
 
@@ -5057,7 +5057,7 @@ sub pages_domain {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/pages/domains> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/pages/domains> and returns the decoded response content.
 
 =cut
 
@@ -5080,7 +5080,7 @@ sub create_pages_domain {
         \%params,
     );
 
-Sends a C<PUT> request to C<projects/:project_id/pages/domains/:domain> and returns the decoded response body.
+Sends a C<PUT> request to C<projects/:project_id/pages/domains/:domain> and returns the decoded response content.
 
 =cut
 
@@ -5129,7 +5129,7 @@ See L<https://docs.gitlab.com/ce/api/pipelines.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/pipelines> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/pipelines> and returns the decoded response content.
 
 =cut
 
@@ -5151,7 +5151,7 @@ sub pipelines {
         $pipeline_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/pipelines/:pipeline_id> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/pipelines/:pipeline_id> and returns the decoded response content.
 
 =cut
 
@@ -5171,7 +5171,7 @@ sub pipeline {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/pipeline> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/pipeline> and returns the decoded response content.
 
 =cut
 
@@ -5193,7 +5193,7 @@ sub create_pipeline {
         $pipeline_id,
     );
 
-Sends a C<POST> request to C<projects/:project_id/pipelines/:pipeline_id/retry> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/pipelines/:pipeline_id/retry> and returns the decoded response content.
 
 =cut
 
@@ -5213,7 +5213,7 @@ sub retry_pipeline_jobs {
         $pipeline_id,
     );
 
-Sends a C<POST> request to C<projects/:project_id/pipelines/:pipeline_id/cancel> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/pipelines/:pipeline_id/cancel> and returns the decoded response content.
 
 =cut
 
@@ -5237,7 +5237,7 @@ See L<https://docs.gitlab.com/ce/api/pipeline_triggers.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/triggers> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/triggers> and returns the decoded response content.
 
 =cut
 
@@ -5259,7 +5259,7 @@ sub triggers {
         $trigger_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/triggers/:trigger_id> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/triggers/:trigger_id> and returns the decoded response content.
 
 =cut
 
@@ -5279,7 +5279,7 @@ sub trigger {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/triggers> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/triggers> and returns the decoded response content.
 
 =cut
 
@@ -5302,7 +5302,7 @@ sub create_trigger {
         \%params,
     );
 
-Sends a C<PUT> request to C<projects/:project_id/triggers/:trigger_id> and returns the decoded response body.
+Sends a C<PUT> request to C<projects/:project_id/triggers/:trigger_id> and returns the decoded response content.
 
 =cut
 
@@ -5325,7 +5325,7 @@ sub edit_trigger {
         $trigger_id,
     );
 
-Sends a C<POST> request to C<projects/:project_id/triggers/:trigger_id/take_ownership> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/triggers/:trigger_id/take_ownership> and returns the decoded response content.
 
 =cut
 
@@ -5371,7 +5371,7 @@ See L<https://docs.gitlab.com/ce/api/pipeline_schedules.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/pipeline_schedules> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/pipeline_schedules> and returns the decoded response content.
 
 =cut
 
@@ -5393,7 +5393,7 @@ sub pipeline_schedules {
         $pipeline_schedule_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/pipeline_schedules/:pipeline_schedule_id> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/pipeline_schedules/:pipeline_schedule_id> and returns the decoded response content.
 
 =cut
 
@@ -5413,7 +5413,7 @@ sub pipeline_schedule {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/pipeline_schedules> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/pipeline_schedules> and returns the decoded response content.
 
 =cut
 
@@ -5436,7 +5436,7 @@ sub create_pipeline_schedule {
         \%params,
     );
 
-Sends a C<PUT> request to C<projects/:project_id/pipeline_schedules/:pipeline_schedule_id> and returns the decoded response body.
+Sends a C<PUT> request to C<projects/:project_id/pipeline_schedules/:pipeline_schedule_id> and returns the decoded response content.
 
 =cut
 
@@ -5459,7 +5459,7 @@ sub edit_pipeline_schedule {
         $pipeline_schedule_id,
     );
 
-Sends a C<POST> request to C<projects/:project_id/pipeline_schedules/:pipeline_schedule_id/take_ownership> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/pipeline_schedules/:pipeline_schedule_id/take_ownership> and returns the decoded response content.
 
 =cut
 
@@ -5479,7 +5479,7 @@ sub take_ownership_of_pipeline_schedule {
         $pipeline_schedule_id,
     );
 
-Sends a C<DELETE> request to C<projects/:project_id/pipeline_schedules/:pipeline_schedule_id> and returns the decoded response body.
+Sends a C<DELETE> request to C<projects/:project_id/pipeline_schedules/:pipeline_schedule_id> and returns the decoded response content.
 
 =cut
 
@@ -5500,7 +5500,7 @@ sub delete_pipeline_schedule {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/pipeline_schedules/:pipeline_schedule_id/variables> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/pipeline_schedules/:pipeline_schedule_id/variables> and returns the decoded response content.
 
 =cut
 
@@ -5525,7 +5525,7 @@ sub create_pipeline_schedule_variable {
         \%params,
     );
 
-Sends a C<PUT> request to C<projects/:project_id/pipeline_schedules/:pipeline_schedule_id/variables/:variable_key> and returns the decoded response body.
+Sends a C<PUT> request to C<projects/:project_id/pipeline_schedules/:pipeline_schedule_id/variables/:variable_key> and returns the decoded response content.
 
 =cut
 
@@ -5550,7 +5550,7 @@ sub edit_pipeline_schedule_variable {
         $variable_key,
     );
 
-Sends a C<DELETE> request to C<projects/:project_id/pipeline_schedules/:pipeline_schedule_id/variables/:variable_key> and returns the decoded response body.
+Sends a C<DELETE> request to C<projects/:project_id/pipeline_schedules/:pipeline_schedule_id/variables/:variable_key> and returns the decoded response content.
 
 =cut
 
@@ -5574,7 +5574,7 @@ See L<https://docs.gitlab.com/ce/api/projects.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<projects> and returns the decoded response body.
+Sends a C<GET> request to C<projects> and returns the decoded response content.
 
 =cut
 
@@ -5595,7 +5595,7 @@ sub projects {
         \%params,
     );
 
-Sends a C<GET> request to C<users/:user_id/projects> and returns the decoded response body.
+Sends a C<GET> request to C<users/:user_id/projects> and returns the decoded response content.
 
 =cut
 
@@ -5617,7 +5617,7 @@ sub user_projects {
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id> and returns the decoded response content.
 
 =cut
 
@@ -5639,7 +5639,7 @@ sub project {
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/users> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/users> and returns the decoded response content.
 
 =cut
 
@@ -5660,7 +5660,7 @@ sub project_users {
         \%params,
     );
 
-Sends a C<POST> request to C<projects> and returns the decoded response body.
+Sends a C<POST> request to C<projects> and returns the decoded response content.
 
 =cut
 
@@ -5753,7 +5753,7 @@ sub fork_project {
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/forks> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/forks> and returns the decoded response content.
 
 =cut
 
@@ -5774,7 +5774,7 @@ sub project_forks {
         $project_id,
     );
 
-Sends a C<POST> request to C<projects/:project_id/star> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/star> and returns the decoded response content.
 
 =cut
 
@@ -5792,7 +5792,7 @@ sub start_project {
         $project_id,
     );
 
-Sends a C<POST> request to C<projects/:project_id/unstar> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/unstar> and returns the decoded response content.
 
 =cut
 
@@ -5810,7 +5810,7 @@ sub unstar_project {
         $project_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/languages> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/languages> and returns the decoded response content.
 
 =cut
 
@@ -5828,7 +5828,7 @@ sub project_languages {
         $project_id,
     );
 
-Sends a C<POST> request to C<projects/:project_id/archive> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/archive> and returns the decoded response content.
 
 =cut
 
@@ -5846,7 +5846,7 @@ sub archive_project {
         $project_id,
     );
 
-Sends a C<POST> request to C<projects/:project_id/unarchive> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/unarchive> and returns the decoded response content.
 
 =cut
 
@@ -5885,7 +5885,7 @@ sub delete_project {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/uploads> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/uploads> and returns the decoded response content.
 
 The C<file> parameter must point to a readable file on the local filesystem.
 
@@ -5954,7 +5954,7 @@ sub unshare_project_with_group {
         $project_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/hooks> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/hooks> and returns the decoded response content.
 
 =cut
 
@@ -5973,7 +5973,7 @@ sub project_hooks {
         $hook_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/hooks/:hook_id> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/hooks/:hook_id> and returns the decoded response content.
 
 =cut
 
@@ -5993,7 +5993,7 @@ sub project_hook {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/hooks> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/hooks> and returns the decoded response content.
 
 =cut
 
@@ -6016,7 +6016,7 @@ sub create_project_hook {
         \%params,
     );
 
-Sends a C<PUT> request to C<projects/:project_id/hooks/:hook_id> and returns the decoded response body.
+Sends a C<PUT> request to C<projects/:project_id/hooks/:hook_id> and returns the decoded response content.
 
 =cut
 
@@ -6127,7 +6127,7 @@ See L<https://docs.gitlab.com/ce/api/access_requests.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<groups/:group_id/access_requests> and returns the decoded response body.
+Sends a C<GET> request to C<groups/:group_id/access_requests> and returns the decoded response content.
 
 =cut
 
@@ -6149,7 +6149,7 @@ sub group_access_requests {
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/access_requests> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/access_requests> and returns the decoded response content.
 
 =cut
 
@@ -6170,7 +6170,7 @@ sub project_access_requests {
         $group_id,
     );
 
-Sends a C<POST> request to C<groups/:group_id/access_requests> and returns the decoded response body.
+Sends a C<POST> request to C<groups/:group_id/access_requests> and returns the decoded response content.
 
 =cut
 
@@ -6188,7 +6188,7 @@ sub request_group_access {
         $project_id,
     );
 
-Sends a C<POST> request to C<projects/:project_id/access_requests> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/access_requests> and returns the decoded response content.
 
 =cut
 
@@ -6207,7 +6207,7 @@ sub request_project_access {
         $user_id,
     );
 
-Sends a C<PUT> request to C<groups/:group_id/access_requests/:user_id/approve> and returns the decoded response body.
+Sends a C<PUT> request to C<groups/:group_id/access_requests/:user_id/approve> and returns the decoded response content.
 
 =cut
 
@@ -6227,7 +6227,7 @@ sub approve_group_access {
         $user_id,
     );
 
-Sends a C<PUT> request to C<projects/:project_id/access_requests/:user_id/approve> and returns the decoded response body.
+Sends a C<PUT> request to C<projects/:project_id/access_requests/:user_id/approve> and returns the decoded response content.
 
 =cut
 
@@ -6295,7 +6295,7 @@ See L<https://docs.gitlab.com/ce/api/project_snippets.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/snippets> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/snippets> and returns the decoded response content.
 
 =cut
 
@@ -6317,7 +6317,7 @@ sub snippets {
         $snippet_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/snippets/:snippet_id> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/snippets/:snippet_id> and returns the decoded response content.
 
 =cut
 
@@ -6409,7 +6409,7 @@ sub delete_snippet {
         $snippet_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/snippets/:snippet_id/raw> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/snippets/:snippet_id/raw> and returns the decoded response content.
 
 =cut
 
@@ -6429,7 +6429,7 @@ sub snippet_content {
         $snippet_id,
     );
 
-Sends a C<GET> request to C<projects/:project_id/snippets/:snippet_id/user_agent_detail> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/snippets/:snippet_id/user_agent_detail> and returns the decoded response content.
 
 =cut
 
@@ -6453,7 +6453,7 @@ See L<https://docs.gitlab.com/ce/api/protected_branches.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/protected_branches> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/protected_branches> and returns the decoded response content.
 
 =cut
 
@@ -6475,7 +6475,7 @@ sub protected_branches {
         $branch_name,
     );
 
-Sends a C<GET> request to C<projects/:project_id/protected_branches/:branch_name> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/protected_branches/:branch_name> and returns the decoded response content.
 
 =cut
 
@@ -6495,7 +6495,7 @@ sub protected_branch {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/protected_branches> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/protected_branches> and returns the decoded response content.
 
 =cut
 
@@ -6543,7 +6543,7 @@ See L<https://docs.gitlab.com/ce/api/repositories.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/repository/tree> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/repository/tree> and returns the decoded response content.
 
 =cut
 
@@ -6565,7 +6565,7 @@ sub tree {
         $sha,
     );
 
-Sends a C<GET> request to C<projects/:project_id/repository/blobs/:sha> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/repository/blobs/:sha> and returns the decoded response content.
 
 =cut
 
@@ -6585,7 +6585,7 @@ sub blob {
         $sha,
     );
 
-Sends a C<GET> request to C<projects/:project_id/repository/blobs/:sha/raw> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/repository/blobs/:sha/raw> and returns the decoded response content.
 
 =cut
 
@@ -6605,7 +6605,7 @@ sub raw_blob {
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/repository/archive> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/repository/archive> and returns the decoded response content.
 
 =cut
 
@@ -6627,7 +6627,7 @@ sub archive {
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/repository/compare> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/repository/compare> and returns the decoded response content.
 
 =cut
 
@@ -6649,7 +6649,7 @@ sub compare {
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/repository/contributors> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/repository/contributors> and returns the decoded response content.
 
 =cut
 
@@ -6676,7 +6676,7 @@ See L<https://docs.gitlab.com/ce/api/repository_files.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/repository/files/:file_path> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/repository/files/:file_path> and returns the decoded response content.
 
 =cut
 
@@ -6694,13 +6694,13 @@ sub file {
 
 =head2 raw_file
 
-    my $http_response = $api->raw_file(
+    my $content = $api->raw_file(
         $project_id,
         $file_path,
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/repository/files/:file_path/raw> and returns the L<HTTP::Tiny> response hash ref.
+Sends a C<GET> request to C<projects/:project_id/repository/files/:file_path/raw> and returns the raw response content.
 
 =cut
 
@@ -6805,7 +6805,7 @@ See L<https://docs.gitlab.com/ce/api/runners.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<runners> and returns the decoded response body.
+Sends a C<GET> request to C<runners> and returns the decoded response content.
 
 =cut
 
@@ -6825,7 +6825,7 @@ sub runners {
         \%params,
     );
 
-Sends a C<GET> request to C<runners/all> and returns the decoded response body.
+Sends a C<GET> request to C<runners/all> and returns the decoded response content.
 
 =cut
 
@@ -6845,7 +6845,7 @@ sub all_runners {
         $runner_id,
     );
 
-Sends a C<GET> request to C<runners/:runner_id> and returns the decoded response body.
+Sends a C<GET> request to C<runners/:runner_id> and returns the decoded response content.
 
 =cut
 
@@ -6864,7 +6864,7 @@ sub runner {
         \%params,
     );
 
-Sends a C<PUT> request to C<runners/:runner_id> and returns the decoded response body.
+Sends a C<PUT> request to C<runners/:runner_id> and returns the decoded response content.
 
 =cut
 
@@ -6885,7 +6885,7 @@ sub update_runner {
         $runner_id,
     );
 
-Sends a C<DELETE> request to C<runners/:runner_id> and returns the decoded response body.
+Sends a C<DELETE> request to C<runners/:runner_id> and returns the decoded response content.
 
 =cut
 
@@ -6904,7 +6904,7 @@ sub delete_runner {
         \%params,
     );
 
-Sends a C<GET> request to C<runners/:runner_id/jobs> and returns the decoded response body.
+Sends a C<GET> request to C<runners/:runner_id/jobs> and returns the decoded response content.
 
 =cut
 
@@ -6926,7 +6926,7 @@ sub runner_jobs {
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/runners> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/runners> and returns the decoded response content.
 
 =cut
 
@@ -6948,7 +6948,7 @@ sub project_runners {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/runners> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/runners> and returns the decoded response content.
 
 =cut
 
@@ -6970,7 +6970,7 @@ sub enable_project_runner {
         $runner_id,
     );
 
-Sends a C<DELETE> request to C<projects/:project_id/runners/:runner_id> and returns the decoded response body.
+Sends a C<DELETE> request to C<projects/:project_id/runners/:runner_id> and returns the decoded response content.
 
 =cut
 
@@ -6994,7 +6994,7 @@ See L<https://docs.gitlab.com/ce/api/services.html>.
         $service_name,
     );
 
-Sends a C<GET> request to C<projects/:project_id/services/:service_name> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/services/:service_name> and returns the decoded response content.
 
 =cut
 
@@ -7063,7 +7063,7 @@ See L<https://docs.gitlab.com/ce/api/settings.html>.
 
     my $settings = $api->settings();
 
-Sends a C<GET> request to C<application/settings> and returns the decoded response body.
+Sends a C<GET> request to C<application/settings> and returns the decoded response content.
 
 =cut
 
@@ -7080,7 +7080,7 @@ sub settings {
         \%params,
     );
 
-Sends a C<PUT> request to C<application/settings> and returns the decoded response body.
+Sends a C<PUT> request to C<application/settings> and returns the decoded response content.
 
 =cut
 
@@ -7102,7 +7102,7 @@ See L<https://docs.gitlab.com/ce/api/sidekiq_metrics.html>.
 
     my $metrics = $api->queue_metrics();
 
-Sends a C<GET> request to C<sidekiq/queue_metrics> and returns the decoded response body.
+Sends a C<GET> request to C<sidekiq/queue_metrics> and returns the decoded response content.
 
 =cut
 
@@ -7117,7 +7117,7 @@ sub queue_metrics {
 
     my $metrics = $api->process_metrics();
 
-Sends a C<GET> request to C<sidekiq/process_metrics> and returns the decoded response body.
+Sends a C<GET> request to C<sidekiq/process_metrics> and returns the decoded response content.
 
 =cut
 
@@ -7132,7 +7132,7 @@ sub process_metrics {
 
     my $stats = $api->job_stats();
 
-Sends a C<GET> request to C<sidekiq/job_stats> and returns the decoded response body.
+Sends a C<GET> request to C<sidekiq/job_stats> and returns the decoded response content.
 
 =cut
 
@@ -7147,7 +7147,7 @@ sub job_stats {
 
     my $metrics = $api->compound_metrics();
 
-Sends a C<GET> request to C<sidekiq/compound_metrics> and returns the decoded response body.
+Sends a C<GET> request to C<sidekiq/compound_metrics> and returns the decoded response content.
 
 =cut
 
@@ -7168,7 +7168,7 @@ See L<https://docs.gitlab.com/ce/api/system_hooks.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<hooks> and returns the decoded response body.
+Sends a C<GET> request to C<hooks> and returns the decoded response content.
 
 =cut
 
@@ -7210,7 +7210,7 @@ sub create_hook {
         $hook_id,
     );
 
-Sends a C<GET> request to C<hooks/:hook_id> and returns the decoded response body.
+Sends a C<GET> request to C<hooks/:hook_id> and returns the decoded response content.
 
 =cut
 
@@ -7253,7 +7253,7 @@ See L<https://docs.gitlab.com/ce/api/tags.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/repository/tags> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/repository/tags> and returns the decoded response content.
 
 =cut
 
@@ -7275,7 +7275,7 @@ sub tags {
         $tag_name,
     );
 
-Sends a C<GET> request to C<projects/:project_id/repository/tags/:tag_name> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/repository/tags/:tag_name> and returns the decoded response content.
 
 =cut
 
@@ -7295,7 +7295,7 @@ sub tag {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/repository/tags> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/repository/tags> and returns the decoded response content.
 
 =cut
 
@@ -7394,7 +7394,7 @@ See L<https://docs.gitlab.com/ce/api/todos.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<todos> and returns the decoded response body.
+Sends a C<GET> request to C<todos> and returns the decoded response content.
 
 =cut
 
@@ -7414,7 +7414,7 @@ sub todos {
         $todo_id,
     );
 
-Sends a C<POST> request to C<todos/:todo_id/mark_as_done> and returns the decoded response body.
+Sends a C<POST> request to C<todos/:todo_id/mark_as_done> and returns the decoded response content.
 
 =cut
 
@@ -7453,7 +7453,7 @@ See L<https://docs.gitlab.com/ce/api/users.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<users> and returns the decoded response body.
+Sends a C<GET> request to C<users> and returns the decoded response content.
 
 =cut
 
@@ -7473,7 +7473,7 @@ sub users {
         $user_id,
     );
 
-Sends a C<GET> request to C<users/:user_id> and returns the decoded response body.
+Sends a C<GET> request to C<users/:user_id> and returns the decoded response content.
 
 =cut
 
@@ -7555,7 +7555,7 @@ sub delete_user {
 
     my $user = $api->current_user();
 
-Sends a C<GET> request to C<user> and returns the decoded response body.
+Sends a C<GET> request to C<user> and returns the decoded response content.
 
 =cut
 
@@ -7572,7 +7572,7 @@ sub current_user {
         \%params,
     );
 
-Sends a C<GET> request to C<user/keys> and returns the decoded response body.
+Sends a C<GET> request to C<user/keys> and returns the decoded response content.
 
 =cut
 
@@ -7593,7 +7593,7 @@ sub current_user_ssh_keys {
         \%params,
     );
 
-Sends a C<GET> request to C<users/:user_id/keys> and returns the decoded response body.
+Sends a C<GET> request to C<users/:user_id/keys> and returns the decoded response content.
 
 =cut
 
@@ -7614,7 +7614,7 @@ sub user_ssh_keys {
         $key_id,
     );
 
-Sends a C<GET> request to C<user/keys/:key_id> and returns the decoded response body.
+Sends a C<GET> request to C<user/keys/:key_id> and returns the decoded response content.
 
 =cut
 
@@ -7720,7 +7720,7 @@ sub delete_user_ssh_key {
         \%params,
     );
 
-Sends a C<GET> request to C<user/gpg_keys> and returns the decoded response body.
+Sends a C<GET> request to C<user/gpg_keys> and returns the decoded response content.
 
 =cut
 
@@ -7740,7 +7740,7 @@ sub current_user_gpg_keys {
         $key_id,
     );
 
-Sends a C<GET> request to C<user/gpg_keys/:key_id> and returns the decoded response body.
+Sends a C<GET> request to C<user/gpg_keys/:key_id> and returns the decoded response content.
 
 =cut
 
@@ -7801,7 +7801,7 @@ sub delete_current_user_gpg_key {
         \%params,
     );
 
-Sends a C<GET> request to C<users/:user_id/gpg_keys> and returns the decoded response body.
+Sends a C<GET> request to C<users/:user_id/gpg_keys> and returns the decoded response content.
 
 =cut
 
@@ -7823,7 +7823,7 @@ sub user_gpg_keys {
         $key_id,
     );
 
-Sends a C<GET> request to C<users/:user_id/gpg_keys/:key_id> and returns the decoded response body.
+Sends a C<GET> request to C<users/:user_id/gpg_keys/:key_id> and returns the decoded response content.
 
 =cut
 
@@ -7843,7 +7843,7 @@ sub user_gpg_key {
         \%params,
     );
 
-Sends a C<POST> request to C<users/:user_id/gpg_keys> and returns the decoded response body.
+Sends a C<POST> request to C<users/:user_id/gpg_keys> and returns the decoded response content.
 
 =cut
 
@@ -7886,7 +7886,7 @@ sub delete_user_gpg_key {
         \%params,
     );
 
-Sends a C<GET> request to C<user/emails> and returns the decoded response body.
+Sends a C<GET> request to C<user/emails> and returns the decoded response content.
 
 =cut
 
@@ -7907,7 +7907,7 @@ sub current_user_emails {
         \%params,
     );
 
-Sends a C<GET> request to C<users/:user_id/emails> and returns the decoded response body.
+Sends a C<GET> request to C<users/:user_id/emails> and returns the decoded response content.
 
 =cut
 
@@ -7928,7 +7928,7 @@ sub user_emails {
         $email_id,
     );
 
-Sends a C<GET> request to C<user/emails/:email_id> and returns the decoded response body.
+Sends a C<GET> request to C<user/emails/:email_id> and returns the decoded response content.
 
 =cut
 
@@ -7946,7 +7946,7 @@ sub current_user_email {
         \%params,
     );
 
-Sends a C<POST> request to C<user/emails> and returns the decoded response body.
+Sends a C<POST> request to C<user/emails> and returns the decoded response content.
 
 =cut
 
@@ -7967,7 +7967,7 @@ sub create_current_user_email {
         \%params,
     );
 
-Sends a C<POST> request to C<users/:user_id/emails> and returns the decoded response body.
+Sends a C<POST> request to C<users/:user_id/emails> and returns the decoded response content.
 
 =cut
 
@@ -8030,7 +8030,7 @@ sub delete_user_email {
         $user_id,
     );
 
-Sends a C<POST> request to C<users/:user_id/block> and returns the decoded response body.
+Sends a C<POST> request to C<users/:user_id/block> and returns the decoded response content.
 
 =cut
 
@@ -8048,7 +8048,7 @@ sub block_user {
         $user_id,
     );
 
-Sends a C<POST> request to C<users/:user_id/unblock> and returns the decoded response body.
+Sends a C<POST> request to C<users/:user_id/unblock> and returns the decoded response content.
 
 =cut
 
@@ -8067,7 +8067,7 @@ sub unblock_user {
         \%params,
     );
 
-Sends a C<GET> request to C<users/:user_id/impersonation_tokens> and returns the decoded response body.
+Sends a C<GET> request to C<users/:user_id/impersonation_tokens> and returns the decoded response content.
 
 =cut
 
@@ -8089,7 +8089,7 @@ sub user_impersonation_tokens {
         $impersonation_token_id,
     );
 
-Sends a C<GET> request to C<users/:user_id/impersonation_tokens/:impersonation_token_id> and returns the decoded response body.
+Sends a C<GET> request to C<users/:user_id/impersonation_tokens/:impersonation_token_id> and returns the decoded response content.
 
 =cut
 
@@ -8109,7 +8109,7 @@ sub user_impersonation_token {
         \%params,
     );
 
-Sends a C<POST> request to C<users/:user_id/impersonation_tokens> and returns the decoded response body.
+Sends a C<POST> request to C<users/:user_id/impersonation_tokens> and returns the decoded response content.
 
 =cut
 
@@ -8152,7 +8152,7 @@ sub delete_user_impersonation_token {
         \%params,
     );
 
-Sends a C<GET> request to C<user/activities> and returns the decoded response body.
+Sends a C<GET> request to C<user/activities> and returns the decoded response content.
 
 =cut
 
@@ -8176,7 +8176,7 @@ See L<https://docs.gitlab.com/ce/api/lint.html>.
         \%params,
     );
 
-Sends a C<POST> request to C<lint> and returns the decoded response body.
+Sends a C<POST> request to C<lint> and returns the decoded response content.
 
 =cut
 
@@ -8198,7 +8198,7 @@ See L<https://docs.gitlab.com/ce/api/version.html>.
 
     my $version = $api->version();
 
-Sends a C<GET> request to C<version> and returns the decoded response body.
+Sends a C<GET> request to C<version> and returns the decoded response content.
 
 =cut
 
@@ -8220,7 +8220,7 @@ See L<https://docs.gitlab.com/ce/api/wikis.html>.
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/wikis> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/wikis> and returns the decoded response content.
 
 =cut
 
@@ -8242,7 +8242,7 @@ sub wiki_pages {
         $slug,
     );
 
-Sends a C<GET> request to C<projects/:project_id/wikis/:slug> and returns the decoded response body.
+Sends a C<GET> request to C<projects/:project_id/wikis/:slug> and returns the decoded response content.
 
 =cut
 
@@ -8262,7 +8262,7 @@ sub wiki_page {
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/wikis> and returns the decoded response body.
+Sends a C<POST> request to C<projects/:project_id/wikis> and returns the decoded response content.
 
 =cut
 
@@ -8285,7 +8285,7 @@ sub create_wiki_page {
         \%params,
     );
 
-Sends a C<PUT> request to C<projects/:project_id/wikis/:slug> and returns the decoded response body.
+Sends a C<PUT> request to C<projects/:project_id/wikis/:slug> and returns the decoded response content.
 
 =cut
 

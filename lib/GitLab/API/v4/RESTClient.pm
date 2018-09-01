@@ -170,7 +170,7 @@ sub request {
     if ($res->{success}) {
         my $decode = $options->{decode};
         $decode = 1 if !defined $decode;
-        return $res if !$decode;
+        return $res->{content} if !$decode;
 
         # JSON decoding may fail. Catch it and provide a more contextually rich
         # error message?

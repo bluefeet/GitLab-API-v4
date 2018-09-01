@@ -1,7 +1,7 @@
 ---
 - file: file = GET projects/:project_id/repository/files/:file_path?
 - method: raw_file
-  spec: http_response = GET projects/:project_id/repository/files/:file_path/raw?
+  spec: content = GET projects/:project_id/repository/files/:file_path/raw?
   no_decode: true
 - create_file: POST projects/:project_id/repository/files/:file_path?
 - edit_file: PUT projects/:project_id/repository/files/:file_path?

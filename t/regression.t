@@ -74,13 +74,13 @@ subtest projects => sub{
             'created file is there; and looks right',
         );
 
-        my $raw_res = $api->raw_file(
+        my $content = $api->raw_file(
             $project_id,
             'foo/bar.txt',
             { ref=>'master' },
         );
         is(
-            $raw_res->{content},
+            $content,
             'Test of create file.',
             'able to retrieve the file raw',
         );

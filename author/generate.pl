@@ -71,10 +71,7 @@ foreach my $section_name (keys %$section_pack) {
         print ");\n\n";
 
         print "Sends a C<$verb> request to C<$path>";
-        if ($return) {
-            if ($no_decode) { print ' and returns the L<HTTP::Tiny> response hash ref' }
-            else { print ' and returns the decoded response body' }
-        }
+        print ' and returns the ' . ($no_decode ? 'raw' : 'decoded') . ' response content' if $return;
         print ".\n\n";
         print "$endpoint->{note}\n\n" if $endpoint->{note};
         print "=cut\n\n";
