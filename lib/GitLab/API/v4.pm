@@ -2706,7 +2706,97 @@ sub delete_ldap_provider_group_link {
 
 =back
 
-=head2 Group and project members
+=head2 Group access requests
+
+See L<https://docs.gitlab.com/ce/api/access_requests.html>.
+
+=over
+
+=item group_access_requests
+
+    my $requests = $api->group_access_requests(
+        $group_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C<groups/:group_id/access_requests> and returns the decoded response content.
+
+=cut
+
+sub group_access_requests {
+    my $self = shift;
+    croak 'group_access_requests must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($group_id) to group_access_requests must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to group_access_requests must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
+    my $options = {};
+    $options->{query} = $params if defined $params;
+    return $self->_call_rest_client( 'GET', 'groups/:group_id/access_requests', [@_], $options );
+}
+
+=item request_group_access
+
+    my $request = $api->request_group_access(
+        $group_id,
+    );
+
+Sends a C<POST> request to C<groups/:group_id/access_requests> and returns the decoded response content.
+
+=cut
+
+sub request_group_access {
+    my $self = shift;
+    croak 'request_group_access must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($group_id) to request_group_access must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $options = {};
+    return $self->_call_rest_client( 'POST', 'groups/:group_id/access_requests', [@_], $options );
+}
+
+=item approve_group_access
+
+    my $request = $api->approve_group_access(
+        $group_id,
+        $user_id,
+    );
+
+Sends a C<PUT> request to C<groups/:group_id/access_requests/:user_id/approve> and returns the decoded response content.
+
+=cut
+
+sub approve_group_access {
+    my $self = shift;
+    croak 'approve_group_access must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($group_id) to approve_group_access must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($user_id) to approve_group_access must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $options = {};
+    return $self->_call_rest_client( 'PUT', 'groups/:group_id/access_requests/:user_id/approve', [@_], $options );
+}
+
+=item deny_group_access
+
+    $api->deny_group_access(
+        $group_id,
+        $user_id,
+    );
+
+Sends a C<DELETE> request to C<groups/:group_id/access_requests/:user_id>.
+
+=cut
+
+sub deny_group_access {
+    my $self = shift;
+    croak 'deny_group_access must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($group_id) to deny_group_access must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($user_id) to deny_group_access must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $options = {};
+    $options->{decode} = 0;
+    $self->_call_rest_client( 'DELETE', 'groups/:group_id/access_requests/:user_id', [@_], $options );
+    return;
+}
+
+=back
+
+=head2 Group members
 
 See L<https://docs.gitlab.com/ce/api/members.html>.
 
@@ -2734,28 +2824,6 @@ sub group_members {
     return $self->_call_rest_client( 'GET', 'groups/:group_id/members', [@_], $options );
 }
 
-=item project_members
-
-    my $members = $api->project_members(
-        $project_id,
-        \%params,
-    );
-
-Sends a C<GET> request to C<projects/:project_id/members> and returns the decoded response content.
-
-=cut
-
-sub project_members {
-    my $self = shift;
-    croak 'project_members must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
-    croak 'The #1 argument ($project_id) to project_members must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The last argument (\%params) to project_members must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
-    my $params = (@_ == 2) ? pop() : undef;
-    my $options = {};
-    $options->{query} = $params if defined $params;
-    return $self->_call_rest_client( 'GET', 'projects/:project_id/members', [@_], $options );
-}
-
 =item group_member
 
     my $member = $api->group_member(
@@ -2774,26 +2842,6 @@ sub group_member {
     croak 'The #2 argument ($user_id) to group_member must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     return $self->_call_rest_client( 'GET', 'groups/:project_id/members/:user_id', [@_], $options );
-}
-
-=item project_member
-
-    my $member = $api->project_member(
-        $project_id,
-        $user_id,
-    );
-
-Sends a C<GET> request to C<projects/:project_id/members/:user_id> and returns the decoded response content.
-
-=cut
-
-sub project_member {
-    my $self = shift;
-    croak 'project_member must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($project_id) to project_member must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($user_id) to project_member must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    my $options = {};
-    return $self->_call_rest_client( 'GET', 'projects/:project_id/members/:user_id', [@_], $options );
 }
 
 =item add_group_member
@@ -2816,28 +2864,6 @@ sub add_group_member {
     my $options = {};
     $options->{content} = $params if defined $params;
     return $self->_call_rest_client( 'POST', 'groups/:group_id/members', [@_], $options );
-}
-
-=item add_project_member
-
-    my $member = $api->add_project_member(
-        $project_id,
-        \%params,
-    );
-
-Sends a C<POST> request to C<projects/:project_id/members> and returns the decoded response content.
-
-=cut
-
-sub add_project_member {
-    my $self = shift;
-    croak 'add_project_member must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
-    croak 'The #1 argument ($project_id) to add_project_member must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The last argument (\%params) to add_project_member must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
-    my $params = (@_ == 2) ? pop() : undef;
-    my $options = {};
-    $options->{content} = $params if defined $params;
-    return $self->_call_rest_client( 'POST', 'projects/:project_id/members', [@_], $options );
 }
 
 =item update_group_member
@@ -2864,30 +2890,6 @@ sub update_group_member {
     return $self->_call_rest_client( 'PUT', 'groups/:group_id/members/:user_id', [@_], $options );
 }
 
-=item update_project_member
-
-    my $member = $api->update_project_member(
-        $project_id,
-        $user_id,
-        \%params,
-    );
-
-Sends a C<PUT> request to C<projects/:project_id/members/:user_id> and returns the decoded response content.
-
-=cut
-
-sub update_project_member {
-    my $self = shift;
-    croak 'update_project_member must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
-    croak 'The #1 argument ($project_id) to update_project_member must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($user_id) to update_project_member must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    croak 'The last argument (\%params) to update_project_member must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
-    my $params = (@_ == 3) ? pop() : undef;
-    my $options = {};
-    $options->{content} = $params if defined $params;
-    return $self->_call_rest_client( 'PUT', 'projects/:project_id/members/:user_id', [@_], $options );
-}
-
 =item remove_group_member
 
     $api->remove_group_member(
@@ -2907,28 +2909,6 @@ sub remove_group_member {
     my $options = {};
     $options->{decode} = 0;
     $self->_call_rest_client( 'DELETE', 'groups/:group_id/members/:user_id', [@_], $options );
-    return;
-}
-
-=item remove_project_member
-
-    $api->remove_project_member(
-        $project_id,
-        $user_id,
-    );
-
-Sends a C<DELETE> request to C<projects/:project_id/members/:user_id>.
-
-=cut
-
-sub remove_project_member {
-    my $self = shift;
-    croak 'remove_project_member must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($project_id) to remove_project_member must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($user_id) to remove_project_member must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    my $options = {};
-    $options->{decode} = 0;
-    $self->_call_rest_client( 'DELETE', 'projects/:project_id/members/:user_id', [@_], $options );
     return;
 }
 
@@ -6391,7 +6371,7 @@ sub start_housekeeping {
 
 =back
 
-=head2 Group and project access requests
+=head2 Project access requests
 
 See L<https://docs.gitlab.com/ce/api/access_requests.html>.
 
@@ -6558,6 +6538,124 @@ sub deny_project_access {
     my $options = {};
     $options->{decode} = 0;
     $self->_call_rest_client( 'DELETE', 'projects/:project_id/access_requests/:user_id', [@_], $options );
+    return;
+}
+
+=back
+
+=head2 Project members
+
+See L<https://docs.gitlab.com/ce/api/members.html>.
+
+=over
+
+=item project_members
+
+    my $members = $api->project_members(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/members> and returns the decoded response content.
+
+=cut
+
+sub project_members {
+    my $self = shift;
+    croak 'project_members must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($project_id) to project_members must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to project_members must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
+    my $options = {};
+    $options->{query} = $params if defined $params;
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/members', [@_], $options );
+}
+
+=item project_member
+
+    my $member = $api->project_member(
+        $project_id,
+        $user_id,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/members/:user_id> and returns the decoded response content.
+
+=cut
+
+sub project_member {
+    my $self = shift;
+    croak 'project_member must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to project_member must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($user_id) to project_member must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $options = {};
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/members/:user_id', [@_], $options );
+}
+
+=item add_project_member
+
+    my $member = $api->add_project_member(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C<projects/:project_id/members> and returns the decoded response content.
+
+=cut
+
+sub add_project_member {
+    my $self = shift;
+    croak 'add_project_member must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($project_id) to add_project_member must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to add_project_member must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
+    my $options = {};
+    $options->{content} = $params if defined $params;
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/members', [@_], $options );
+}
+
+=item update_project_member
+
+    my $member = $api->update_project_member(
+        $project_id,
+        $user_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C<projects/:project_id/members/:user_id> and returns the decoded response content.
+
+=cut
+
+sub update_project_member {
+    my $self = shift;
+    croak 'update_project_member must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to update_project_member must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($user_id) to update_project_member must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to update_project_member must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
+    my $options = {};
+    $options->{content} = $params if defined $params;
+    return $self->_call_rest_client( 'PUT', 'projects/:project_id/members/:user_id', [@_], $options );
+}
+
+=item remove_project_member
+
+    $api->remove_project_member(
+        $project_id,
+        $user_id,
+    );
+
+Sends a C<DELETE> request to C<projects/:project_id/members/:user_id>.
+
+=cut
+
+sub remove_project_member {
+    my $self = shift;
+    croak 'remove_project_member must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to remove_project_member must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($user_id) to remove_project_member must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $options = {};
+    $options->{decode} = 0;
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/members/:user_id', [@_], $options );
     return;
 }
 

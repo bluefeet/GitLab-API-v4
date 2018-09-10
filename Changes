@@ -2,6 +2,8 @@ Revision history for Perl extension GitLab::API::v4.
 
 {{$NEXT}}
 
+- Reorganized project/group members/access requests sections to better match
+  the official API.
 - Rename the various project snippet methods to have "project" in their name.
 - Add the (non-project) Snippets API.
 - Add constants for the snippet visibility levels.

@@ -1,0 +1,5 @@
+---
+- group_access_requests: requests = GET groups/:group_id/access_requests?
+- request_group_access: request = POST groups/:group_id/access_requests
+- approve_group_access: request = PUT groups/:group_id/access_requests/:user_id/approve
+- deny_group_access: DELETE groups/:group_id/access_requests/:user_id

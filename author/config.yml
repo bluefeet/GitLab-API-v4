@@ -48,8 +48,11 @@ sections:
 - groups:
     head: Groups
     doc_url: https://docs.gitlab.com/ce/api/groups.html
-- members:
-    head: Group and project members
+- group_access_requests:
+    head: Group access requests
+    doc_url: https://docs.gitlab.com/ce/api/access_requests.html
+- group_members:
+    head: Group members
     doc_url: https://docs.gitlab.com/ce/api/members.html
 - issues:
     head: Issues
@@ -102,9 +105,12 @@ sections:
 - projects:
     head: Projects
     doc_url: https://docs.gitlab.com/ce/api/projects.html
-- access_requests:
-    head: Group and project access requests
+- project_access_requests:
+    head: Project access requests
     doc_url: https://docs.gitlab.com/ce/api/access_requests.html
+- project_members:
+    head: Project members
+    doc_url: https://docs.gitlab.com/ce/api/members.html
 - project_snippets:
     head: Project snippets
     doc_url: https://docs.gitlab.com/ce/api/project_snippets.html

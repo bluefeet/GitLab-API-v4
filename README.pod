@@ -1224,7 +1224,50 @@ Sends a C<DELETE> request to C<groups/:group_id/ldap_group_links/:provider/:cn>.
 
 =back
 
-=head2 Group and project members
+=head2 Group access requests
+
+See L<https://docs.gitlab.com/ce/api/access_requests.html>.
+
+=over
+
+=item group_access_requests
+
+    my $requests = $api->group_access_requests(
+        $group_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C<groups/:group_id/access_requests> and returns the decoded response content.
+
+=item request_group_access
+
+    my $request = $api->request_group_access(
+        $group_id,
+    );
+
+Sends a C<POST> request to C<groups/:group_id/access_requests> and returns the decoded response content.
+
+=item approve_group_access
+
+    my $request = $api->approve_group_access(
+        $group_id,
+        $user_id,
+    );
+
+Sends a C<PUT> request to C<groups/:group_id/access_requests/:user_id/approve> and returns the decoded response content.
+
+=item deny_group_access
+
+    $api->deny_group_access(
+        $group_id,
+        $user_id,
+    );
+
+Sends a C<DELETE> request to C<groups/:group_id/access_requests/:user_id>.
+
+=back
+
+=head2 Group members
 
 See L<https://docs.gitlab.com/ce/api/members.html>.
 
@@ -1239,15 +1282,6 @@ See L<https://docs.gitlab.com/ce/api/members.html>.
 
 Sends a C<GET> request to C<groups/:group_id/members> and returns the decoded response content.
 
-=item project_members
-
-    my $members = $api->project_members(
-        $project_id,
-        \%params,
-    );
-
-Sends a C<GET> request to C<projects/:project_id/members> and returns the decoded response content.
-
 =item group_member
 
     my $member = $api->group_member(
@@ -1257,15 +1291,6 @@ Sends a C<GET> request to C<projects/:project_id/members> and returns the decode
 
 Sends a C<GET> request to C<groups/:project_id/members/:user_id> and returns the decoded response content.
 
-=item project_member
-
-    my $member = $api->project_member(
-        $project_id,
-        $user_id,
-    );
-
-Sends a C<GET> request to C<projects/:project_id/members/:user_id> and returns the decoded response content.
-
 =item add_group_member
 
     my $member = $api->add_group_member(
@@ -1274,15 +1299,6 @@ Sends a C<GET> request to C<projects/:project_id/members/:user_id> and returns t
     );
 
 Sends a C<POST> request to C<groups/:group_id/members> and returns the decoded response content.
-
-=item add_project_member
-
-    my $member = $api->add_project_member(
-        $project_id,
-        \%params,
-    );
-
-Sends a C<POST> request to C<projects/:project_id/members> and returns the decoded response content.
 
 =item update_group_member
 
@@ -1294,16 +1310,6 @@ Sends a C<POST> request to C<projects/:project_id/members> and returns the decod
 
 Sends a C<PUT> request to C<groups/:group_id/members/:user_id> and returns the decoded response content.
 
-=item update_project_member
-
-    my $member = $api->update_project_member(
-        $project_id,
-        $user_id,
-        \%params,
-    );
-
-Sends a C<PUT> request to C<projects/:project_id/members/:user_id> and returns the decoded response content.
-
 =item remove_group_member
 
     $api->remove_group_member(
@@ -1312,15 +1318,6 @@ Sends a C<PUT> request to C<projects/:project_id/members/:user_id> and returns t
     );
 
 Sends a C<DELETE> request to C<groups/:group_id/members/:user_id>.
-
-=item remove_project_member
-
-    $api->remove_project_member(
-        $project_id,
-        $user_id,
-    );
-
-Sends a C<DELETE> request to C<projects/:project_id/members/:user_id>.
 
 =back
 
@@ -2866,7 +2863,7 @@ Sends a C<POST> request to C<projects/:project_id/housekeeping>.
 
 =back
 
-=head2 Group and project access requests
+=head2 Project access requests
 
 See L<https://docs.gitlab.com/ce/api/access_requests.html>.
 
@@ -2941,6 +2938,60 @@ Sends a C<DELETE> request to C<groups/:group_id/access_requests/:user_id>.
     );
 
 Sends a C<DELETE> request to C<projects/:project_id/access_requests/:user_id>.
+
+=back
+
+=head2 Project members
+
+See L<https://docs.gitlab.com/ce/api/members.html>.
+
+=over
+
+=item project_members
+
+    my $members = $api->project_members(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/members> and returns the decoded response content.
+
+=item project_member
+
+    my $member = $api->project_member(
+        $project_id,
+        $user_id,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/members/:user_id> and returns the decoded response content.
+
+=item add_project_member
+
+    my $member = $api->add_project_member(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C<projects/:project_id/members> and returns the decoded response content.
+
+=item update_project_member
+
+    my $member = $api->update_project_member(
+        $project_id,
+        $user_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C<projects/:project_id/members/:user_id> and returns the decoded response content.
+
+=item remove_project_member
+
+    $api->remove_project_member(
+        $project_id,
+        $user_id,
+    );
+
+Sends a C<DELETE> request to C<projects/:project_id/members/:user_id>.
 
 =back
 
