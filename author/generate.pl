@@ -19,8 +19,9 @@ foreach my $section_name (keys %$section_pack) {
     my $file = $dir->child("$section_name.yml");
     my $endpoints = YAML::XS::Load( $file->slurp() );
 
-    print "=head1 $section->{head}\n\n";
+    print "=head2 $section->{head}\n\n";
     print "See L<$section->{doc_url}>.\n\n";
+    print "=over\n\n";
 
     foreach my $endpoint (@$endpoints) {
         if (keys(%$endpoint) == 1) {
@@ -46,7 +47,7 @@ foreach my $section_name (keys %$section_pack) {
         $no_decode = 1 if !$return;
         $no_decode = 1 if $endpoint->{no_decode};
 
-        print "=head2 $method\n\n";
+        print "=item $method\n\n";
         print '    ';
 
         print "my \$$return = " if $return;
@@ -124,6 +125,8 @@ foreach my $section_name (keys %$section_pack) {
         print "    return;\n" if !$return;
         print "}\n\n";
     }
+
+    print "=back\n\n";
 }}
 
 print $footer;

@@ -378,3 +378,5 @@ sub sudo {
     );
 }
 
+=head1 API METHODS
+

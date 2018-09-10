@@ -1,149 +1,149 @@
 ---
 sections:
 - award_emoji:
-    head: AWARD EMOJI METHODS
+    head: Award Emoji
     doc_url: https://docs.gitlab.com/ce/api/award_emoji.html
 - branches:
-    head: BRANCH METHODS
-    doc_url: https://doc.gitlab.com/ce/api/branches.html
+    head: Branches
+    doc_url: https://docs.gitlab.com/ce/api/branches.html
 - broadcast_messages:
-    head: BROADCAST MESSAGE METHODS
+    head: Broadcast Messages
     doc_url: https://docs.gitlab.com/ce/api/broadcast_messages.html
 - project_level_variables:
-    head: PROJECT LEVEL VARIABLE METHODS
+    head: Project-level Variables
     doc_url: https://docs.gitlab.com/ce/api/project_level_variables.html
 - group_level_variables:
-    head: GROUP LEVEL VARIABLE METHODS
+    head: Group-level Variables
     doc_url: https://docs.gitlab.com/ce/api/group_level_variables.html
 - commits:
-    doc_url: https://doc.gitlab.com/ce/api/commits.html
-    head: COMMIT METHODS
+    head: Commits
+    doc_url: https://docs.gitlab.com/ce/api/commits.html
 - custom_attributes:
+    head: Custom Attributes
     doc_url: https://docs.gitlab.com/ce/api/custom_attributes.html
-    head: CUSTOM ATTRIBUTE METHODS
 - deployments:
+    head: Deployments
     doc_url: https://docs.gitlab.com/ce/api/deployments.html
-    head: DEPLOYMENT METHODS
 - deploy_keys:
-    head: DEPLOY KEY METHODS
+    head: Deploy Keys
     doc_url: https://docs.gitlab.com/ce/api/deploy_keys.html
 - environments:
-    head: ENVIRONMENT METHODS
+    head: Environments
     doc_url: https://docs.gitlab.com/ce/api/environments.html
 - events:
-    head: EVENT METHODS
+    head: Events
     doc_url: https://docs.gitlab.com/ce/api/events.html
 - features:
-    head: FEATURE FLAG METHODS
+    head: Feature flags
     doc_url: https://docs.gitlab.com/ce/api/features.html
 - gitignores_templates:
-    head: GITIGNORES TEMPLATE METHODS
+    head: Gitignores
     doc_url: https://docs.gitlab.com/ce/api/templates/gitignores.html
 - gitlab_ci_ymls_templates:
-    head: GITLAB CI CONFIG TEMPLATE METHODS
+    head: GitLab CI YMLs
     doc_url: https://docs.gitlab.com/ce/api/templates/gitlab_ci_ymls.html
 - groups:
-    head: GROUP METHODS
+    head: Groups
     doc_url: https://docs.gitlab.com/ce/api/groups.html
 - members:
-    head: GROUP AND PROJECT MEMBER METHODS
+    head: Group and project members
     doc_url: https://docs.gitlab.com/ce/api/members.html
 - issues:
-    head: ISSUE METHODS
+    head: Issues
     doc_url: https://docs.gitlab.com/ce/api/issues.html
 - boards:
-    head: ISSUE BOARD METHODS
+    head: Issue Boards
     doc_url: https://docs.gitlab.com/ce/api/boards.html
 - jobs:
-    head: JOB METHODS
+    head: Jobs
     doc_url: https://docs.gitlab.com/ce/api/jobs.html
 - keys:
-    head: KEY METHODS
+    head: Keys
     doc_url: https://docs.gitlab.com/ce/api/keys.html
 - labels:
-    head: LABEL METHODS
+    head: Labels
     doc_url: https://docs.gitlab.com/ce/api/labels.html
 - merge_requests:
-    head: MERGE REQUEST METHODS
+    head: Merge requests
     doc_url: https://docs.gitlab.com/ce/api/merge_requests.html
 - milestones:
-    head: PROJECT MILESTONE METHODS
+    head: Milestones
     doc_url: https://docs.gitlab.com/ce/api/milestones.html
 - group_milestones:
-    head: GROUP MILESTONE METHODS
+    head: Group milestones
     doc_url: https://docs.gitlab.com/ce/api/group_milestones.html
 - namespaces:
-    head: NAMESPACE METHODS
+    head: Namespaces
     doc_url: https://docs.gitlab.com/ce/api/namespaces.html
 - notes:
-    head: NOTE METHODS
+    head: Notes
     doc_url: https://docs.gitlab.com/ce/api/notes.html
 - notification_settings:
-    head: NOTIFICATION SETTING METHODS
+    head: Notification settings
     doc_url: https://docs.gitlab.com/ce/api/notification_settings.html
 - licenses_templates:
-    head: OPEN SOURCE LICENSE TEMPLATE METHODS
+    head: Licenses
     doc_url: https://docs.gitlab.com/ce/api/templates/licenses.html
 - page_domains:
-    head: PAGE DOMAIN METHODS
+    head: Pages domains
     doc_url: https://docs.gitlab.com/ce/api/pages_domains.html
 - pipelines:
-    head: PIPELINE METHODS
+    head: Pipelines
     doc_url: https://docs.gitlab.com/ce/api/pipelines.html
 - pipeline_triggers:
-    head: PIPELINE TRIGGER METHODS
+    head: Pipeline triggers
     doc_url: https://docs.gitlab.com/ce/api/pipeline_triggers.html
 - pipeline_schedules:
-    head: PIPELINE SCHEDULE METHODS
+    head: Pipeline schedules
     doc_url: https://docs.gitlab.com/ce/api/pipeline_schedules.html
 - projects:
-    head: PROJECT METHODS
+    head: Projects
     doc_url: https://docs.gitlab.com/ce/api/projects.html
 - access_requests:
-    head: PROJECT ACCESS REQUEST METHODS
+    head: Group and project access requests
     doc_url: https://docs.gitlab.com/ce/api/access_requests.html
 - project_snippets:
-    head: PROJECT SNIPPET METHODS
+    head: Project snippets
     doc_url: https://docs.gitlab.com/ce/api/project_snippets.html
 - protected_branches:
-    head: PROTECTED BRANCH METHODS
+    head: Protected branches
     doc_url: https://docs.gitlab.com/ce/api/protected_branches.html
 - repositories:
-    head: REPOSITORY METHODS
+    head: Repositories
     doc_url: https://docs.gitlab.com/ce/api/repositories.html
 - repository_files:
-    head: REPOSITORY FILE METHODS
+    head: Repository files
     doc_url: https://docs.gitlab.com/ce/api/repository_files.html
 - runners:
-    head: RUNNER METHODS
+    head: Runners
     doc_url: https://docs.gitlab.com/ce/api/runners.html
 - services:
-    head: SERVICE METHODS
+    head: Services
     doc_url: https://docs.gitlab.com/ce/api/services.html
 - settings:
-    head: SETTINGS METHODS
+    head: Application settings
     doc_url: https://docs.gitlab.com/ce/api/settings.html
 - sidekiq_metrics:
-    head: SIDEKIQ METRIC METHODS
+    head: Sidekiq Metrics
     doc_url: https://docs.gitlab.com/ce/api/sidekiq_metrics.html
 - system_hooks:
-    head: SYSTEM HOOK METHODS
+    head: System hooks
     doc_url: https://docs.gitlab.com/ce/api/system_hooks.html
 - tags:
-    head: TAG METHODS
+    head: Tags
     doc_url: https://docs.gitlab.com/ce/api/tags.html
 - todos:
-    head: TODO METHODS
+    head: Todos
     doc_url: https://docs.gitlab.com/ce/api/todos.html
 - users:
-    head: USER METHODS
+    head: Users
     doc_url: https://docs.gitlab.com/ce/api/users.html
 - lint:
-    head: VALIDATE CI CONFIGURATION METHODS
+    head: Validate the .gitlab-ci.yml
     doc_url: https://docs.gitlab.com/ce/api/lint.html
 - version:
-    head: VERSION METHODS
+    head: Version
     doc_url: https://docs.gitlab.com/ce/api/version.html
 - wikis:
-    head: WIKI METHODS
+    head: Wikis
     doc_url: https://docs.gitlab.com/ce/api/wikis.html
