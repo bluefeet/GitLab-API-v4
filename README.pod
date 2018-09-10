@@ -1267,6 +1267,68 @@ Sends a C<DELETE> request to C<groups/:group_id/access_requests/:user_id>.
 
 =back
 
+=head2 Group badges
+
+See L<https://docs.gitlab.com/ce/api/group_badges.html>.
+
+=over
+
+=item group_badges
+
+    my $badges = $api->group_badges(
+        $group_id,
+    );
+
+Sends a C<GET> request to C<groups/:group_id/badges> and returns the decoded response content.
+
+=item group_badge
+
+    my $badge = $api->group_badge(
+        $group_id,
+        $badge_id,
+    );
+
+Sends a C<GET> request to C<groups/:group_id/badges/:badge_id> and returns the decoded response content.
+
+=item create_group_badge
+
+    my $badge = $api->create_group_badge(
+        $group_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C<groups/:group_id/badges> and returns the decoded response content.
+
+=item edit_group_badge
+
+    my $badge = $api->edit_group_badge(
+        $group_id,
+        $badge_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C<groups/:group_id/badges/:badge_id> and returns the decoded response content.
+
+=item delete_group_badge
+
+    $api->delete_group_badge(
+        $group_id,
+        $badge_id,
+    );
+
+Sends a C<DELETE> request to C<groups/:group_id/badges/:badge_id>.
+
+=item preview_group_badge
+
+    my $preview = $api->preview_group_badge(
+        $group_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C<groups/:group_id/badges/render> and returns the decoded response content.
+
+=back
+
 =head2 Group members
 
 See L<https://docs.gitlab.com/ce/api/members.html>.

@@ -2,10 +2,11 @@ Revision history for Perl extension GitLab::API::v4.
 
 {{$NEXT}}
 
+- Add the Group badges API.
+- Add the (non-project) Snippets API.
 - Reorganized project/group members/access requests sections to better match
   the official API.
 - Rename the various project snippet methods to have "project" in their name.
-- Add the (non-project) Snippets API.
 - Add constants for the snippet visibility levels.
 - Major overhaul to the POD heading layout in order to avoid the massive TOC of
   death.

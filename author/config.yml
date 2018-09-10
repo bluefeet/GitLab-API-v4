@@ -51,6 +51,9 @@ sections:
 - group_access_requests:
     head: Group access requests
     doc_url: https://docs.gitlab.com/ce/api/access_requests.html
+- group_badges:
+    head: Group badges
+    doc_url: https://docs.gitlab.com/ce/api/group_badges.html
 - group_members:
     head: Group members
     doc_url: https://docs.gitlab.com/ce/api/members.html

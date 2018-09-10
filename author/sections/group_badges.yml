@@ -1,0 +1,7 @@
+---
+- group_badges: badges = GET groups/:group_id/badges
+- group_badge: badge = GET groups/:group_id/badges/:badge_id
+- create_group_badge: badge = POST groups/:group_id/badges?
+- edit_group_badge: badge = PUT groups/:group_id/badges/:badge_id?
+- delete_group_badge: DELETE groups/:group_id/badges/:badge_id
+- preview_group_badge: preview = GET groups/:group_id/badges/render?
