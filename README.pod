@@ -60,7 +60,7 @@ don't want them to.
 
 =head2 Constants
 
-The GitLab API, in rare cases, uses a numeric value to represent a state.
+The GitLab API, in rare cases, uses a hard-coded value to represent a state.
 To make life easier the L<GitLab::API::v4::Constants> module exposes
 these states as named variables.
 
@@ -589,6 +589,69 @@ Sends a C<PUT> request to C<groups/:group_id/variables/:variable_key> and return
     );
 
 Sends a C<DELETE> request to C<groups/:group_id/variables/:variable_key>.
+
+=back
+
+=head2 Snippets
+
+See L<https://docs.gitlab.com/ce/api/snippets.html>.
+
+=over
+
+=item snippets
+
+    my $snippets = $api->snippets();
+
+Sends a C<GET> request to C<snippets> and returns the decoded response content.
+
+=item snippet
+
+    my $snippet = $api->snippet(
+        $snippet_id,
+    );
+
+Sends a C<GET> request to C<snippets/:snippet_id> and returns the decoded response content.
+
+=item create_snippet
+
+    my $snippet = $api->create_snippet(
+        \%params,
+    );
+
+Sends a C<POST> request to C<snippets> and returns the decoded response content.
+
+=item edit_snippet
+
+    my $snippet = $api->edit_snippet(
+        $snippet_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C<snippets/:snippet_id> and returns the decoded response content.
+
+=item delete_snippet
+
+    $api->delete_snippet(
+        $snippet_id,
+    );
+
+Sends a C<DELETE> request to C<snippets/:snippet_id>.
+
+=item public_snippets
+
+    my $snippets = $api->public_snippets(
+        \%params,
+    );
+
+Sends a C<GET> request to C<snippets/public> and returns the decoded response content.
+
+=item snippet_user_agent_detail
+
+    my $user_agent = $api->snippet_user_agent_detail(
+        $snippet_id,
+    );
+
+Sends a C<GET> request to C<snippets/:snippet_id/user_agent_detail> and returns the decoded response content.
 
 =back
 
@@ -2887,36 +2950,36 @@ See L<https://docs.gitlab.com/ce/api/project_snippets.html>.
 
 =over
 
-=item snippets
+=item project_snippets
 
-    my $snippets = $api->snippets(
+    my $snippets = $api->project_snippets(
         $project_id,
         \%params,
     );
 
 Sends a C<GET> request to C<projects/:project_id/snippets> and returns the decoded response content.
 
-=item snippet
+=item project_snippet
 
-    my $snippet = $api->snippet(
+    my $snippet = $api->project_snippet(
         $project_id,
         $snippet_id,
     );
 
 Sends a C<GET> request to C<projects/:project_id/snippets/:snippet_id> and returns the decoded response content.
 
-=item create_snippet
+=item create_project_snippet
 
-    $api->create_snippet(
+    $api->create_project_snippet(
         $project_id,
         \%params,
     );
 
 Sends a C<POST> request to C<projects/:project_id/snippets>.
 
-=item edit_snippet
+=item edit_project_snippet
 
-    $api->edit_snippet(
+    $api->edit_project_snippet(
         $project_id,
         $snippet_id,
         \%params,
@@ -2924,27 +2987,27 @@ Sends a C<POST> request to C<projects/:project_id/snippets>.
 
 Sends a C<PUT> request to C<projects/:project_id/snippets/:snippet_id>.
 
-=item delete_snippet
+=item delete_project_snippet
 
-    $api->delete_snippet(
+    $api->delete_project_snippet(
         $project_id,
         $snippet_id,
     );
 
 Sends a C<DELETE> request to C<projects/:project_id/snippets/:snippet_id>.
 
-=item snippet_content
+=item project_snippet_content
 
-    my $content = $api->snippet_content(
+    my $content = $api->project_snippet_content(
         $project_id,
         $snippet_id,
     );
 
 Sends a C<GET> request to C<projects/:project_id/snippets/:snippet_id/raw> and returns the decoded response content.
 
-=item snippet_user_agent_detail
+=item project_snippet_user_agent_detail
 
-    my $user_agent = $api->snippet_user_agent_detail(
+    my $user_agent = $api->project_snippet_user_agent_detail(
         $project_id,
         $snippet_id,
     );

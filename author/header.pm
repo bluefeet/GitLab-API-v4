@@ -60,7 +60,7 @@ don't want them to.
 
 =head2 Constants
 
-The GitLab API, in rare cases, uses a numeric value to represent a state.
+The GitLab API, in rare cases, uses a hard-coded value to represent a state.
 To make life easier the L<GitLab::API::v4::Constants> module exposes
 these states as named variables.
 

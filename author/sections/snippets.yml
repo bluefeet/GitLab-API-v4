@@ -1,0 +1,8 @@
+---
+- snippets: snippets = GET snippets
+- snippet: snippet = GET snippets/:snippet_id
+- create_snippet: snippet = POST snippets?
+- edit_snippet: snippet = PUT snippets/:snippet_id?
+- delete_snippet: DELETE snippets/:snippet_id
+- public_snippets: snippets = GET snippets/public?
+- snippet_user_agent_detail: user_agent = GET snippets/:snippet_id/user_agent_detail

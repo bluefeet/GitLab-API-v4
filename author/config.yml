@@ -15,6 +15,9 @@ sections:
 - group_level_variables:
     head: Group-level Variables
     doc_url: https://docs.gitlab.com/ce/api/group_level_variables.html
+- snippets:
+    head: Snippets
+    doc_url: https://docs.gitlab.com/ce/api/snippets.html
 - commits:
     head: Commits
     doc_url: https://docs.gitlab.com/ce/api/commits.html

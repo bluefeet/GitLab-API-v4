@@ -1,8 +1,8 @@
 ---
-- snippets: snippets = GET projects/:project_id/snippets?
-- snippet: snippet = GET projects/:project_id/snippets/:snippet_id
-- create_snippet: POST projects/:project_id/snippets?
-- edit_snippet: PUT projects/:project_id/snippets/:snippet_id?
-- delete_snippet: DELETE projects/:project_id/snippets/:snippet_id
-- snippet_content: content = GET projects/:project_id/snippets/:snippet_id/raw
-- snippet_user_agent_detail: user_agent = GET projects/:project_id/snippets/:snippet_id/user_agent_detail
+- project_snippets: snippets = GET projects/:project_id/snippets?
+- project_snippet: snippet = GET projects/:project_id/snippets/:snippet_id
+- create_project_snippet: POST projects/:project_id/snippets?
+- edit_project_snippet: PUT projects/:project_id/snippets/:snippet_id?
+- delete_project_snippet: DELETE projects/:project_id/snippets/:snippet_id
+- project_snippet_content: content = GET projects/:project_id/snippets/:snippet_id/raw
+- project_snippet_user_agent_detail: user_agent = GET projects/:project_id/snippets/:snippet_id/user_agent_detail

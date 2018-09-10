@@ -60,7 +60,7 @@ don't want them to.
 
 =head2 Constants
 
-The GitLab API, in rare cases, uses a numeric value to represent a state.
+The GitLab API, in rare cases, uses a hard-coded value to represent a state.
 To make life easier the L<GitLab::API::v4::Constants> module exposes
 these states as named variables.
 
@@ -1306,6 +1306,147 @@ sub delete_group_variable {
     $options->{decode} = 0;
     $self->_call_rest_client( 'DELETE', 'groups/:group_id/variables/:variable_key', [@_], $options );
     return;
+}
+
+=back
+
+=head2 Snippets
+
+See L<https://docs.gitlab.com/ce/api/snippets.html>.
+
+=over
+
+=item snippets
+
+    my $snippets = $api->snippets();
+
+Sends a C<GET> request to C<snippets> and returns the decoded response content.
+
+=cut
+
+sub snippets {
+    my $self = shift;
+    croak "The snippets method does not take any arguments" if @_;
+    my $options = {};
+    return $self->_call_rest_client( 'GET', 'snippets', [@_], $options );
+}
+
+=item snippet
+
+    my $snippet = $api->snippet(
+        $snippet_id,
+    );
+
+Sends a C<GET> request to C<snippets/:snippet_id> and returns the decoded response content.
+
+=cut
+
+sub snippet {
+    my $self = shift;
+    croak 'snippet must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($snippet_id) to snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $options = {};
+    return $self->_call_rest_client( 'GET', 'snippets/:snippet_id', [@_], $options );
+}
+
+=item create_snippet
+
+    my $snippet = $api->create_snippet(
+        \%params,
+    );
+
+Sends a C<POST> request to C<snippets> and returns the decoded response content.
+
+=cut
+
+sub create_snippet {
+    my $self = shift;
+    croak 'create_snippet must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to create_snippet must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    my $params = (@_ == 1) ? pop() : undef;
+    my $options = {};
+    $options->{content} = $params if defined $params;
+    return $self->_call_rest_client( 'POST', 'snippets', [@_], $options );
+}
+
+=item edit_snippet
+
+    my $snippet = $api->edit_snippet(
+        $snippet_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C<snippets/:snippet_id> and returns the decoded response content.
+
+=cut
+
+sub edit_snippet {
+    my $self = shift;
+    croak 'edit_snippet must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($snippet_id) to edit_snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to edit_snippet must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
+    my $options = {};
+    $options->{content} = $params if defined $params;
+    return $self->_call_rest_client( 'PUT', 'snippets/:snippet_id', [@_], $options );
+}
+
+=item delete_snippet
+
+    $api->delete_snippet(
+        $snippet_id,
+    );
+
+Sends a C<DELETE> request to C<snippets/:snippet_id>.
+
+=cut
+
+sub delete_snippet {
+    my $self = shift;
+    croak 'delete_snippet must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($snippet_id) to delete_snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $options = {};
+    $options->{decode} = 0;
+    $self->_call_rest_client( 'DELETE', 'snippets/:snippet_id', [@_], $options );
+    return;
+}
+
+=item public_snippets
+
+    my $snippets = $api->public_snippets(
+        \%params,
+    );
+
+Sends a C<GET> request to C<snippets/public> and returns the decoded response content.
+
+=cut
+
+sub public_snippets {
+    my $self = shift;
+    croak 'public_snippets must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to public_snippets must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    my $params = (@_ == 1) ? pop() : undef;
+    my $options = {};
+    $options->{query} = $params if defined $params;
+    return $self->_call_rest_client( 'GET', 'snippets/public', [@_], $options );
+}
+
+=item snippet_user_agent_detail
+
+    my $user_agent = $api->snippet_user_agent_detail(
+        $snippet_id,
+    );
+
+Sends a C<GET> request to C<snippets/:snippet_id/user_agent_detail> and returns the decoded response content.
+
+=cut
+
+sub snippet_user_agent_detail {
+    my $self = shift;
+    croak 'snippet_user_agent_detail must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($snippet_id) to snippet_user_agent_detail must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $options = {};
+    return $self->_call_rest_client( 'GET', 'snippets/:snippet_id/user_agent_detail', [@_], $options );
 }
 
 =back
@@ -6428,9 +6569,9 @@ See L<https://docs.gitlab.com/ce/api/project_snippets.html>.
 
 =over
 
-=item snippets
+=item project_snippets
 
-    my $snippets = $api->snippets(
+    my $snippets = $api->project_snippets(
         $project_id,
         \%params,
     );
@@ -6439,20 +6580,20 @@ Sends a C<GET> request to C<projects/:project_id/snippets> and returns the decod
 
 =cut
 
-sub snippets {
+sub project_snippets {
     my $self = shift;
-    croak 'snippets must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
-    croak 'The #1 argument ($project_id) to snippets must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The last argument (\%params) to snippets must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    croak 'project_snippets must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($project_id) to project_snippets must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to project_snippets must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
     return $self->_call_rest_client( 'GET', 'projects/:project_id/snippets', [@_], $options );
 }
 
-=item snippet
+=item project_snippet
 
-    my $snippet = $api->snippet(
+    my $snippet = $api->project_snippet(
         $project_id,
         $snippet_id,
     );
@@ -6461,18 +6602,18 @@ Sends a C<GET> request to C<projects/:project_id/snippets/:snippet_id> and retur
 
 =cut
 
-sub snippet {
+sub project_snippet {
     my $self = shift;
-    croak 'snippet must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($project_id) to snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($snippet_id) to snippet must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'project_snippet must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to project_snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($snippet_id) to project_snippet must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     return $self->_call_rest_client( 'GET', 'projects/:project_id/snippets/:snippet_id', [@_], $options );
 }
 
-=item create_snippet
+=item create_project_snippet
 
-    $api->create_snippet(
+    $api->create_project_snippet(
         $project_id,
         \%params,
     );
@@ -6481,11 +6622,11 @@ Sends a C<POST> request to C<projects/:project_id/snippets>.
 
 =cut
 
-sub create_snippet {
+sub create_project_snippet {
     my $self = shift;
-    croak 'create_snippet must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
-    croak 'The #1 argument ($project_id) to create_snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The last argument (\%params) to create_snippet must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    croak 'create_project_snippet must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($project_id) to create_project_snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to create_project_snippet must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{decode} = 0;
@@ -6494,9 +6635,9 @@ sub create_snippet {
     return;
 }
 
-=item edit_snippet
+=item edit_project_snippet
 
-    $api->edit_snippet(
+    $api->edit_project_snippet(
         $project_id,
         $snippet_id,
         \%params,
@@ -6506,12 +6647,12 @@ Sends a C<PUT> request to C<projects/:project_id/snippets/:snippet_id>.
 
 =cut
 
-sub edit_snippet {
+sub edit_project_snippet {
     my $self = shift;
-    croak 'edit_snippet must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
-    croak 'The #1 argument ($project_id) to edit_snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($snippet_id) to edit_snippet must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    croak 'The last argument (\%params) to edit_snippet must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    croak 'edit_project_snippet must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to edit_project_snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($snippet_id) to edit_project_snippet must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to edit_project_snippet must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{decode} = 0;
@@ -6520,9 +6661,9 @@ sub edit_snippet {
     return;
 }
 
-=item delete_snippet
+=item delete_project_snippet
 
-    $api->delete_snippet(
+    $api->delete_project_snippet(
         $project_id,
         $snippet_id,
     );
@@ -6531,20 +6672,20 @@ Sends a C<DELETE> request to C<projects/:project_id/snippets/:snippet_id>.
 
 =cut
 
-sub delete_snippet {
+sub delete_project_snippet {
     my $self = shift;
-    croak 'delete_snippet must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($project_id) to delete_snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($snippet_id) to delete_snippet must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'delete_project_snippet must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to delete_project_snippet must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($snippet_id) to delete_project_snippet must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
     $self->_call_rest_client( 'DELETE', 'projects/:project_id/snippets/:snippet_id', [@_], $options );
     return;
 }
 
-=item snippet_content
+=item project_snippet_content
 
-    my $content = $api->snippet_content(
+    my $content = $api->project_snippet_content(
         $project_id,
         $snippet_id,
     );
@@ -6553,18 +6694,18 @@ Sends a C<GET> request to C<projects/:project_id/snippets/:snippet_id/raw> and r
 
 =cut
 
-sub snippet_content {
+sub project_snippet_content {
     my $self = shift;
-    croak 'snippet_content must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($project_id) to snippet_content must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($snippet_id) to snippet_content must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'project_snippet_content must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to project_snippet_content must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($snippet_id) to project_snippet_content must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     return $self->_call_rest_client( 'GET', 'projects/:project_id/snippets/:snippet_id/raw', [@_], $options );
 }
 
-=item snippet_user_agent_detail
+=item project_snippet_user_agent_detail
 
-    my $user_agent = $api->snippet_user_agent_detail(
+    my $user_agent = $api->project_snippet_user_agent_detail(
         $project_id,
         $snippet_id,
     );
@@ -6573,11 +6714,11 @@ Sends a C<GET> request to C<projects/:project_id/snippets/:snippet_id/user_agent
 
 =cut
 
-sub snippet_user_agent_detail {
+sub project_snippet_user_agent_detail {
     my $self = shift;
-    croak 'snippet_user_agent_detail must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($project_id) to snippet_user_agent_detail must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($snippet_id) to snippet_user_agent_detail must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'project_snippet_user_agent_detail must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to project_snippet_user_agent_detail must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($snippet_id) to project_snippet_user_agent_detail must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     return $self->_call_rest_client( 'GET', 'projects/:project_id/snippets/:snippet_id/user_agent_detail', [@_], $options );
 }
