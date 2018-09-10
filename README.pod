@@ -1624,6 +1624,81 @@ Sends a C<DELETE> request to C<projects/:project_id/boards/:board_id/lists/:list
 
 =back
 
+=head2 Group Issue Boards
+
+See L<https://docs.gitlab.com/ce/api/group_boards.html>.
+
+=over
+
+=item group_boards
+
+    my $boards = $api->group_boards(
+        $group_id,
+    );
+
+Sends a C<GET> request to C<groups/:group_id/boards> and returns the decoded response content.
+
+=item group_board
+
+    my $board = $api->group_board(
+        $group_id,
+        $board_id,
+    );
+
+Sends a C<GET> request to C<groups/:group_id/boards/:board_id> and returns the decoded response content.
+
+=item group_board_lists
+
+    my $lists = $api->group_board_lists(
+        $group_id,
+        $board_id,
+    );
+
+Sends a C<GET> request to C<groups/:group_id/boards/:board_id/lists> and returns the decoded response content.
+
+=item group_board_list
+
+    my $list = $api->group_board_list(
+        $group_id,
+        $board_id,
+        $list_id,
+    );
+
+Sends a C<GET> request to C<groups/:group_id/boards/:board_id/lists/:list_id> and returns the decoded response content.
+
+=item create_group_board_list
+
+    my $list = $api->create_group_board_list(
+        $group_id,
+        $board_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C<groups/:group_id/boards/:board_id/lists> and returns the decoded response content.
+
+=item edit_group_board_list
+
+    my $list = $api->edit_group_board_list(
+        $group_id,
+        $board_id,
+        $list_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C<groups/:group_id/boards/:board_id/lists/:list_id> and returns the decoded response content.
+
+=item delete_group_board_list
+
+    $api->delete_group_board_list(
+        $group_id,
+        $board_id,
+        $list_id,
+    );
+
+Sends a C<DELETE> request to C<groups/:group_id/boards/:board_id/lists/:list_id>.
+
+=back
+
 =head2 Jobs
 
 See L<https://docs.gitlab.com/ce/api/jobs.html>.

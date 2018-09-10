@@ -3592,6 +3592,168 @@ sub delete_project_board_list {
 
 =back
 
+=head2 Group Issue Boards
+
+See L<https://docs.gitlab.com/ce/api/group_boards.html>.
+
+=over
+
+=item group_boards
+
+    my $boards = $api->group_boards(
+        $group_id,
+    );
+
+Sends a C<GET> request to C<groups/:group_id/boards> and returns the decoded response content.
+
+=cut
+
+sub group_boards {
+    my $self = shift;
+    croak 'group_boards must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($group_id) to group_boards must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $options = {};
+    return $self->_call_rest_client( 'GET', 'groups/:group_id/boards', [@_], $options );
+}
+
+=item group_board
+
+    my $board = $api->group_board(
+        $group_id,
+        $board_id,
+    );
+
+Sends a C<GET> request to C<groups/:group_id/boards/:board_id> and returns the decoded response content.
+
+=cut
+
+sub group_board {
+    my $self = shift;
+    croak 'group_board must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($group_id) to group_board must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($board_id) to group_board must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $options = {};
+    return $self->_call_rest_client( 'GET', 'groups/:group_id/boards/:board_id', [@_], $options );
+}
+
+=item group_board_lists
+
+    my $lists = $api->group_board_lists(
+        $group_id,
+        $board_id,
+    );
+
+Sends a C<GET> request to C<groups/:group_id/boards/:board_id/lists> and returns the decoded response content.
+
+=cut
+
+sub group_board_lists {
+    my $self = shift;
+    croak 'group_board_lists must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($group_id) to group_board_lists must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($board_id) to group_board_lists must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $options = {};
+    return $self->_call_rest_client( 'GET', 'groups/:group_id/boards/:board_id/lists', [@_], $options );
+}
+
+=item group_board_list
+
+    my $list = $api->group_board_list(
+        $group_id,
+        $board_id,
+        $list_id,
+    );
+
+Sends a C<GET> request to C<groups/:group_id/boards/:board_id/lists/:list_id> and returns the decoded response content.
+
+=cut
+
+sub group_board_list {
+    my $self = shift;
+    croak 'group_board_list must be called with 3 arguments' if @_ != 3;
+    croak 'The #1 argument ($group_id) to group_board_list must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($board_id) to group_board_list must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($list_id) to group_board_list must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    my $options = {};
+    return $self->_call_rest_client( 'GET', 'groups/:group_id/boards/:board_id/lists/:list_id', [@_], $options );
+}
+
+=item create_group_board_list
+
+    my $list = $api->create_group_board_list(
+        $group_id,
+        $board_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C<groups/:group_id/boards/:board_id/lists> and returns the decoded response content.
+
+=cut
+
+sub create_group_board_list {
+    my $self = shift;
+    croak 'create_group_board_list must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($group_id) to create_group_board_list must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($board_id) to create_group_board_list must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to create_group_board_list must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
+    my $options = {};
+    $options->{content} = $params if defined $params;
+    return $self->_call_rest_client( 'POST', 'groups/:group_id/boards/:board_id/lists', [@_], $options );
+}
+
+=item edit_group_board_list
+
+    my $list = $api->edit_group_board_list(
+        $group_id,
+        $board_id,
+        $list_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C<groups/:group_id/boards/:board_id/lists/:list_id> and returns the decoded response content.
+
+=cut
+
+sub edit_group_board_list {
+    my $self = shift;
+    croak 'edit_group_board_list must be called with 3 to 4 arguments' if @_ < 3 or @_ > 4;
+    croak 'The #1 argument ($group_id) to edit_group_board_list must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($board_id) to edit_group_board_list must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($list_id) to edit_group_board_list must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    croak 'The last argument (\%params) to edit_group_board_list must be a hash ref' if defined($_[3]) and ref($_[3]) ne 'HASH';
+    my $params = (@_ == 4) ? pop() : undef;
+    my $options = {};
+    $options->{content} = $params if defined $params;
+    return $self->_call_rest_client( 'PUT', 'groups/:group_id/boards/:board_id/lists/:list_id', [@_], $options );
+}
+
+=item delete_group_board_list
+
+    $api->delete_group_board_list(
+        $group_id,
+        $board_id,
+        $list_id,
+    );
+
+Sends a C<DELETE> request to C<groups/:group_id/boards/:board_id/lists/:list_id>.
+
+=cut
+
+sub delete_group_board_list {
+    my $self = shift;
+    croak 'delete_group_board_list must be called with 3 arguments' if @_ != 3;
+    croak 'The #1 argument ($group_id) to delete_group_board_list must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($board_id) to delete_group_board_list must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($list_id) to delete_group_board_list must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    my $options = {};
+    $options->{decode} = 0;
+    $self->_call_rest_client( 'DELETE', 'groups/:group_id/boards/:board_id/lists/:list_id', [@_], $options );
+    return;
+}
+
+=back
+
 =head2 Jobs
 
 See L<https://docs.gitlab.com/ce/api/jobs.html>.

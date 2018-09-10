@@ -63,6 +63,9 @@ sections:
 - boards:
     head: Issue Boards
     doc_url: https://docs.gitlab.com/ce/api/boards.html
+- group_boards:
+    head: Group Issue Boards
+    doc_url: https://docs.gitlab.com/ce/api/group_boards.html
 - jobs:
     head: Jobs
     doc_url: https://docs.gitlab.com/ce/api/jobs.html

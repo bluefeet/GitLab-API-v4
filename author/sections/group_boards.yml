@@ -1,0 +1,8 @@
+---
+- group_boards: boards = GET groups/:group_id/boards
+- group_board: board = GET groups/:group_id/boards/:board_id
+- group_board_lists: lists = GET groups/:group_id/boards/:board_id/lists
+- group_board_list: list = GET groups/:group_id/boards/:board_id/lists/:list_id
+- create_group_board_list: list = POST groups/:group_id/boards/:board_id/lists?
+- edit_group_board_list: list = PUT groups/:group_id/boards/:board_id/lists/:list_id?
+- delete_group_board_list: DELETE groups/:group_id/boards/:board_id/lists/:list_id
