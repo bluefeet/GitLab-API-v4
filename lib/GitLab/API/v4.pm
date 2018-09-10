@@ -283,7 +283,7 @@ has sudo_user => (
 
 =head2 rest_client
 
-An instance of L<GitLab::API::v4::RESTClient> (or wharwever L</rest_client_class>
+An instance of L<GitLab::API::v4::RESTClient> (or whatever L</rest_client_class>
 is set to).  Typically you will not be setting this as it defaults to a new
 instance and customization should not be necessary.
 

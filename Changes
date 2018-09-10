@@ -2,6 +2,8 @@ Revision history for Perl extension GitLab::API::v4.
 
 {{$NEXT}}
 
+- Fix minor typo.
+
 0.11 2018-09-01
 
 - Fixed the raw_file method to not try to decode the respository file contents and
