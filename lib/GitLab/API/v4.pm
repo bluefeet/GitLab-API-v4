@@ -7749,6 +7749,114 @@ sub preview_project_badge {
 
 =back
 
+=head2 Project import/export
+
+See L<https://docs.gitlab.com/ce/api/project_import_export.html>.
+
+=over
+
+=item schedule_project_export
+
+    $api->schedule_project_export(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C<projects/:project_id/export>.
+
+=cut
+
+sub schedule_project_export {
+    my $self = shift;
+    croak 'schedule_project_export must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($project_id) to schedule_project_export must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to schedule_project_export must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
+    my $options = {};
+    $options->{decode} = 0;
+    $options->{content} = $params if defined $params;
+    $self->_call_rest_client( 'POST', 'projects/:project_id/export', [@_], $options );
+    return;
+}
+
+=item project_export_status
+
+    my $status = $api->project_export_status(
+        $project_id,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/export> and returns the decoded response content.
+
+=cut
+
+sub project_export_status {
+    my $self = shift;
+    croak 'project_export_status must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($project_id) to project_export_status must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $options = {};
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/export', [@_], $options );
+}
+
+=item download_project_export
+
+    my $download = $api->download_project_export(
+        $project_id,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/export/download> and returns the decoded response content.
+
+=cut
+
+sub download_project_export {
+    my $self = shift;
+    croak 'download_project_export must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($project_id) to download_project_export must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $options = {};
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/export/download', [@_], $options );
+}
+
+=item schedule_project_import
+
+    $api->schedule_project_import(
+        \%params,
+    );
+
+Sends a C<POST> request to C<projects/import>.
+
+=cut
+
+sub schedule_project_import {
+    my $self = shift;
+    croak 'schedule_project_import must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to schedule_project_import must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    my $params = (@_ == 1) ? pop() : undef;
+    my $options = {};
+    $options->{decode} = 0;
+    $options->{content} = $params if defined $params;
+    $self->_call_rest_client( 'POST', 'projects/import', [@_], $options );
+    return;
+}
+
+=item project_import_status
+
+    my $status = $api->project_import_status(
+        $project_id,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/import> and returns the decoded response content.
+
+=cut
+
+sub project_import_status {
+    my $self = shift;
+    croak 'project_import_status must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($project_id) to project_import_status must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $options = {};
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/import', [@_], $options );
+}
+
+=back
+
 =head2 Project members
 
 See L<https://docs.gitlab.com/ce/api/members.html>.

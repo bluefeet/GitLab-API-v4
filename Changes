@@ -2,6 +2,7 @@ Revision history for Perl extension GitLab::API::v4.
 
 {{$NEXT}}
 
+- Added the Project import/export API.
 - Added the Project badges API.
 - Added the Resource label events API.
 - Added the Discussions API.

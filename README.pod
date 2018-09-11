@@ -3477,6 +3477,55 @@ Sends a C<GET> request to C<projects/:project_id/badges/render> and returns the 
 
 =back
 
+=head2 Project import/export
+
+See L<https://docs.gitlab.com/ce/api/project_import_export.html>.
+
+=over
+
+=item schedule_project_export
+
+    $api->schedule_project_export(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C<projects/:project_id/export>.
+
+=item project_export_status
+
+    my $status = $api->project_export_status(
+        $project_id,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/export> and returns the decoded response content.
+
+=item download_project_export
+
+    my $download = $api->download_project_export(
+        $project_id,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/export/download> and returns the decoded response content.
+
+=item schedule_project_import
+
+    $api->schedule_project_import(
+        \%params,
+    );
+
+Sends a C<POST> request to C<projects/import>.
+
+=item project_import_status
+
+    my $status = $api->project_import_status(
+        $project_id,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/import> and returns the decoded response content.
+
+=back
+
 =head2 Project members
 
 See L<https://docs.gitlab.com/ce/api/members.html>.

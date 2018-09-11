@@ -126,6 +126,9 @@ sections:
 - project_badges:
     head: Project badges
     doc_url: https://docs.gitlab.com/ce/api/project_badges.html
+- project_import_export:
+    head: Project import/export
+    doc_url: https://docs.gitlab.com/ce/api/project_import_export.html
 - project_members:
     head: Project members
     doc_url: https://docs.gitlab.com/ce/api/members.html
