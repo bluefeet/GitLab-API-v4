@@ -123,6 +123,9 @@ sections:
 - project_access_requests:
     head: Project access requests
     doc_url: https://docs.gitlab.com/ce/api/access_requests.html
+- project_badges:
+    head: Project badges
+    doc_url: https://docs.gitlab.com/ce/api/project_badges.html
 - project_members:
     head: Project members
     doc_url: https://docs.gitlab.com/ce/api/members.html

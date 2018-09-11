@@ -7613,6 +7613,142 @@ sub deny_project_access {
 
 =back
 
+=head2 Project badges
+
+See L<https://docs.gitlab.com/ce/api/project_badges.html>.
+
+=over
+
+=item project_badges
+
+    my $badges = $api->project_badges(
+        $project_id,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/badges> and returns the decoded response content.
+
+=cut
+
+sub project_badges {
+    my $self = shift;
+    croak 'project_badges must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($project_id) to project_badges must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $options = {};
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/badges', [@_], $options );
+}
+
+=item project_badge
+
+    my $badge = $api->project_badge(
+        $project_id,
+        $badge_id,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/badges/:badge_id> and returns the decoded response content.
+
+=cut
+
+sub project_badge {
+    my $self = shift;
+    croak 'project_badge must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to project_badge must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($badge_id) to project_badge must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $options = {};
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/badges/:badge_id', [@_], $options );
+}
+
+=item create_project_badge
+
+    my $badge = $api->create_project_badge(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C<projects/:project_id/badges> and returns the decoded response content.
+
+=cut
+
+sub create_project_badge {
+    my $self = shift;
+    croak 'create_project_badge must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($project_id) to create_project_badge must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to create_project_badge must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
+    my $options = {};
+    $options->{content} = $params if defined $params;
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/badges', [@_], $options );
+}
+
+=item edit_project_badge
+
+    my $badge = $api->edit_project_badge(
+        $project_id,
+        $badge_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C<projects/:project_id/badges/:badge_id> and returns the decoded response content.
+
+=cut
+
+sub edit_project_badge {
+    my $self = shift;
+    croak 'edit_project_badge must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to edit_project_badge must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($badge_id) to edit_project_badge must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to edit_project_badge must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
+    my $options = {};
+    $options->{content} = $params if defined $params;
+    return $self->_call_rest_client( 'PUT', 'projects/:project_id/badges/:badge_id', [@_], $options );
+}
+
+=item delete_project_badge
+
+    $api->delete_project_badge(
+        $project_id,
+        $badge_id,
+    );
+
+Sends a C<DELETE> request to C<projects/:project_id/badges/:badge_id>.
+
+=cut
+
+sub delete_project_badge {
+    my $self = shift;
+    croak 'delete_project_badge must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to delete_project_badge must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($badge_id) to delete_project_badge must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $options = {};
+    $options->{decode} = 0;
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/badges/:badge_id', [@_], $options );
+    return;
+}
+
+=item preview_project_badge
+
+    my $preview = $api->preview_project_badge(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/badges/render> and returns the decoded response content.
+
+=cut
+
+sub preview_project_badge {
+    my $self = shift;
+    croak 'preview_project_badge must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($project_id) to preview_project_badge must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to preview_project_badge must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
+    my $options = {};
+    $options->{query} = $params if defined $params;
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/badges/render', [@_], $options );
+}
+
+=back
+
 =head2 Project members
 
 See L<https://docs.gitlab.com/ce/api/members.html>.

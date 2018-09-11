@@ -3415,6 +3415,68 @@ Sends a C<DELETE> request to C<projects/:project_id/access_requests/:user_id>.
 
 =back
 
+=head2 Project badges
+
+See L<https://docs.gitlab.com/ce/api/project_badges.html>.
+
+=over
+
+=item project_badges
+
+    my $badges = $api->project_badges(
+        $project_id,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/badges> and returns the decoded response content.
+
+=item project_badge
+
+    my $badge = $api->project_badge(
+        $project_id,
+        $badge_id,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/badges/:badge_id> and returns the decoded response content.
+
+=item create_project_badge
+
+    my $badge = $api->create_project_badge(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C<projects/:project_id/badges> and returns the decoded response content.
+
+=item edit_project_badge
+
+    my $badge = $api->edit_project_badge(
+        $project_id,
+        $badge_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C<projects/:project_id/badges/:badge_id> and returns the decoded response content.
+
+=item delete_project_badge
+
+    $api->delete_project_badge(
+        $project_id,
+        $badge_id,
+    );
+
+Sends a C<DELETE> request to C<projects/:project_id/badges/:badge_id>.
+
+=item preview_project_badge
+
+    my $preview = $api->preview_project_badge(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/badges/render> and returns the decoded response content.
+
+=back
+
 =head2 Project members
 
 See L<https://docs.gitlab.com/ce/api/members.html>.

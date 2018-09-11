@@ -1,0 +1,7 @@
+---
+- project_badges: badges = GET projects/:project_id/badges
+- project_badge: badge = GET projects/:project_id/badges/:badge_id
+- create_project_badge: badge = POST projects/:project_id/badges?
+- edit_project_badge: badge = PUT projects/:project_id/badges/:badge_id?
+- delete_project_badge: DELETE projects/:project_id/badges/:badge_id
+- preview_project_badge: preview = GET projects/:project_id/badges/render?
