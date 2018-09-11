@@ -4180,6 +4180,34 @@ sub unsubscribe_from_label {
 
 =back
 
+=head2 Markdown
+
+See L<https://docs.gitlab.com/ce/api/markdown.html>.
+
+=over
+
+=item markdown
+
+    my $html = $api->markdown(
+        \%params,
+    );
+
+Sends a C<POST> request to C<markdown> and returns the decoded response content.
+
+=cut
+
+sub markdown {
+    my $self = shift;
+    croak 'markdown must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to markdown must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    my $params = (@_ == 1) ? pop() : undef;
+    my $options = {};
+    $options->{content} = $params if defined $params;
+    return $self->_call_rest_client( 'POST', 'markdown', [@_], $options );
+}
+
+=back
+
 =head2 Merge requests
 
 See L<https://docs.gitlab.com/ce/api/merge_requests.html>.

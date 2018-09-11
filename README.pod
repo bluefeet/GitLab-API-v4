@@ -1896,6 +1896,22 @@ Sends a C<POST> request to C<projects/:project_id/labels/:label_id/unsubscribe>.
 
 =back
 
+=head2 Markdown
+
+See L<https://docs.gitlab.com/ce/api/markdown.html>.
+
+=over
+
+=item markdown
+
+    my $html = $api->markdown(
+        \%params,
+    );
+
+Sends a C<POST> request to C<markdown> and returns the decoded response content.
+
+=back
+
 =head2 Merge requests
 
 See L<https://docs.gitlab.com/ce/api/merge_requests.html>.

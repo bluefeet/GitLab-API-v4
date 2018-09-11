@@ -75,6 +75,9 @@ sections:
 - labels:
     head: Labels
     doc_url: https://docs.gitlab.com/ce/api/labels.html
+- markdown:
+    head: Markdown
+    doc_url: https://docs.gitlab.com/ce/api/markdown.html
 - merge_requests:
     head: Merge requests
     doc_url: https://docs.gitlab.com/ce/api/merge_requests.html
