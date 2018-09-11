@@ -147,6 +147,9 @@ sections:
 - runners:
     head: Runners
     doc_url: https://docs.gitlab.com/ce/api/runners.html
+- search:
+    head: Search
+    doc_url: https://docs.gitlab.com/ce/api/search.html
 - services:
     head: Services
     doc_url: https://docs.gitlab.com/ce/api/services.html

@@ -8694,6 +8694,34 @@ sub disable_project_runner {
 
 =back
 
+=head2 Search
+
+See L<https://docs.gitlab.com/ce/api/search.html>.
+
+=over
+
+=item search
+
+    my $results = $api->search(
+        \%params,
+    );
+
+Sends a C<GET> request to C<search> and returns the decoded response content.
+
+=cut
+
+sub search {
+    my $self = shift;
+    croak 'search must be called with 0 to 1 arguments' if @_ < 0 or @_ > 1;
+    croak 'The last argument (\%params) to search must be a hash ref' if defined($_[0]) and ref($_[0]) ne 'HASH';
+    my $params = (@_ == 1) ? pop() : undef;
+    my $options = {};
+    $options->{query} = $params if defined $params;
+    return $self->_call_rest_client( 'GET', 'search', [@_], $options );
+}
+
+=back
+
 =head2 Services
 
 See L<https://docs.gitlab.com/ce/api/services.html>.

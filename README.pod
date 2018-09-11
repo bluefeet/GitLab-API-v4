@@ -3901,6 +3901,22 @@ Sends a C<DELETE> request to C<projects/:project_id/runners/:runner_id> and retu
 
 =back
 
+=head2 Search
+
+See L<https://docs.gitlab.com/ce/api/search.html>.
+
+=over
+
+=item search
+
+    my $results = $api->search(
+        \%params,
+    );
+
+Sends a C<GET> request to C<search> and returns the decoded response content.
+
+=back
+
 =head2 Services
 
 See L<https://docs.gitlab.com/ce/api/services.html>.
