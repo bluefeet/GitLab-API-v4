@@ -1,0 +1,5 @@
+---
+- protected_tags: tags = GET projects/:project_id/protected_tags?
+- protected_tag: tag = GET projects/:project_id/protected_tags/:tag_name
+- protect_tag: tag = POST projects/:project_id/protected_tags?
+- unprotect_tag: DELETE projects/:project_id/protected_tags/:tag_name

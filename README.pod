@@ -3696,6 +3696,50 @@ Sends a C<DELETE> request to C<projects/:project_id/protected_branches/:branch_n
 
 =back
 
+=head2 Protected tags
+
+See L<https://docs.gitlab.com/ce/api/protected_tags.html>.
+
+=over
+
+=item protected_tags
+
+    my $tags = $api->protected_tags(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/protected_tags> and returns the decoded response content.
+
+=item protected_tag
+
+    my $tag = $api->protected_tag(
+        $project_id,
+        $tag_name,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/protected_tags/:tag_name> and returns the decoded response content.
+
+=item protect_tag
+
+    my $tag = $api->protect_tag(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C<projects/:project_id/protected_tags> and returns the decoded response content.
+
+=item unprotect_tag
+
+    $api->unprotect_tag(
+        $project_id,
+        $tag_name,
+    );
+
+Sends a C<DELETE> request to C<projects/:project_id/protected_tags/:tag_name>.
+
+=back
+
 =head2 Repositories
 
 See L<https://docs.gitlab.com/ce/api/repositories.html>.

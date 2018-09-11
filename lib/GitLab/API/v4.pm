@@ -8231,6 +8231,100 @@ sub unprotect_branch {
 
 =back
 
+=head2 Protected tags
+
+See L<https://docs.gitlab.com/ce/api/protected_tags.html>.
+
+=over
+
+=item protected_tags
+
+    my $tags = $api->protected_tags(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/protected_tags> and returns the decoded response content.
+
+=cut
+
+sub protected_tags {
+    my $self = shift;
+    croak 'protected_tags must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($project_id) to protected_tags must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to protected_tags must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
+    my $options = {};
+    $options->{query} = $params if defined $params;
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/protected_tags', [@_], $options );
+}
+
+=item protected_tag
+
+    my $tag = $api->protected_tag(
+        $project_id,
+        $tag_name,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/protected_tags/:tag_name> and returns the decoded response content.
+
+=cut
+
+sub protected_tag {
+    my $self = shift;
+    croak 'protected_tag must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to protected_tag must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($tag_name) to protected_tag must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $options = {};
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/protected_tags/:tag_name', [@_], $options );
+}
+
+=item protect_tag
+
+    my $tag = $api->protect_tag(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C<projects/:project_id/protected_tags> and returns the decoded response content.
+
+=cut
+
+sub protect_tag {
+    my $self = shift;
+    croak 'protect_tag must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($project_id) to protect_tag must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to protect_tag must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
+    my $options = {};
+    $options->{content} = $params if defined $params;
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/protected_tags', [@_], $options );
+}
+
+=item unprotect_tag
+
+    $api->unprotect_tag(
+        $project_id,
+        $tag_name,
+    );
+
+Sends a C<DELETE> request to C<projects/:project_id/protected_tags/:tag_name>.
+
+=cut
+
+sub unprotect_tag {
+    my $self = shift;
+    croak 'unprotect_tag must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to unprotect_tag must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($tag_name) to unprotect_tag must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $options = {};
+    $options->{decode} = 0;
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/protected_tags/:tag_name', [@_], $options );
+    return;
+}
+
+=back
+
 =head2 Repositories
 
 See L<https://docs.gitlab.com/ce/api/repositories.html>.

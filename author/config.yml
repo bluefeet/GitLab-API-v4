@@ -138,6 +138,9 @@ sections:
 - protected_branches:
     head: Protected branches
     doc_url: https://docs.gitlab.com/ce/api/protected_branches.html
+- protected_tags:
+    head: Protected tags
+    doc_url: https://docs.gitlab.com/ce/api/protected_tags.html
 - repositories:
     head: Repositories
     doc_url: https://docs.gitlab.com/ce/api/repositories.html
