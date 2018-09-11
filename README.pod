@@ -2704,6 +2704,52 @@ Sends a C<DELETE> request to C<projects/:project_id/commits/:commit_id/discussio
 
 =back
 
+=head2 Resource label events
+
+See L<https://docs.gitlab.com/ce/api/resource_label_events.html>.
+
+=over
+
+=item issue_resource_label_events
+
+    my $events = $api->issue_resource_label_events(
+        $project_id,
+        $issue_iid,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid/resource_label_events> and returns the decoded response content.
+
+=item issue_resource_label_event
+
+    my $event = $api->issue_resource_label_event(
+        $project_id,
+        $issue_iid,
+        $resource_label_event_id,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid/resource_label_events/:resource_label_event_id> and returns the decoded response content.
+
+=item merge_request_resource_label_events
+
+    my $events = $api->merge_request_resource_label_events(
+        $project_id,
+        $merge_request_iid,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/resource_label_events> and returns the decoded response content.
+
+=item merge_request_resource_label_event
+
+    my $event = $api->merge_request_resource_label_event(
+        $project_id,
+        $merge_request_iid,
+        $resource_label_event_id,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/resource_label_events/:resource_label_event_id> and returns the decoded response content.
+
+=back
+
 =head2 Notification settings
 
 See L<https://docs.gitlab.com/ce/api/notification_settings.html>.

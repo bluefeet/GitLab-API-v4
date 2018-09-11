@@ -6024,6 +6024,98 @@ sub delete_commit_discussion_note {
 
 =back
 
+=head2 Resource label events
+
+See L<https://docs.gitlab.com/ce/api/resource_label_events.html>.
+
+=over
+
+=item issue_resource_label_events
+
+    my $events = $api->issue_resource_label_events(
+        $project_id,
+        $issue_iid,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid/resource_label_events> and returns the decoded response content.
+
+=cut
+
+sub issue_resource_label_events {
+    my $self = shift;
+    croak 'issue_resource_label_events must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to issue_resource_label_events must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($issue_iid) to issue_resource_label_events must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $options = {};
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/issues/:issue_iid/resource_label_events', [@_], $options );
+}
+
+=item issue_resource_label_event
+
+    my $event = $api->issue_resource_label_event(
+        $project_id,
+        $issue_iid,
+        $resource_label_event_id,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid/resource_label_events/:resource_label_event_id> and returns the decoded response content.
+
+=cut
+
+sub issue_resource_label_event {
+    my $self = shift;
+    croak 'issue_resource_label_event must be called with 3 arguments' if @_ != 3;
+    croak 'The #1 argument ($project_id) to issue_resource_label_event must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($issue_iid) to issue_resource_label_event must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($resource_label_event_id) to issue_resource_label_event must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    my $options = {};
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/issues/:issue_iid/resource_label_events/:resource_label_event_id', [@_], $options );
+}
+
+=item merge_request_resource_label_events
+
+    my $events = $api->merge_request_resource_label_events(
+        $project_id,
+        $merge_request_iid,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/resource_label_events> and returns the decoded response content.
+
+=cut
+
+sub merge_request_resource_label_events {
+    my $self = shift;
+    croak 'merge_request_resource_label_events must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to merge_request_resource_label_events must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($merge_request_iid) to merge_request_resource_label_events must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $options = {};
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/resource_label_events', [@_], $options );
+}
+
+=item merge_request_resource_label_event
+
+    my $event = $api->merge_request_resource_label_event(
+        $project_id,
+        $merge_request_iid,
+        $resource_label_event_id,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/resource_label_events/:resource_label_event_id> and returns the decoded response content.
+
+=cut
+
+sub merge_request_resource_label_event {
+    my $self = shift;
+    croak 'merge_request_resource_label_event must be called with 3 arguments' if @_ != 3;
+    croak 'The #1 argument ($project_id) to merge_request_resource_label_event must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($merge_request_iid) to merge_request_resource_label_event must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($resource_label_event_id) to merge_request_resource_label_event must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    my $options = {};
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/resource_label_events/:resource_label_event_id', [@_], $options );
+}
+
+=back
+
 =head2 Notification settings
 
 See L<https://docs.gitlab.com/ce/api/notification_settings.html>.

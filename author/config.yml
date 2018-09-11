@@ -96,6 +96,9 @@ sections:
 - discussions:
     head: Discussions
     doc_url: https://docs.gitlab.com/ce/api/discussions.html
+- resource_label_events:
+    head: Resource label events
+    doc_url: https://docs.gitlab.com/ce/api/resource_label_events.html
 - notification_settings:
     head: Notification settings
     doc_url: https://docs.gitlab.com/ce/api/notification_settings.html
