@@ -93,6 +93,9 @@ sections:
 - notes:
     head: Notes
     doc_url: https://docs.gitlab.com/ce/api/notes.html
+- discussions:
+    head: Discussions
+    doc_url: https://docs.gitlab.com/ce/api/discussions.html
 - notification_settings:
     head: Notification settings
     doc_url: https://docs.gitlab.com/ce/api/notification_settings.html

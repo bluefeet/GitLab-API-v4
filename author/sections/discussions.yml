@@ -1,0 +1,29 @@
+---
+- issue_discussions: discussions = GET projects/:project_id/issues/:issue_iid/discussions?
+- issue_discussion: discussion = GET projects/:project_id/issues/:issue_iid/discussions/:discussion_id
+- create_issue_discussion: discussion = POST projects/:project_id/issues/:issue_iid/discussions?
+- create_issue_discussion_note: POST projects/:project_id/issues/:issue_iid/discussions/:discussion_id/notes?
+- edit_issue_discussion_note: PUT projects/:project_id/issues/:issue_iid/discussions/:discussion_id/notes/:note_id?
+- delete_issue_discussion_note: DELETE projects/:project_id/issues/:issue_iid/discussions/:discussion_id/notes/:note_id
+
+- project_snippet_discussions: discussions = GET projects/:project_id/snippets/:snippet_id/discussions?
+- project_snippet_discussion: discussion = GET projects/:project_id/snippets/:snippet_id/discussions/:discussion_id
+- create_project_snippet_discussion: discussion = POST projects/:project_id/snippets/:snippet_id/discussions?
+- create_project_snippet_discussion_note: POST projects/:project_id/snippets/:snippet_id/discussions/:discussion_id/notes?
+- edit_project_snippet_discussion_note: PUT projects/:project_id/snippets/:snippet_id/discussions/:discussion_id/notes/:note_id?
+- delete_project_snippet_discussion_note: DELETE projects/:project_id/snippets/:snippet_id/discussions/:discussion_id/notes/:note_id
+
+- merge_request_discussions: discussions = GET projects/:project_id/merge_requests/:merge_request_iid/discussions?
+- merge_request_discussion: discussion = GET projects/:project_id/merge_requests/:merge_request_iid/discussions/:discussion_id
+- create_merge_request_discussion: discussion = POST projects/:project_id/merge_requests/:merge_request_iid/discussions?
+- resolve_merge_request_discussion: PUT projects/:project_id/merge_requests/:merge_request_iid/discussions/:discussion_id?
+- create_merge_request_discussion_note: POST projects/:project_id/merge_requests/:merge_request_iid/discussions/:discussion_id/notes?
+- edit_merge_request_discussion_note: PUT projects/:project_id/merge_requests/:merge_request_iid/discussions/:discussion_id/notes/:note_id?
+- delete_merge_request_discussion_note: DELETE projects/:project_id/merge_requests/:merge_request_iid/discussions/:discussion_id/notes/:note_id
+
+- commit_discussions: discussions = GET projects/:project_id/commits/:commit_id/discussions?
+- commit_discussion: discussion = GET projects/:project_id/commits/:commit_id/discussions/:discussion_id
+- create_commit_discussion: discussion = POST projects/:project_id/commits/:commit_id/discussions?
+- create_commit_discussion_note: POST projects/:project_id/commits/:commit_id/discussions/:discussion_id/notes?
+- edit_commit_discussion_note: PUT projects/:project_id/commits/:commit_id/discussions/:discussion_id/notes/:note_id?
+- delete_commit_discussion_note: DELETE projects/:project_id/commits/:commit_id/discussions/:discussion_id/notes/:note_id

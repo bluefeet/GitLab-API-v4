@@ -2,6 +2,7 @@ Revision history for Perl extension GitLab::API::v4.
 
 {{$NEXT}}
 
+- Added the Discussions API.
 - Added the Markdown API.
 - Added the Group Issue Boards API.
 - Added the Group badges API.

@@ -5372,6 +5372,658 @@ sub delete_merge_request_note {
 
 =back
 
+=head2 Discussions
+
+See L<https://docs.gitlab.com/ce/api/discussions.html>.
+
+=over
+
+=item issue_discussions
+
+    my $discussions = $api->issue_discussions(
+        $project_id,
+        $issue_iid,
+        \%params,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid/discussions> and returns the decoded response content.
+
+=cut
+
+sub issue_discussions {
+    my $self = shift;
+    croak 'issue_discussions must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to issue_discussions must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($issue_iid) to issue_discussions must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to issue_discussions must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
+    my $options = {};
+    $options->{query} = $params if defined $params;
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/issues/:issue_iid/discussions', [@_], $options );
+}
+
+=item issue_discussion
+
+    my $discussion = $api->issue_discussion(
+        $project_id,
+        $issue_iid,
+        $discussion_id,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/issues/:issue_iid/discussions/:discussion_id> and returns the decoded response content.
+
+=cut
+
+sub issue_discussion {
+    my $self = shift;
+    croak 'issue_discussion must be called with 3 arguments' if @_ != 3;
+    croak 'The #1 argument ($project_id) to issue_discussion must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($issue_iid) to issue_discussion must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($discussion_id) to issue_discussion must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    my $options = {};
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/issues/:issue_iid/discussions/:discussion_id', [@_], $options );
+}
+
+=item create_issue_discussion
+
+    my $discussion = $api->create_issue_discussion(
+        $project_id,
+        $issue_iid,
+        \%params,
+    );
+
+Sends a C<POST> request to C<projects/:project_id/issues/:issue_iid/discussions> and returns the decoded response content.
+
+=cut
+
+sub create_issue_discussion {
+    my $self = shift;
+    croak 'create_issue_discussion must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to create_issue_discussion must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($issue_iid) to create_issue_discussion must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to create_issue_discussion must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
+    my $options = {};
+    $options->{content} = $params if defined $params;
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/issues/:issue_iid/discussions', [@_], $options );
+}
+
+=item create_issue_discussion_note
+
+    $api->create_issue_discussion_note(
+        $project_id,
+        $issue_iid,
+        $discussion_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C<projects/:project_id/issues/:issue_iid/discussions/:discussion_id/notes>.
+
+=cut
+
+sub create_issue_discussion_note {
+    my $self = shift;
+    croak 'create_issue_discussion_note must be called with 3 to 4 arguments' if @_ < 3 or @_ > 4;
+    croak 'The #1 argument ($project_id) to create_issue_discussion_note must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($issue_iid) to create_issue_discussion_note must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($discussion_id) to create_issue_discussion_note must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    croak 'The last argument (\%params) to create_issue_discussion_note must be a hash ref' if defined($_[3]) and ref($_[3]) ne 'HASH';
+    my $params = (@_ == 4) ? pop() : undef;
+    my $options = {};
+    $options->{decode} = 0;
+    $options->{content} = $params if defined $params;
+    $self->_call_rest_client( 'POST', 'projects/:project_id/issues/:issue_iid/discussions/:discussion_id/notes', [@_], $options );
+    return;
+}
+
+=item edit_issue_discussion_note
+
+    $api->edit_issue_discussion_note(
+        $project_id,
+        $issue_iid,
+        $discussion_id,
+        $note_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C<projects/:project_id/issues/:issue_iid/discussions/:discussion_id/notes/:note_id>.
+
+=cut
+
+sub edit_issue_discussion_note {
+    my $self = shift;
+    croak 'edit_issue_discussion_note must be called with 4 to 5 arguments' if @_ < 4 or @_ > 5;
+    croak 'The #1 argument ($project_id) to edit_issue_discussion_note must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($issue_iid) to edit_issue_discussion_note must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($discussion_id) to edit_issue_discussion_note must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    croak 'The #4 argument ($note_id) to edit_issue_discussion_note must be a scalar' if ref($_[3]) or (!defined $_[3]);
+    croak 'The last argument (\%params) to edit_issue_discussion_note must be a hash ref' if defined($_[4]) and ref($_[4]) ne 'HASH';
+    my $params = (@_ == 5) ? pop() : undef;
+    my $options = {};
+    $options->{decode} = 0;
+    $options->{content} = $params if defined $params;
+    $self->_call_rest_client( 'PUT', 'projects/:project_id/issues/:issue_iid/discussions/:discussion_id/notes/:note_id', [@_], $options );
+    return;
+}
+
+=item delete_issue_discussion_note
+
+    $api->delete_issue_discussion_note(
+        $project_id,
+        $issue_iid,
+        $discussion_id,
+        $note_id,
+    );
+
+Sends a C<DELETE> request to C<projects/:project_id/issues/:issue_iid/discussions/:discussion_id/notes/:note_id>.
+
+=cut
+
+sub delete_issue_discussion_note {
+    my $self = shift;
+    croak 'delete_issue_discussion_note must be called with 4 arguments' if @_ != 4;
+    croak 'The #1 argument ($project_id) to delete_issue_discussion_note must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($issue_iid) to delete_issue_discussion_note must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($discussion_id) to delete_issue_discussion_note must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    croak 'The #4 argument ($note_id) to delete_issue_discussion_note must be a scalar' if ref($_[3]) or (!defined $_[3]);
+    my $options = {};
+    $options->{decode} = 0;
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/issues/:issue_iid/discussions/:discussion_id/notes/:note_id', [@_], $options );
+    return;
+}
+
+=item project_snippet_discussions
+
+    my $discussions = $api->project_snippet_discussions(
+        $project_id,
+        $snippet_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/snippets/:snippet_id/discussions> and returns the decoded response content.
+
+=cut
+
+sub project_snippet_discussions {
+    my $self = shift;
+    croak 'project_snippet_discussions must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to project_snippet_discussions must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($snippet_id) to project_snippet_discussions must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to project_snippet_discussions must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
+    my $options = {};
+    $options->{query} = $params if defined $params;
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/snippets/:snippet_id/discussions', [@_], $options );
+}
+
+=item project_snippet_discussion
+
+    my $discussion = $api->project_snippet_discussion(
+        $project_id,
+        $snippet_id,
+        $discussion_id,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/snippets/:snippet_id/discussions/:discussion_id> and returns the decoded response content.
+
+=cut
+
+sub project_snippet_discussion {
+    my $self = shift;
+    croak 'project_snippet_discussion must be called with 3 arguments' if @_ != 3;
+    croak 'The #1 argument ($project_id) to project_snippet_discussion must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($snippet_id) to project_snippet_discussion must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($discussion_id) to project_snippet_discussion must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    my $options = {};
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/snippets/:snippet_id/discussions/:discussion_id', [@_], $options );
+}
+
+=item create_project_snippet_discussion
+
+    my $discussion = $api->create_project_snippet_discussion(
+        $project_id,
+        $snippet_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C<projects/:project_id/snippets/:snippet_id/discussions> and returns the decoded response content.
+
+=cut
+
+sub create_project_snippet_discussion {
+    my $self = shift;
+    croak 'create_project_snippet_discussion must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to create_project_snippet_discussion must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($snippet_id) to create_project_snippet_discussion must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to create_project_snippet_discussion must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
+    my $options = {};
+    $options->{content} = $params if defined $params;
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/snippets/:snippet_id/discussions', [@_], $options );
+}
+
+=item create_project_snippet_discussion_note
+
+    $api->create_project_snippet_discussion_note(
+        $project_id,
+        $snippet_id,
+        $discussion_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C<projects/:project_id/snippets/:snippet_id/discussions/:discussion_id/notes>.
+
+=cut
+
+sub create_project_snippet_discussion_note {
+    my $self = shift;
+    croak 'create_project_snippet_discussion_note must be called with 3 to 4 arguments' if @_ < 3 or @_ > 4;
+    croak 'The #1 argument ($project_id) to create_project_snippet_discussion_note must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($snippet_id) to create_project_snippet_discussion_note must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($discussion_id) to create_project_snippet_discussion_note must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    croak 'The last argument (\%params) to create_project_snippet_discussion_note must be a hash ref' if defined($_[3]) and ref($_[3]) ne 'HASH';
+    my $params = (@_ == 4) ? pop() : undef;
+    my $options = {};
+    $options->{decode} = 0;
+    $options->{content} = $params if defined $params;
+    $self->_call_rest_client( 'POST', 'projects/:project_id/snippets/:snippet_id/discussions/:discussion_id/notes', [@_], $options );
+    return;
+}
+
+=item edit_project_snippet_discussion_note
+
+    $api->edit_project_snippet_discussion_note(
+        $project_id,
+        $snippet_id,
+        $discussion_id,
+        $note_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C<projects/:project_id/snippets/:snippet_id/discussions/:discussion_id/notes/:note_id>.
+
+=cut
+
+sub edit_project_snippet_discussion_note {
+    my $self = shift;
+    croak 'edit_project_snippet_discussion_note must be called with 4 to 5 arguments' if @_ < 4 or @_ > 5;
+    croak 'The #1 argument ($project_id) to edit_project_snippet_discussion_note must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($snippet_id) to edit_project_snippet_discussion_note must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($discussion_id) to edit_project_snippet_discussion_note must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    croak 'The #4 argument ($note_id) to edit_project_snippet_discussion_note must be a scalar' if ref($_[3]) or (!defined $_[3]);
+    croak 'The last argument (\%params) to edit_project_snippet_discussion_note must be a hash ref' if defined($_[4]) and ref($_[4]) ne 'HASH';
+    my $params = (@_ == 5) ? pop() : undef;
+    my $options = {};
+    $options->{decode} = 0;
+    $options->{content} = $params if defined $params;
+    $self->_call_rest_client( 'PUT', 'projects/:project_id/snippets/:snippet_id/discussions/:discussion_id/notes/:note_id', [@_], $options );
+    return;
+}
+
+=item delete_project_snippet_discussion_note
+
+    $api->delete_project_snippet_discussion_note(
+        $project_id,
+        $snippet_id,
+        $discussion_id,
+        $note_id,
+    );
+
+Sends a C<DELETE> request to C<projects/:project_id/snippets/:snippet_id/discussions/:discussion_id/notes/:note_id>.
+
+=cut
+
+sub delete_project_snippet_discussion_note {
+    my $self = shift;
+    croak 'delete_project_snippet_discussion_note must be called with 4 arguments' if @_ != 4;
+    croak 'The #1 argument ($project_id) to delete_project_snippet_discussion_note must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($snippet_id) to delete_project_snippet_discussion_note must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($discussion_id) to delete_project_snippet_discussion_note must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    croak 'The #4 argument ($note_id) to delete_project_snippet_discussion_note must be a scalar' if ref($_[3]) or (!defined $_[3]);
+    my $options = {};
+    $options->{decode} = 0;
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/snippets/:snippet_id/discussions/:discussion_id/notes/:note_id', [@_], $options );
+    return;
+}
+
+=item merge_request_discussions
+
+    my $discussions = $api->merge_request_discussions(
+        $project_id,
+        $merge_request_iid,
+        \%params,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/discussions> and returns the decoded response content.
+
+=cut
+
+sub merge_request_discussions {
+    my $self = shift;
+    croak 'merge_request_discussions must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to merge_request_discussions must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($merge_request_iid) to merge_request_discussions must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to merge_request_discussions must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
+    my $options = {};
+    $options->{query} = $params if defined $params;
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/discussions', [@_], $options );
+}
+
+=item merge_request_discussion
+
+    my $discussion = $api->merge_request_discussion(
+        $project_id,
+        $merge_request_iid,
+        $discussion_id,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/merge_requests/:merge_request_iid/discussions/:discussion_id> and returns the decoded response content.
+
+=cut
+
+sub merge_request_discussion {
+    my $self = shift;
+    croak 'merge_request_discussion must be called with 3 arguments' if @_ != 3;
+    croak 'The #1 argument ($project_id) to merge_request_discussion must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($merge_request_iid) to merge_request_discussion must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($discussion_id) to merge_request_discussion must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    my $options = {};
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/merge_requests/:merge_request_iid/discussions/:discussion_id', [@_], $options );
+}
+
+=item create_merge_request_discussion
+
+    my $discussion = $api->create_merge_request_discussion(
+        $project_id,
+        $merge_request_iid,
+        \%params,
+    );
+
+Sends a C<POST> request to C<projects/:project_id/merge_requests/:merge_request_iid/discussions> and returns the decoded response content.
+
+=cut
+
+sub create_merge_request_discussion {
+    my $self = shift;
+    croak 'create_merge_request_discussion must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to create_merge_request_discussion must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($merge_request_iid) to create_merge_request_discussion must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to create_merge_request_discussion must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
+    my $options = {};
+    $options->{content} = $params if defined $params;
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/merge_requests/:merge_request_iid/discussions', [@_], $options );
+}
+
+=item resolve_merge_request_discussion
+
+    $api->resolve_merge_request_discussion(
+        $project_id,
+        $merge_request_iid,
+        $discussion_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C<projects/:project_id/merge_requests/:merge_request_iid/discussions/:discussion_id>.
+
+=cut
+
+sub resolve_merge_request_discussion {
+    my $self = shift;
+    croak 'resolve_merge_request_discussion must be called with 3 to 4 arguments' if @_ < 3 or @_ > 4;
+    croak 'The #1 argument ($project_id) to resolve_merge_request_discussion must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($merge_request_iid) to resolve_merge_request_discussion must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($discussion_id) to resolve_merge_request_discussion must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    croak 'The last argument (\%params) to resolve_merge_request_discussion must be a hash ref' if defined($_[3]) and ref($_[3]) ne 'HASH';
+    my $params = (@_ == 4) ? pop() : undef;
+    my $options = {};
+    $options->{decode} = 0;
+    $options->{content} = $params if defined $params;
+    $self->_call_rest_client( 'PUT', 'projects/:project_id/merge_requests/:merge_request_iid/discussions/:discussion_id', [@_], $options );
+    return;
+}
+
+=item create_merge_request_discussion_note
+
+    $api->create_merge_request_discussion_note(
+        $project_id,
+        $merge_request_iid,
+        $discussion_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C<projects/:project_id/merge_requests/:merge_request_iid/discussions/:discussion_id/notes>.
+
+=cut
+
+sub create_merge_request_discussion_note {
+    my $self = shift;
+    croak 'create_merge_request_discussion_note must be called with 3 to 4 arguments' if @_ < 3 or @_ > 4;
+    croak 'The #1 argument ($project_id) to create_merge_request_discussion_note must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($merge_request_iid) to create_merge_request_discussion_note must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($discussion_id) to create_merge_request_discussion_note must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    croak 'The last argument (\%params) to create_merge_request_discussion_note must be a hash ref' if defined($_[3]) and ref($_[3]) ne 'HASH';
+    my $params = (@_ == 4) ? pop() : undef;
+    my $options = {};
+    $options->{decode} = 0;
+    $options->{content} = $params if defined $params;
+    $self->_call_rest_client( 'POST', 'projects/:project_id/merge_requests/:merge_request_iid/discussions/:discussion_id/notes', [@_], $options );
+    return;
+}
+
+=item edit_merge_request_discussion_note
+
+    $api->edit_merge_request_discussion_note(
+        $project_id,
+        $merge_request_iid,
+        $discussion_id,
+        $note_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C<projects/:project_id/merge_requests/:merge_request_iid/discussions/:discussion_id/notes/:note_id>.
+
+=cut
+
+sub edit_merge_request_discussion_note {
+    my $self = shift;
+    croak 'edit_merge_request_discussion_note must be called with 4 to 5 arguments' if @_ < 4 or @_ > 5;
+    croak 'The #1 argument ($project_id) to edit_merge_request_discussion_note must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($merge_request_iid) to edit_merge_request_discussion_note must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($discussion_id) to edit_merge_request_discussion_note must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    croak 'The #4 argument ($note_id) to edit_merge_request_discussion_note must be a scalar' if ref($_[3]) or (!defined $_[3]);
+    croak 'The last argument (\%params) to edit_merge_request_discussion_note must be a hash ref' if defined($_[4]) and ref($_[4]) ne 'HASH';
+    my $params = (@_ == 5) ? pop() : undef;
+    my $options = {};
+    $options->{decode} = 0;
+    $options->{content} = $params if defined $params;
+    $self->_call_rest_client( 'PUT', 'projects/:project_id/merge_requests/:merge_request_iid/discussions/:discussion_id/notes/:note_id', [@_], $options );
+    return;
+}
+
+=item delete_merge_request_discussion_note
+
+    $api->delete_merge_request_discussion_note(
+        $project_id,
+        $merge_request_iid,
+        $discussion_id,
+        $note_id,
+    );
+
+Sends a C<DELETE> request to C<projects/:project_id/merge_requests/:merge_request_iid/discussions/:discussion_id/notes/:note_id>.
+
+=cut
+
+sub delete_merge_request_discussion_note {
+    my $self = shift;
+    croak 'delete_merge_request_discussion_note must be called with 4 arguments' if @_ != 4;
+    croak 'The #1 argument ($project_id) to delete_merge_request_discussion_note must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($merge_request_iid) to delete_merge_request_discussion_note must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($discussion_id) to delete_merge_request_discussion_note must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    croak 'The #4 argument ($note_id) to delete_merge_request_discussion_note must be a scalar' if ref($_[3]) or (!defined $_[3]);
+    my $options = {};
+    $options->{decode} = 0;
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/merge_requests/:merge_request_iid/discussions/:discussion_id/notes/:note_id', [@_], $options );
+    return;
+}
+
+=item commit_discussions
+
+    my $discussions = $api->commit_discussions(
+        $project_id,
+        $commit_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/commits/:commit_id/discussions> and returns the decoded response content.
+
+=cut
+
+sub commit_discussions {
+    my $self = shift;
+    croak 'commit_discussions must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to commit_discussions must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($commit_id) to commit_discussions must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to commit_discussions must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
+    my $options = {};
+    $options->{query} = $params if defined $params;
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/commits/:commit_id/discussions', [@_], $options );
+}
+
+=item commit_discussion
+
+    my $discussion = $api->commit_discussion(
+        $project_id,
+        $commit_id,
+        $discussion_id,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/commits/:commit_id/discussions/:discussion_id> and returns the decoded response content.
+
+=cut
+
+sub commit_discussion {
+    my $self = shift;
+    croak 'commit_discussion must be called with 3 arguments' if @_ != 3;
+    croak 'The #1 argument ($project_id) to commit_discussion must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($commit_id) to commit_discussion must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($discussion_id) to commit_discussion must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    my $options = {};
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/commits/:commit_id/discussions/:discussion_id', [@_], $options );
+}
+
+=item create_commit_discussion
+
+    my $discussion = $api->create_commit_discussion(
+        $project_id,
+        $commit_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C<projects/:project_id/commits/:commit_id/discussions> and returns the decoded response content.
+
+=cut
+
+sub create_commit_discussion {
+    my $self = shift;
+    croak 'create_commit_discussion must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to create_commit_discussion must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($commit_id) to create_commit_discussion must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to create_commit_discussion must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
+    my $options = {};
+    $options->{content} = $params if defined $params;
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/commits/:commit_id/discussions', [@_], $options );
+}
+
+=item create_commit_discussion_note
+
+    $api->create_commit_discussion_note(
+        $project_id,
+        $commit_id,
+        $discussion_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C<projects/:project_id/commits/:commit_id/discussions/:discussion_id/notes>.
+
+=cut
+
+sub create_commit_discussion_note {
+    my $self = shift;
+    croak 'create_commit_discussion_note must be called with 3 to 4 arguments' if @_ < 3 or @_ > 4;
+    croak 'The #1 argument ($project_id) to create_commit_discussion_note must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($commit_id) to create_commit_discussion_note must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($discussion_id) to create_commit_discussion_note must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    croak 'The last argument (\%params) to create_commit_discussion_note must be a hash ref' if defined($_[3]) and ref($_[3]) ne 'HASH';
+    my $params = (@_ == 4) ? pop() : undef;
+    my $options = {};
+    $options->{decode} = 0;
+    $options->{content} = $params if defined $params;
+    $self->_call_rest_client( 'POST', 'projects/:project_id/commits/:commit_id/discussions/:discussion_id/notes', [@_], $options );
+    return;
+}
+
+=item edit_commit_discussion_note
+
+    $api->edit_commit_discussion_note(
+        $project_id,
+        $commit_id,
+        $discussion_id,
+        $note_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C<projects/:project_id/commits/:commit_id/discussions/:discussion_id/notes/:note_id>.
+
+=cut
+
+sub edit_commit_discussion_note {
+    my $self = shift;
+    croak 'edit_commit_discussion_note must be called with 4 to 5 arguments' if @_ < 4 or @_ > 5;
+    croak 'The #1 argument ($project_id) to edit_commit_discussion_note must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($commit_id) to edit_commit_discussion_note must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($discussion_id) to edit_commit_discussion_note must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    croak 'The #4 argument ($note_id) to edit_commit_discussion_note must be a scalar' if ref($_[3]) or (!defined $_[3]);
+    croak 'The last argument (\%params) to edit_commit_discussion_note must be a hash ref' if defined($_[4]) and ref($_[4]) ne 'HASH';
+    my $params = (@_ == 5) ? pop() : undef;
+    my $options = {};
+    $options->{decode} = 0;
+    $options->{content} = $params if defined $params;
+    $self->_call_rest_client( 'PUT', 'projects/:project_id/commits/:commit_id/discussions/:discussion_id/notes/:note_id', [@_], $options );
+    return;
+}
+
+=item delete_commit_discussion_note
+
+    $api->delete_commit_discussion_note(
+        $project_id,
+        $commit_id,
+        $discussion_id,
+        $note_id,
+    );
+
+Sends a C<DELETE> request to C<projects/:project_id/commits/:commit_id/discussions/:discussion_id/notes/:note_id>.
+
+=cut
+
+sub delete_commit_discussion_note {
+    my $self = shift;
+    croak 'delete_commit_discussion_note must be called with 4 arguments' if @_ != 4;
+    croak 'The #1 argument ($project_id) to delete_commit_discussion_note must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($commit_id) to delete_commit_discussion_note must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($discussion_id) to delete_commit_discussion_note must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    croak 'The #4 argument ($note_id) to delete_commit_discussion_note must be a scalar' if ref($_[3]) or (!defined $_[3]);
+    my $options = {};
+    $options->{decode} = 0;
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/commits/:commit_id/discussions/:discussion_id/notes/:note_id', [@_], $options );
+    return;
+}
+
+=back
+
 =head2 Notification settings
 
 See L<https://docs.gitlab.com/ce/api/notification_settings.html>.
