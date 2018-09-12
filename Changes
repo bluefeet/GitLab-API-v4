@@ -2,6 +2,8 @@ Revision history for Perl extension GitLab::API::v4.
 
 {{$NEXT}}
 
+0.12 2018-09-11
+
 - Added API methods for Protected Tags, Search, Project Import/Export,
   Project Badges, Resource Label Events, Discussions, Markdown,
   Group Issue Boards, Group Badges, and Snippets.
