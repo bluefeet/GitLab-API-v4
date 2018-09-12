@@ -3343,15 +3343,6 @@ See L<https://docs.gitlab.com/ce/api/access_requests.html>.
 
 =over
 
-=item group_access_requests
-
-    my $requests = $api->group_access_requests(
-        $group_id,
-        \%params,
-    );
-
-Sends a C<GET> request to C<groups/:group_id/access_requests> and returns the decoded response content.
-
 =item project_access_requests
 
     my $requests = $api->project_access_requests(
@@ -3361,14 +3352,6 @@ Sends a C<GET> request to C<groups/:group_id/access_requests> and returns the de
 
 Sends a C<GET> request to C<projects/:project_id/access_requests> and returns the decoded response content.
 
-=item request_group_access
-
-    my $request = $api->request_group_access(
-        $group_id,
-    );
-
-Sends a C<POST> request to C<groups/:group_id/access_requests> and returns the decoded response content.
-
 =item request_project_access
 
     my $request = $api->request_project_access(
@@ -3376,15 +3359,6 @@ Sends a C<POST> request to C<groups/:group_id/access_requests> and returns the d
     );
 
 Sends a C<POST> request to C<projects/:project_id/access_requests> and returns the decoded response content.
-
-=item approve_group_access
-
-    my $request = $api->approve_group_access(
-        $group_id,
-        $user_id,
-    );
-
-Sends a C<PUT> request to C<groups/:group_id/access_requests/:user_id/approve> and returns the decoded response content.
 
 =item approve_project_access
 
@@ -3394,15 +3368,6 @@ Sends a C<PUT> request to C<groups/:group_id/access_requests/:user_id/approve> a
     );
 
 Sends a C<PUT> request to C<projects/:project_id/access_requests/:user_id/approve> and returns the decoded response content.
-
-=item deny_group_access
-
-    $api->deny_group_access(
-        $group_id,
-        $user_id,
-    );
-
-Sends a C<DELETE> request to C<groups/:group_id/access_requests/:user_id>.
 
 =item deny_project_access
 
@@ -4569,16 +4534,6 @@ Sends a C<PUT> request to C<projects/:project_id/wikis/:slug> and returns the de
 Sends a C<DELETE> request to C<projects/:project_id/wikis/:slug>.
 
 =back
-
-
-sub raw_snippet {
-    my $self = shift;
-    warn "The raw_snippet method is deprecated, please use the snippet_content method instead";
-    return $self->snippet_content( @_ );
-}
-
-1;
-__END__
 
 =head1 SEE ALSO
 

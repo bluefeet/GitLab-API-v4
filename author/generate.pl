@@ -12,6 +12,8 @@ my $config = YAML::XS::Load( path('config.yml')->slurp() );
 
 print $header;
 
+print "=head1 API METHODS\n\n";
+
 foreach my $section_pack (@{ $config->{sections} }) {
 foreach my $section_name (keys %$section_pack) {
     my $section = $section_pack->{$section_name};
@@ -128,5 +130,7 @@ foreach my $section_name (keys %$section_pack) {
 
     print "=back\n\n";
 }}
+
+print "=cut\n\n";
 
 print $footer;

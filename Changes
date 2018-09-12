@@ -2,16 +2,9 @@ Revision history for Perl extension GitLab::API::v4.
 
 {{$NEXT}}
 
-- Added the Protected tags API.
-- Added the Search API.
-- Added the Project import/export API.
-- Added the Project badges API.
-- Added the Resource label events API.
-- Added the Discussions API.
-- Added the Markdown API.
-- Added the Group Issue Boards API.
-- Added the Group badges API.
-- Added the (non-project) Snippets API.
+- Added API methods for Protected Tags, Search, Project Import/Export,
+  Project Badges, Resource Label Events, Discussions, Markdown,
+  Group Issue Boards, Group Badges, and Snippets.
 - Reorganized project/group members/access requests sections to better match
   the official API.
 - Renamed the various project snippet methods to have "project" in their name.
