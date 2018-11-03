@@ -1148,6 +1148,7 @@ Sends a C<GET> request to C<groups/:group_id/projects> and returns the decoded r
 
     my $group = $api->group(
         $group_id,
+        \%params,
     );
 
 Sends a C<GET> request to C<groups/:group_id> and returns the decoded response content.

@@ -2,7 +2,7 @@
 - groups: groups = GET groups?
 - group_subgroups: subgroups = GET groups/:group_id/subgroups?
 - group_projects: projects = GET groups/:group_id/projects?
-- group: group = GET groups/:group_id
+- group: group = GET groups/:group_id?
 - create_group: POST groups?
 - transfer_project_to_group: POST groups/:group_id/projects/:project_id
 - edit_group: group = PUT groups/:group_id?
