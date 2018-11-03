@@ -3,6 +3,7 @@ Revision history for Perl extension GitLab::API::v4.
 {{$NEXT}}
 
 - group() now accepts parameters.
+- Add the transfer_project_to_namespace() method.
 
 0.12 2018-09-11
 

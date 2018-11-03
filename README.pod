@@ -3336,6 +3336,15 @@ Sends a C<DELETE> request to C<projects/:project_id/fork>.
 
 Sends a C<POST> request to C<projects/:project_id/housekeeping>.
 
+=item transfer_project_to_namespace
+
+    $api->transfer_project_to_namespace(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C<projects/:project_id/transfer>.
+
 =back
 
 =head2 Project access requests

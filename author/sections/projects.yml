@@ -27,5 +27,6 @@
 - set_project_fork: POST projects/:project_id/fork/:from_project_id
 - clear_project_fork: DELETE projects/:project_id/fork
 - start_housekeeping: POST projects/:project_id/housekeeping
+- transfer_project_to_namespace: PUT projects/:project_id/transfer?
 # TODO: Support undecoded responses, maybe more.
 #- download_project_snapshot: snapshot = GET projects/:project_id/snapshot

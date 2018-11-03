@@ -7443,6 +7443,30 @@ sub start_housekeeping {
     return;
 }
 
+=item transfer_project_to_namespace
+
+    $api->transfer_project_to_namespace(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C<projects/:project_id/transfer>.
+
+=cut
+
+sub transfer_project_to_namespace {
+    my $self = shift;
+    croak 'transfer_project_to_namespace must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($project_id) to transfer_project_to_namespace must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to transfer_project_to_namespace must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
+    my $options = {};
+    $options->{decode} = 0;
+    $options->{content} = $params if defined $params;
+    $self->_call_rest_client( 'PUT', 'projects/:project_id/transfer', [@_], $options );
+    return;
+}
+
 =back
 
 =head2 Project access requests
