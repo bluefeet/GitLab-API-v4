@@ -16,7 +16,7 @@ use Pod::Usage qw( pod2usage );
 
 Getopt::Long::Configure(qw(
     gnu_getopt no_ignore_case
-    pass_through
+    pass_through require_order
 ));
 
 GetOptions(
