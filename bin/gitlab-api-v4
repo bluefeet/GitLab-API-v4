@@ -64,6 +64,9 @@ foreach my $arg (@ARGV) {
         $value = $has_value ? $value : $no ? 0 : 1;
         $params->{$key} = $value;
     }
+    elsif ($arg eq '--') {
+        next;
+    }
     else {
         push @args, $arg;
     }
@@ -77,6 +80,10 @@ if ($method eq 'configure') {
     $config->configure();
     exit;
 }
+
+$log->debug("method: $method");
+$log->debug('arguments: ' . encode_json(\@args));
+$log->debug('params: ' . encode_json($params));
 
 try {
     my $api = GitLab::API::v4->new( $config->args() );
