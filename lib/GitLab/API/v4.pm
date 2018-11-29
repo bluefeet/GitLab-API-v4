@@ -2964,6 +2964,28 @@ sub group_members {
     return $self->_call_rest_client( 'GET', 'groups/:group_id/members', [@_], $options );
 }
 
+=item all_group_members
+
+    my $members = $api->all_group_members(
+        $group_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C<groups/:group_id/members/all> and returns the decoded response content.
+
+=cut
+
+sub all_group_members {
+    my $self = shift;
+    croak 'all_group_members must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($group_id) to all_group_members must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to all_group_members must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
+    my $options = {};
+    $options->{query} = $params if defined $params;
+    return $self->_call_rest_client( 'GET', 'groups/:group_id/members/all', [@_], $options );
+}
+
 =item group_member
 
     my $member = $api->group_member(
@@ -7829,6 +7851,28 @@ sub project_members {
     my $options = {};
     $options->{query} = $params if defined $params;
     return $self->_call_rest_client( 'GET', 'projects/:project_id/members', [@_], $options );
+}
+
+=item all_project_members
+
+    my $members = $api->all_project_members(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/members/all> and returns the decoded response content.
+
+=cut
+
+sub all_project_members {
+    my $self = shift;
+    croak 'all_project_members must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($project_id) to all_project_members must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to all_project_members must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
+    my $options = {};
+    $options->{query} = $params if defined $params;
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/members/all', [@_], $options );
 }
 
 =item project_member
