@@ -1,5 +1,6 @@
 ---
 - project_members: members = GET projects/:project_id/members?
+- all_project_members: members = GET projects/:project_id/members/all?
 - project_member: member = GET projects/:project_id/members/:user_id
 - add_project_member: member = POST projects/:project_id/members?
 - update_project_member: member = PUT projects/:project_id/members/:user_id?

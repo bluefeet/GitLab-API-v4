@@ -1,5 +1,6 @@
 ---
 - group_members: members = GET groups/:group_id/members?
+- all_group_members: members = GET groups/:group_id/members/all?
 - group_member: member = GET groups/:project_id/members/:user_id
 - add_group_member: member = POST groups/:group_id/members?
 - update_group_member: member = PUT groups/:group_id/members/:user_id?
