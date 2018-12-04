@@ -10257,6 +10257,10 @@ royce55 <royceE<64>ecs.vuw.ac.nz>
 
 gregor herrmann <gregoaE<64>debian.org>
 
+=item *
+
+Luc Didry <lucE<64>framasoft.org>
+
 =back
 
 =head1 ACKNOWLEDGEMENTS

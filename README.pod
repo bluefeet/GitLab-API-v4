@@ -1345,6 +1345,15 @@ See L<https://docs.gitlab.com/ce/api/members.html>.
 
 Sends a C<GET> request to C<groups/:group_id/members> and returns the decoded response content.
 
+=item all_group_members
+
+    my $members = $api->all_group_members(
+        $group_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C<groups/:group_id/members/all> and returns the decoded response content.
+
 =item group_member
 
     my $member = $api->group_member(
@@ -3516,6 +3525,15 @@ See L<https://docs.gitlab.com/ce/api/members.html>.
 
 Sends a C<GET> request to C<projects/:project_id/members> and returns the decoded response content.
 
+=item all_project_members
+
+    my $members = $api->all_project_members(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/members/all> and returns the decoded response content.
+
 =item project_member
 
     my $member = $api->project_member(
@@ -4610,6 +4628,10 @@ royce55 <royceE<64>ecs.vuw.ac.nz>
 =item *
 
 gregor herrmann <gregoaE<64>debian.org>
+
+=item *
+
+Luc Didry <lucE<64>framasoft.org>
 
 =back
 

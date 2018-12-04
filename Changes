@@ -2,6 +2,9 @@ Revision history for Perl extension GitLab::API::v4.
 
 {{$NEXT}}
 
+ - Add all_project_members and all_group_members methods.
+ - gitlab-api-v4 now handles -- like you'd expect your typical linux tooling would.
+
 0.13 2018-11-08
 
 - group() now accepts parameters.
