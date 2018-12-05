@@ -2,6 +2,8 @@ Revision history for Perl extension GitLab::API::v4.
 
 {{$NEXT}}
 
+ - Add --pretty and --canonical options to gitlab-api-v4.
+
 0.14 2018-12-04
 
  - Add all_project_members and all_group_members methods.

@@ -71,6 +71,10 @@ gregor herrmann <gregoaE<64>debian.org>
 
 Luc Didry <lucE<64>framasoft.org>
 
+=item *
+
+Kieren Diment <kieren.dimentE<64>staples.com.au>
+
 =back
 
 =head1 ACKNOWLEDGEMENTS

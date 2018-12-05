@@ -20,12 +20,13 @@ Getopt::Long::Configure(qw(
 ));
 
 GetOptions(
-    'a|all' => \my $all,
+    'a|all'       => \my $all,
+    'p|pretty'    => \my $pretty,
+    'c|canonical' => \my $canonical,
 
     'h|help'    => \my $help,
     'v|verbose' => \my $verbose,
     'q|quiet'   => \my $quiet,
-    'p|pretty'  => \my $pretty,
 ) or fail('Unable to process options!');
 
 if ($help or @ARGV and $ARGV[0] eq 'help') {
@@ -103,7 +104,8 @@ try {
 
     binmode STDOUT, ':utf8';
     my $json = JSON->new->allow_nonref();
-    $json->pretty(1) if $ENV{GITLAB_PRETTY_JSON} || $pretty;
+    $json->pretty() if $pretty;
+    $json->canonical() if $canonical;
     print $json->encode( $data );
 }
 catch {
@@ -181,16 +183,23 @@ Any parameters that the L</method> accepts.
 =head2 all
 
     --all
+    -a
 
 Retrieves all results when the results would normally be paged.
 
 =head2 pretty
 
     --pretty
+    -p
 
-Makes the script emit pretty json rather than compact.  Setting the
-C<GITLAB_PRETTY_JSON> environment variable will also have the same
-effect.
+Enables the L<JSON/pretty> feature.
+
+=head2 canonical
+
+    --canonical
+    -c
+
+Enables the L<JSON/canonical> feature.
 
 =head1 AUTHORS
 
