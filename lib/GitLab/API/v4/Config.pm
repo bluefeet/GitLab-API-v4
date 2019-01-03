@@ -37,10 +37,14 @@ use Moo;
 use strictures 2;
 use namespace::clean;
 
-sub BUILD {
-    my ($self) = @_;
-    $self->opt_args();
-    return;
+sub _filter_args {
+    my ($self, $args) = @_;
+
+    return {
+        map { $_ => $args->{$_} }
+        grep { $args->{$_} }
+        keys %$args
+    };
 }
 
 =head1 ARGUMENTS
@@ -93,35 +97,10 @@ of this class so that there are no weird race conditions.
 =cut
 
 has opt_args => (
-    is  => 'lazy',
-    isa => HashRef,
+    is      => 'rwp',
+    isa     => HashRef,
+    default => sub{ {} },
 );
-my $opt_args;
-sub _build_opt_args {
-    my ($self) = @_;
-
-    return $opt_args if $opt_args;
-
-    Getopt::Long::Configure('pass_through');
-
-    GetOptions(
-        'config-file=s'   => \my $config_file,
-        'url=s'           => \my $url,
-        'private-token=s' => \my $private_token,
-        'access-token=s'  => \my $access_token,
-        'retries=i'       => \my $retries,
-    ) or die('Unable to process options!');
-
-    $opt_args = $self->_filter_args({
-        config_file   => $config_file,
-        url           => $url,
-        private_token => $private_token,
-        access_token  => $access_token,
-        retries       => $retries,
-    });
-
-    return $opt_args;
-}
 
 =head2 env_args
 
@@ -157,12 +136,13 @@ sub _build_env_args {
 
 Returns a hashref of arguments gotten by decoding the JSON in the L</file>.
 
-Note that the file is re-read every time you call this attribute (or the
-L</args> attribute).
-
 =cut
 
-sub file_args {
+has file_args => (
+    is  => 'lazy',
+    isa => HashRef,
+);
+sub _build_file_args {
     my ($self) = @_;
 
     my $file = $self->file();
@@ -174,16 +154,6 @@ sub file_args {
     my $data = decode_json( $json );
 
     return $self->_filter_args( $data );
-}
-
-sub _filter_args {
-    my ($self, $args) = @_;
-
-    return {
-        map { $_ => $args->{$_} }
-        grep { $args->{$_} }
-        keys %$args
-    };
 }
 
 =head2 args
@@ -206,6 +176,35 @@ sub args {
 }
 
 =head1 METHODS
+
+=head2 get_options
+
+=cut
+
+sub get_options {
+    my ($self, @extra) = @_;
+
+    Getopt::Long::Configure(qw(
+        gnu_getopt no_ignore_case
+    ));
+
+    my $opt_args = {};
+
+    GetOptions(
+        'config-file=s'   => \$opt_args->{config_file},
+        'url=s'           => \$opt_args->{url},
+        'private-token=s' => \$opt_args->{private_token},
+        'access-token=s'  => \$opt_args->{access_token},
+        'retries=i'       => \$opt_args->{retries},
+        @extra,
+    ) or die('Unable to process options!');
+
+    $opt_args = $self->_filter_args( $opt_args );
+
+    $self->_set_opt_args( $opt_args );
+
+    return;
+}
 
 =head2 configure
 

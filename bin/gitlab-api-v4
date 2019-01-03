@@ -11,15 +11,16 @@ use Log::Any::Adapter::Screen;
 use Try::Tiny;
 use JSON;
 
-use Getopt::Long qw( GetOptions );
 use Pod::Usage qw( pod2usage );
 
-Getopt::Long::Configure(qw(
-    gnu_getopt no_ignore_case
-    pass_through
-));
+if (!@ARGV) {
+    print "USAGE: gitlab-api-v4 help\n";
+    exit 0;
+}
 
-GetOptions(
+my $config = GitLab::API::v4::Config->new();
+
+$config->get_options(
     'a|all'       => \my $all,
     'p|pretty'    => \my $pretty,
     'c|canonical' => \my $canonical,
@@ -27,10 +28,15 @@ GetOptions(
     'h|help'    => \my $help,
     'v|verbose' => \my $verbose,
     'q|quiet'   => \my $quiet,
-) or fail('Unable to process options!');
+);
 
-if ($help or @ARGV and $ARGV[0] eq 'help') {
+if ($help or (@ARGV and $ARGV[0] eq 'help')) {
     pod2usage( -verbose => 2 );
+    exit 0;
+}
+
+if (@ARGV and $ARGV[0] eq 'configure') {
+    $config->configure();
     exit 0;
 }
 
@@ -38,84 +44,88 @@ my $min_level = 'info';
 $min_level = 'trace' if $verbose;
 $min_level = 'error' if $quiet;
 
-my $config = GitLab::API::v4::Config->new();
-
 Log::Any::Adapter->set(
     'Screen',
     min_level => $min_level,
     stderr    => 1,
 );
 
-my $access_levels = {
-    '--access-level-guest'     => $GITLAB_ACCESS_LEVEL_GUEST,
-    '--access-level-reporter'  => $GITLAB_ACCESS_LEVEL_REPORTER,
-    '--access-level-developer' => $GITLAB_ACCESS_LEVEL_DEVELOPER,
-    '--access-level-master'    => $GITLAB_ACCESS_LEVEL_MASTER,
-    '--access-level-owner'     => $GITLAB_ACCESS_LEVEL_OWNER,
-};
-
-my @args;
-my $params = {};
-foreach my $arg (@ARGV) {
-    if (defined $access_levels->{$arg}) {
-        $params->{access_level} = $access_levels->{$arg};
-    }
-    elsif ($arg =~ m{^--(no-|)?([^\s=]+)(=(.*)|)$}) {
-        my ($no, $key, $has_value, $value) = ($1, $2, $3, $4);
-        $key =~ s{-}{_}g;
-        $value = $has_value ? $value : $no ? 0 : 1;
-        $params->{$key} = $value;
-    }
-    elsif ($arg eq '--') {
-        next;
-    }
-    else {
-        push @args, $arg;
-    }
-}
-
-my $method = shift( @args );
-fail( 'No method was specified.' ) if !$method;
+my $method = shift @ARGV;
+die "ERROR: No API method specified.\n" if !$method;
+my $orig_method = $method;
 $method =~ s{-}{_}g;
 
-if ($method eq 'configure') {
-    $config->configure();
-    exit;
+die "ERROR: Unknown API method \"$orig_method\".\n"
+    if !GitLab::API::v4->can( $method );
+
+my @args;
+while (@ARGV and $ARGV[0] !~ m{:}) {
+    my $arg = shift @ARGV;
+    next if $arg eq '--';
+
+    push @args, shift @ARGV;
 }
 
+my $aliases = {
+    access_level => {
+        guest     => $GITLAB_ACCESS_LEVEL_GUEST,
+        reporter  => $GITLAB_ACCESS_LEVEL_REPORTER,
+        developer => $GITLAB_ACCESS_LEVEL_DEVELOPER,
+        master    => $GITLAB_ACCESS_LEVEL_MASTER,
+        owner     => $GITLAB_ACCESS_LEVEL_OWNER,
+    },
+};
+
+my $params = {};
+while (@ARGV) {
+    my $arg = shift @ARGV;
+    next if $arg eq '--';
+
+    if ($arg =~ m{^([^:]+):(.*)$}) {
+        my ($key, $value) = ($1, $2);
+
+        $key =~ s{-}{_}g;
+
+        if ($aliases->{$key} and exists $aliases->{$key}->{$value}) {
+            $value = $aliases->{$key}->{$value};
+        }
+
+        $params->{$key} = $value;
+    }
+    else {
+        die "ERROR: Invalid API parameter \"$arg\".\n";
+    }
+}
+
+# Make sure we don't leak tokens in the logs.
+my $debug_config = { %{ $config->args() } };
+$debug_config->{private_token} = 'xxxx' if $debug_config->{private_token};
+$debug_config->{access_token} = 'xxxx' if $debug_config->{access_token};
+
+$log->debug('config: ' . encode_json($debug_config));
 $log->debug("method: $method");
 $log->debug('arguments: ' . encode_json(\@args));
 $log->debug('params: ' . encode_json($params));
 
-try {
-    my $api = GitLab::API::v4->new( $config->args() );
+my $api = GitLab::API::v4->new( $config->args() );
 
-    if ($all) {
-        @args = ( $method, @args );
-        $method = 'paginator';
-    }
-
-    my $data = $api->$method(
-        @args,
-        %$params ? $params : (),
-    );
-
-    $data = $data->all() if $all;
-
-    binmode STDOUT, ':utf8';
-    my $json = JSON->new->allow_nonref();
-    $json->pretty() if $pretty;
-    $json->canonical() if $canonical;
-    print $json->encode( $data );
+if ($all) {
+    unshift @args, $method;
+    $method = 'paginator';
 }
-catch {
-    fail( $_ );
-};
 
-sub fail {
-    $log->fatal( @_ );
-    exit 1;
-}
+my $data = $api->$method(
+    @args,
+    %$params ? $params : (),
+);
+
+$data = $data->all() if $all;
+
+binmode STDOUT, ':utf8';
+my $json = JSON->new->allow_nonref();
+$json->pretty() if $pretty;
+$json->canonical() if $canonical;
+print $json->encode( $data );
 
 __END__
 
@@ -126,7 +136,7 @@ gitlab-api-v4 - Command line interface to the GitLab API v4.
 =head1 SYNOPSIS
 
     # Generally:
-    gitlab-api-v4 <method> [<arg> ...] [--<param>=<value> ...]
+    gitlab-api-v4 [<options>] <method> [<arg> ...] [<param>:<value> ...]
     
     # List all groups:
     gitlab-api-v4 groups
@@ -136,11 +146,15 @@ gitlab-api-v4 - Command line interface to the GitLab API v4.
     
     # Create an admin user:
     gitlab-api-v4 create-user \
-        --email=<email> --password=<password> --username=<username> --name=<name> --admin
+        username:foo \
+        password:xxxxxxxx \
+        email:user@example.com \
+        "name:Foo Smith" \
+        admin:1
 
 =head1 CONFIGURING
 
-You may configure this module with envornment variables, command line options,
+You may configure this module with environment variables, command line options,
 and a configuration file.  To setup the configuration file run:
 
     gitlab-api-v4 configure
@@ -153,32 +167,29 @@ Read more at L<GitLab::API::v4::Config>.
 
 =head1 OPTIONS
 
-=head2 method
+=head2 url
 
-    <method>
+    --url=<url>
 
-The API method to call (one of the methods documented in
-L<GitLab::API::v4>).
+Sets L<GitLab::API::v4/url>.
 
-=head2 args
+=head2 access-token
 
-    <arg> ...
+    --access-token=<token>
 
-Any arguments that the L</method> requires.
+Sets L<GitLab::API::v4/access_token>.
 
-=head2 params
+=head2 private-token
 
-    --<param>=<value> ...
+    --private-token=<token>
 
-Any parameters that the L</method> accepts.
+Sets L<GitLab::API::v4/private_token>.
 
-=head2 access level
+=head2 retries
 
-    --access-level-guest
-    --access-level-reporter
-    --access-level-developer
-    --access-level-master
-    --access-level-owner
+    --retries=<count>
+
+Sets L<GitLab::API::v4/retries>.
 
 =head2 all
 
@@ -186,6 +197,7 @@ Any parameters that the L</method> accepts.
     -a
 
 Retrieves all results when the results would normally be paged.
+See L<GitLab::API::v4::Paginator/all> for details.
 
 =head2 pretty
 
@@ -200,6 +212,37 @@ Enables the L<JSON/pretty> feature.
     -c
 
 Enables the L<JSON/canonical> feature.
+
+=head1 API METHOD
+
+    <method>
+
+The API method to call - one of the methods documented in
+L<GitLab::API::v4/API METHODS>.
+
+=head1 API ARGUMENTS
+
+    <arg> ...
+
+Any arguments that the L</API METHOD> requires.
+
+=head1 API PARAMETERS
+
+    <param>:<value> ...
+
+Any parameters that the L</API METHOD> accepts.
+
+=head2 access-level
+
+    access-level:guest
+    access-level:reporter
+    access-level:developer
+    access-level:master
+    access-level:owner
+
+There are mappings setup for the various C<access-level> parameters
+so that you can, for example, specify C<access-level:guest> and it
+will be automatically converted to C<access-level:10>.
 
 =head1 AUTHORS
 
