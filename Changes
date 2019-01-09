@@ -2,6 +2,8 @@ Revision history for Perl extension GitLab::API::v4.
 
 {{$NEXT}}
 
+0.15 2019-01-09
+
  - BREAKING CHANGE: gitlab-api-v4 now takes parameters in the form of param:value
    rather than --param=value.  This is to avoid foot-gun ambiguities when options
    have the same names as parameters (such as --url).
