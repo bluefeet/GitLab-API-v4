@@ -63,7 +63,7 @@ while (@ARGV and $ARGV[0] !~ m{:}) {
     my $arg = shift @ARGV;
     next if $arg eq '--';
 
-    push @args, shift @ARGV;
+    push @args, $arg;
 }
 
 my $aliases = {
