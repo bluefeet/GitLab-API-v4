@@ -1,0 +1,106 @@
+{
+   "abstract" : "A complete GitLab API v4 client.",
+   "author" : [
+      "Aran Clary Deltac <bluefeet@gmail.com>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Minilla/v3.1.4, CPAN::Meta::Converter version 2.150010",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "GitLab-API-v4",
+   "no_index" : {
+      "directory" : [
+         "t",
+         "xt",
+         "inc",
+         "share",
+         "eg",
+         "examples",
+         "author",
+         "builder"
+      ]
+   },
+   "prereqs" : {
+      "configure" : {
+         "requires" : {
+            "Module::Build::Tiny" : "0.035"
+         }
+      },
+      "develop" : {
+         "requires" : {
+            "Test::CPAN::Meta" : "0",
+            "Test::MinimumVersion::Fast" : "0.04",
+            "Test::PAUSE::Permissions" : "0.04",
+            "Test::Pod" : "1.41",
+            "Test::Spellunker" : "v0.2.7"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Carp" : "0",
+            "Const::Fast" : "0.014",
+            "Exporter" : "0",
+            "Getopt::Long" : "0",
+            "HTTP::Tiny" : "0.059",
+            "HTTP::Tiny::Multipart" : "0.05",
+            "IO::Prompter" : "0.004014",
+            "JSON" : "2.59",
+            "Log::Any" : "1.703",
+            "Log::Any::Adapter" : "1.703",
+            "Log::Any::Adapter::Screen" : "0.13",
+            "Moo" : "2.003000",
+            "Path::Tiny" : "0.079",
+            "Pod::Usage" : "0",
+            "Try::Tiny" : "0.28",
+            "Types::Common::Numeric" : "1.002001",
+            "Types::Common::String" : "1.002001",
+            "Types::Standard" : "1.002001",
+            "URI" : "1.62",
+            "URI::Escape" : "1.72",
+            "namespace::clean" : "0.27",
+            "strictures" : "2.000003"
+         }
+      },
+      "test" : {
+         "requires" : {
+            "Log::Any::Adapter::TAP" : "0.003003",
+            "MIME::Base64" : "3.15",
+            "Test2::V0" : "0.000094"
+         }
+      }
+   },
+   "release_status" : "unstable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/bluefeet/GitLab-API-v4/issues"
+      },
+      "homepage" : "https://github.com/bluefeet/GitLab-API-v4",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/bluefeet/GitLab-API-v4.git",
+         "web" : "https://github.com/bluefeet/GitLab-API-v4"
+      }
+   },
+   "version" : "0.15",
+   "x_contributors" : [
+      "Aran Deltac <aran@ziprecruiter.com>",
+      "Dave Webb <github@d5ve.com>",
+      "Dotan Dimet <dotan@corky.net>",
+      "José Joaquín Atria <jjatria@gmail.com>",
+      "Kieren Diment <kieren.diment@staples.com.au>",
+      "Luc Didry <luc@framasoft.org>",
+      "Marek R. Sotola <Marek.R.Sotola@nasa.gov>",
+      "Nigel Gregoire <nigelgregoire@gmail.com>",
+      "Simon Ruderich <simon@ruderich.org>",
+      "gregor herrmann <gregoa@debian.org>",
+      "royce55 <royce@ecs.vuw.ac.nz>",
+      "trunov-ms <trunov.ms@gmail.com>"
+   ],
+   "x_serialization_backend" : "JSON::PP version 2.27300",
+   "x_static_install" : 1
+}

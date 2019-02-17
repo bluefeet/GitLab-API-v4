@@ -20,7 +20,7 @@ sub run {
     local $ENV{PERL5LIB} = 'lib';
 
     my($ok, $error, $full, $stdout, $stderr) =
-        IPC::Cmd::run( command => ['bin/gitlab-api-v4', @_] );
+        IPC::Cmd::run( command => ['script/gitlab-api-v4', @_] );
 
     if ($ok) {
         $stdout = join('',@$stdout);

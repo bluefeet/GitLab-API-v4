@@ -2,6 +2,8 @@ Revision history for Perl extension GitLab::API::v4.
 
 {{$NEXT}}
 
+ - Migrate build tooling from Dist::Zilla to Minilla.
+
 0.15 2019-01-09
 
  - BREAKING CHANGE: gitlab-api-v4 now takes parameters in the form of param:value

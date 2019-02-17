@@ -1,5 +1,7 @@
 package GitLab::API::v4;
 
+$GitLab::API::v4::VERSION = '0.15';
+
 =encoding utf8
 
 =head1 NAME
