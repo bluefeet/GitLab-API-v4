@@ -2,6 +2,8 @@ Revision history for Perl extension GitLab-API-v4.
 
 {{$NEXT}}
 
+0.16 2019-02-18T06:21:15Z
+
  - Migrate build tooling from Dist::Zilla to Minilla.
 
 0.15 2019-01-09

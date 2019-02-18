@@ -1,6 +1,6 @@
 package GitLab::API::v4::RESTClient;
 
-$GitLab::API::v4::RESTClient::VERSION = '0.15';
+$GitLab::API::v4::RESTClient::VERSION = '0.16';
 
 =encoding utf8
 

@@ -1,6 +1,6 @@
 package GitLab::API::v4::Paginator;
 
-$GitLab::API::v4::Paginator::VERSION = '0.15';
+$GitLab::API::v4::Paginator::VERSION = '0.16';
 
 =encoding utf8
 
