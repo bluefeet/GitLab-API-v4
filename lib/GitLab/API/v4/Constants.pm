@@ -1,6 +1,6 @@
 package GitLab::API::v4::Constants;
 
-$GitLab::API::v4::Constants::VERSION = '0.16';
+our $VERSION = '0.16';
 
 =encoding utf8
 
