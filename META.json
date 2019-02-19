@@ -63,6 +63,7 @@
             "URI" : "1.62",
             "URI::Escape" : "1.72",
             "namespace::clean" : "0.27",
+            "perl" : "5.008001",
             "strictures" : "2.000003"
          }
       },
