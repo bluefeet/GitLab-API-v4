@@ -1,3 +1,5 @@
+requires 'perl' => '5.008001';
+
 # Common modules.
 requires 'Moo' => '2.003000';
 requires 'strictures' => '2.000003';
