@@ -2,7 +2,7 @@ Revision history for Perl extension GitLab-API-v4.
 
 {{$NEXT}}
 
- - Require perl 5.8 per Manilla.
+ - Require perl 5.8 per Minilla.
  - Simplify VERSION declarations.
 
 0.16 2019-02-18T06:21:15Z
