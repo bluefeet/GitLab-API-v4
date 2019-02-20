@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+use 5.010001;
 use strictures 2;
 
 use Test2::V0;

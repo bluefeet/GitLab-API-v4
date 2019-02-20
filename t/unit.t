@@ -1,14 +1,16 @@
 #!/usr/bin/env perl
+use 5.010001;
 use strictures 2;
 
 {
     package MockRESTClient;
+    use 5.010001;
+    use strictures 2;
 
     use URI;
     use JSON;
 
     use Moo;
-    use strictures 2;
     use namespace::clean;
 
     extends 'GitLab::API::v4::RESTClient';
