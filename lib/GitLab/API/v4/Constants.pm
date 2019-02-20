@@ -1,5 +1,6 @@
 package GitLab::API::v4::Constants;
-
+use 5.010001;
+use strictures 2;
 our $VERSION = '0.16';
 
 =encoding utf8
@@ -18,7 +19,6 @@ GitLab::API::v4::Constants - GitLab API v4 constants.
 
 use Const::Fast;
 
-use strictures 2;
 use namespace::clean;
 
 use Exporter qw( import );

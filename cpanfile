@@ -1,4 +1,4 @@
-requires 'perl' => '5.008001';
+requires 'perl' => '5.010001';
 
 # Common modules.
 requires 'Moo' => '2.003000';

@@ -10,7 +10,7 @@
    ],
    "meta-spec" : {
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
-      "version" : "2"
+      "version" : 2
    },
    "name" : "GitLab-API-v4",
    "no_index" : {
@@ -63,7 +63,7 @@
             "URI" : "1.62",
             "URI::Escape" : "1.72",
             "namespace::clean" : "0.27",
-            "perl" : "5.008001",
+            "perl" : "5.010001",
             "strictures" : "2.000003"
          }
       },
@@ -102,6 +102,6 @@
       "royce55 <royce@ecs.vuw.ac.nz>",
       "trunov-ms <trunov.ms@gmail.com>"
    ],
-   "x_serialization_backend" : "JSON::PP version 2.27300",
+   "x_serialization_backend" : "JSON::PP version 2.97001",
    "x_static_install" : 1
 }

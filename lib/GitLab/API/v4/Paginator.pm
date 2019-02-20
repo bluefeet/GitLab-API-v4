@@ -1,5 +1,6 @@
 package GitLab::API::v4::Paginator;
-
+use 5.010001;
+use strictures 2;
 our $VERSION = '0.16';
 
 =encoding utf8
@@ -21,7 +22,6 @@ use Types::Common::String -types;
 use Carp qw( croak );
 
 use Moo;
-use strictures 2;
 use namespace::clean;
 
 =head1 REQUIRED ARGUMENTS
