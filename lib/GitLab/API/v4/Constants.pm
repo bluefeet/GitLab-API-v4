@@ -1,7 +1,7 @@
 package GitLab::API::v4::Constants;
 use 5.010001;
 use strictures 2;
-our $VERSION = '0.16';
+our $VERSION = '0.17';
 
 =encoding utf8
 
