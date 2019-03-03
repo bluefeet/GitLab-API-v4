@@ -259,12 +259,9 @@ sub configure {
 1;
 __END__
 
-=head1 AUTHORS
+=head1 AUTHORS AND LICENSE
 
-See L<GitLab::API::v4/AUTHOR> and L<GitLab::API::v4/CONTRIBUTORS>.
+See L<GitLab::API::v4/AUTHORS> and L<GitLab::API::v4/LICENSE>.
 
-=head1 LICENSE
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+=cut
 

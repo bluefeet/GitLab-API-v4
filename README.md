@@ -4337,23 +4337,20 @@ for more information.
 Alternatively, you can
 [open a ticket](https://github.com/bluefeet/GitLab-API-v4/issues).
 
-# AUTHOR
+# AUTHORS
 
-Aran Clary Deltac <bluefeet@gmail.com>
-
-# CONTRIBUTORS
-
-- Dotan Dimet <dotan@corky.net>
-- Nigel Gregoire <nigelgregoire@gmail.com>
-- trunov-ms <trunov.ms@gmail.com>
-- Marek R. Sotola <Marek.R.Sotola@nasa.gov>
-- José Joaquín Atria <jjatria@gmail.com>
-- Dave Webb <github@d5ve.com>
-- Simon Ruderich <simon@ruderich.org>
-- royce55 <royce@ecs.vuw.ac.nz>
-- gregor herrmann <gregoa@debian.org>
-- Luc Didry <luc@framasoft.org>
-- Kieren Diment <kieren.diment@staples.com.au>
+    Aran Clary Deltac <bluefeet@gmail.com>
+    Dotan Dimet <dotan@corky.net>
+    Nigel Gregoire <nigelgregoire@gmail.com>
+    trunov-ms <trunov.ms@gmail.com>
+    Marek R. Sotola <Marek.R.Sotola@nasa.gov>
+    José Joaquín Atria <jjatria@gmail.com>
+    Dave Webb <github@d5ve.com>
+    Simon Ruderich <simon@ruderich.org>
+    royce55 <royce@ecs.vuw.ac.nz>
+    gregor herrmann <gregoa@debian.org>
+    Luc Didry <luc@framasoft.org>
+    Kieren Diment <kieren.diment@staples.com.au>
 
 # ACKNOWLEDGEMENTS
 
