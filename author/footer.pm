@@ -75,6 +75,10 @@ Luc Didry <lucE<64>framasoft.org>
 
 Kieren Diment <kieren.dimentE<64>staples.com.au>
 
+=item *
+
+Dmitry Frolov <dmitry.frolovE<64>gmail.com>
+
 =back
 
 =head1 ACKNOWLEDGEMENTS
