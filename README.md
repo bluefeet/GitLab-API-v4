@@ -2863,6 +2863,35 @@ See [https://docs.gitlab.com/ce/api/pipeline\_triggers.html](https://docs.gitlab
 
     Sends a `DELETE` request to `projects/:project_id/triggers/:trigger_id`.
 
+- trigger\_pipeline
+
+        my $pipeline = $api->trigger_pipeline(
+            $project_id,
+            \%params,
+        );
+
+    Sends a `POST` request to `projects/:project_id/trigger/pipeline` and returns the decoded response content.
+
+    The API authentication token (["private\_token"](#private_token) or ["access\_token"](#access_token)
+    parameters in a constructor) is not needed when using this method, however
+    You must pass trigger token (generated at the trigger creation) as `token`
+    field and git ref name as `ref` field in the `%params` hash. You can also
+    pass variables to be set in a pipeline in the `variables` field. Example:
+
+        my $pipeline = $api->trigger_pipeline(
+            $project_id,
+            {
+                token => 'd69dba9162ab6ac72fa0993496286ada',
+                'ref' => 'master',
+                variables => {
+                    variable1 => 'value1',
+                    variable2 => 'value2',
+                },
+            },
+        );
+
+    Read more at [https://docs.gitlab.com/ce/ci/triggers/#triggering-a-pipeline](https://docs.gitlab.com/ce/ci/triggers/#triggering-a-pipeline).
+
 ## Pipeline schedules
 
 See [https://docs.gitlab.com/ce/api/pipeline\_schedules.html](https://docs.gitlab.com/ce/api/pipeline_schedules.html).
@@ -4339,18 +4368,19 @@ Alternatively, you can
 
 # AUTHORS
 
-    Aran Clary Deltac <bluefeet@gmail.com>
-    Dotan Dimet <dotan@corky.net>
-    Nigel Gregoire <nigelgregoire@gmail.com>
-    trunov-ms <trunov.ms@gmail.com>
-    Marek R. Sotola <Marek.R.Sotola@nasa.gov>
-    José Joaquín Atria <jjatria@gmail.com>
-    Dave Webb <github@d5ve.com>
-    Simon Ruderich <simon@ruderich.org>
-    royce55 <royce@ecs.vuw.ac.nz>
-    gregor herrmann <gregoa@debian.org>
-    Luc Didry <luc@framasoft.org>
-    Kieren Diment <kieren.diment@staples.com.au>
+    Aran Clary Deltac <bluefeetE<64>gmail.com>
+    Dotan Dimet <dotanE<64>corky.net>
+    Nigel Gregoire <nigelgregoireE<64>gmail.com>
+    trunov-ms <trunov.msE<64>gmail.com>
+    Marek R. Sotola <Marek.R.SotolaE<64>nasa.gov>
+    José Joaquín Atria <jjatriaE<64>gmail.com>
+    Dave Webb <githubE<64>d5ve.com>
+    Simon Ruderich <simonE<64>ruderich.org>
+    royce55 <royceE<64>ecs.vuw.ac.nz>
+    gregor herrmann <gregoaE<64>debian.org>
+    Luc Didry <lucE<64>framasoft.org>
+    Kieren Diment <kieren.dimentE<64>staples.com.au>
+    Dmitry Frolov <dmitry.frolov@gmail.com>
 
 # ACKNOWLEDGEMENTS
 

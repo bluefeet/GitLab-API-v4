@@ -6703,6 +6703,49 @@ sub delete_trigger {
     return;
 }
 
+=item trigger_pipeline
+
+    my $pipeline = $api->trigger_pipeline(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C<projects/:project_id/trigger/pipeline> and returns the decoded response content.
+
+The API authentication token (L</private_token> or L</access_token>
+parameters in a constructor) is not needed when using this method, however
+You must pass trigger token (generated at the trigger creation) as C<token>
+field and git ref name as C<ref> field in the C<%params> hash. You can also
+pass variables to be set in a pipeline in the C<variables> field. Example:
+
+    my $pipeline = $api->trigger_pipeline(
+        $project_id,
+        {
+            token => 'd69dba9162ab6ac72fa0993496286ada',
+            'ref' => 'master',
+            variables => {
+                variable1 => 'value1',
+                variable2 => 'value2',
+            },
+        },
+    );
+
+Read more at L<https://docs.gitlab.com/ce/ci/triggers/#triggering-a-pipeline>.
+
+
+=cut
+
+sub trigger_pipeline {
+    my $self = shift;
+    croak 'trigger_pipeline must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($project_id) to trigger_pipeline must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to trigger_pipeline must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
+    my $options = {};
+    $options->{content} = $params if defined $params;
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/trigger/pipeline', [@_], $options );
+}
+
 =back
 
 =head2 Pipeline schedules
@@ -10217,18 +10260,19 @@ L<open a ticket|https://github.com/bluefeet/GitLab-API-v4/issues>.
 
 =head1 AUTHORS
 
-    Aran Clary Deltac <bluefeet@gmail.com>
-    Dotan Dimet <dotan@corky.net>
-    Nigel Gregoire <nigelgregoire@gmail.com>
-    trunov-ms <trunov.ms@gmail.com>
-    Marek R. Sotola <Marek.R.Sotola@nasa.gov>
-    José Joaquín Atria <jjatria@gmail.com>
-    Dave Webb <github@d5ve.com>
-    Simon Ruderich <simon@ruderich.org>
-    royce55 <royce@ecs.vuw.ac.nz>
-    gregor herrmann <gregoa@debian.org>
-    Luc Didry <luc@framasoft.org>
-    Kieren Diment <kieren.diment@staples.com.au>
+    Aran Clary Deltac <bluefeetE<64>gmail.com>
+    Dotan Dimet <dotanE<64>corky.net>
+    Nigel Gregoire <nigelgregoireE<64>gmail.com>
+    trunov-ms <trunov.msE<64>gmail.com>
+    Marek R. Sotola <Marek.R.SotolaE<64>nasa.gov>
+    José Joaquín Atria <jjatriaE<64>gmail.com>
+    Dave Webb <githubE<64>d5ve.com>
+    Simon Ruderich <simonE<64>ruderich.org>
+    royce55 <royceE<64>ecs.vuw.ac.nz>
+    gregor herrmann <gregoaE<64>debian.org>
+    Luc Didry <lucE<64>framasoft.org>
+    Kieren Diment <kieren.dimentE<64>staples.com.au>
+    Dmitry Frolov <dmitry.frolov@gmail.com>
 
 =head1 ACKNOWLEDGEMENTS
 
@@ -10241,6 +10285,4 @@ development this distribution would not exist.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
-
-=cut
 

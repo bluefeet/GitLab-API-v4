@@ -92,6 +92,7 @@
    "x_contributors" : [
       "Aran Deltac <aran@ziprecruiter.com>",
       "Dave Webb <github@d5ve.com>",
+      "Dmitry Frolov <dmitry.frolov@gmail.com>",
       "Dotan Dimet <dotan@corky.net>",
       "José Joaquín Atria <jjatria@gmail.com>",
       "Kieren Diment <kieren.diment@staples.com.au>",
@@ -103,6 +104,6 @@
       "royce55 <royce@ecs.vuw.ac.nz>",
       "trunov-ms <trunov.ms@gmail.com>"
    ],
-   "x_serialization_backend" : "JSON::PP version 2.97001",
+   "x_serialization_backend" : "JSON::PP version 4.02",
    "x_static_install" : 1
 }

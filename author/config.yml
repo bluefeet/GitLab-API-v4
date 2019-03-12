@@ -114,9 +114,6 @@ sections:
 - pipeline_triggers:
     head: Pipeline triggers
     doc_url: https://docs.gitlab.com/ce/api/pipeline_triggers.html
-- trigger_pipeline:
-    head: Trigger Pipeline
-    doc_url: https://docs.gitlab.com/ce/ci/triggers/#triggering-a-pipeline
 - pipeline_schedules:
     head: Pipeline schedules
     doc_url: https://docs.gitlab.com/ce/api/pipeline_schedules.html

@@ -5,3 +5,25 @@
 - edit_trigger: trigger = PUT projects/:project_id/triggers/:trigger_id?
 - take_ownership_of_trigger: trigger = POST projects/:project_id/triggers/:trigger_id/take_ownership
 - delete_trigger: DELETE projects/:project_id/triggers/:trigger_id
+- method: trigger_pipeline
+  spec: pipeline = POST projects/:project_id/trigger/pipeline?
+  note: |
+    The API authentication token (L</private_token> or L</access_token>
+    parameters in a constructor) is not needed when using this method, however
+    You must pass trigger token (generated at the trigger creation) as C<token>
+    field and git ref name as C<ref> field in the C<%params> hash. You can also
+    pass variables to be set in a pipeline in the C<variables> field. Example:
+
+        my $pipeline = $api->trigger_pipeline(
+            $project_id,
+            {
+                token => 'd69dba9162ab6ac72fa0993496286ada',
+                'ref' => 'master',
+                variables => {
+                    variable1 => 'value1',
+                    variable2 => 'value2',
+                },
+            },
+        );
+
+    Read more at L<https://docs.gitlab.com/ce/ci/triggers/#triggering-a-pipeline>.

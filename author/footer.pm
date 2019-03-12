@@ -23,63 +23,21 @@ for more information.
 Alternatively, you can
 L<open a ticket|https://github.com/bluefeet/GitLab-API-v4/issues>.
 
-=head1 AUTHOR
+=head1 AUTHORS
 
-Aran Clary Deltac <bluefeetE<64>gmail.com>
-
-=head1 CONTRIBUTORS
-
-=over
-
-=item *
-
-Dotan Dimet <dotanE<64>corky.net>
-
-=item *
-
-Nigel Gregoire <nigelgregoireE<64>gmail.com>
-
-=item *
-
-trunov-ms <trunov.msE<64>gmail.com>
-
-=item *
-
-Marek R. Sotola <Marek.R.SotolaE<64>nasa.gov>
-
-=item *
-
-José Joaquín Atria <jjatriaE<64>gmail.com>
-
-=item *
-
-Dave Webb <githubE<64>d5ve.com>
-
-=item *
-
-Simon Ruderich <simonE<64>ruderich.org>
-
-=item *
-
-royce55 <royceE<64>ecs.vuw.ac.nz>
-
-=item *
-
-gregor herrmann <gregoaE<64>debian.org>
-
-=item *
-
-Luc Didry <lucE<64>framasoft.org>
-
-=item *
-
-Kieren Diment <kieren.dimentE<64>staples.com.au>
-
-=item *
-
-Dmitry Frolov <dmitry.frolovE<64>gmail.com>
-
-=back
+    Aran Clary Deltac <bluefeetE<64>gmail.com>
+    Dotan Dimet <dotanE<64>corky.net>
+    Nigel Gregoire <nigelgregoireE<64>gmail.com>
+    trunov-ms <trunov.msE<64>gmail.com>
+    Marek R. Sotola <Marek.R.SotolaE<64>nasa.gov>
+    José Joaquín Atria <jjatriaE<64>gmail.com>
+    Dave Webb <githubE<64>d5ve.com>
+    Simon Ruderich <simonE<64>ruderich.org>
+    royce55 <royceE<64>ecs.vuw.ac.nz>
+    gregor herrmann <gregoaE<64>debian.org>
+    Luc Didry <lucE<64>framasoft.org>
+    Kieren Diment <kieren.dimentE<64>staples.com.au>
+    Dmitry Frolov <dmitry.frolov@gmail.com>
 
 =head1 ACKNOWLEDGEMENTS
 
@@ -92,4 +50,6 @@ development this distribution would not exist.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
+
+=cut
 
