@@ -3,6 +3,7 @@ Revision history for Perl extension GitLab-API-v4.
 {{$NEXT}}
 
  - Add the trigger_pipeline method.
+ - Document some create_pipeline method parameters.
 
 0.17 2019-02-20T22:47:58Z
 

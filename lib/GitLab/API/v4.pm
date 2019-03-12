@@ -6512,6 +6512,21 @@ sub pipeline {
 
 Sends a C<POST> request to C<projects/:project_id/pipeline> and returns the decoded response content.
 
+Git ref (branch or tag) name must be specified in the C<ref> field of the
+C<%params> hash. It's also possible to pass variables to a pipeline in
+the C<variables> field like in the following example:
+
+    my $pipeline = $api->create_pipeline(
+        $project_id,
+        {
+            'ref'     => 'master',
+            variables => [
+                { 'key' => 'VARIABLE1', 'value' => 'VALUE1' },
+                { 'key' => 'VARIABLE2', 'value' => 'VALUE2' },
+            ],
+        },
+    );
+
 =cut
 
 sub create_pipeline {
@@ -6731,7 +6746,6 @@ pass variables to be set in a pipeline in the C<variables> field. Example:
     );
 
 Read more at L<https://docs.gitlab.com/ce/ci/triggers/#triggering-a-pipeline>.
-
 
 =cut
 
@@ -7282,7 +7296,6 @@ sub delete_project {
 Sends a C<POST> request to C<projects/:project_id/uploads> and returns the decoded response content.
 
 The C<file> parameter must point to a readable file on the local filesystem.
-
 =cut
 
 sub upload_file_to_project {
@@ -10285,4 +10298,6 @@ development this distribution would not exist.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
+
+=cut
 

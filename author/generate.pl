@@ -76,7 +76,7 @@ foreach my $section_name (keys %$section_pack) {
         print "Sends a C<$verb> request to C<$path>";
         print ' and returns the ' . ($no_decode ? 'raw' : 'decoded') . ' response content' if $return;
         print ".\n\n";
-        print "$endpoint->{note}\n\n" if $endpoint->{note};
+        print "$endpoint->{note}\n" if $endpoint->{note};
         print "=cut\n\n";
 
         print "sub $method {\n";

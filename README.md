@@ -2786,6 +2786,21 @@ See [https://docs.gitlab.com/ce/api/pipelines.html](https://docs.gitlab.com/ce/a
 
     Sends a `POST` request to `projects/:project_id/pipeline` and returns the decoded response content.
 
+    Git ref (branch or tag) name must be specified in the `ref` field of the
+    `%params` hash. It's also possible to pass variables to a pipeline in
+    the `variables` field like in the following example:
+
+        my $pipeline = $api->create_pipeline(
+            $project_id,
+            {
+                'ref'     => 'master',
+                variables => [
+                    { 'key' => 'VARIABLE1', 'value' => 'VALUE1' },
+                    { 'key' => 'VARIABLE2', 'value' => 'VALUE2' },
+                ],
+            },
+        );
+
 - retry\_pipeline\_jobs
 
         my $pipeline = $api->retry_pipeline_jobs(
