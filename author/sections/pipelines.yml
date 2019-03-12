@@ -1,6 +1,23 @@
 ---
 - pipelines: pipelines = GET projects/:project_id/pipelines?
 - pipeline: pipeline = GET projects/:project_id/pipelines/:pipeline_id
-- create_pipeline: pipeline = POST projects/:project_id/pipeline?
+- method: create_pipeline
+  spec: pipeline = POST projects/:project_id/pipeline?
+  note: |
+    Git ref (branch or tag) name must be specified in the C<ref> field of the
+    C<%params> hash. It's also possible to pass variables to a pipeline in
+    the C<variables> field like in the following example:
+
+
+        my $pipeline = $api->create_pipeline(
+            $project_id,
+            {
+                'ref'     => 'master',
+                variables => [
+                    { 'key' => 'VARIABLE1', 'value' => 'VALUE1' },
+                    { 'key' => 'VARIABLE2', 'value' => 'VALUE2' }
+                ]
+            }
+        );
 - retry_pipeline_jobs: pipeline = POST projects/:project_id/pipelines/:pipeline_id/retry
 - cancel_pipeline_jobs: pipeline = POST projects/:project_id/pipelines/:pipeline_id/cancel
