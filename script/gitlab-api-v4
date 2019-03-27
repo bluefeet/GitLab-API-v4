@@ -130,6 +130,8 @@ print $json->encode( $data );
 
 __END__
 
+=encoding utf8
+
 =head1 NAME
 
 gitlab-api-v4 - Command line interface to the GitLab API v4.
@@ -245,12 +247,17 @@ There are mappings setup for the various C<access-level> parameters
 so that you can, for example, specify C<access-level:guest> and it
 will be automatically converted to C<access-level:10>.
 
+=head1 SUPPORT
+
+See L<GitLab::API::v4/SUPPORT>.
+
 =head1 AUTHORS
 
-See L<GitLab::API::v4/AUTHOR> and L<GitLab::API::v4/CONTRIBUTORS>.
+See L<GitLab::API::v4/AUTHORS>.
 
 =head1 LICENSE
 
-This script is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+See L<GitLab::API::v4/LICENSE>.
+
+=cut
 

@@ -200,9 +200,17 @@ sub request {
 1;
 __END__
 
-=head1 AUTHORS AND LICENSE
+=head1 SUPPORT
 
-See L<GitLab::API::v4/AUTHORS> and L<GitLab::API::v4/LICENSE>.
+See L<GitLab::API::v4/SUPPORT>.
+
+=head1 AUTHORS
+
+See L<GitLab::API::v4/AUTHORS>.
+
+=head1 LICENSE
+
+See L<GitLab::API::v4/LICENSE>.
 
 =cut
 

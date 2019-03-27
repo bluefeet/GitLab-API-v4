@@ -10271,6 +10271,13 @@ for more information.
 Alternatively, you can
 L<open a ticket|https://github.com/bluefeet/GitLab-API-v4/issues>.
 
+=head1 SUPPORT
+
+Please submit bugs and feature requests to the
+GitLab-API-v4 GitHub issue tracker:
+
+L<https://github.com/bluefeet/GitLab-API-v4/issues>
+
 =head1 AUTHORS
 
     Aran Clary Deltac <bluefeetE<64>gmail.com>
