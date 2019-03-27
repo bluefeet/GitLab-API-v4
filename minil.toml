@@ -1,2 +1,3 @@
 name = "GitLab-API-v4"
 authority="cpan:BLUEFEET"
+markdown_maker = "Pod::Markdown::Github"
