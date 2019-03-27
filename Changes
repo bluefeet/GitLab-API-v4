@@ -3,6 +3,7 @@ Revision history for Perl extension GitLab-API-v4.
 {{$NEXT}}
 
  - Add SUPPORT section to the docs.
+ - Add the commit_refs method.
  - Add the trigger_pipeline method.
  - Document some create_pipeline method parameters.
 

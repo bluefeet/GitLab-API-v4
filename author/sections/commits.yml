@@ -2,6 +2,7 @@
 - commits: commits = GET projects/:project_id/repository/commits?
 - create_commit: commit = POST projects/:project_id/repository/commits?
 - commit: commit = GET projects/:project_id/repository/commits/:commit_sha
+- commit_refs: refs = GET projects/:project_id/repository/commits/:commit_sha/refs?
 - cherry_pick_commit: commit = POST projects/:project_id/repository/commits/:commit_sha/cherry_pick?
 - commit_diff: diff = GET projects/:project_id/repository/commits/:commit_sha/diff?
 - commit_comments: comments = GET projects/:project_id/repository/commits/:commit_sha/comments?

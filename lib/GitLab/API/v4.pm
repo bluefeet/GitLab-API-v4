@@ -1523,6 +1523,30 @@ sub commit {
     return $self->_call_rest_client( 'GET', 'projects/:project_id/repository/commits/:commit_sha', [@_], $options );
 }
 
+=item commit_refs
+
+    my $refs = $api->commit_refs(
+        $project_id,
+        $commit_sha,
+        \%params,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/repository/commits/:commit_sha/refs> and returns the decoded response content.
+
+=cut
+
+sub commit_refs {
+    my $self = shift;
+    croak 'commit_refs must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to commit_refs must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($commit_sha) to commit_refs must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to commit_refs must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
+    my $options = {};
+    $options->{query} = $params if defined $params;
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/repository/commits/:commit_sha/refs', [@_], $options );
+}
+
 =item cherry_pick_commit
 
     my $commit = $api->cherry_pick_commit(
