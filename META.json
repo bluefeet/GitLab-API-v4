@@ -90,7 +90,6 @@
    "version" : "0.17",
    "x_authority" : "cpan:BLUEFEET",
    "x_contributors" : [
-      "Aran Deltac <aran@ziprecruiter.com>",
       "Dave Webb <github@d5ve.com>",
       "Dmitry Frolov <dmitry.frolov@gmail.com>",
       "Dotan Dimet <dotan@corky.net>",

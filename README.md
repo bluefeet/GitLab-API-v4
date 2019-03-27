@@ -5269,18 +5269,18 @@ GitLab-API-v4 GitHub issue tracker:
 # AUTHORS
 
 ```
-Aran Clary Deltac <bluefeetE<64>gmail.com>
-Dotan Dimet <dotanE<64>corky.net>
-Nigel Gregoire <nigelgregoireE<64>gmail.com>
-trunov-ms <trunov.msE<64>gmail.com>
-Marek R. Sotola <Marek.R.SotolaE<64>nasa.gov>
-José Joaquín Atria <jjatriaE<64>gmail.com>
-Dave Webb <githubE<64>d5ve.com>
-Simon Ruderich <simonE<64>ruderich.org>
-royce55 <royceE<64>ecs.vuw.ac.nz>
-gregor herrmann <gregoaE<64>debian.org>
-Luc Didry <lucE<64>framasoft.org>
-Kieren Diment <kieren.dimentE<64>staples.com.au>
+Aran Clary Deltac <bluefeet@gmail.com>
+Dotan Dimet <dotan@corky.net>
+Nigel Gregoire <nigelgregoire@gmail.com>
+trunov-ms <trunov.ms@gmail.com>
+Marek R. Sotola <Marek.R.Sotola@nasa.gov>
+José Joaquín Atria <jjatria@gmail.com>
+Dave Webb <github@d5ve.com>
+Simon Ruderich <simon@ruderich.org>
+royce55 <royce@ecs.vuw.ac.nz>
+gregor herrmann <gregoa@debian.org>
+Luc Didry <luc@framasoft.org>
+Kieren Diment <kieren.diment@staples.com.au>
 Dmitry Frolov <dmitry.frolov@gmail.com>
 ```
 
