@@ -1,12 +1,6 @@
 1;
 __END__
 
-=head1 SEE ALSO
-
-L<Net::Gitlab> purports to provide an interface to the GitLab API, but
-it is hard to tell due to a complete lack of documentation via either
-POD or unit tests.
-
 =head1 CONTRIBUTING
 
 This module is auto-generated from a set of YAML files defining the

@@ -5243,12 +5243,6 @@ See [https://docs.gitlab.com/ce/api/wikis.html](https://docs.gitlab.com/ce/api/w
 
     Sends a `DELETE` request to `projects/:project_id/wikis/:slug`.
 
-# SEE ALSO
-
-[Net::Gitlab](https://metacpan.org/pod/Net::Gitlab) purports to provide an interface to the GitLab API, but
-it is hard to tell due to a complete lack of documentation via either
-POD or unit tests.
-
 # CONTRIBUTING
 
 This module is auto-generated from a set of YAML files defining the
