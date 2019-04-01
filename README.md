@@ -4345,7 +4345,7 @@ See [https://docs.gitlab.com/ce/api/repositories.html](https://docs.gitlab.com/c
     );
     ```
 
-    Sends a `GET` request to `projects/:project_id/repository/archive` and returns the decoded response content.
+    Sends a `GET` request to `projects/:project_id/repository/archive` and returns the raw response content.
 
 - compare
 

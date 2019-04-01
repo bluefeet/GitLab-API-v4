@@ -8472,7 +8472,7 @@ sub raw_blob {
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:project_id/repository/archive> and returns the decoded response content.
+Sends a C<GET> request to C<projects/:project_id/repository/archive> and returns the raw response content.
 
 =cut
 
@@ -8483,6 +8483,7 @@ sub archive {
     croak 'The last argument (\%params) to archive must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
+    $options->{decode} = 0;
     $options->{query} = $params if defined $params;
     return $self->_call_rest_client( 'GET', 'projects/:project_id/repository/archive', [@_], $options );
 }
