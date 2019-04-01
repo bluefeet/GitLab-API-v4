@@ -1,7 +1,7 @@
 package GitLab::API::v4::RESTClient;
 use 5.010001;
 use strictures 2;
-our $VERSION = '0.17';
+our $VERSION = '0.18';
 
 =encoding utf8
 

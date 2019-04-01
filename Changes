@@ -2,6 +2,8 @@ Revision history for Perl extension GitLab-API-v4.
 
 {{$NEXT}}
 
+0.18 2019-04-01T04:35:02Z
+
  - Add SUPPORT section to the docs.
  - The archive method no longer tries to decode the response.
  - Add the commit_refs method.
