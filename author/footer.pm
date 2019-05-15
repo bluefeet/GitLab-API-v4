@@ -24,6 +24,13 @@ GitLab-API-v4 GitHub issue tracker:
 
 L<https://github.com/bluefeet/GitLab-API-v4/issues>
 
+=head1 ACKNOWLEDGEMENTS
+
+Thanks to L<ZipRecruiter|https://www.ziprecruiter.com/>
+for encouraging their employees to contribute back to the open
+source ecosystem.  Without their dedication to quality software
+development this distribution would not exist.
+
 =head1 AUTHORS
 
     Aran Clary Deltac <aran@bluefeet.dev>
@@ -40,17 +47,22 @@ L<https://github.com/bluefeet/GitLab-API-v4/issues>
     Kieren Diment <kieren.diment@staples.com.au>
     Dmitry Frolov <dmitry.frolov@gmail.com>
 
-=head1 ACKNOWLEDGEMENTS
+=head1 COPYRIGHT AND LICENSE
 
-Thanks to L<ZipRecruiter|https://www.ziprecruiter.com/>
-for encouraging their employees to contribute back to the open
-source ecosystem.  Without their dedication to quality software
-development this distribution would not exist.
+Copyright (C) 2014 Aran Clary Deltac
 
-=head1 LICENSE
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see L<http://www.gnu.org/licenses/>.
 
 =cut
 

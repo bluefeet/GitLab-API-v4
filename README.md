@@ -5266,10 +5266,17 @@ GitLab-API-v4 GitHub issue tracker:
 
 [https://github.com/bluefeet/GitLab-API-v4/issues](https://github.com/bluefeet/GitLab-API-v4/issues)
 
+# ACKNOWLEDGEMENTS
+
+Thanks to [ZipRecruiter](https://www.ziprecruiter.com/)
+for encouraging their employees to contribute back to the open
+source ecosystem.  Without their dedication to quality software
+development this distribution would not exist.
+
 # AUTHORS
 
 ```
-Aran Clary Deltac <bluefeet@gmail.com>
+Aran Clary Deltac <aran@bluefeet.dev>
 Dotan Dimet <dotan@corky.net>
 Nigel Gregoire <nigelgregoire@gmail.com>
 trunov-ms <trunov.ms@gmail.com>
@@ -5284,14 +5291,19 @@ Kieren Diment <kieren.diment@staples.com.au>
 Dmitry Frolov <dmitry.frolov@gmail.com>
 ```
 
-# ACKNOWLEDGEMENTS
+# COPYRIGHT AND LICENSE
 
-Thanks to [ZipRecruiter](https://www.ziprecruiter.com/)
-for encouraging their employees to contribute back to the open
-source ecosystem.  Without their dedication to quality software
-development this distribution would not exist.
+Copyright (C) 2014 Aran Clary Deltac
 
-# LICENSE
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see [http://www.gnu.org/licenses/](http://www.gnu.org/licenses/).

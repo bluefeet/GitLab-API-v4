@@ -1,12 +1,12 @@
 {
    "abstract" : "A complete GitLab API v4 client.",
    "author" : [
-      "Aran Clary Deltac <bluefeet@gmail.com>"
+      "Aran Clary Deltac <aran@bluefeet.dev>"
    ],
    "dynamic_config" : 0,
    "generated_by" : "Minilla/v3.1.4, CPAN::Meta::Converter version 2.150010",
    "license" : [
-      "perl_5"
+      "gpl_3"
    ],
    "meta-spec" : {
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
