@@ -26,7 +26,7 @@ L<https://github.com/bluefeet/GitLab-API-v4/issues>
 
 =head1 AUTHORS
 
-    Aran Clary Deltac <bluefeet@gmail.com>
+    Aran Clary Deltac <aran@bluefeet.dev>
     Dotan Dimet <dotan@corky.net>
     Nigel Gregoire <nigelgregoire@gmail.com>
     trunov-ms <trunov.ms@gmail.com>

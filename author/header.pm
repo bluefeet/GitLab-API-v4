@@ -1,7 +1,5 @@
 package GitLab::API::v4;
-use 5.010001;
-use strictures 2;
-our $VERSION = '0.17';
+our $VERSION = '0.18';
 
 =encoding utf8
 
@@ -92,16 +90,16 @@ this point is vague.
 
 =cut
 
-use GitLab::API::v4::RESTClient;
-use GitLab::API::v4::Paginator;
-
-use Types::Standard -types;
-use Types::Common::String -types;
-use Types::Common::Numeric -types;
 use Carp qw( croak );
+use GitLab::API::v4::Paginator;
+use GitLab::API::v4::RESTClient;
 use Log::Any qw( $log );
+use Types::Common::Numeric -types;
+use Types::Common::String -types;
+use Types::Standard -types;
 
 use Moo;
+use strictures 2;
 use namespace::clean;
 
 sub BUILD {

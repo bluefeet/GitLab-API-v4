@@ -1,6 +1,4 @@
 package GitLab::API::v4::RESTClient;
-use 5.010001;
-use strictures 2;
 our $VERSION = '0.18';
 
 =encoding utf8
@@ -20,20 +18,21 @@ source.
 
 =cut
 
-use Types::Standard -types;
-use Types::Common::String -types;
-use Types::Common::Numeric -types;
-use Log::Any qw( $log );
-use URI::Escape;
-use HTTP::Tiny;
+use Carp qw( croak );
 use HTTP::Tiny::Multipart;
+use HTTP::Tiny;
 use JSON;
-use URI;
-use Carp qw( croak confess );
-use Try::Tiny;
+use Log::Any qw( $log );
 use Path::Tiny;
+use Try::Tiny;
+use Types::Common::Numeric -types;
+use Types::Common::String -types;
+use Types::Standard -types;
+use URI::Escape;
+use URI;
 
 use Moo;
+use strictures 2;
 use namespace::clean;
 
 has _clean_base_url => (

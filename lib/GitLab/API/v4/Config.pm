@@ -1,6 +1,4 @@
 package GitLab::API::v4::Config;
-use 5.010001;
-use strictures 2;
 our $VERSION = '0.18';
 
 =encoding utf8
@@ -28,15 +26,16 @@ L</SYNOPSIS>.
 
 =cut
 
-use Types::Standard -types;
-use Types::Common::String -types;
-use Path::Tiny;
-use JSON;
-use Log::Any qw( $log );
 use Getopt::Long;
 use IO::Prompter;
+use JSON;
+use Log::Any qw( $log );
+use Path::Tiny;
+use Types::Common::String -types;
+use Types::Standard -types;
 
 use Moo;
+use strictures 2;
 use namespace::clean;
 
 sub _filter_args {

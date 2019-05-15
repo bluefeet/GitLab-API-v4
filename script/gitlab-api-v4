@@ -1,18 +1,15 @@
 #!/usr/bin/env perl
-use 5.010001;
 use strictures 2;
 
-use GitLab::API::v4;
-use GitLab::API::v4::Constants qw( :all );
 use GitLab::API::v4::Config;
-
-use Log::Any qw( $log );
-use Log::Any::Adapter;
-use Log::Any::Adapter::Screen;
-use Try::Tiny;
+use GitLab::API::v4::Constants qw( :all );
+use GitLab::API::v4;
 use JSON;
-
+use Log::Any qw( $log );
+use Log::Any::Adapter::Screen;
+use Log::Any::Adapter;
 use Pod::Usage qw( pod2usage );
+use Try::Tiny;
 
 if (!@ARGV) {
     print "USAGE: gitlab-api-v4 help\n";

@@ -1,6 +1,4 @@
 package GitLab::API::v4::Paginator;
-use 5.010001;
-use strictures 2;
 our $VERSION = '0.18';
 
 =encoding utf8
@@ -17,11 +15,12 @@ simplifies things a bit.
 
 =cut
 
-use Types::Standard -types;
-use Types::Common::String -types;
 use Carp qw( croak );
+use Types::Common::String -types;
+use Types::Standard -types;
 
 use Moo;
+use strictures 2;
 use namespace::clean;
 
 =head1 REQUIRED ARGUMENTS
