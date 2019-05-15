@@ -1,4 +1,21 @@
 package GitLab::API::v4::Mock::RESTClient;
+our $VERSION = '0.18';
+
+=encoding utf8
+
+=head1 NAME
+
+GitLab::API::v4::Mock::RESTClient - Mocked REST client that doesn't actually make HTTP requests.
+
+=head1 DESCRIPTION
+
+This module is a subclass of L<GitLab::API::v4::RESTClient>.  It
+modifies it to divert HTTP requests to
+L<GitLab::API::v4::Mock::Engine> rather than making live requests.
+
+This module is used by L<GitLab::API::v4::Mock>.
+
+=cut
 
 use GitLab::API::v4::Mock::Engine;
 use JSON;
@@ -81,7 +98,7 @@ sub _build_engine {
 
 has_endpoint GET => qr{^users$}, sub{
     my ($self) = @_;
-    return 200, $self->users();
+    return 200, $self->engine->users();
 };
 
 =head2 GET user/:id
@@ -91,7 +108,7 @@ has_endpoint GET => qr{^users$}, sub{
 has_endpoint GET => qr{^users/(\d+)$}, sub{
     my ($self, $req, $id) = @_;
 
-    my $user = $self->user( $id );
+    my $user = $self->engine->user( $id );
     return 404 if !$user;
 
     return 200, $user;
@@ -105,7 +122,7 @@ has_endpoint POST => qr{^users$}, sub{
     my ($self, $req) = @_;
 
     my $user = decode_json( $req->[2]->{content} );
-    $self->create_user( $user );
+    $self->engine->create_user( $user );
 
     return 204;
 };
@@ -119,7 +136,7 @@ has_endpoint PUT => qr{^users/(\d+)$}, sub{
 
     my $data = decode_json( $req->[2]->{content} );
 
-    my $user = $self->update_user( $id, $data );
+    my $user = $self->engine->update_user( $id, $data );
     return 404 if !$user;
 
     return 204;
@@ -132,7 +149,7 @@ has_endpoint PUT => qr{^users/(\d+)$}, sub{
 has_endpoint DELETE => qr{^users/(\d+)$}, sub{
     my ($self, $req, $id) = @_;
 
-    my $user = $self->delete_user( $id );
+    my $user = $self->engine->delete_user( $id );
     return 404 if !$user;
 
     return 204;

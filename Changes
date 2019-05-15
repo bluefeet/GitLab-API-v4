@@ -2,6 +2,7 @@ Revision history for Perl extension GitLab-API-v4.
 
 {{$NEXT}}
 
+ - Add GitLab::API::v4::Mock for writing unit tests.
  - Switch to the GNU General Public License version 3.
 
 0.18 2019-04-01T04:35:02Z
