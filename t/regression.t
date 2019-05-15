@@ -1,15 +1,15 @@
 #!/usr/bin/env perl
 use strictures 2;
 
-use Test2::V0;
 use Test2::Require::AuthorTesting;
+use Test2::V0;
 
 use Log::Any::Adapter 'TAP';
-use Path::Tiny;
 use MIME::Base64 qw( decode_base64 );
+use Path::Tiny;
 
-use GitLab::API::v4;
 use GitLab::API::v4::Config;
+use GitLab::API::v4;
 
 my $config = GitLab::API::v4::Config->new();
 my $api = GitLab::API::v4->new( $config->args() );

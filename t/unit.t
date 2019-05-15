@@ -1,9 +1,9 @@
 #!/usr/bin/env perl
 use strictures 2;
 
-use GitLab::API::v4::Mock;
-use JSON;
 use Test2::V0;
+
+use GitLab::API::v4::Mock;
 
 subtest users => sub{
     my @users = ();
