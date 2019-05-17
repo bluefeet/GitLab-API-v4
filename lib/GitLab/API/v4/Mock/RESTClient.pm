@@ -80,6 +80,8 @@ sub _http_tiny_request {
 
 =head2 engine
 
+The L<GitLab::API::v4::Mock::Engine> used behind the hood.
+
 =cut
 
 has engine => (
@@ -94,6 +96,8 @@ sub _build_engine {
 
 =head2 GET users
 
+Handles L<GitLab::API::v4/users>.
+
 =cut
 
 has_endpoint GET => qr{^users$}, sub{
@@ -102,6 +106,8 @@ has_endpoint GET => qr{^users$}, sub{
 };
 
 =head2 GET user/:id
+
+Handles L<GitLab::API::v4/user>.
 
 =cut
 
@@ -116,6 +122,8 @@ has_endpoint GET => qr{^users/(\d+)$}, sub{
 
 =head2 POST users
 
+Handles L<GitLab::API::v4/create_user>.
+
 =cut
 
 has_endpoint POST => qr{^users$}, sub{
@@ -128,6 +136,8 @@ has_endpoint POST => qr{^users$}, sub{
 };
 
 =head2 PUT user/:id
+
+Handles L<GitLab::API::v4/edit_user>.
 
 =cut
 
@@ -143,6 +153,8 @@ has_endpoint PUT => qr{^users/(\d+)$}, sub{
 };
 
 =head2 DELETE user/:id
+
+Handles L<GitLab::API::v4/delete_user>.
 
 =cut
 
