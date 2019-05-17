@@ -2,6 +2,8 @@ Revision history for Perl extension GitLab-API-v4.
 
 {{$NEXT}}
 
+0.19 2019-05-17T20:40:22Z
+
  - Live tests now run against GitLab CE 11.10.4 (was 11.2.3).
  - Add GitLab::API::v4::WWWClient.
  - Add GitLab::API::v4::Mock for writing unit tests.
