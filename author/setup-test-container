@@ -16,4 +16,5 @@ echo 4. Create a new private token \(use this token below\).
 echo 5. Then set the following env vars:
 echo export GITLAB_API_V4_URL=http://localhost/api/v4
 echo export GITLAB_API_V4_PRIVATE_TOKEN=
+echo export GITLAB_API_V4_ROOT_PASSWORD=
 echo 6. You should now be able to run: t/regression.t
