@@ -2,6 +2,7 @@ Revision history for Perl extension GitLab-API-v4.
 
 {{$NEXT}}
 
+ - Live tests now run against GitLab CE 11.10.4 (was 11.2.3).
  - Add GitLab::API::v4::WWWClient.
  - Add GitLab::API::v4::Mock for writing unit tests.
  - Switch to the GNU General Public License version 3.
