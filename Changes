@@ -2,6 +2,8 @@ Revision history for Perl extension GitLab-API-v4.
 
 {{$NEXT}}
 
+0.20 2019-07-23T21:42:37Z
+
  - The preexisting create_release and edit_release methods have been renamed to
    create_tag_release and update_tag_release to make room for the new releases API.
  - Added methods for the new (added in GitLab 11.7) releases and release links APIs.

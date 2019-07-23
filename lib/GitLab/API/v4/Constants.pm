@@ -1,5 +1,5 @@
 package GitLab::API::v4::Constants;
-our $VERSION = '0.19';
+our $VERSION = '0.20';
 
 =encoding utf8
 

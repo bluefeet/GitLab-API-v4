@@ -87,7 +87,7 @@
          "web" : "https://github.com/bluefeet/GitLab-API-v4"
       }
    },
-   "version" : "0.19",
+   "version" : "0.20",
    "x_authority" : "cpan:BLUEFEET",
    "x_contributors" : [
       "Dave Webb <github@d5ve.com>",

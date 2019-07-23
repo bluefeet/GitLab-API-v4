@@ -1,5 +1,5 @@
 package GitLab::API::v4::Paginator;
-our $VERSION = '0.19';
+our $VERSION = '0.20';
 
 =encoding utf8
 
