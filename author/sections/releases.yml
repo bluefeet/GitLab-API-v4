@@ -1,0 +1,6 @@
+---
+- releases: releases = GET projects/:project_id/releases?
+- release: release = GET projects/:project_id/releases/:tag_name
+- create_release: release = POST projects/:project_id/releases?
+- update_release: release = PUT projects/:project_id/releases/:tag_name?
+- delete_release: release = DELETE projects/:project_id/releases/:tag_name

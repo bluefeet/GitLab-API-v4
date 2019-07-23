@@ -8395,6 +8395,248 @@ sub unprotect_tag {
 
 =back
 
+=head2 Releases
+
+See L<https://docs.gitlab.com/ce/api/releases/index.html>.
+
+=over
+
+=item releases
+
+    my $releases = $api->releases(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/releases> and returns the decoded response content.
+
+=cut
+
+sub releases {
+    my $self = shift;
+    croak 'releases must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($project_id) to releases must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to releases must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
+    my $options = {};
+    $options->{query} = $params if defined $params;
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/releases', [@_], $options );
+}
+
+=item release
+
+    my $release = $api->release(
+        $project_id,
+        $tag_name,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/releases/:tag_name> and returns the decoded response content.
+
+=cut
+
+sub release {
+    my $self = shift;
+    croak 'release must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to release must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($tag_name) to release must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $options = {};
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/releases/:tag_name', [@_], $options );
+}
+
+=item create_release
+
+    my $release = $api->create_release(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C<projects/:project_id/releases> and returns the decoded response content.
+
+=cut
+
+sub create_release {
+    my $self = shift;
+    croak 'create_release must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($project_id) to create_release must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to create_release must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
+    my $options = {};
+    $options->{content} = $params if defined $params;
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/releases', [@_], $options );
+}
+
+=item update_release
+
+    my $release = $api->update_release(
+        $project_id,
+        $tag_name,
+        \%params,
+    );
+
+Sends a C<PUT> request to C<projects/:project_id/releases/:tag_name> and returns the decoded response content.
+
+=cut
+
+sub update_release {
+    my $self = shift;
+    croak 'update_release must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to update_release must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($tag_name) to update_release must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to update_release must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
+    my $options = {};
+    $options->{content} = $params if defined $params;
+    return $self->_call_rest_client( 'PUT', 'projects/:project_id/releases/:tag_name', [@_], $options );
+}
+
+=item delete_release
+
+    my $release = $api->delete_release(
+        $project_id,
+        $tag_name,
+    );
+
+Sends a C<DELETE> request to C<projects/:project_id/releases/:tag_name> and returns the decoded response content.
+
+=cut
+
+sub delete_release {
+    my $self = shift;
+    croak 'delete_release must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to delete_release must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($tag_name) to delete_release must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $options = {};
+    return $self->_call_rest_client( 'DELETE', 'projects/:project_id/releases/:tag_name', [@_], $options );
+}
+
+=back
+
+=head2 Release Links
+
+See L<https://docs.gitlab.com/ce/api/releases/links.html>.
+
+=over
+
+=item release_links
+
+    my $links = $api->release_links(
+        $project_id,
+        $tag_name,
+        \%params,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/releases/:tag_name/assets/links> and returns the decoded response content.
+
+=cut
+
+sub release_links {
+    my $self = shift;
+    croak 'release_links must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to release_links must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($tag_name) to release_links must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to release_links must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
+    my $options = {};
+    $options->{query} = $params if defined $params;
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/releases/:tag_name/assets/links', [@_], $options );
+}
+
+=item release_link
+
+    my $link = $api->release_link(
+        $project_id,
+        $tag_name,
+        $link_id,
+    );
+
+Sends a C<GET> request to C<projects/:project_id/releases/:tag_name/assets/links/:link_id> and returns the decoded response content.
+
+=cut
+
+sub release_link {
+    my $self = shift;
+    croak 'release_link must be called with 3 arguments' if @_ != 3;
+    croak 'The #1 argument ($project_id) to release_link must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($tag_name) to release_link must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($link_id) to release_link must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    my $options = {};
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/releases/:tag_name/assets/links/:link_id', [@_], $options );
+}
+
+=item create_release_link
+
+    my $link = $api->create_release_link(
+        $project_id,
+        $tag_name,
+        \%params,
+    );
+
+Sends a C<POST> request to C<projects/:project_id/releases/:tag_name/assets/links> and returns the decoded response content.
+
+=cut
+
+sub create_release_link {
+    my $self = shift;
+    croak 'create_release_link must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to create_release_link must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($tag_name) to create_release_link must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to create_release_link must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
+    my $options = {};
+    $options->{content} = $params if defined $params;
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/releases/:tag_name/assets/links', [@_], $options );
+}
+
+=item update_release_link
+
+    my $link = $api->update_release_link(
+        $project_id,
+        $tag_name,
+        $link_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C<projects/:project_id/releases/:tag_name/assets/links/:link_id> and returns the decoded response content.
+
+=cut
+
+sub update_release_link {
+    my $self = shift;
+    croak 'update_release_link must be called with 3 to 4 arguments' if @_ < 3 or @_ > 4;
+    croak 'The #1 argument ($project_id) to update_release_link must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($tag_name) to update_release_link must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($link_id) to update_release_link must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    croak 'The last argument (\%params) to update_release_link must be a hash ref' if defined($_[3]) and ref($_[3]) ne 'HASH';
+    my $params = (@_ == 4) ? pop() : undef;
+    my $options = {};
+    $options->{content} = $params if defined $params;
+    return $self->_call_rest_client( 'PUT', 'projects/:project_id/releases/:tag_name/assets/links/:link_id', [@_], $options );
+}
+
+=item delete_release_link
+
+    my $link = $api->delete_release_link(
+        $project_id,
+        $tag_name,
+        $link_id,
+    );
+
+Sends a C<DELETE> request to C<projects/:project_id/releases/:tag_name/assets/links/:link_id> and returns the decoded response content.
+
+=cut
+
+sub delete_release_link {
+    my $self = shift;
+    croak 'delete_release_link must be called with 3 arguments' if @_ != 3;
+    croak 'The #1 argument ($project_id) to delete_release_link must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($tag_name) to delete_release_link must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The #3 argument ($link_id) to delete_release_link must be a scalar' if ref($_[2]) or (!defined $_[2]);
+    my $options = {};
+    return $self->_call_rest_client( 'DELETE', 'projects/:project_id/releases/:tag_name/assets/links/:link_id', [@_], $options );
+}
+
+=back
+
 =head2 Repositories
 
 See L<https://docs.gitlab.com/ce/api/repositories.html>.
@@ -9254,56 +9496,52 @@ sub delete_tag {
     return;
 }
 
-=item create_release
+=item create_tag_release
 
-    $api->create_release(
+    my $release = $api->create_tag_release(
         $project_id,
         $tag_name,
         \%params,
     );
 
-Sends a C<POST> request to C<projects/:project_id/repository/tags/:tag_name/release>.
+Sends a C<POST> request to C<projects/:project_id/repository/tags/:tag_name/release> and returns the decoded response content.
 
 =cut
 
-sub create_release {
+sub create_tag_release {
     my $self = shift;
-    croak 'create_release must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
-    croak 'The #1 argument ($project_id) to create_release must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($tag_name) to create_release must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    croak 'The last argument (\%params) to create_release must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    croak 'create_tag_release must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to create_tag_release must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($tag_name) to create_tag_release must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to create_tag_release must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
-    $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_client( 'POST', 'projects/:project_id/repository/tags/:tag_name/release', [@_], $options );
-    return;
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/repository/tags/:tag_name/release', [@_], $options );
 }
 
-=item edit_release
+=item edit_tag_release
 
-    $api->edit_release(
+    my $release = $api->edit_tag_release(
         $project_id,
         $tag_name,
         \%params,
     );
 
-Sends a C<PUT> request to C<projects/:project_id/repository/tags/:tag_name/release>.
+Sends a C<PUT> request to C<projects/:project_id/repository/tags/:tag_name/release> and returns the decoded response content.
 
 =cut
 
-sub edit_release {
+sub edit_tag_release {
     my $self = shift;
-    croak 'edit_release must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
-    croak 'The #1 argument ($project_id) to edit_release must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($tag_name) to edit_release must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    croak 'The last argument (\%params) to edit_release must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    croak 'edit_tag_release must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to edit_tag_release must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($tag_name) to edit_tag_release must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to edit_tag_release must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
-    $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_client( 'PUT', 'projects/:project_id/repository/tags/:tag_name/release', [@_], $options );
-    return;
+    return $self->_call_rest_client( 'PUT', 'projects/:project_id/repository/tags/:tag_name/release', [@_], $options );
 }
 
 =back

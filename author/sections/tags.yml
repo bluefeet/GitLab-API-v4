@@ -3,5 +3,5 @@
 - tag: tag = GET projects/:project_id/repository/tags/:tag_name
 - create_tag: tag = POST projects/:project_id/repository/tags?
 - delete_tag: DELETE projects/:project_id/repository/tags/:tag_name
-- create_release: POST projects/:project_id/repository/tags/:tag_name/release?
-- edit_release: PUT projects/:project_id/repository/tags/:tag_name/release?
+- create_tag_release: release = POST projects/:project_id/repository/tags/:tag_name/release?
+- edit_tag_release: release = PUT projects/:project_id/repository/tags/:tag_name/release?

@@ -4299,6 +4299,131 @@ See [https://docs.gitlab.com/ce/api/protected\_tags.html](https://docs.gitlab.co
 
     Sends a `DELETE` request to `projects/:project_id/protected_tags/:tag_name`.
 
+## Releases
+
+See [https://docs.gitlab.com/ce/api/releases/index.html](https://docs.gitlab.com/ce/api/releases/index.html).
+
+- releases
+
+    ```perl
+    my $releases = $api->releases(
+        $project_id,
+        \%params,
+    );
+    ```
+
+    Sends a `GET` request to `projects/:project_id/releases` and returns the decoded response content.
+
+- release
+
+    ```perl
+    my $release = $api->release(
+        $project_id,
+        $tag_name,
+    );
+    ```
+
+    Sends a `GET` request to `projects/:project_id/releases/:tag_name` and returns the decoded response content.
+
+- create\_release
+
+    ```perl
+    my $release = $api->create_release(
+        $project_id,
+        \%params,
+    );
+    ```
+
+    Sends a `POST` request to `projects/:project_id/releases` and returns the decoded response content.
+
+- update\_release
+
+    ```perl
+    my $release = $api->update_release(
+        $project_id,
+        $tag_name,
+        \%params,
+    );
+    ```
+
+    Sends a `PUT` request to `projects/:project_id/releases/:tag_name` and returns the decoded response content.
+
+- delete\_release
+
+    ```perl
+    my $release = $api->delete_release(
+        $project_id,
+        $tag_name,
+    );
+    ```
+
+    Sends a `DELETE` request to `projects/:project_id/releases/:tag_name` and returns the decoded response content.
+
+## Release Links
+
+See [https://docs.gitlab.com/ce/api/releases/links.html](https://docs.gitlab.com/ce/api/releases/links.html).
+
+- release\_links
+
+    ```perl
+    my $links = $api->release_links(
+        $project_id,
+        $tag_name,
+        \%params,
+    );
+    ```
+
+    Sends a `GET` request to `projects/:project_id/releases/:tag_name/assets/links` and returns the decoded response content.
+
+- release\_link
+
+    ```perl
+    my $link = $api->release_link(
+        $project_id,
+        $tag_name,
+        $link_id,
+    );
+    ```
+
+    Sends a `GET` request to `projects/:project_id/releases/:tag_name/assets/links/:link_id` and returns the decoded response content.
+
+- create\_release\_link
+
+    ```perl
+    my $link = $api->create_release_link(
+        $project_id,
+        $tag_name,
+        \%params,
+    );
+    ```
+
+    Sends a `POST` request to `projects/:project_id/releases/:tag_name/assets/links` and returns the decoded response content.
+
+- update\_release\_link
+
+    ```perl
+    my $link = $api->update_release_link(
+        $project_id,
+        $tag_name,
+        $link_id,
+        \%params,
+    );
+    ```
+
+    Sends a `PUT` request to `projects/:project_id/releases/:tag_name/assets/links/:link_id` and returns the decoded response content.
+
+- delete\_release\_link
+
+    ```perl
+    my $link = $api->delete_release_link(
+        $project_id,
+        $tag_name,
+        $link_id,
+    );
+    ```
+
+    Sends a `DELETE` request to `projects/:project_id/releases/:tag_name/assets/links/:link_id` and returns the decoded response content.
+
 ## Repositories
 
 See [https://docs.gitlab.com/ce/api/repositories.html](https://docs.gitlab.com/ce/api/repositories.html).
@@ -4734,29 +4859,29 @@ See [https://docs.gitlab.com/ce/api/tags.html](https://docs.gitlab.com/ce/api/ta
 
     Sends a `DELETE` request to `projects/:project_id/repository/tags/:tag_name`.
 
-- create\_release
+- create\_tag\_release
 
-    ```
-    $api->create_release(
+    ```perl
+    my $release = $api->create_tag_release(
         $project_id,
         $tag_name,
         \%params,
     );
     ```
 
-    Sends a `POST` request to `projects/:project_id/repository/tags/:tag_name/release`.
+    Sends a `POST` request to `projects/:project_id/repository/tags/:tag_name/release` and returns the decoded response content.
 
-- edit\_release
+- edit\_tag\_release
 
-    ```
-    $api->edit_release(
+    ```perl
+    my $release = $api->edit_tag_release(
         $project_id,
         $tag_name,
         \%params,
     );
     ```
 
-    Sends a `PUT` request to `projects/:project_id/repository/tags/:tag_name/release`.
+    Sends a `PUT` request to `projects/:project_id/repository/tags/:tag_name/release` and returns the decoded response content.
 
 ## Todos
 

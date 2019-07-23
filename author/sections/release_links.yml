@@ -1,0 +1,6 @@
+---
+- release_links: links = GET projects/:project_id/releases/:tag_name/assets/links?
+- release_link: link = GET projects/:project_id/releases/:tag_name/assets/links/:link_id
+- create_release_link: link = POST projects/:project_id/releases/:tag_name/assets/links?
+- update_release_link: link = PUT projects/:project_id/releases/:tag_name/assets/links/:link_id?
+- delete_release_link: link = DELETE projects/:project_id/releases/:tag_name/assets/links/:link_id

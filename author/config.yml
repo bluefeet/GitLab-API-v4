@@ -141,6 +141,12 @@ sections:
 - protected_tags:
     head: Protected tags
     doc_url: https://docs.gitlab.com/ce/api/protected_tags.html
+- releases:
+    head: Releases
+    doc_url: https://docs.gitlab.com/ce/api/releases/index.html
+- release_links:
+    head: Release Links
+    doc_url: https://docs.gitlab.com/ce/api/releases/links.html
 - repositories:
     head: Repositories
     doc_url: https://docs.gitlab.com/ce/api/repositories.html
