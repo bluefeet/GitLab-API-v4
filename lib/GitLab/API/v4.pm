@@ -9520,9 +9520,9 @@ sub create_tag_release {
     return $self->_call_rest_client( 'POST', 'projects/:project_id/repository/tags/:tag_name/release', [@_], $options );
 }
 
-=item edit_tag_release
+=item update_tag_release
 
-    my $release = $api->edit_tag_release(
+    my $release = $api->update_tag_release(
         $project_id,
         $tag_name,
         \%params,
@@ -9532,12 +9532,12 @@ Sends a C<PUT> request to C<projects/:project_id/repository/tags/:tag_name/relea
 
 =cut
 
-sub edit_tag_release {
+sub update_tag_release {
     my $self = shift;
-    croak 'edit_tag_release must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
-    croak 'The #1 argument ($project_id) to edit_tag_release must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument ($tag_name) to edit_tag_release must be a scalar' if ref($_[1]) or (!defined $_[1]);
-    croak 'The last argument (\%params) to edit_tag_release must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    croak 'update_tag_release must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to update_tag_release must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($tag_name) to update_tag_release must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to update_tag_release must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{content} = $params if defined $params;

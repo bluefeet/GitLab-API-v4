@@ -4871,10 +4871,10 @@ See [https://docs.gitlab.com/ce/api/tags.html](https://docs.gitlab.com/ce/api/ta
 
     Sends a `POST` request to `projects/:project_id/repository/tags/:tag_name/release` and returns the decoded response content.
 
-- edit\_tag\_release
+- update\_tag\_release
 
     ```perl
-    my $release = $api->edit_tag_release(
+    my $release = $api->update_tag_release(
         $project_id,
         $tag_name,
         \%params,
