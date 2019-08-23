@@ -89,7 +89,7 @@ sub _http_tiny_request {
 }
 
 sub request {
-    my ($self, $verb, $path, $path_vars, $options) = @_;
+    my ($self, $verb, $raw_path, $path_vars, $options) = @_;
 
     $options = { %{ $options || {} } };
     my $query = delete $options->{query};
@@ -97,6 +97,7 @@ sub request {
     my $headers = $options->{headers} = { %{ $options->{headers} || {} } };
 
     # Convert foo/:bar/baz into foo/%s/baz.
+    my $path = $raw_path;
     $path =~ s{:[^/]+}{%s}g;
     # sprintf will throw if the number of %s doesn't match the size of @$path_vars.
     # Might be nice to catch that and provide a better error message, but that should
@@ -165,6 +166,12 @@ sub request {
     } while $tries_left > 0;
 
     if ($res->{status} eq '404' and $verb eq 'GET') {
+        return undef;
+    }
+
+    # Special case for:
+    # https://github.com/bluefeet/GitLab-API-v4/issues/35#issuecomment-515533017
+    if ($res->{status} eq '403' and $verb eq 'GET' and $raw_path eq 'projects/:project_id/releases/:tag_name') {
         return undef;
     }
 
