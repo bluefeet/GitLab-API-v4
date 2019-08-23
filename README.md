@@ -5401,7 +5401,7 @@ development this distribution would not exist.
 # AUTHORS
 
 ```
-Aran Clary Deltac <aran@bluefeet.dev>
+Aran Clary Deltac <bluefeet@gmail.com>
 Dotan Dimet <dotan@corky.net>
 Nigel Gregoire <nigelgregoire@gmail.com>
 trunov-ms <trunov.ms@gmail.com>

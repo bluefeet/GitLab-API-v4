@@ -1,7 +1,7 @@
 {
    "abstract" : "A complete GitLab API v4 client.",
    "author" : [
-      "Aran Clary Deltac <aran@bluefeet.dev>"
+      "Aran Clary Deltac <bluefeet@gmail.com>"
    ],
    "dynamic_config" : 0,
    "generated_by" : "Minilla/v3.1.4, CPAN::Meta::Converter version 2.150010",
@@ -103,6 +103,6 @@
       "royce55 <royce@ecs.vuw.ac.nz>",
       "trunov-ms <trunov.ms@gmail.com>"
    ],
-   "x_serialization_backend" : "JSON::PP version 4.02",
+   "x_serialization_backend" : "JSON::PP version 4.04",
    "x_static_install" : 1
 }
