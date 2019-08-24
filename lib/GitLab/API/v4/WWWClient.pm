@@ -1,5 +1,5 @@
 package GitLab::API::v4::WWWClient;
-our $VERSION = '0.20';
+our $VERSION = '0.21';
 
 =encoding utf8
 
