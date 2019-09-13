@@ -165,6 +165,9 @@ sections:
 - settings:
     head: Application settings
     doc_url: https://docs.gitlab.com/ce/api/settings.html
+- statistics:
+    head: Application statistics
+    doc_url: https://docs.gitlab.com/ee/api/statistics.html
 - sidekiq_metrics:
     head: Sidekiq Metrics
     doc_url: https://docs.gitlab.com/ce/api/sidekiq_metrics.html
