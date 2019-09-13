@@ -2,6 +2,8 @@ Revision history for Perl extension GitLab-API-v4.
 
 {{$NEXT}}
 
+0.22 2019-09-13T15:02:28Z
+
  - Add the statistics method.
  - The delete_user method can now take parameters, allowing for use of
    the hard_delete parameter.

@@ -1,5 +1,5 @@
 package GitLab::API::v4::Mock::Engine;
-our $VERSION = '0.21';
+our $VERSION = '0.22';
 
 =encoding utf8
 
