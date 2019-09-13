@@ -3,7 +3,7 @@
 - user: user = GET users/:user_id
 - create_user: POST users?
 - edit_user: PUT users/:user_id?
-- delete_user: DELETE users/:user_id
+- delete_user: DELETE users/:user_id?
 - current_user: user = GET user
 - current_user_ssh_keys: keys = GET user/keys?
 - user_ssh_keys: keys = GET users/:user_id/keys?
