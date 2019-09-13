@@ -4731,6 +4731,18 @@ See [https://docs.gitlab.com/ce/api/settings.html](https://docs.gitlab.com/ce/ap
 
     Sends a `PUT` request to `application/settings` and returns the decoded response content.
 
+## Application statistics
+
+See [https://docs.gitlab.com/ce/api/statistics.html](https://docs.gitlab.com/ce/api/statistics.html).
+
+- statistics
+
+    ```perl
+    my $statistics = $api->statistics();
+    ```
+
+    Sends a `GET` request to `application/statistics` and returns the decoded response content.
+
 ## Sidekiq Metrics
 
 See [https://docs.gitlab.com/ce/api/sidekiq\_metrics.html](https://docs.gitlab.com/ce/api/sidekiq_metrics.html).
@@ -5411,7 +5423,7 @@ Dave Webb <github@d5ve.com>
 Simon Ruderich <simon@ruderich.org>
 royce55 <royce@ecs.vuw.ac.nz>
 gregor herrmann <gregoa@debian.org>
-Luc Didry <luc@framasoft.org>
+Luc Didry <luc@didry.org>
 Kieren Diment <kieren.diment@staples.com.au>
 Dmitry Frolov <dmitry.frolov@gmail.com>
 ```

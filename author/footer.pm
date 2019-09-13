@@ -33,7 +33,7 @@ development this distribution would not exist.
 
 =head1 AUTHORS
 
-    Aran Clary Deltac <aran@bluefeet.dev>
+    Aran Clary Deltac <bluefeet@gmail.com>
     Dotan Dimet <dotan@corky.net>
     Nigel Gregoire <nigelgregoire@gmail.com>
     trunov-ms <trunov.ms@gmail.com>
@@ -43,7 +43,7 @@ development this distribution would not exist.
     Simon Ruderich <simon@ruderich.org>
     royce55 <royce@ecs.vuw.ac.nz>
     gregor herrmann <gregoa@debian.org>
-    Luc Didry <luc@framasoft.org>
+    Luc Didry <luc@didry.org>
     Kieren Diment <kieren.diment@staples.com.au>
     Dmitry Frolov <dmitry.frolov@gmail.com>
 

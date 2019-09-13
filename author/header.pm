@@ -1,5 +1,5 @@
 package GitLab::API::v4;
-our $VERSION = '0.19';
+our $VERSION = '0.21';
 
 =encoding utf8
 

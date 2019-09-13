@@ -9248,6 +9248,29 @@ sub update_settings {
 
 =back
 
+=head2 Application statistics
+
+See L<https://docs.gitlab.com/ce/api/statistics.html>.
+
+=over
+
+=item statistics
+
+    my $statistics = $api->statistics();
+
+Sends a C<GET> request to C<application/statistics> and returns the decoded response content.
+
+=cut
+
+sub statistics {
+    my $self = shift;
+    croak "The statistics method does not take any arguments" if @_;
+    my $options = {};
+    return $self->_call_rest_client( 'GET', 'application/statistics', [@_], $options );
+}
+
+=back
+
 =head2 Sidekiq Metrics
 
 See L<https://docs.gitlab.com/ce/api/sidekiq_metrics.html>.
@@ -10552,7 +10575,7 @@ development this distribution would not exist.
     Simon Ruderich <simon@ruderich.org>
     royce55 <royce@ecs.vuw.ac.nz>
     gregor herrmann <gregoa@debian.org>
-    Luc Didry <luc@framasoft.org>
+    Luc Didry <luc@didry.org>
     Kieren Diment <kieren.diment@staples.com.au>
     Dmitry Frolov <dmitry.frolov@gmail.com>
 
