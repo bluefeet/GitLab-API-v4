@@ -9726,6 +9726,7 @@ sub edit_user {
 
     $api->delete_user(
         $user_id,
+        \%params,
     );
 
 Sends a C<DELETE> request to C<users/:user_id>.
@@ -9734,10 +9735,13 @@ Sends a C<DELETE> request to C<users/:user_id>.
 
 sub delete_user {
     my $self = shift;
-    croak 'delete_user must be called with 1 arguments' if @_ != 1;
+    croak 'delete_user must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($user_id) to delete_user must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to delete_user must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{decode} = 0;
+    $options->{content} = $params if defined $params;
     $self->_call_rest_client( 'DELETE', 'users/:user_id', [@_], $options );
     return;
 }

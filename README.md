@@ -4977,6 +4977,7 @@ See [https://docs.gitlab.com/ce/api/users.html](https://docs.gitlab.com/ce/api/u
     ```perl
     $api->delete_user(
         $user_id,
+        \%params,
     );
     ```
 

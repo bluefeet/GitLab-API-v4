@@ -3,6 +3,8 @@ Revision history for Perl extension GitLab-API-v4.
 {{$NEXT}}
 
  - Add the statistics method.
+ - The delete_user method can now take parameters, allowing for use of
+   the hard_delete parameter.
 
 0.21 2019-08-24T18:56:13Z
 
@@ -12,9 +14,11 @@ Revision history for Perl extension GitLab-API-v4.
 
 0.20 2019-07-23T21:42:37Z
 
- - The preexisting create_release and edit_release methods have been renamed to
-   create_tag_release and update_tag_release to make room for the new releases API.
- - Added methods for the new (added in GitLab 11.7) releases and release links APIs.
+ - The preexisting create_release and edit_release methods have been
+   renamed to create_tag_release and update_tag_release to make room
+   for the new releases API.
+ - Added methods for the new (added in GitLab 11.7) releases and
+   release links APIs.
 
 0.19 2019-05-17T20:40:22Z
 
@@ -33,8 +37,8 @@ Revision history for Perl extension GitLab-API-v4.
 
 0.17 2019-02-20T22:47:58Z
 
- - Require perl 5.10.1 as I give up trying to support 5.8 due to other modules
-   requiring 5.10 and strictures/multidimensional issues.
+ - Require perl 5.10.1 as I give up trying to support 5.8 due to other
+   modules requiring 5.10 and strictures/multidimensional issues.
  - Simplify VERSION declarations.
 
 0.16 2019-02-18T06:21:15Z
@@ -43,15 +47,17 @@ Revision history for Perl extension GitLab-API-v4.
 
 0.15 2019-01-09
 
- - BREAKING CHANGE: gitlab-api-v4 now takes parameters in the form of param:value
-   rather than --param=value.  This is to avoid foot-gun ambiguities when options
-   have the same names as parameters (such as --url).
+ - BREAKING CHANGE: gitlab-api-v4 now takes parameters in the form of
+   param:value rather than --param=value.  This is to avoid foot-gun
+   ambiguities when options have the same names as parameters (such
+   as --url).
  - Add --pretty and --canonical options to gitlab-api-v4.
 
 0.14 2018-12-04
 
  - Add all_project_members and all_group_members methods.
- - gitlab-api-v4 now handles -- like you'd expect your typical linux tooling would.
+ - gitlab-api-v4 now handles -- like you'd expect your typical linux
+   tooling would.
 
 0.13 2018-11-08
 
@@ -60,66 +66,72 @@ Revision history for Perl extension GitLab-API-v4.
 
 0.12 2018-09-11
 
- - Added API methods for Protected Tags, Search, Project Import/Export,
-   Project Badges, Resource Label Events, Discussions, Markdown,
-   Group Issue Boards, Group Badges, and Snippets.
- - Reorganized project/group members/access requests sections to better match
-   the official API.
- - Renamed the various project snippet methods to have "project" in their name.
+ - Added API methods for Protected Tags, Search, Project
+   Import/Export, Project Badges, Resource Label Events, Discussions,
+   Markdown, Group Issue Boards, Group Badges, and Snippets.
+ - Reorganized project/group members/access requests sections to
+   better match the official API.
+ - Renamed the various project snippet methods to have "project" in
+   their name.
  - Added constants for the snippet visibility levels.
- - Overhauled the POD heading layout in order to avoid the massive TOC.
+ - Overhauled the POD heading layout in order to avoid the massive
+   TOC.
  - Fix minor typo.
 
 0.11 2018-09-01
 
- - Fixed the raw_file method to not try to decode the respository file contents and
-   instead just return the undecoded response content.
- - Renamed the POD section "FILE METHODS" to "REPOSITORY FILE METHODS", to better
-   match the GitLab API docs.
+ - Fixed the raw_file method to not try to decode the respository file
+   contents and instead just return the undecoded response content.
+ - Renamed the POD section "FILE METHODS" to
+   "REPOSITORY FILE METHODS", to better match the GitLab API docs.
  - Add the hidden NO_ACCESS constant to ::Constants.
  - Live tests now run against GitLab CE 11.2.3 (was 10.2.2).
 
 0.10 2018-06-05
 
  - Fix project_hook() so it uses the correct path.
- - create_project_hook() and edit_project_hook() now return their decoded
-   response (the hook).
- - delete_project_hook() no longer tries to return anything as a successful
-   delete is a 204 (no content) and a failed one is a 404.
+ - create_project_hook() and edit_project_hook() now return their
+   decoded response (the hook).
+ - delete_project_hook() no longer tries to return anything as a
+   successful delete is a 204 (no content) and a failed one is a 404.
  - Tests for all of the above.
  - Fix typo.
 
 0.09 2018-05-28
 
  - Ensure chmod 600 of ~/.gitlab-api-v4-config is maintained.
- - Enable and fix upload_file_to_project by using HTTP::Tiny::Multipart.
+ - Enable and fix upload_file_to_project by using
+   HTTP::Tiny::Multipart.
  - Individual methods may now have a custom note added to their POD.
- - Added a self-contained unit test, unit.t, which can be expanded on in the future.
-   This is unlike regression.t which requires that a GitLab installation be available.
+ - Added a self-contained unit test, unit.t, which can be expanded on
+   in the future.  This is unlike regression.t which requires that a
+   GitLab installation be available.
  - Added the rest_client_class argument.
 
 0.08 2018-05-14
 
- - Many API endpoints which return lists and did not support parameters now do
-   in order for pagination arguments, and the paginator, to be used with them.
+ - Many API endpoints which return lists and did not support
+   parameters now do in order for pagination arguments, and the
+   paginator, to be used with them.
  - Add project_languages method.
- - Remove upload_file_to_project since it doesn't work.  Will re-add when
-   it is made to work later.
+ - Remove upload_file_to_project since it doesn't work.  Will re-add
+   when it is made to work later.
 
 0.07 2018-05-10
 
  - Completely overhaul ::RestClient to use HTTP::Tiny instead of
-   Role::REST::Client.  This change will make it much easier to alter the
-   behavior of the HTTP communication.
- - ::RestClient now supports the ability to decode non-ref JSON, such as
-   unblock_user which returns just a JSON boolean.
+   Role::REST::Client.  This change will make it much easier to alter
+   the behavior of the HTTP communication.
+ - ::RestClient now supports the ability to decode non-ref JSON, such
+   as unblock_user which returns just a JSON boolean.
  - block_user and unblock_user now return their decoded response.
  - delete_user is no longer expected to return anything.
  - Response decoding will now only be attempted for methods which are
    expected to return something.  Slight optimization.
- - A 404 on a non-returning method throws an exception now, matching the docs.
- - The *_token arguments are now stored in a closure to help users avoid
-   accidentally dumping them somewhere such as logs.
+ - A 404 on a non-returning method throws an exception now, matching
+   the docs.
+ - The *_token arguments are now stored in a closure to help users
+   avoid accidentally dumping them somewhere such as logs.
  - Added all methods for the TODO API.
 
 0.06 2018-04-09
@@ -128,8 +140,8 @@ Revision history for Perl extension GitLab-API-v4.
 
 0.05 2018-03-06
 
- - Fixup gitlab-api-v4 to support parameters who's values are empty or have
-   whitespace in them.
+ - Fixup gitlab-api-v4 to support parameters who's values are empty or
+   have whitespace in them.
 
 0.04 2018-02-03
 
@@ -141,8 +153,8 @@ Revision history for Perl extension GitLab-API-v4.
 
  - Greatly extended authentication and configuration options for the
    gitlab-api-v4 script; added GitLab::API::v4::Config.
- - The gitlab-api-v4 script now always outputs JSON (the default was YAML,
-   with the option to pick other formats).
+ - The gitlab-api-v4 script now always outputs JSON (the default was
+   YAML, with the option to pick other formats).
  - Fixed the fork_project method to hit the correct URL.
 
 0.02 2017-12-15
@@ -153,8 +165,11 @@ Revision history for Perl extension GitLab-API-v4.
 0.01 2017-12-11
 
  - Added the sudo method and the sudo_user argument.
- - Split the token arguments into the access_token and private_token arguments.
- - Removed the login/email/password arguments as they are not supported by v4.
+ - Split the token arguments into the access_token and private_token
+   arguments.
+ - Removed the login/email/password arguments as they are not
+   supported by v4.
  - Many many methods added/removed/renamed/modified.
- - Imported GitLab::API::v3 @ fb9253c58b68ca1be71feedf12c1d6004c8ba8d6.
+ - Imported GitLab::API::v3 @
+   fb9253c58b68ca1be71feedf12c1d6004c8ba8d6.
 
