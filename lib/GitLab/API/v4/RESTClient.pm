@@ -18,7 +18,7 @@ source.
 
 =cut
 
-use Carp qw( croak );
+use Carp qw();
 use HTTP::Tiny::Multipart;
 use HTTP::Tiny;
 use JSON;
@@ -34,6 +34,19 @@ use URI;
 use Moo;
 use strictures 2;
 use namespace::clean;
+
+sub croak {
+    local $Carp::Internal{ 'GitLab::API::v4' } = 1;
+    local $Carp::Internal{ 'GitLab::API::v4::RESTClient' } = 1;
+
+    return Carp::croak( @_ );
+}
+
+sub croakf {
+    my $msg = shift;
+    $msg = sprintf( $msg, @_ );
+    return croak( $msg );
+}
 
 has _clean_base_url => (
     is       => 'lazy',
@@ -176,13 +189,21 @@ sub request {
     }
 
     if ($res->{success}) {
+        return undef if $res->{status} eq '204';
+
         my $decode = $options->{decode};
         $decode = 1 if !defined $decode;
         return $res->{content} if !$decode;
 
-        # JSON decoding may fail. Catch it and provide a more contextually rich
-        # error message?
-        return $self->json->decode( $res->{content} );
+        return try{
+            $self->json->decode( $res->{content} );
+        }
+        catch {
+            croakf(
+                'Error decoding JSON (%s %s %s): ',
+                $verb, $url, $res->{status}, $_,
+            );
+        };
     }
 
     my $glimpse = $res->{content} || '';
@@ -192,10 +213,7 @@ sub request {
         $glimpse .= '...';
     }
 
-    local $Carp::Internal{ 'GitLab::API::v4' } = 1;
-    local $Carp::Internal{ 'GitLab::API::v4::RESTClient' } = 1;
-
-    croak sprintf(
+    croakf(
         'Error %sing %s (HTTP %s): %s %s',
         $verb, $url,
         $res->{status}, ($res->{reason} || 'Unknown'),

@@ -8997,11 +8997,11 @@ sub update_runner {
 
 =item delete_runner
 
-    my $runner = $api->delete_runner(
+    $api->delete_runner(
         $runner_id,
     );
 
-Sends a C<DELETE> request to C<runners/:runner_id> and returns the decoded response content.
+Sends a C<DELETE> request to C<runners/:runner_id>.
 
 =cut
 
@@ -9010,7 +9010,9 @@ sub delete_runner {
     croak 'delete_runner must be called with 1 arguments' if @_ != 1;
     croak 'The #1 argument ($runner_id) to delete_runner must be a scalar' if ref($_[0]) or (!defined $_[0]);
     my $options = {};
-    return $self->_call_rest_client( 'DELETE', 'runners/:runner_id', [@_], $options );
+    $options->{decode} = 0;
+    $self->_call_rest_client( 'DELETE', 'runners/:runner_id', [@_], $options );
+    return;
 }
 
 =item runner_jobs

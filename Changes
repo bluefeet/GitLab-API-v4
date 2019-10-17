@@ -2,6 +2,10 @@ Revision history for Perl extension GitLab-API-v4.
 
 {{$NEXT}}
 
+ - Fix delete_runner so that it doesn't try to decode the response.
+ - Any 204 response now just blanket returns undef.
+ - More contextual JSON decoding error messages.
+
 0.22 2019-09-13T15:02:28Z
 
  - Add the statistics method.

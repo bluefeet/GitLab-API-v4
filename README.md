@@ -4605,13 +4605,13 @@ See [https://docs.gitlab.com/ce/api/runners.html](https://docs.gitlab.com/ce/api
 
 - delete\_runner
 
-    ```perl
-    my $runner = $api->delete_runner(
+    ```
+    $api->delete_runner(
         $runner_id,
     );
     ```
 
-    Sends a `DELETE` request to `runners/:runner_id` and returns the decoded response content.
+    Sends a `DELETE` request to `runners/:runner_id`.
 
 - runner\_jobs
 
