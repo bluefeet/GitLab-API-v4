@@ -33,6 +33,24 @@ subtest users => sub{
     is( $api->users(), \@expected, 'user was deleted' );
 };
 
-done_testing;
+subtest reqres => sub{
+    my $api = GitLab::API::v4::Mock->new();
 
-1;
+    is( $api->rest_client->http_tiny_request(), undef, 'no request' );
+    is( $api->rest_client->http_tiny_response(), undef, 'no response' );
+
+    $api->users();
+
+    is(
+        $api->rest_client->http_tiny_request(),
+        [ 'GET', 'https://example.com/api/v4/users', {headers=>{}} ],
+        'recorded request arrayref looks great',
+    );
+    is(
+        $api->rest_client->http_tiny_response(),
+        { success=>1, status=>200, content=>'[]' },
+        'recorded response hashref looks great',
+    );
+};
+
+done_testing;

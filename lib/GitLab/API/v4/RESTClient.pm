@@ -16,6 +16,25 @@ to not mislead people.
 If you do want to customize how this class works then take a look at the
 source.
 
+=head1 ATTRIBUTES
+
+=head1 http_tiny_request
+
+    my $req = $api->rest_client->http_tiny_request();
+
+The most recent request arrayref as passed to L<HTTP::Tiny>.
+
+If this is C<undef> then no request has been made.
+
+=head1 http_tiny_response
+
+    my $res = $api->rest_client->http_tiny_response();
+
+The most recent response hashref as passed back from L<HTTP::Tiny>.
+
+If this is C<undef> and L</request> is defined then no response was received
+and you will have encountered an error when making the request
+
 =cut
 
 use Carp qw();
@@ -94,6 +113,20 @@ sub _build_json {
     return JSON->new->utf8->allow_nonref();
 }
 
+has http_tiny_request => (
+    is       => 'ro',
+    writer   => '_set_request',
+    clearer  => '_clear_request',
+    init_arg => undef,
+);
+
+has http_tiny_response => (
+    is       => 'ro',
+    writer   => '_set_response',
+    clearer  => '_clear_response',
+    init_arg => undef,
+);
+
 # The purpose of this method is for tests to have a place to inject themselves.
 sub _http_tiny_request {
     my ($self, $req_method, $req) = @_;
@@ -103,6 +136,9 @@ sub _http_tiny_request {
 
 sub request {
     my ($self, $verb, $raw_path, $path_vars, $options) = @_;
+
+    $self->_clear_request();
+    $self->_clear_response();
 
     $options = { %{ $options || {} } };
     my $query = delete $options->{query};
@@ -165,6 +201,8 @@ sub request {
 
     $options->{content} = $content if defined $content;
 
+    $self->_set_request( $req );
+
     my $res;
     my $tries_left = $self->retries();
     do {
@@ -177,6 +215,8 @@ sub request {
             $tries_left = 0
         }
     } while $tries_left > 0;
+
+    $self->_set_response( $res );
 
     if ($res->{status} eq '404' and $verb eq 'GET') {
         return undef;

@@ -2,6 +2,9 @@ Revision history for Perl extension GitLab-API-v4.
 
 {{$NEXT}}
 
+ - Add http_tiny_request and http_tiny_response to ::RESTClient.  This
+   should help people debug issues easier.
+
 0.23 2019-10-18T19:55:06Z
 
  - Fix delete_runner so that it doesn't try to decode the response.
