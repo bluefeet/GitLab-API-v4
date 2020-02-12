@@ -848,6 +848,90 @@ See [https://docs.gitlab.com/ce/api/commits.html](https://docs.gitlab.com/ce/api
 
     Sends a `POST` request to `projects/:project_id/statuses/:commit_sha` and returns the decoded response content.
 
+## Container Registry
+
+See [https://docs.gitlab.com/ce/api/container\_registry.html](https://docs.gitlab.com/ce/api/container_registry.html).
+
+- registry\_repositories\_in\_project
+
+    ```perl
+    my $registry_repositories = $api->registry_repositories_in_project(
+        $id,
+        \%params,
+    );
+    ```
+
+    Sends a `GET` request to `projects/:id/registry/repositories` and returns the decoded response content.
+
+- registry\_repositories\_in\_group
+
+    ```perl
+    my $registry_repositories = $api->registry_repositories_in_group(
+        $id,
+        \%params,
+    );
+    ```
+
+    Sends a `GET` request to `groups/:id/registry/repositories` and returns the decoded response content.
+
+- delete\_registry\_repository
+
+    ```
+    $api->delete_registry_repository(
+        $id,
+        $repository_id,
+    );
+    ```
+
+    Sends a `DELETE` request to `projects/:id/registry/repositories/:repository_id`.
+
+- registry\_repository\_tags
+
+    ```perl
+    my $tags = $api->registry_repository_tags(
+        $id,
+        $repository_id,
+    );
+    ```
+
+    Sends a `GET` request to `projects/:id/registry/repositories/:repository_id/tags` and returns the decoded response content.
+
+- registry\_repository\_tag
+
+    ```perl
+    my $tag = $api->registry_repository_tag(
+        $id,
+        $repository_id,
+        $tag_name,
+    );
+    ```
+
+    Sends a `GET` request to `projects/:id/registry/repositories/:repository_id/tags/:tag_name` and returns the decoded response content.
+
+- delete\_registry\_repository\_tag
+
+    ```
+    $api->delete_registry_repository_tag(
+        $id,
+        $repository_id,
+        $tag_name,
+    );
+    ```
+
+    Sends a `DELETE` request to `projects/:id/registry/repositories/:repository_id/tags/:tag_name`.
+
+- bulk\_delete\_registry\_repository\_tags
+
+    ```
+    $api->bulk_delete_registry_repository_tags(
+        $id,
+        $repository_id,
+        \%params,
+    );
+    ```
+
+    Sends a `DELETE` request to `projects/:id/registry/repositories/:repository_id/tags`.
+
 ## Custom Attributes
 
 See [https://docs.gitlab.com/ce/api/custom\_attributes.html](https://docs.gitlab.com/ce/api/custom_attributes.html).
@@ -5427,6 +5511,7 @@ gregor herrmann <gregoa@debian.org>
 Luc Didry <luc@didry.org>
 Kieren Diment <kieren.diment@staples.com.au>
 Dmitry Frolov <dmitry.frolov@gmail.com>
+Thomas Klausner <domm@plix.at>
 ```
 
 # COPYRIGHT AND LICENSE

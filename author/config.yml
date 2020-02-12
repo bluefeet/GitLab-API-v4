@@ -23,7 +23,7 @@ sections:
     doc_url: https://docs.gitlab.com/ce/api/commits.html
 - container_registry:
     head: Container Registry
-    doc_url: https://docs.gitlab.com/ee/api/container_registry.html
+    doc_url: https://docs.gitlab.com/ce/api/container_registry.html
 - custom_attributes:
     head: Custom Attributes
     doc_url: https://docs.gitlab.com/ce/api/custom_attributes.html
