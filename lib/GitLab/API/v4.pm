@@ -6768,6 +6768,28 @@ sub cancel_pipeline_jobs {
     return $self->_call_rest_client( 'POST', 'projects/:project_id/pipelines/:pipeline_id/cancel', [@_], $options );
 }
 
+=item delete_pipeline
+
+    $api->delete_pipeline(
+        $project_id,
+        $pipeline_id,
+    );
+
+Sends a C<DELETE> request to C<projects/:project_id/pipelines/:pipeline_id>.
+
+=cut
+
+sub delete_pipeline {
+    my $self = shift;
+    croak 'delete_pipeline must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to delete_pipeline must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($pipeline_id) to delete_pipeline must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $options = {};
+    $options->{decode} = 0;
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/pipelines/:pipeline_id', [@_], $options );
+    return;
+}
+
 =back
 
 =head2 Pipeline triggers

@@ -3457,6 +3457,17 @@ See [https://docs.gitlab.com/ce/api/pipelines.html](https://docs.gitlab.com/ce/a
 
     Sends a `POST` request to `projects/:project_id/pipelines/:pipeline_id/cancel` and returns the decoded response content.
 
+- delete\_pipeline
+
+    ```
+    $api->delete_pipeline(
+        $project_id,
+        $pipeline_id,
+    );
+    ```
+
+    Sends a `DELETE` request to `projects/:project_id/pipelines/:pipeline_id`.
+
 ## Pipeline triggers
 
 See [https://docs.gitlab.com/ce/api/pipeline\_triggers.html](https://docs.gitlab.com/ce/api/pipeline_triggers.html).

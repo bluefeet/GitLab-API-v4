@@ -20,3 +20,4 @@
         );
 - retry_pipeline_jobs: pipeline = POST projects/:project_id/pipelines/:pipeline_id/retry
 - cancel_pipeline_jobs: pipeline = POST projects/:project_id/pipelines/:pipeline_id/cancel
+- delete_pipeline: DELETE projects/:project_id/pipelines/:pipeline_id
