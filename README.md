@@ -856,12 +856,12 @@ See [https://docs.gitlab.com/ce/api/container\_registry.html](https://docs.gitla
 
     ```perl
     my $registry_repositories = $api->registry_repositories_in_project(
-        $id,
+        $project_id,
         \%params,
     );
     ```
 
-    Sends a `GET` request to `projects/:id/registry/repositories` and returns the decoded response content.
+    Sends a `GET` request to `projects/:project_id/registry/repositories` and returns the decoded response content.
 
 - registry\_repositories\_in\_group
 
@@ -878,59 +878,59 @@ See [https://docs.gitlab.com/ce/api/container\_registry.html](https://docs.gitla
 
     ```
     $api->delete_registry_repository(
-        $id,
+        $project_id,
         $repository_id,
     );
     ```
 
-    Sends a `DELETE` request to `projects/:id/registry/repositories/:repository_id`.
+    Sends a `DELETE` request to `projects/:project_id/registry/repositories/:repository_id`.
 
 - registry\_repository\_tags
 
     ```perl
     my $tags = $api->registry_repository_tags(
-        $id,
+        $project_id,
         $repository_id,
     );
     ```
 
-    Sends a `GET` request to `projects/:id/registry/repositories/:repository_id/tags` and returns the decoded response content.
+    Sends a `GET` request to `projects/:project_id/registry/repositories/:repository_id/tags` and returns the decoded response content.
 
 - registry\_repository\_tag
 
     ```perl
     my $tag = $api->registry_repository_tag(
-        $id,
+        $project_id,
         $repository_id,
         $tag_name,
     );
     ```
 
-    Sends a `GET` request to `projects/:id/registry/repositories/:repository_id/tags/:tag_name` and returns the decoded response content.
+    Sends a `GET` request to `projects/:project_id/registry/repositories/:repository_id/tags/:tag_name` and returns the decoded response content.
 
 - delete\_registry\_repository\_tag
 
     ```
     $api->delete_registry_repository_tag(
-        $id,
+        $project_id,
         $repository_id,
         $tag_name,
     );
     ```
 
-    Sends a `DELETE` request to `projects/:id/registry/repositories/:repository_id/tags/:tag_name`.
+    Sends a `DELETE` request to `projects/:project_id/registry/repositories/:repository_id/tags/:tag_name`.
 
 - bulk\_delete\_registry\_repository\_tags
 
     ```
     $api->bulk_delete_registry_repository_tags(
-        $id,
+        $project_id,
         $repository_id,
         \%params,
     );
     ```
 
-    Sends a `DELETE` request to `projects/:id/registry/repositories/:repository_id/tags`.
+    Sends a `DELETE` request to `projects/:project_id/registry/repositories/:repository_id/tags`.
 
 ## Custom Attributes
 

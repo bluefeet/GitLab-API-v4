@@ -1702,23 +1702,23 @@ See L<https://docs.gitlab.com/ce/api/container_registry.html>.
 =item registry_repositories_in_project
 
     my $registry_repositories = $api->registry_repositories_in_project(
-        $id,
+        $project_id,
         \%params,
     );
 
-Sends a C<GET> request to C<projects/:id/registry/repositories> and returns the decoded response content.
+Sends a C<GET> request to C<projects/:project_id/registry/repositories> and returns the decoded response content.
 
 =cut
 
 sub registry_repositories_in_project {
     my $self = shift;
     croak 'registry_repositories_in_project must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
-    croak 'The #1 argument ($id) to registry_repositories_in_project must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #1 argument ($project_id) to registry_repositories_in_project must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The last argument (\%params) to registry_repositories_in_project must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{query} = $params if defined $params;
-    return $self->_call_rest_client( 'GET', 'projects/:id/registry/repositories', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/registry/repositories', [@_], $options );
 }
 
 =item registry_repositories_in_group
@@ -1746,114 +1746,114 @@ sub registry_repositories_in_group {
 =item delete_registry_repository
 
     $api->delete_registry_repository(
-        $id,
+        $project_id,
         $repository_id,
     );
 
-Sends a C<DELETE> request to C<projects/:id/registry/repositories/:repository_id>.
+Sends a C<DELETE> request to C<projects/:project_id/registry/repositories/:repository_id>.
 
 =cut
 
 sub delete_registry_repository {
     my $self = shift;
     croak 'delete_registry_repository must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($id) to delete_registry_repository must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #1 argument ($project_id) to delete_registry_repository must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($repository_id) to delete_registry_repository must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_client( 'DELETE', 'projects/:id/registry/repositories/:repository_id', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/registry/repositories/:repository_id', [@_], $options );
     return;
 }
 
 =item registry_repository_tags
 
     my $tags = $api->registry_repository_tags(
-        $id,
+        $project_id,
         $repository_id,
     );
 
-Sends a C<GET> request to C<projects/:id/registry/repositories/:repository_id/tags> and returns the decoded response content.
+Sends a C<GET> request to C<projects/:project_id/registry/repositories/:repository_id/tags> and returns the decoded response content.
 
 =cut
 
 sub registry_repository_tags {
     my $self = shift;
     croak 'registry_repository_tags must be called with 2 arguments' if @_ != 2;
-    croak 'The #1 argument ($id) to registry_repository_tags must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #1 argument ($project_id) to registry_repository_tags must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($repository_id) to registry_repository_tags must be a scalar' if ref($_[1]) or (!defined $_[1]);
     my $options = {};
-    return $self->_call_rest_client( 'GET', 'projects/:id/registry/repositories/:repository_id/tags', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/registry/repositories/:repository_id/tags', [@_], $options );
 }
 
 =item registry_repository_tag
 
     my $tag = $api->registry_repository_tag(
-        $id,
+        $project_id,
         $repository_id,
         $tag_name,
     );
 
-Sends a C<GET> request to C<projects/:id/registry/repositories/:repository_id/tags/:tag_name> and returns the decoded response content.
+Sends a C<GET> request to C<projects/:project_id/registry/repositories/:repository_id/tags/:tag_name> and returns the decoded response content.
 
 =cut
 
 sub registry_repository_tag {
     my $self = shift;
     croak 'registry_repository_tag must be called with 3 arguments' if @_ != 3;
-    croak 'The #1 argument ($id) to registry_repository_tag must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #1 argument ($project_id) to registry_repository_tag must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($repository_id) to registry_repository_tag must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The #3 argument ($tag_name) to registry_repository_tag must be a scalar' if ref($_[2]) or (!defined $_[2]);
     my $options = {};
-    return $self->_call_rest_client( 'GET', 'projects/:id/registry/repositories/:repository_id/tags/:tag_name', [@_], $options );
+    return $self->_call_rest_client( 'GET', 'projects/:project_id/registry/repositories/:repository_id/tags/:tag_name', [@_], $options );
 }
 
 =item delete_registry_repository_tag
 
     $api->delete_registry_repository_tag(
-        $id,
+        $project_id,
         $repository_id,
         $tag_name,
     );
 
-Sends a C<DELETE> request to C<projects/:id/registry/repositories/:repository_id/tags/:tag_name>.
+Sends a C<DELETE> request to C<projects/:project_id/registry/repositories/:repository_id/tags/:tag_name>.
 
 =cut
 
 sub delete_registry_repository_tag {
     my $self = shift;
     croak 'delete_registry_repository_tag must be called with 3 arguments' if @_ != 3;
-    croak 'The #1 argument ($id) to delete_registry_repository_tag must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #1 argument ($project_id) to delete_registry_repository_tag must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($repository_id) to delete_registry_repository_tag must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The #3 argument ($tag_name) to delete_registry_repository_tag must be a scalar' if ref($_[2]) or (!defined $_[2]);
     my $options = {};
     $options->{decode} = 0;
-    $self->_call_rest_client( 'DELETE', 'projects/:id/registry/repositories/:repository_id/tags/:tag_name', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/registry/repositories/:repository_id/tags/:tag_name', [@_], $options );
     return;
 }
 
 =item bulk_delete_registry_repository_tags
 
     $api->bulk_delete_registry_repository_tags(
-        $id,
+        $project_id,
         $repository_id,
         \%params,
     );
 
-Sends a C<DELETE> request to C<projects/:id/registry/repositories/:repository_id/tags>.
+Sends a C<DELETE> request to C<projects/:project_id/registry/repositories/:repository_id/tags>.
 
 =cut
 
 sub bulk_delete_registry_repository_tags {
     my $self = shift;
     croak 'bulk_delete_registry_repository_tags must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
-    croak 'The #1 argument ($id) to bulk_delete_registry_repository_tags must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #1 argument ($project_id) to bulk_delete_registry_repository_tags must be a scalar' if ref($_[0]) or (!defined $_[0]);
     croak 'The #2 argument ($repository_id) to bulk_delete_registry_repository_tags must be a scalar' if ref($_[1]) or (!defined $_[1]);
     croak 'The last argument (\%params) to bulk_delete_registry_repository_tags must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
     my $params = (@_ == 3) ? pop() : undef;
     my $options = {};
     $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_client( 'DELETE', 'projects/:id/registry/repositories/:repository_id/tags', [@_], $options );
+    $self->_call_rest_client( 'DELETE', 'projects/:project_id/registry/repositories/:repository_id/tags', [@_], $options );
     return;
 }
 

@@ -6,7 +6,7 @@ Revision history for Perl extension GitLab-API-v4.
 
 0.24 2020-02-12T22:09:39Z
 
- - Added container registry methods.
+ - Add all the container registry methods.
  - Add http_tiny_request and http_tiny_response to ::RESTClient.  This
    should help people debug issues easier.
 
