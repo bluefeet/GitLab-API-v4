@@ -1,6 +1,6 @@
 ---
 - registry_repositories_in_project: registry_repositories = GET projects/:project_id/registry/repositories?
-- registry_repositories_in_group: registry_repositories = GET groups/:id/registry/repositories?
+- registry_repositories_in_group: registry_repositories = GET groups/:group_id/registry/repositories?
 - delete_registry_repository: DELETE projects/:project_id/registry/repositories/:repository_id
 - registry_repository_tags: tags = GET projects/:project_id/registry/repositories/:repository_id/tags
 - registry_repository_tag: tag = GET projects/:project_id/registry/repositories/:repository_id/tags/:tag_name

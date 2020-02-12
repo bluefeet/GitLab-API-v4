@@ -867,12 +867,12 @@ See [https://docs.gitlab.com/ce/api/container\_registry.html](https://docs.gitla
 
     ```perl
     my $registry_repositories = $api->registry_repositories_in_group(
-        $id,
+        $group_id,
         \%params,
     );
     ```
 
-    Sends a `GET` request to `groups/:id/registry/repositories` and returns the decoded response content.
+    Sends a `GET` request to `groups/:group_id/registry/repositories` and returns the decoded response content.
 
 - delete\_registry\_repository
 
