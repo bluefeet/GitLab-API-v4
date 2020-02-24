@@ -120,7 +120,7 @@ my $data = $api->$method(
 $data = $data->all() if $all;
 
 binmode STDOUT, ':utf8';
-my $json = JSON->new->allow_nonref();
+my $json = JSON::MaybeXS->new(allow_nonref => 1);
 $json->pretty() if $pretty;
 $json->canonical() if $canonical;
 print $json->encode( $data );
