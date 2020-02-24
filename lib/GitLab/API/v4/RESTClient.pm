@@ -9,9 +9,9 @@ GitLab::API::v4::RESTClient - The HTTP client that does the heavy lifting.
 
 =head1 DESCRIPTION
 
-Currently this class uses L<HTTP::Tiny> and L<JSON> to do its job.  This may
-change, and the interface may change, so documentation is lacking in order
-to not mislead people.
+Currently this class uses L<HTTP::Tiny> and L<JSON::MaybeXS> to do its job.
+This may change, and the interface may change, so documentation is lacking in
+order to not mislead people.
 
 If you do want to customize how this class works then take a look at the
 source.
@@ -40,7 +40,7 @@ and you will have encountered an error when making the request
 use Carp qw();
 use HTTP::Tiny::Multipart;
 use HTTP::Tiny;
-use JSON;
+use JSON::MaybeXS;
 use Log::Any qw( $log );
 use Path::Tiny;
 use Try::Tiny;

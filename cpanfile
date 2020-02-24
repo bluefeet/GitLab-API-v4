@@ -9,7 +9,7 @@ requires 'Types::Common::String' => '1.002001';
 requires 'Types::Common::Numeric' => '1.002001';
 requires 'Log::Any' => '1.703';
 requires 'Carp';
-requires 'JSON' => '2.59';
+requires 'JSON::MaybeXS' => '1.003007';
 
 # Used by GitLab::API::v4::RESTClient.
 requires 'HTTP::Tiny' => '0.059';
