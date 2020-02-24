@@ -4,7 +4,7 @@ use strictures 2;
 use GitLab::API::v4::Config;
 use GitLab::API::v4::Constants qw( :all );
 use GitLab::API::v4;
-use JSON;
+use JSON::MaybeXS;
 use Log::Any qw( $log );
 use Log::Any::Adapter::Screen;
 use Log::Any::Adapter;
@@ -204,14 +204,14 @@ See L<GitLab::API::v4::Paginator/all> for details.
     --pretty
     -p
 
-Enables the L<JSON/pretty> feature.
+Enables the L<JSON::PP/pretty> feature.
 
 =head2 canonical
 
     --canonical
     -c
 
-Enables the L<JSON/canonical> feature.
+Enables the L<JSON::PP/canonical> feature.
 
 =head1 API METHOD
 
