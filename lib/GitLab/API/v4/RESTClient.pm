@@ -110,7 +110,7 @@ has json => (
     isa => HasMethods[ 'encode', 'decode' ],
 );
 sub _build_json {
-    return JSON->new->utf8->allow_nonref();
+    return JSON::MaybeXS->new(utf8 => 1, allow_nonref => 1);
 }
 
 has http_tiny_request => (

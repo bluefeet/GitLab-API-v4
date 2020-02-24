@@ -236,9 +236,7 @@ sub configure {
         '-stdio', '-verbatim',
     );
 
-    my $json = JSON->new
-        ->pretty
-        ->canonical
+    my $json = JSON::MaybeXS->new(pretty => 1, canonical => 1)
     ->encode({
         $url           ? (url=>$url) : (),
         $private_token ? (private_token=>$private_token) : (),
