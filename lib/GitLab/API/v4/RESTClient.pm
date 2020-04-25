@@ -126,7 +126,6 @@ sub request {
 
         # Might as well mask the filename, but leave the extension.
         my $filename = $file->basename(); # foo/bar.txt => bar.txt
-        $filename =~ s{^.*?(\.[^.]+|)}{upload$1}; # bar.txt => upload.txt
 
         my $data = {
             file => {
