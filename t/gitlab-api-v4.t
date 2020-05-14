@@ -17,10 +17,8 @@ ok( 1, 'made it to the end' );
 done_testing;
 
 sub run {
-    local $ENV{PERL5LIB} = 'lib';
-
     my($ok, $error, $full, $stdout, $stderr) =
-        IPC::Cmd::run( command => ['script/gitlab-api-v4', @_] );
+        IPC::Cmd::run( command => [$^X, '-I', 'lib', 'script/gitlab-api-v4', @_] );
 
     if ($ok) {
         $stdout = join('',@$stdout);
