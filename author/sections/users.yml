@@ -34,3 +34,4 @@
 - create_user_impersonation_token: token = POST users/:user_id/impersonation_tokens?
 - delete_user_impersonation_token: DELETE users/:user_id/impersonation_tokens/:impersonation_token_id
 - all_user_activities: activities = GET user/activities?
+- user_memberships: memberships = GET users/:user_id/memberships?

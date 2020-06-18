@@ -17,7 +17,7 @@ like this:
 
 =head2 SUB
 
-The name if the subroutine that will be created in v4.pm.
+The name of the subroutine that will be created in v4.pm.
 
 =head2 RETURN
 
