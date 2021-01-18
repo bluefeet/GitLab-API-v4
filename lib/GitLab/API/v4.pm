@@ -2898,6 +2898,52 @@ sub delete_ldap_provider_group_link {
     return;
 }
 
+=item share_group_with_group
+
+    $api->share_group_with_group(
+        $group_id,
+        \%params,
+    );
+
+Sends a C<POST> request to C<groups/:group_id/share>.
+
+=cut
+
+sub share_group_with_group {
+    my $self = shift;
+    croak 'share_group_with_group must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($group_id) to share_group_with_group must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to share_group_with_group must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
+    my $options = {};
+    $options->{decode} = 0;
+    $options->{content} = $params if defined $params;
+    $self->_call_rest_client( 'POST', 'groups/:group_id/share', [@_], $options );
+    return;
+}
+
+=item unshare_group_with_group
+
+    $api->unshare_group_with_group(
+        $group_id,
+        $shared_with_group_id,
+    );
+
+Sends a C<DELETE> request to C<groups/:group_id/share/:shared_with_group_id>.
+
+=cut
+
+sub unshare_group_with_group {
+    my $self = shift;
+    croak 'unshare_group_with_group must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($group_id) to unshare_group_with_group must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($shared_with_group_id) to unshare_group_with_group must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $options = {};
+    $options->{decode} = 0;
+    $self->_call_rest_client( 'DELETE', 'groups/:group_id/share/:shared_with_group_id', [@_], $options );
+    return;
+}
+
 =back
 
 =head2 Group access requests

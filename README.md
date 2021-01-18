@@ -1463,6 +1463,28 @@ See [https://docs.gitlab.com/ce/api/groups.html](https://docs.gitlab.com/ce/api/
 
     Sends a `DELETE` request to `groups/:group_id/ldap_group_links/:provider/:cn`.
 
+- share\_group\_with\_group
+
+    ```
+    $api->share_group_with_group(
+        $group_id,
+        \%params,
+    );
+    ```
+
+    Sends a `POST` request to `groups/:group_id/share`.
+
+- unshare\_group\_with\_group
+
+    ```
+    $api->unshare_group_with_group(
+        $group_id,
+        $shared_with_group_id,
+    );
+    ```
+
+    Sends a `DELETE` request to `groups/:group_id/share/:shared_with_group_id`.
+
 ## Group access requests
 
 See [https://docs.gitlab.com/ce/api/access\_requests.html](https://docs.gitlab.com/ce/api/access_requests.html).
