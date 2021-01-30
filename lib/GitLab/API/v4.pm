@@ -10551,6 +10551,28 @@ sub all_user_activities {
     return $self->_call_rest_client( 'GET', 'user/activities', [@_], $options );
 }
 
+=item user_memberships
+
+    my $memberships = $api->user_memberships(
+        $user_id,
+        \%params,
+    );
+
+Sends a C<GET> request to C<users/:user_id/memberships> and returns the decoded response content.
+
+=cut
+
+sub user_memberships {
+    my $self = shift;
+    croak 'user_memberships must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($user_id) to user_memberships must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to user_memberships must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
+    my $options = {};
+    $options->{query} = $params if defined $params;
+    return $self->_call_rest_client( 'GET', 'users/:user_id/memberships', [@_], $options );
+}
+
 =back
 
 =head2 Validate the .gitlab-ci.yml
@@ -10773,6 +10795,7 @@ development this distribution would not exist.
     Kieren Diment <kieren.diment@staples.com.au>
     Dmitry Frolov <dmitry.frolov@gmail.com>
     Thomas Klausner <domm@plix.at>
+    Graham Knop <haarg@haarg.org>
 
 =head1 COPYRIGHT AND LICENSE
 

@@ -47,6 +47,7 @@ development this distribution would not exist.
     Kieren Diment <kieren.diment@staples.com.au>
     Dmitry Frolov <dmitry.frolov@gmail.com>
     Thomas Klausner <domm@plix.at>
+    Graham Knop <haarg@haarg.org>
 
 =head1 COPYRIGHT AND LICENSE
 

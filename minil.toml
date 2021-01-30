@@ -1,4 +1,4 @@
 name = "GitLab-API-v4"
 authority="cpan:BLUEFEET"
 markdown_maker = "Pod::Markdown::Github"
-license = "gpl_3"
+license = "perl_5"
