@@ -18,7 +18,7 @@ This module is used by L<GitLab::API::v4::Mock>.
 =cut
 
 use GitLab::API::v4::Mock::Engine;
-use JSON;
+use JSON::MaybeXS;
 use URI;
 
 use Moo;

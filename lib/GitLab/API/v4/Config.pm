@@ -28,7 +28,7 @@ L</SYNOPSIS>.
 
 use Getopt::Long;
 use IO::Prompter;
-use JSON;
+use JSON::MaybeXS;
 use Log::Any qw( $log );
 use Path::Tiny;
 use Types::Common::String -types;
@@ -236,9 +236,7 @@ sub configure {
         '-stdio', '-verbatim',
     );
 
-    my $json = JSON->new
-        ->pretty
-        ->canonical
+    my $json = JSON::MaybeXS->new(pretty => 1, canonical => 1)
     ->encode({
         $url           ? (url=>$url) : (),
         $private_token ? (private_token=>$private_token) : (),

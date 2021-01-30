@@ -5,9 +5,9 @@ use Test2::Require::AuthorTesting;
 use Test2::V0;
 
 use IPC::Cmd qw();
-use JSON qw();
+use JSON::MaybeXS qw();
 
-my $json = JSON->new->allow_nonref();
+my $json = JSON::MaybeXS->new(allow_nonref => 1);
 
 my $project = run('create-project', 'name:test-gitlab-api-v4');
 run('delete-project', $project->{id});
