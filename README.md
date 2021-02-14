@@ -26,7 +26,7 @@ interface (CLI).
 
 ## Upgrading
 
-If you are upgrading from [GitLab::API::v3](https://metacpan.org/pod/GitLab::API::v3) make sure you read:
+If you are upgrading from [GitLab::API::v3](https://metacpan.org/pod/GitLab%3A%3AAPI%3A%3Av3) make sure you read:
 
 [https://docs.gitlab.com/ce/api/v3\_to\_v4.html](https://docs.gitlab.com/ce/api/v3_to_v4.html)
 
@@ -59,7 +59,7 @@ don't want them to.
 ## Constants
 
 The GitLab API, in rare cases, uses a hard-coded value to represent a state.
-To make life easier the [GitLab::API::v4::Constants](https://metacpan.org/pod/GitLab::API::v4::Constants) module exposes
+To make life easier the [GitLab::API::v4::Constants](https://metacpan.org/pod/GitLab%3A%3AAPI%3A%3Av4%3A%3AConstants) module exposes
 these states as named variables.
 
 ## Exceptions
@@ -70,11 +70,11 @@ an unsuccessful response is received from the API.  That is except for
 for methods that return a value.
 
 If you'd like to catch and handle these exceptions consider using
-[Try::Tiny](https://metacpan.org/pod/Try::Tiny).
+[Try::Tiny](https://metacpan.org/pod/Try%3A%3ATiny).
 
 ## Logging
 
-This module uses [Log::Any](https://metacpan.org/pod/Log::Any) and produces some debug messages here
+This module uses [Log::Any](https://metacpan.org/pod/Log%3A%3AAny) and produces some debug messages here
 and there, but the most useful bits are the info messages produced
 just before each API call.
 
@@ -121,14 +121,14 @@ See [https://docs.gitlab.com/ce/api/#sudo](https://docs.gitlab.com/ce/api/#sudo)
 
 ## rest\_client
 
-An instance of [GitLab::API::v4::RESTClient](https://metacpan.org/pod/GitLab::API::v4::RESTClient) (or whatever ["rest\_client\_class"](#rest_client_class)
+An instance of [GitLab::API::v4::RESTClient](https://metacpan.org/pod/GitLab%3A%3AAPI%3A%3Av4%3A%3ARESTClient) (or whatever ["rest\_client\_class"](#rest_client_class)
 is set to).  Typically you will not be setting this as it defaults to a new
 instance and customization should not be necessary.
 
 ## rest\_client\_class
 
 The class to use when constructing the ["rest\_client"](#rest_client).
-Defaults to [GitLab::API::v4::RESTClient](https://metacpan.org/pod/GitLab::API::v4::RESTClient).
+Defaults to [GitLab::API::v4::RESTClient](https://metacpan.org/pod/GitLab%3A%3AAPI%3A%3Av4%3A%3ARESTClient).
 
 # UTILITY METHODS
 
@@ -155,7 +155,7 @@ my $all_open_issues = $api->paginator(
 ```
 
 Given a method who supports the `page` and `per_page` parameters,
-and returns an array ref, this will return a [GitLab::API::v4::Paginator](https://metacpan.org/pod/GitLab::API::v4::Paginator)
+and returns an array ref, this will return a [GitLab::API::v4::Paginator](https://metacpan.org/pod/GitLab%3A%3AAPI%3A%3Av4%3A%3APaginator)
 object that will allow you to walk the records one page or one record
 at a time.
 
@@ -165,7 +165,7 @@ at a time.
 $api->sudo('fred')->create_issue(...);
 ```
 
-Returns a new instance of [GitLab::API::v4](https://metacpan.org/pod/GitLab::API::v4) with the ["sudo\_user"](#sudo_user) argument
+Returns a new instance of [GitLab::API::v4](https://metacpan.org/pod/GitLab%3A%3AAPI%3A%3Av4) with the ["sudo\_user"](#sudo_user) argument
 set.
 
 See [https://docs.gitlab.com/ce/api/#sudo](https://docs.gitlab.com/ce/api/#sudo).
@@ -5390,6 +5390,17 @@ See [https://docs.gitlab.com/ce/api/users.html](https://docs.gitlab.com/ce/api/u
 
     Sends a `GET` request to `user/activities` and returns the decoded response content.
 
+- user\_memberships
+
+    ```perl
+    my $memberships = $api->user_memberships(
+        $user_id,
+        \%params,
+    );
+    ```
+
+    Sends a `GET` request to `users/:user_id/memberships` and returns the decoded response content.
+
 ## Validate the .gitlab-ci.yml
 
 See [https://docs.gitlab.com/ce/api/lint.html](https://docs.gitlab.com/ce/api/lint.html).
@@ -5523,6 +5534,7 @@ Luc Didry <luc@didry.org>
 Kieren Diment <kieren.diment@staples.com.au>
 Dmitry Frolov <dmitry.frolov@gmail.com>
 Thomas Klausner <domm@plix.at>
+Graham Knop <haarg@haarg.org>
 ```
 
 # COPYRIGHT AND LICENSE

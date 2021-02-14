@@ -48,6 +48,7 @@ development this distribution would not exist.
     Dmitry Frolov <dmitry.frolov@gmail.com>
     Thomas Klausner <domm@plix.at>
     Jon Taylor <jon@stackhaus.com>
+    Graham Knop <haarg@haarg.org>
 
 =head1 COPYRIGHT AND LICENSE
 

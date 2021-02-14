@@ -1,5 +1,5 @@
 package GitLab::API::v4::RESTClient;
-our $VERSION = '0.25';
+our $VERSION = '0.26';
 
 =encoding utf8
 
@@ -175,7 +175,6 @@ sub request {
 
         # Might as well mask the filename, but leave the extension.
         my $filename = $file->basename(); # foo/bar.txt => bar.txt
-        $filename =~ s{^.*?(\.[^.]+|)}{upload$1}; # bar.txt => upload.txt
 
         my $data = {
             file => {

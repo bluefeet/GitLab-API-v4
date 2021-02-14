@@ -2,6 +2,13 @@ Revision history for Perl extension GitLab-API-v4.
 
 {{$NEXT}}
 
+0.26 2021-01-30T07:10:57Z
+
+ - Changed licensing terms to be the same as Perl 5.
+ - Add the user_memeberships method.
+ - Remove file renaming before upload.
+ - Provide a .editorconfig instead of .lvimrc.
+
 0.25 2020-02-12T22:20:48Z
 
  - Add the delete_pipeline method.
