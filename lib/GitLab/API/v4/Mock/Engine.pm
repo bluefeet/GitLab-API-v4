@@ -202,9 +202,9 @@ See L<GitLab::API::v4/SUPPORT>.
 
 See L<GitLab::API::v4/AUTHORS>.
 
-=head1 COPYRIGHT AND LICENSE
+=head1 LICENSE
 
-See L<GitLab::API::v4/COPYRIGHT AND LICENSE>.
+See L<GitLab::API::v4/LICENSE>.
 
 =cut
 

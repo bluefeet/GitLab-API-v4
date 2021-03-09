@@ -2,6 +2,8 @@ Revision history for Perl extension GitLab-API-v4.
 
 {{$NEXT}}
 
+ - Fixed incorrect license messaging in POD.
+
 0.26 2021-01-30T07:10:57Z
 
  - Changed licensing terms to be the same as Perl 5.
