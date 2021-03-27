@@ -11,3 +11,5 @@
 - create_ldap_group_link: POST groups/:group_id/ldap_group_links?
 - delete_ldap_group_link: DELETE groups/:group_id/ldap_group_links/:cn
 - delete_ldap_provider_group_link: DELETE groups/:group_id/ldap_group_links/:provider/:cn
+- share_group_with_group: POST groups/:group_id/share?
+- unshare_group_with_group: DELETE groups/:group_id/share/:shared_with_group_id

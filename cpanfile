@@ -35,3 +35,7 @@ on test => sub {
     requires 'Log::Any::Adapter::TAP' => '0.003003';
     requires 'MIME::Base64' => '3.15';
 };
+
+on 'develop' => sub {
+    requires 'YAML::XS';
+};
