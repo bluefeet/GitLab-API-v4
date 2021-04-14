@@ -1,0 +1,5 @@
+---
+- remote_mirrors: mirrors = GET projects/:project_id/remote_mirrors
+- create_remote_mirror: mirror = POST projects/:project_id/remote_mirrors?
+- edit_remote_mirror: mirror = PUT projects/:project_id/remote_mirrors/:mirror_id?
+

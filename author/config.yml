@@ -150,6 +150,9 @@ sections:
 - release_links:
     head: Release Links
     doc_url: https://docs.gitlab.com/ce/api/releases/links.html
+- remote_mirrors:
+    head: Remote Mirrors
+    doc_url: https://docs.gitlab.com/ce/api/remote_mirrors.html
 - repositories:
     head: Repositories
     doc_url: https://docs.gitlab.com/ce/api/repositories.html

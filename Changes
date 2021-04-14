@@ -2,6 +2,10 @@ Revision history for Perl extension GitLab-API-v4.
 
 {{$NEXT}}
 
+ - Handle multiple cookies correctly when there is more than one.
+ - Live tests now run against GitLab CE 13.9.6 (was 11.10.4).
+ - Add the the remote_mirrors, create_remote_mirror, and
+   edit_remote_mirror methods.
  - Fixed incorrect license messaging in POD.
 
 0.26 2021-01-30T07:10:57Z

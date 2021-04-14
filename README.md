@@ -4519,6 +4519,43 @@ See [https://docs.gitlab.com/ce/api/releases/links.html](https://docs.gitlab.com
 
     Sends a `DELETE` request to `projects/:project_id/releases/:tag_name/assets/links/:link_id` and returns the decoded response content.
 
+## Remote Mirrors
+
+See [https://docs.gitlab.com/ce/api/remote\_mirrors.html](https://docs.gitlab.com/ce/api/remote_mirrors.html).
+
+- remote\_mirrors
+
+    ```perl
+    my $mirrors = $api->remote_mirrors(
+        $project_id,
+    );
+    ```
+
+    Sends a `GET` request to `projects/:project_id/remote_mirrors` and returns the decoded response content.
+
+- create\_remote\_mirror
+
+    ```perl
+    my $mirror = $api->create_remote_mirror(
+        $project_id,
+        \%params,
+    );
+    ```
+
+    Sends a `POST` request to `projects/:project_id/remote_mirrors` and returns the decoded response content.
+
+- edit\_remote\_mirror
+
+    ```perl
+    my $mirror = $api->edit_remote_mirror(
+        $project_id,
+        $mirror_id,
+        \%params,
+    );
+    ```
+
+    Sends a `PUT` request to `projects/:project_id/remote_mirrors/:mirror_id` and returns the decoded response content.
+
 ## Repositories
 
 See [https://docs.gitlab.com/ce/api/repositories.html](https://docs.gitlab.com/ce/api/repositories.html).

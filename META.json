@@ -50,6 +50,7 @@
             "HTTP::Tiny::Multipart" : "0.05",
             "IO::Prompter" : "0.004014",
             "JSON" : "2.59",
+            "List::Util" : "0",
             "Log::Any" : "1.703",
             "Log::Any::Adapter" : "1.703",
             "Log::Any::Adapter::Screen" : "0.13",
