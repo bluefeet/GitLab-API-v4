@@ -79,7 +79,7 @@ while (@ARGV) {
     my $arg = shift @ARGV;
     next if $arg eq '--';
 
-    if ($arg =~ m{^([^:]+):(.*)$}) {
+    if ($arg =~ m{^([^:]+):(.*)$}s) {
         my ($key, $value) = ($1, $2);
 
         $key =~ s{-}{_}g;
