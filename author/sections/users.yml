@@ -31,6 +31,8 @@
 - unblock_user: success = POST users/:user_id/unblock
 - approve_user: POST users/:user_id/approve
 - reject_user: POST users/:user_id/reject
+- ban_user: POST users/:user_id/ban
+- unban_user: POST users/:user_id/unban
 - user_impersonation_tokens: tokens = GET users/:user_id/impersonation_tokens?
 - user_impersonation_token: token = GET users/:user_id/impersonation_tokens/:impersonation_token_id
 - create_user_impersonation_token: token = POST users/:user_id/impersonation_tokens?
