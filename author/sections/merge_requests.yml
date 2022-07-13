@@ -8,6 +8,8 @@
 - edit_merge_request: merge_request = PUT projects/:project_id/merge_requests/:merge_request_iid?
 - delete_merge_request: DELETE projects/:project_id/merge_requests/:merge_request_iid
 - accept_merge_request: merge_request = PUT projects/:project_id/merge_requests/:merge_request_iid/merge?
+- approve_merge_request: merge_request = POST projects/:project_id/merge_requests/:merge_request_iid/approve?
+- unapprove_merge_request: merge_request = POST projects/:project_id/merge_requests/:merge_request_iid/unapprove?
 - cancel_merge_when_pipeline_succeeds: merge_request = PUT projects/:project_id/merge_requests/:merge_request_iid/cancel_merge_when_pipeline_succeeds
 - merge_request_closes_issues: issues = GET projects/:project_id/merge_requests/:merge_request_iid/closes_issues?
 - subscribe_to_merge_request: merge_request = POST projects/:project_id/merge_requests/:merge_request_iid/subscribe
