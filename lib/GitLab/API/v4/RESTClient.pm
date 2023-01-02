@@ -162,10 +162,18 @@ sub request {
 
     my $req_method = 'request';
     my $req = [ $verb, $url, $options ];
+    my $boundary;
 
-    if ($verb eq 'POST' and ref($content) eq 'HASH' and $content->{file}) {
+    if (($verb eq 'POST' or $verb eq 'PUT' ) and ref($content) eq 'HASH' and $content->{file}) {
         $content = { %$content };
-        my $file = path( delete $content->{file} );
+        my $file = delete $content->{file};
+
+        my $key = (keys %$file)[0]
+            if (ref $file);
+
+        $file = (ref $file)
+            ? path( $file->{$key} )
+            : path( $file );
 
         unless (-f $file and -r $file) {
             local $Carp::Internal{ 'GitLab::API::v4' } = 1;
@@ -183,18 +191,34 @@ sub request {
             },
         };
 
-        $req->[0] = $req->[1]; # Replace method with url.
-        $req->[1] = $data; # Put data where url was.
-        # So, req went from [$verb,$url,$options] to [$url,$data,$options],
-        # per the post_multipart interface.
+        if ($verb eq 'POST') {
+            $req->[0] = $req->[1]; # Replace method with url.
+            $req->[1] = $data; # Put data where url was.
+            # So, req went from [$verb,$url,$options] to [$url,$data,$options],
+            # per the post_multipart interface.
 
-        $req_method = 'post_multipart';
-        $content = undef if ! %$content;
+            $req_method = 'post_multipart';
+            $content = undef if ! %$content;
+        } elsif ($verb eq 'PUT') {
+            $boundary .= sprintf("%x", rand 16) for 1..16;
+            $content = <<"EOL";
+--------------------------$boundary
+Content-Disposition: form-data; name="$key"; filename="$data->{file}->{filename}"
+
+$data->{file}->{content}
+--------------------------$boundary--
+EOL
+        }
     }
 
-    if (ref $content) {
-        $content = $self->json->encode( $content );
-        $headers->{'content-type'} = 'application/json';
+    if (defined $boundary or ref $content) {
+        $content = $self->json->encode( $content )
+          if (ref $content);
+
+      $headers->{'content-type'} = (defined $boundary)
+          ? "multipart/form-data; boundary=------------------------$boundary"
+          : 'application/json';
+
         $headers->{'content-length'} = length( $content );
     }
 
