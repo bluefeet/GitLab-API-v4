@@ -7180,6 +7180,26 @@ sub take_ownership_of_pipeline_schedule {
     return $self->_call_rest_client( 'POST', 'projects/:project_id/pipeline_schedules/:pipeline_schedule_id/take_ownership', [@_], $options );
 }
 
+=item run_pipeline_schedule
+
+    my $variable = $api->run_pipeline_schedule(
+        $project_id,
+        $pipeline_schedule_id,
+    );
+
+Sends a C<POST> request to C<projects/:project_id/pipeline_schedules/:pipeline_schedule_id/play> and returns the decoded response content.
+
+=cut
+
+sub run_pipeline_schedule {
+    my $self = shift;
+    croak 'run_pipeline_schedule must be called with 2 arguments' if @_ != 2;
+    croak 'The #1 argument ($project_id) to run_pipeline_schedule must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($pipeline_schedule_id) to run_pipeline_schedule must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    my $options = {};
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/pipeline_schedules/:pipeline_schedule_id/play', [@_], $options );
+}
+
 =item delete_pipeline_schedule
 
     my $schedule = $api->delete_pipeline_schedule(

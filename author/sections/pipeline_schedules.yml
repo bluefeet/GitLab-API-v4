@@ -4,6 +4,7 @@
 - create_pipeline_schedule: schedule = POST projects/:project_id/pipeline_schedules?
 - edit_pipeline_schedule: schedule = PUT projects/:project_id/pipeline_schedules/:pipeline_schedule_id?
 - take_ownership_of_pipeline_schedule: schedule = POST projects/:project_id/pipeline_schedules/:pipeline_schedule_id/take_ownership
+- run_pipeline_schedule: variable = POST projects/:project_id/pipeline_schedules/:pipeline_schedule_id/play
 - delete_pipeline_schedule: schedule = DELETE projects/:project_id/pipeline_schedules/:pipeline_schedule_id
 - create_pipeline_schedule_variable: variable = POST projects/:project_id/pipeline_schedules/:pipeline_schedule_id/variables?
 - edit_pipeline_schedule_variable: variable = PUT projects/:project_id/pipeline_schedules/:pipeline_schedule_id/variables/:variable_key?
