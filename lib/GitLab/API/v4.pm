@@ -7321,7 +7321,6 @@ sub create_project_for_user {
     $api->edit_project(
         $project_id,
         \%params,
-        \%params_multipart,
     );
 
 Sends a C<PUT> request to C<projects/:project_id>.
@@ -7330,21 +7329,39 @@ Sends a C<PUT> request to C<projects/:project_id>.
 
 sub edit_project {
     my $self = shift;
-    croak 'edit_project must be called with 1 to 3 arguments' if @_ < 1 or @_ > 3;
+    croak 'edit_project must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
     croak 'The #1 argument ($project_id) to edit_project must be a scalar' if ref($_[0]) or (!defined $_[0]);
-    croak 'The #2 argument (\%params) to edit_project must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
-    croak 'The last argument (\%params_multipart) to edit_project must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
-    my $params_multipart = (@_ == 3) ? pop() : undef;
+    croak 'The last argument (\%params) to edit_project must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
     my $params = (@_ == 2) ? pop() : undef;
     my $options = {};
     $options->{decode} = 0;
     $options->{content} = $params if defined $params;
-    $self->_call_rest_client( 'PUT', 'projects/:project_id', [$_[0]], $options );
+    $self->_call_rest_client( 'PUT', 'projects/:project_id', [@_], $options );
+    return;
+}
 
-    if (keys %$params_multipart) {
-        $options->{content}->{file} = $params_multipart ;
-        $self->_call_rest_client( 'PUT', 'projects/:project_id', [$_[0]], $options );
-    }
+=item edit_project_multipart
+
+    $api->edit_project_multipart(
+        $project_id,
+        \%params,
+    );
+
+Sends a C<PUT> request to C<projects/:project_id>.
+
+The request will have "multipart/form-data" header set for uploading files.
+=cut
+
+sub edit_project_multipart {
+    my $self = shift;
+    croak 'edit_project_multipart must be called with 1 to 2 arguments' if @_ < 1 or @_ > 2;
+    croak 'The #1 argument ($project_id) to edit_project_multipart must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The last argument (\%params) to edit_project_multipart must be a hash ref' if defined($_[1]) and ref($_[1]) ne 'HASH';
+    my $params = (@_ == 2) ? pop() : undef;
+    my $options = {};
+    $options->{decode} = 0;
+    $options->{content}->{file} = $params if defined $params;
+    $self->_call_rest_client( 'PUT', 'projects/:project_id', [@_], $options );
     return;
 }
 
