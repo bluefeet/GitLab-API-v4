@@ -102,7 +102,7 @@ has http_tiny => (
     isa => InstanceOf[ 'HTTP::Tiny' ],
 );
 sub _build_http_tiny {
-    return HTTP::Tiny->new();
+    return HTTP::Tiny->new( verify_SSL => 1 );
 }
 
 has json => (

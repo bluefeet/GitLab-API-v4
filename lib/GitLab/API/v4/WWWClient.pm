@@ -81,6 +81,7 @@ sub sign_in {
     my ($self, $username, $password) = @_;
 
     my $tiny = HTTP::Tiny->new(
+        verify_SSL => 1,
         max_redirect => 0,
     );
 
@@ -165,6 +166,7 @@ sub get {
     my ($self, $path) = @_;
 
     my $tiny = HTTP::Tiny->new(
+        verify_SSL => 1,
         max_redirect => 0,
     );
 
