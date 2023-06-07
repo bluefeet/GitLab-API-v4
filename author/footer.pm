@@ -31,9 +31,12 @@ for encouraging their employees to contribute back to the open
 source ecosystem.  Without their dedication to quality software
 development this distribution would not exist.
 
-=head1 AUTHORS
+=head1 AUTHOR
 
     Aran Clary Deltac <bluefeet@gmail.com>
+
+=head1 CONTRIBUTORS
+
     Dotan Dimet <dotan@corky.net>
     Nigel Gregoire <nigelgregoire@gmail.com>
     trunov-ms <trunov.ms@gmail.com>
