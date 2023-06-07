@@ -5547,13 +5547,6 @@ GitLab-API-v4 GitHub issue tracker:
 
 [https://github.com/bluefeet/GitLab-API-v4/issues](https://github.com/bluefeet/GitLab-API-v4/issues)
 
-# ACKNOWLEDGEMENTS
-
-Thanks to [ZipRecruiter](https://www.ziprecruiter.com/)
-for encouraging their employees to contribute back to the open
-source ecosystem.  Without their dedication to quality software
-development this distribution would not exist.
-
 # AUTHOR
 
 ```
