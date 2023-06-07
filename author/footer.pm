@@ -44,6 +44,8 @@ L<https://github.com/bluefeet/GitLab-API-v4/issues>
     Dmitry Frolov <dmitry.frolov@gmail.com>
     Thomas Klausner <domm@plix.at>
     Graham Knop <haarg@haarg.org>
+    Stig Palmquist <git@stig.io>
+    Dan Book <grinnz@grinnz.com>
 
 =head1 LICENSE
 

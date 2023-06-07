@@ -2,6 +2,8 @@ Revision history for Perl extension GitLab-API-v4.
 
 {{$NEXT}}
 
+ - Use JSON::MaybeXS instead of JSON.
+ - Add verify_SSL=>1 to HTTP::Tiny to verify https server identity.
  - Handle multiple cookies correctly when there is more than one.
  - Live tests now run against GitLab CE 16.0.3 (was 11.10.4).
  - Add the the remote_mirrors, create_remote_mirror, and
