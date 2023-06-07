@@ -2,6 +2,7 @@ Revision history for Perl extension GitLab-API-v4.
 
 {{$NEXT}}
 
+ - Add approve_merge_request and unapprove_merge_request
  - Add approve_user and reject_user.
  - Add ban_user and unban_user.
  - Add activate_user and deactivate_user.

@@ -2358,6 +2358,30 @@ See [https://docs.gitlab.com/ce/api/merge\_requests.html](https://docs.gitlab.co
 
     Sends a `PUT` request to `projects/:project_id/merge_requests/:merge_request_iid/merge` and returns the decoded response content.
 
+- approve\_merge\_request
+
+    ```perl
+    my $merge_request = $api->approve_merge_request(
+        $project_id,
+        $merge_request_iid,
+        \%params,
+    );
+    ```
+
+    Sends a `POST` request to `projects/:project_id/merge_requests/:merge_request_iid/approve` and returns the decoded response content.
+
+- unapprove\_merge\_request
+
+    ```perl
+    my $merge_request = $api->unapprove_merge_request(
+        $project_id,
+        $merge_request_iid,
+        \%params,
+    );
+    ```
+
+    Sends a `POST` request to `projects/:project_id/merge_requests/:merge_request_iid/unapprove` and returns the decoded response content.
+
 - cancel\_merge\_when\_pipeline\_succeeds
 
     ```perl
@@ -5632,6 +5656,7 @@ Thomas Klausner <domm@plix.at>
 Graham Knop <haarg@haarg.org>
 Stig Palmquist <git@stig.io>
 Dan Book <grinnz@grinnz.com>
+James Wright <jwright@ecstuning.com>
 ```
 
 # LICENSE

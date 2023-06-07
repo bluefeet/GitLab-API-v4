@@ -4624,6 +4624,54 @@ sub accept_merge_request {
     return $self->_call_rest_client( 'PUT', 'projects/:project_id/merge_requests/:merge_request_iid/merge', [@_], $options );
 }
 
+=item approve_merge_request
+
+    my $merge_request = $api->approve_merge_request(
+        $project_id,
+        $merge_request_iid,
+        \%params,
+    );
+
+Sends a C<POST> request to C<projects/:project_id/merge_requests/:merge_request_iid/approve> and returns the decoded response content.
+
+=cut
+
+sub approve_merge_request {
+    my $self = shift;
+    croak 'approve_merge_request must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to approve_merge_request must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($merge_request_iid) to approve_merge_request must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to approve_merge_request must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
+    my $options = {};
+    $options->{content} = $params if defined $params;
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/merge_requests/:merge_request_iid/approve', [@_], $options );
+}
+
+=item unapprove_merge_request
+
+    my $merge_request = $api->unapprove_merge_request(
+        $project_id,
+        $merge_request_iid,
+        \%params,
+    );
+
+Sends a C<POST> request to C<projects/:project_id/merge_requests/:merge_request_iid/unapprove> and returns the decoded response content.
+
+=cut
+
+sub unapprove_merge_request {
+    my $self = shift;
+    croak 'unapprove_merge_request must be called with 2 to 3 arguments' if @_ < 2 or @_ > 3;
+    croak 'The #1 argument ($project_id) to unapprove_merge_request must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    croak 'The #2 argument ($merge_request_iid) to unapprove_merge_request must be a scalar' if ref($_[1]) or (!defined $_[1]);
+    croak 'The last argument (\%params) to unapprove_merge_request must be a hash ref' if defined($_[2]) and ref($_[2]) ne 'HASH';
+    my $params = (@_ == 3) ? pop() : undef;
+    my $options = {};
+    $options->{content} = $params if defined $params;
+    return $self->_call_rest_client( 'POST', 'projects/:project_id/merge_requests/:merge_request_iid/unapprove', [@_], $options );
+}
+
 =item cancel_merge_when_pipeline_succeeds
 
     my $merge_request = $api->cancel_merge_when_pipeline_succeeds(
@@ -10986,6 +11034,7 @@ L<https://github.com/bluefeet/GitLab-API-v4/issues>
     Graham Knop <haarg@haarg.org>
     Stig Palmquist <git@stig.io>
     Dan Book <grinnz@grinnz.com>
+    James Wright <jwright@ecstuning.com>
 
 =head1 LICENSE
 

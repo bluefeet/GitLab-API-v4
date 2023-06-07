@@ -46,6 +46,7 @@ L<https://github.com/bluefeet/GitLab-API-v4/issues>
     Graham Knop <haarg@haarg.org>
     Stig Palmquist <git@stig.io>
     Dan Book <grinnz@grinnz.com>
+    James Wright <jwright@ecstuning.com>
 
 =head1 LICENSE
 
