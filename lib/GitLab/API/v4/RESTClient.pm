@@ -97,6 +97,12 @@ has retries => (
     default => 0,
 );
 
+has retry_wait => (
+    is      => 'ro',
+    isa     => PositiveOrZeroInt,
+    default => 10,
+);
+
 has http_tiny => (
     is  => 'lazy',
     isa => InstanceOf[ 'HTTP::Tiny' ],
@@ -203,17 +209,19 @@ sub request {
     $self->_set_request( $req );
 
     my $res;
-    my $tries_left = $self->retries();
-    do {
+    my $tries_left = $self->retries + 1;
+    while ($tries_left) {
         $res = $self->_http_tiny_request( $req_method, $req );
-        if ($res->{status} =~ m{^5}) {
-            $tries_left--;
-            $log->warn('Request failed; retrying...') if $tries_left > 0;
-        }
-        else {
-            $tries_left = 0
-        }
-    } while $tries_left > 0;
+        $tries_left--;
+        last unless $tries_left;
+
+        # Retry if we get a 5xx (error) or 429 (rate limited)
+        my $status = $res->{status};
+        last unless $status =~ m{^5} or $status == 429;
+        my $wait = $self->retry_wait;
+        $log->warn("Request failed with a $status status; retrying in $wait seconds...");
+        sleep $wait if $wait;
+    }
 
     $self->_set_response( $res );
 

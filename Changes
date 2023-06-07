@@ -2,6 +2,9 @@ Revision history for Perl extension GitLab-API-v4.
 
 {{$NEXT}}
 
+ - Retry on 429 (rate limited) responses.
+ - Add a retry_wait with a default of 10 (seconds).
+
 0.27 2023-06-07T20:50:56Z
 
  - Add run_pipeline_schedule.
