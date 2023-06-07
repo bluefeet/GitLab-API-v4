@@ -2,6 +2,10 @@ Revision history for Perl extension GitLab-API-v4.
 
 {{$NEXT}}
 
+ - Add approve_user and reject_user.
+ - Add ban_user and unban_user.
+ - Add activate_user and deactivate_user.
+ - Allow multi-line arguments.
  - Use JSON::MaybeXS instead of JSON.
  - Add verify_SSL=>1 to HTTP::Tiny to verify https server identity.
  - Handle multiple cookies correctly when there is more than one.

@@ -5373,6 +5373,66 @@ See [https://docs.gitlab.com/ce/api/users.html](https://docs.gitlab.com/ce/api/u
 
     Sends a `POST` request to `users/:user_id/unblock` and returns the decoded response content.
 
+- approve\_user
+
+    ```perl
+    $api->approve_user(
+        $user_id,
+    );
+    ```
+
+    Sends a `POST` request to `users/:user_id/approve`.
+
+- reject\_user
+
+    ```perl
+    $api->reject_user(
+        $user_id,
+    );
+    ```
+
+    Sends a `POST` request to `users/:user_id/reject`.
+
+- activate\_user
+
+    ```perl
+    $api->activate_user(
+        $user_id,
+    );
+    ```
+
+    Sends a `POST` request to `users/:user_id/activate`.
+
+- deactivate\_user
+
+    ```perl
+    $api->deactivate_user(
+        $user_id,
+    );
+    ```
+
+    Sends a `POST` request to `users/:user_id/deactivate`.
+
+- ban\_user
+
+    ```perl
+    $api->ban_user(
+        $user_id,
+    );
+    ```
+
+    Sends a `POST` request to `users/:user_id/ban`.
+
+- unban\_user
+
+    ```perl
+    $api->unban_user(
+        $user_id,
+    );
+    ```
+
+    Sends a `POST` request to `users/:user_id/unban`.
+
 - user\_impersonation\_tokens
 
     ```perl

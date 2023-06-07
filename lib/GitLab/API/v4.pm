@@ -10517,6 +10517,126 @@ sub unblock_user {
     return $self->_call_rest_client( 'POST', 'users/:user_id/unblock', [@_], $options );
 }
 
+=item approve_user
+
+    $api->approve_user(
+        $user_id,
+    );
+
+Sends a C<POST> request to C<users/:user_id/approve>.
+
+=cut
+
+sub approve_user {
+    my $self = shift;
+    croak 'approve_user must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($user_id) to approve_user must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $options = {};
+    $options->{decode} = 0;
+    $self->_call_rest_client( 'POST', 'users/:user_id/approve', [@_], $options );
+    return;
+}
+
+=item reject_user
+
+    $api->reject_user(
+        $user_id,
+    );
+
+Sends a C<POST> request to C<users/:user_id/reject>.
+
+=cut
+
+sub reject_user {
+    my $self = shift;
+    croak 'reject_user must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($user_id) to reject_user must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $options = {};
+    $options->{decode} = 0;
+    $self->_call_rest_client( 'POST', 'users/:user_id/reject', [@_], $options );
+    return;
+}
+
+=item activate_user
+
+    $api->activate_user(
+        $user_id,
+    );
+
+Sends a C<POST> request to C<users/:user_id/activate>.
+
+=cut
+
+sub activate_user {
+    my $self = shift;
+    croak 'activate_user must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($user_id) to activate_user must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $options = {};
+    $options->{decode} = 0;
+    $self->_call_rest_client( 'POST', 'users/:user_id/activate', [@_], $options );
+    return;
+}
+
+=item deactivate_user
+
+    $api->deactivate_user(
+        $user_id,
+    );
+
+Sends a C<POST> request to C<users/:user_id/deactivate>.
+
+=cut
+
+sub deactivate_user {
+    my $self = shift;
+    croak 'deactivate_user must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($user_id) to deactivate_user must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $options = {};
+    $options->{decode} = 0;
+    $self->_call_rest_client( 'POST', 'users/:user_id/deactivate', [@_], $options );
+    return;
+}
+
+=item ban_user
+
+    $api->ban_user(
+        $user_id,
+    );
+
+Sends a C<POST> request to C<users/:user_id/ban>.
+
+=cut
+
+sub ban_user {
+    my $self = shift;
+    croak 'ban_user must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($user_id) to ban_user must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $options = {};
+    $options->{decode} = 0;
+    $self->_call_rest_client( 'POST', 'users/:user_id/ban', [@_], $options );
+    return;
+}
+
+=item unban_user
+
+    $api->unban_user(
+        $user_id,
+    );
+
+Sends a C<POST> request to C<users/:user_id/unban>.
+
+=cut
+
+sub unban_user {
+    my $self = shift;
+    croak 'unban_user must be called with 1 arguments' if @_ != 1;
+    croak 'The #1 argument ($user_id) to unban_user must be a scalar' if ref($_[0]) or (!defined $_[0]);
+    my $options = {};
+    $options->{decode} = 0;
+    $self->_call_rest_client( 'POST', 'users/:user_id/unban', [@_], $options );
+    return;
+}
+
 =item user_impersonation_tokens
 
     my $tokens = $api->user_impersonation_tokens(
