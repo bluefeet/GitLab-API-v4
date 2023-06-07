@@ -5679,6 +5679,7 @@ Graham Knop <haarg@haarg.org>
 Stig Palmquist <git@stig.io>
 Dan Book <grinnz@grinnz.com>
 James Wright <jwright@ecstuning.com>
+Jonathan Taylor <jon@stackhaus.com>
 ```
 
 # LICENSE
