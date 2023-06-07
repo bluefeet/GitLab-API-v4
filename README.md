@@ -3678,6 +3678,17 @@ See [https://docs.gitlab.com/ce/api/pipeline\_schedules.html](https://docs.gitla
 
     Sends a `POST` request to `projects/:project_id/pipeline_schedules/:pipeline_schedule_id/take_ownership` and returns the decoded response content.
 
+- run\_pipeline\_schedule
+
+    ```perl
+    my $variable = $api->run_pipeline_schedule(
+        $project_id,
+        $pipeline_schedule_id,
+    );
+    ```
+
+    Sends a `POST` request to `projects/:project_id/pipeline_schedules/:pipeline_schedule_id/play` and returns the decoded response content.
+
 - delete\_pipeline\_schedule
 
     ```perl
@@ -5680,6 +5691,7 @@ Stig Palmquist <git@stig.io>
 Dan Book <grinnz@grinnz.com>
 James Wright <jwright@ecstuning.com>
 Jonathan Taylor <jon@stackhaus.com>
+g0t mi1k <have.you.g0tmi1k@gmail.com>
 ```
 
 # LICENSE

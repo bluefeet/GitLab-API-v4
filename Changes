@@ -2,6 +2,7 @@ Revision history for Perl extension GitLab-API-v4.
 
 {{$NEXT}}
 
+ - Add run_pipeline_schedule.
  - Add share_group_with_group and unshare_group_with_group.
  - Add approve_merge_request and unapprove_merge_request
  - Add approve_user and reject_user.

@@ -11102,6 +11102,7 @@ L<https://github.com/bluefeet/GitLab-API-v4/issues>
     Dan Book <grinnz@grinnz.com>
     James Wright <jwright@ecstuning.com>
     Jonathan Taylor <jon@stackhaus.com>
+    g0t mi1k <have.you.g0tmi1k@gmail.com>
 
 =head1 LICENSE
 
