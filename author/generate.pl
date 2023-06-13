@@ -121,6 +121,12 @@ foreach my $section_name (keys %$section_pack) {
             print "    \$options->{$params_key} = \$params if defined \$params;\n";
         }
 
+        my @code;
+        @code = split /\n/, $endpoint->{code} if $endpoint->{code};
+        foreach my $line (@code) {
+            print "    $line\n";
+        }
+
         print '    ';
         print 'return ' if $return;
         print "\$self->_call_rest_client( '$verb', '$path', [\@_], \$options );\n";

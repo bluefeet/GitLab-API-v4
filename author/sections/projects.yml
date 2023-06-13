@@ -6,6 +6,10 @@
 - create_project: project = POST projects?
 - create_project_for_user: POST projects/user/:user_id?
 - edit_project: PUT projects/:project_id?
+- method: edit_project_multipart
+  spec: PUT projects/:project_id?
+  note: The request will have "multipart/form-data" header set for uploading files.
+  code: $options->{content}->{file} = $params;
 - fork_project: POST projects/:project_id/fork?
 - project_forks: forks = GET projects/:project_id/forks?
 - start_project: project = POST projects/:project_id/star
